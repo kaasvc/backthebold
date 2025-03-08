@@ -4,7 +4,7 @@ import FormSection from "./FormSection";
 import FormProgress from "./FormProgress";
 import SubmitSection from "./SubmitSection";
 import { formSections, submitForm, validateSection } from "@/utils/formUtils";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 const ApplicationForm: React.FC = () => {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);

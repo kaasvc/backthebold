@@ -1,4 +1,3 @@
-
 import { toast } from "sonner";
 
 export interface FormField {
@@ -17,7 +16,6 @@ export interface FormSection {
   fields: FormField[];
 }
 
-// Sample form structure - we'll replace this with actual questions when provided
 export const formSections: FormSection[] = [
   {
     id: "company",
@@ -199,16 +197,23 @@ export const validateSection = (formData: Record<string, string>, section: FormS
   return errors;
 };
 
+export const validateAllSections = (formData: Record<string, string>): Record<string, string> => {
+  let allErrors: Record<string, string> = {};
+  
+  formSections.forEach(section => {
+    const sectionErrors = validateSection(formData, section);
+    allErrors = { ...allErrors, ...sectionErrors };
+  });
+  
+  return allErrors;
+};
+
 export const submitForm = async (formData: Record<string, string>): Promise<boolean> => {
   try {
-    // This would normally be an API call to your backend
-    // For now, we'll just simulate a successful submission
     console.log('Form data submitted:', formData);
     
-    // Simulate network request
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    // Show success message
     toast.success("Application submitted successfully", {
       description: "We've received your application and will be in touch soon.",
     });

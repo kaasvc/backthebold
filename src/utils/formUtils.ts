@@ -1,3 +1,4 @@
+
 import { toast } from "sonner";
 
 export interface FormField {
@@ -52,14 +53,7 @@ export const formSections: FormSection[] = [
     description: "Tell us about the founding team.",
     fields: [
       {
-        id: "founderNames",
-        label: "Founder names",
-        type: "text",
-        placeholder: "Names of all founders, separated by commas",
-        required: true,
-      },
-      {
-        id: "founderRoles",
+        id: "founderTechnical",
         label: "Who are the technical founders?",
         type: "text",
         placeholder: "Names of technical founders, if any",
@@ -204,6 +198,21 @@ export const validateAllSections = (formData: Record<string, string>): Record<st
     const sectionErrors = validateSection(formData, section);
     allErrors = { ...allErrors, ...sectionErrors };
   });
+  
+  // Validate founders array if it exists
+  const foundersData = formData.founders ? JSON.parse(formData.founders) : [];
+  if (foundersData.length === 0) {
+    allErrors["founders"] = "Please add at least one founder";
+  } else {
+    foundersData.forEach((founder: any, index: number) => {
+      if (!founder.name.trim()) {
+        allErrors[`founder_${index}_name`] = "Founder name is required";
+      }
+      if (founder.linkedin && !/^https?:\/\/([a-z]{2,3}\.)?linkedin\.com\/.*$/i.test(founder.linkedin)) {
+        allErrors[`founder_${index}_linkedin`] = "Please enter a valid LinkedIn URL";
+      }
+    });
+  }
   
   return allErrors;
 };

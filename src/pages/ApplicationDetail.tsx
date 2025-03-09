@@ -1,83 +1,44 @@
 
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft, UserCircle, Building, CalendarIcon, FileText, CheckCircle2, Clock, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { formSections } from "@/utils/formUtils";
-import { RocketIcon, TrendingUpIcon, LogOut, ChevronLeft, CheckCircle, XCircle, AlertCircle, Clock } from "lucide-react";
-import { toast } from "sonner";
+import { Application } from "@/contexts/AuthContext";
+import { Badge } from "@/components/ui/badge";
 
-const ApplicationDetail: React.FC = () => {
+const ApplicationDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const { user, applications, updateApplicationStatus } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [statusLoading, setStatusLoading] = useState(false);
-
-  useEffect(() => {
-    // Check if URL has admin query parameter
-    const params = new URLSearchParams(location.search);
-    setIsAdmin(params.has("admin") && user?.role === "admin");
-  }, [location, user]);
-
-  if (!user || !id) {
-    return null; // Should be handled by ProtectedRoute
-  }
-
+  const { user, applications, logout } = useAuth();
+  
+  // Find the application from the context
   const application = applications.find(app => app.id === id);
+  
   if (!application) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold">Application Not Found</h1>
-        <p className="text-muted-foreground mt-2 mb-6">The application you're looking for doesn't exist or you don't have access to it.</p>
-        <Button variant="kaas" onClick={() => navigate(-1)}>Go Back</Button>
+      <div className="container max-w-4xl mx-auto py-12">
+        <div className="bg-red-50 text-red-800 p-6 rounded-lg mb-8">
+          <h2 className="text-2xl font-bold mb-3">Application Not Found</h2>
+          <p className="mb-4">
+            We couldn't find the application you're looking for. It may have been removed or you might not have permission to view it.
+          </p>
+          <Button 
+            variant="outline" 
+            onClick={() => navigate(-1)}
+            className="mt-4"
+          >
+            Go Back
+          </Button>
+        </div>
       </div>
     );
   }
-
-  // Only admin or the owner should view this
-  if (user.role !== "admin" && application.userId !== user.id) {
-    return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-bold">Access Denied</h1>
-        <p className="text-muted-foreground mt-2 mb-6">You don't have permission to view this application.</p>
-        <Button variant="kaas" onClick={() => navigate("/dashboard")}>Back to Dashboard</Button>
-      </div>
-    );
-  }
-
-  const formData = application.formData;
   
-  // Parse founders data
-  let founders: Array<{ name: string; linkedin: string }> = [];
-  try {
-    if (formData.founders) {
-      founders = JSON.parse(formData.founders);
-    }
-  } catch (error) {
-    console.error("Failed to parse founders data:", error);
-  }
-
-  const getStatusIcon = (status: string) => {
+  const getStatusColor = (status: Application["status"]) => {
     switch (status) {
       case "pending":
-        return <Clock className="h-5 w-5 text-amber-500" />;
-      case "reviewing":
-        return <AlertCircle className="h-5 w-5 text-blue-500" />;
-      case "approved":
-        return <CheckCircle className="h-5 w-5 text-green-500" />;
-      case "rejected":
-        return <XCircle className="h-5 w-5 text-red-500" />;
-      default:
-        return <Clock className="h-5 w-5 text-gray-500" />;
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "pending":
-        return "bg-amber-100 text-amber-800";
+        return "bg-yellow-100 text-yellow-800";
       case "reviewing":
         return "bg-blue-100 text-blue-800";
       case "approved":
@@ -88,196 +49,163 @@ const ApplicationDetail: React.FC = () => {
         return "bg-gray-100 text-gray-800";
     }
   };
-
-  const getStatusText = (status: string) => {
+  
+  const getStatusIcon = (status: Application["status"]) => {
     switch (status) {
       case "pending":
-        return "Pending Review";
+        return <Clock className="h-5 w-5" />;
       case "reviewing":
-        return "Under Review";
+        return <FileText className="h-5 w-5" />;
       case "approved":
-        return "Approved";
+        return <CheckCircle2 className="h-5 w-5" />;
       case "rejected":
-        return "Not Approved";
+        return <XCircle className="h-5 w-5" />;
       default:
-        return "Unknown";
-    }
-  };
-
-  const handleStatusChange = async (newStatus: typeof application.status) => {
-    if (!isAdmin) return;
-    
-    setStatusLoading(true);
-    const success = await updateApplicationStatus(application.id, newStatus);
-    setStatusLoading(false);
-    
-    if (success) {
-      toast.success(`Application status updated to ${newStatus}`);
+        return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background">
       <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="flex items-center">
-              <RocketIcon className="h-8 w-8 text-kaas-pink" />
-              <TrendingUpIcon className="h-6 w-6 text-kaas-darkpink -ml-2 -mt-3" />
-              <span className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-kaas-pink to-kaas-darkpink ml-1">KaasX</span>
-              {isAdmin && (
-                <span className="ml-2 px-2 py-0.5 text-xs font-bold bg-blue-500 text-white rounded">ADMIN</span>
-              )}
-            </div>
-          </Link>
+        <div className="container flex h-16 items-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="mr-4"
+            onClick={() => navigate("/dashboard")}
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Dashboard
+          </Button>
+          
+          <div className="flex-1" />
           
           <div className="flex items-center space-x-4">
-            <span className="text-sm font-medium">{user.name}</span>
-            <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
-              <ChevronLeft className="h-4 w-4 mr-1" />
-              Back
-            </Button>
-            <Button variant="ghost" size="sm" onClick={() => user.logout()}>
-              <LogOut className="h-4 w-4 mr-2" />
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => logout()}
+            >
               Logout
             </Button>
           </div>
         </div>
       </header>
       
-      <main className="container py-10">
-        <div className="flex justify-between items-start mb-8">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">
-              Application #{application.id.split("-")[1]}
-            </h1>
-            <p className="text-muted-foreground">
-              Submitted on {new Date(application.submittedAt).toLocaleDateString()}
-            </p>
-          </div>
-          <div className={`px-4 py-2 rounded-full text-sm font-medium flex items-center ${getStatusColor(application.status)}`}>
+      <main className="container py-10 max-w-4xl">
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-3xl font-bold">Application Details</h1>
+          <Badge 
+            className={`${getStatusColor(application.status)} flex items-center gap-1 px-3 py-1 text-sm rounded-full`}
+          >
             {getStatusIcon(application.status)}
-            <span className="ml-2">{getStatusText(application.status)}</span>
-          </div>
+            {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
+          </Badge>
         </div>
         
-        {isAdmin && (
-          <div className="mb-8 p-6 border border-border rounded-lg bg-muted/30">
-            <h2 className="text-xl font-semibold mb-4">Admin Actions</h2>
-            <div className="flex flex-wrap gap-3">
-              <Button
-                variant="outline"
-                className="border-amber-500 text-amber-700 hover:bg-amber-50"
-                disabled={application.status === "pending" || statusLoading}
-                onClick={() => handleStatusChange("pending")}
-              >
-                <Clock className="h-4 w-4 mr-2" />
-                Mark as Pending
-              </Button>
-              <Button
-                variant="outline"
-                className="border-blue-500 text-blue-700 hover:bg-blue-50"
-                disabled={application.status === "reviewing" || statusLoading}
-                onClick={() => handleStatusChange("reviewing")}
-              >
-                <AlertCircle className="h-4 w-4 mr-2" />
-                Mark as Reviewing
-              </Button>
-              <Button
-                variant="outline"
-                className="border-green-500 text-green-700 hover:bg-green-50"
-                disabled={application.status === "approved" || statusLoading}
-                onClick={() => handleStatusChange("approved")}
-              >
-                <CheckCircle className="h-4 w-4 mr-2" />
-                Approve Application
-              </Button>
-              <Button
-                variant="outline"
-                className="border-red-500 text-red-700 hover:bg-red-50"
-                disabled={application.status === "rejected" || statusLoading}
-                onClick={() => handleStatusChange("rejected")}
-              >
-                <XCircle className="h-4 w-4 mr-2" />
-                Reject Application
-              </Button>
+        <div className="bg-card rounded-lg border border-border shadow-sm">
+          <div className="p-6">
+            <div className="flex items-center space-x-2 mb-6">
+              <UserCircle className="h-5 w-5 text-muted-foreground" />
+              <h2 className="text-xl font-semibold">Applicant Information</h2>
             </div>
-            <div className="mt-4 pt-4 border-t border-border">
-              <Button 
-                variant="admin"
-                onClick={() => {
-                  // Simulate email with application details
-                  console.log("Sending email to hello@kaas.vc with application details:", application);
-                  toast.success("Email notification sent to KaasX team");
-                }}
-              >
-                Notify Team via Email
-              </Button>
-            </div>
-          </div>
-        )}
-        
-        <div className="space-y-8">
-          {formSections.map((section) => (
-            <div key={section.id} className="p-6 border border-border rounded-lg">
-              <h2 className="text-xl font-semibold mb-4">{section.title}</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Company Name</p>
+                <p className="text-base font-medium">{application.formData.companyName || "Not provided"}</p>
+              </div>
               
-              {section.id === "founders" && (
-                <div className="mb-6 space-y-4">
-                  <h3 className="text-lg font-medium">Founders</h3>
-                  {founders.length === 0 ? (
-                    <p className="text-muted-foreground">No founders listed</p>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Company Website</p>
+                <p className="text-base">
+                  {application.formData.companyWebsite ? (
+                    <a 
+                      href={application.formData.companyWebsite} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-kaas-pink hover:underline"
+                    >
+                      {application.formData.companyWebsite}
+                    </a>
                   ) : (
-                    <div className="space-y-4">
-                      {founders.map((founder, index) => (
-                        <div key={index} className="p-4 bg-muted/30 rounded-md">
-                          <p><strong>Name:</strong> {founder.name}</p>
-                          {founder.linkedin && (
-                            <p><strong>LinkedIn:</strong> <a href={founder.linkedin} target="_blank" rel="noopener noreferrer" className="text-kaas-pink hover:underline">{founder.linkedin}</a></p>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                    "Not provided"
                   )}
-                </div>
-              )}
+                </p>
+              </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {section.fields.map((field) => {
-                  // Skip conditional fields if their parent field is not set to show them
-                  if (
-                    (field.id === "previouslyWorkedDetails" && formData.previouslyWorked !== "Yes") ||
-                    (field.id === "locationChangeDetails" && formData.locationChange !== "Yes") ||
-                    (field.id === "usersDetails" && formData.usersStatus !== "Yes") ||
-                    (field.id === "revenueDetails" && formData.revenueStatus !== "Yes") ||
-                    (field.id === "acceleratorDetails" && formData.acceleratorStatus !== "Yes") ||
-                    (field.id === "legalEntityDetails" && formData.legalEntity !== "Yes") ||
-                    (field.id === "investmentDetails" && formData.investmentStatus !== "Yes") ||
-                    (field.id === "vcTimeline" && formData.vcPlans !== "Yes")
-                  ) {
-                    return null;
-                  }
-                  
-                  return (
-                    <div key={field.id} className="space-y-1">
-                      <h3 className="font-medium text-sm">
-                        {field.label}
-                        {field.required && <span className="text-red-500 ml-1">*</span>}
-                      </h3>
-                      
-                      <div className="bg-muted/30 p-3 rounded">
-                        {formData[field.id] ? (
-                          <p className="whitespace-pre-line">{formData[field.id]}</p>
-                        ) : (
-                          <p className="text-muted-foreground italic">Not provided</p>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Company Description</p>
+                <p className="text-base">{application.formData.companyDescription || "Not provided"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Location</p>
+                <p className="text-base">{application.formData.location || "Not provided"}</p>
               </div>
             </div>
-          ))}
+            
+            <div className="flex items-center space-x-2 mb-6">
+              <Building className="h-5 w-5 text-muted-foreground" />
+              <h2 className="text-xl font-semibold">Product & Business</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-6 mb-8">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Problem Statement</p>
+                <p className="text-base">{application.formData.problemStatement || "Not provided"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Solution</p>
+                <p className="text-base">{application.formData.solution || "Not provided"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Target Market</p>
+                <p className="text-base">{application.formData.targetMarket || "Not provided"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Revenue Model</p>
+                <p className="text-base">{application.formData.revenueModel || "Not provided"}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-2 mb-6">
+              <CalendarIcon className="h-5 w-5 text-muted-foreground" />
+              <h2 className="text-xl font-semibold">Funding & Timeline</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Funding Needed</p>
+                <p className="text-base">{application.formData.fundingNeeded || "Not provided"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Timeline</p>
+                <p className="text-base">{application.formData.timeline || "Not provided"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Use of Funds</p>
+                <p className="text-base">{application.formData.useOfFunds || "Not provided"}</p>
+              </div>
+              
+              <div>
+                <p className="text-sm font-medium text-muted-foreground mb-1">Previous Investment</p>
+                <p className="text-base">{application.formData.previousInvestment || "None"}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-muted/40 p-4 rounded-b-lg border-t border-border">
+            <p className="text-sm text-muted-foreground">
+              Application submitted on {new Date(application.submittedAt).toLocaleDateString()} at {new Date(application.submittedAt).toLocaleTimeString()}
+            </p>
+          </div>
         </div>
       </main>
     </div>

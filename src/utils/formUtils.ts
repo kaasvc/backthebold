@@ -386,13 +386,6 @@ export const formSections: FormSection[] = [
         placeholder: "Talent attraction, sales, strategic coaching, investor connections?",
         required: true,
       },
-      {
-        id: "scalingPlans",
-        label: "If successful, how would you scale your business beyond its initial market?",
-        type: "textarea",
-        placeholder: "Describe your scaling strategy...",
-        required: true,
-      },
     ],
   },
   {

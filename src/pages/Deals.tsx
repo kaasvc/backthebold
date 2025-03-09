@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, ChartBar, TrendingUp, Award, CircleDollarSign } from "lucide-react";
+import { Building, Users, Briefcase, ChartBar, TrendingUp, Award, CircleDollarSign, Linkedin } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Deals = () => {
@@ -66,7 +67,18 @@ const Deals = () => {
         size: "$2 Trillion",
         fundingLeft: "$500K"
       },
-      founders: "Founded by Sarah Chen (ex-Airbnb PM) & David Rodriguez (MIT AI Lab)"
+      founders: [
+        {
+          name: "Sarah Chen",
+          title: "ex-Airbnb PM",
+          linkedin: "https://linkedin.com/in/sarahchen"
+        },
+        {
+          name: "David Rodriguez",
+          title: "MIT AI Lab",
+          linkedin: "https://linkedin.com/in/davidrodriguez"
+        }
+      ]
     },
     {
       id: 2,
@@ -90,7 +102,18 @@ const Deals = () => {
         size: "$4 Trillion",
         fundingLeft: "$1.2M"
       },
-      founders: "Founded by Dr. Maya Johnson (Stanford Med) & Raj Patel (ex-Zocdoc CTO)"
+      founders: [
+        {
+          name: "Dr. Maya Johnson",
+          title: "Stanford Med",
+          linkedin: "https://linkedin.com/in/mayajohnson"
+        },
+        {
+          name: "Raj Patel",
+          title: "ex-Zocdoc CTO",
+          linkedin: "https://linkedin.com/in/rajpatel"
+        }
+      ]
     },
     {
       id: 3,
@@ -114,7 +137,18 @@ const Deals = () => {
         size: "$1.5 Trillion",
         fundingLeft: "$840K"
       },
-      founders: "Founded by Emma Torres (Climate Scientist) & Alex Kim (Serial CleanTech Entrepreneur)"
+      founders: [
+        {
+          name: "Emma Torres",
+          title: "Climate Scientist",
+          linkedin: "https://linkedin.com/in/emmatorres"
+        },
+        {
+          name: "Alex Kim",
+          title: "Serial CleanTech Entrepreneur",
+          linkedin: "https://linkedin.com/in/alexkim"
+        }
+      ]
     }
   ];
   
@@ -211,7 +245,22 @@ const Deals = () => {
                 {/* Founder Information */}
                 <div className="flex items-center gap-1.5 mb-3">
                   <Users className="h-3.5 w-3.5 text-kaas-pink" />
-                  <p className="text-xs text-slate-700">{deal.founders}</p>
+                  <div className="text-xs text-slate-700">
+                    {deal.founders.map((founder, index) => (
+                      <span key={index}>
+                        <a 
+                          href={founder.linkedin} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="hover:text-kaas-pink inline-flex items-center"
+                        >
+                          {founder.name} <Linkedin className="h-3 w-3 ml-0.5 inline" />
+                        </a>
+                        {founder.title && <span> ({founder.title})</span>}
+                        {index < deal.founders.length - 1 && <span> & </span>}
+                      </span>
+                    ))}
+                  </div>
                 </div>
                 
                 {/* Progress Bar */}

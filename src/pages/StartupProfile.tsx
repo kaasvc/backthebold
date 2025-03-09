@@ -668,9 +668,6 @@ const StartupProfile = () => {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Invest in ProprHome.com</DialogTitle>
-            <DialogDescription>
-              Indicate your interest in investing. This is a non-binding offer. Firm commitments will be made through the link sent to your email.
-            </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-5 py-2">

@@ -315,7 +315,7 @@ const ApplicationForm: React.FC = () => {
                       <p className="text-muted-foreground mb-4">No founders added yet</p>
                       <Button 
                         type="button" 
-                        variant="outline" 
+                        variant="kaas" 
                         onClick={handleAddFounder}
                         className="flex items-center gap-2"
                       >
@@ -394,7 +394,7 @@ const ApplicationForm: React.FC = () => {
                       
                       <Button 
                         type="button" 
-                        variant="outline" 
+                        variant="kaas" 
                         onClick={handleAddFounder}
                         className="flex items-center gap-2"
                       >
@@ -465,6 +465,7 @@ const ApplicationForm: React.FC = () => {
         <div className="py-6 flex justify-center">
           <Button
             type="submit"
+            variant="kaas"
             className="w-full md:w-auto px-8"
             disabled={isSubmitting}
           >

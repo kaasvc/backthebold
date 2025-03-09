@@ -11,9 +11,9 @@ const Index = () => {
         <div className="container flex h-16 items-center">
           <div className="mr-4 flex items-center space-x-2">
             <div className="flex items-center">
-              <RocketIcon className="h-8 w-8 text-kaasx-700" />
-              <TrendingUpIcon className="h-6 w-6 text-kaasx-500 -ml-2 -mt-3" />
-              <span className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-kaasx-600 to-kaasx-800 ml-1">KaasX</span>
+              <RocketIcon className="h-8 w-8 text-kaas-pink" />
+              <TrendingUpIcon className="h-6 w-6 text-kaas-darkpink -ml-2 -mt-3" />
+              <span className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-kaas-pink to-kaas-darkpink ml-1">KaasX</span>
             </div>
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">

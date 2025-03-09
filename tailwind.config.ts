@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -74,6 +73,11 @@ export default {
 					700: '#2d50e9',
 					800: '#2540d1',
 					900: '#213aa9',
+				},
+				kaas: {
+					pink: '#D946EF',
+					darkpink: '#9b30b0',
+					lightpink: '#e98ff5'
 				}
 			},
 			borderRadius: {

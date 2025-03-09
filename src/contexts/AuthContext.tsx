@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -19,15 +18,34 @@ export interface Application {
   formData: Record<string, string>;
 }
 
+export interface Deal {
+  id: string;
+  companyName: string;
+  logo: string;
+  shortDescription: string;
+  minInvestment: number;
+  noteDiscount: number;
+  industry: string[];
+  raised: number;
+  target: number;
+  isActive: boolean;
+  createdAt: string;
+}
+
 interface AuthContextType {
   user: User | null;
   applications: Application[];
+  deals: Deal[];
   loading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   register: (name: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
   submitApplication: (formData: Record<string, string>) => Promise<string | null>;
   updateApplicationStatus: (applicationId: string, status: Application["status"]) => Promise<boolean>;
+  getDeal: (dealId: string) => Deal | undefined;
+  updateDeal: (dealId: string, dealData: Partial<Deal>) => Promise<boolean>;
+  createDeal: (dealData: Omit<Deal, "id" | "createdAt">) => Promise<string | null>;
+  toggleDealStatus: (dealId: string) => Promise<boolean>;
 }
 
 // Mock data for development purposes
@@ -42,11 +60,42 @@ const MOCK_USERS: User[] = [
 
 const MOCK_APPLICATIONS: Application[] = [];
 
+// Mock deal data
+const MOCK_DEALS: Deal[] = [
+  {
+    id: "deal-1",
+    companyName: "PropRai",
+    logo: "/placeholder.svg",
+    shortDescription: "AI-powered property management and rental platform",
+    minInvestment: 500,
+    noteDiscount: 30,
+    industry: ["PropTech", "AI", "SaaS"],
+    raised: 450000,
+    target: 750000,
+    isActive: true,
+    createdAt: new Date("2023-10-10").toISOString(),
+  },
+  {
+    id: "deal-2",
+    companyName: "MediSync",
+    logo: "/placeholder.svg",
+    shortDescription: "Healthcare data synchronization platform",
+    minInvestment: 500,
+    noteDiscount: 30,
+    industry: ["HealthTech", "Data", "AI"],
+    raised: 250000,
+    target: 500000,
+    isActive: true,
+    createdAt: new Date("2023-11-15").toISOString(),
+  }
+];
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [applications, setApplications] = useState<Application[]>(MOCK_APPLICATIONS);
+  const [deals, setDeals] = useState<Deal[]>(MOCK_DEALS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -205,17 +254,115 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  // Deal management functions for admin
+  const getDeal = (dealId: string): Deal | undefined => {
+    return deals.find(deal => deal.id === dealId);
+  };
+
+  const updateDeal = async (dealId: string, dealData: Partial<Deal>): Promise<boolean> => {
+    if (!user || user.role !== "admin") {
+      toast.error("Only admins can update deals");
+      return false;
+    }
+    
+    try {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const dealIndex = deals.findIndex(deal => deal.id === dealId);
+      if (dealIndex === -1) {
+        toast.error("Deal not found");
+        return false;
+      }
+      
+      const updatedDeals = [...deals];
+      updatedDeals[dealIndex] = { ...updatedDeals[dealIndex], ...dealData };
+      setDeals(updatedDeals);
+      
+      toast.success("Deal updated successfully");
+      return true;
+    } catch (error) {
+      console.error("Deal update error:", error);
+      toast.error("Failed to update deal");
+      return false;
+    }
+  };
+
+  const createDeal = async (dealData: Omit<Deal, "id" | "createdAt">): Promise<string | null> => {
+    if (!user || user.role !== "admin") {
+      toast.error("Only admins can create deals");
+      return null;
+    }
+    
+    try {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const newDeal: Deal = {
+        ...dealData,
+        id: `deal-${Date.now()}`,
+        createdAt: new Date().toISOString(),
+      };
+      
+      setDeals([...deals, newDeal]);
+      
+      toast.success("Deal created successfully");
+      return newDeal.id;
+    } catch (error) {
+      console.error("Deal creation error:", error);
+      toast.error("Failed to create deal");
+      return null;
+    }
+  };
+
+  const toggleDealStatus = async (dealId: string): Promise<boolean> => {
+    if (!user || user.role !== "admin") {
+      toast.error("Only admins can toggle deal status");
+      return false;
+    }
+    
+    try {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const dealIndex = deals.findIndex(deal => deal.id === dealId);
+      if (dealIndex === -1) {
+        toast.error("Deal not found");
+        return false;
+      }
+      
+      const updatedDeals = [...deals];
+      updatedDeals[dealIndex] = { 
+        ...updatedDeals[dealIndex], 
+        isActive: !updatedDeals[dealIndex].isActive 
+      };
+      setDeals(updatedDeals);
+      
+      toast.success(`Deal ${updatedDeals[dealIndex].isActive ? 'activated' : 'deactivated'} successfully`);
+      return true;
+    } catch (error) {
+      console.error("Deal status toggle error:", error);
+      toast.error("Failed to toggle deal status");
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
         applications,
+        deals,
         loading,
         login,
         register,
         logout,
         submitApplication,
         updateApplicationStatus,
+        getDeal,
+        updateDeal,
+        createDeal,
+        toggleDealStatus,
       }}
     >
       {children}

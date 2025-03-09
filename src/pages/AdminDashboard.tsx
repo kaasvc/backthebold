@@ -1,15 +1,22 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { LogOut, Clock, CheckCircle, XCircle, AlertCircle, Search } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { LogOut, Clock, CheckCircle, XCircle, AlertCircle, Search, Building, Plus, RefreshCw, ToggleLeft, ToggleRight, PencilLine } from "lucide-react";
+import DealEditor from "@/components/DealEditor";
 
 const AdminDashboard: React.FC = () => {
-  const { user, applications, logout } = useAuth();
+  const { user, applications, deals, logout, toggleDealStatus } = useAuth();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("applications");
+  const [editDealId, setEditDealId] = useState<string | null>(null);
+  const [showCreateDealDialog, setShowCreateDealDialog] = useState(false);
+  const [dealSearchTerm, setDealSearchTerm] = useState("");
 
   if (!user || user.role !== "admin") {
     return null; // Should be handled by ProtectedRoute
@@ -57,6 +64,19 @@ const AdminDashboard: React.FC = () => {
     return true;
   });
 
+  const filteredDeals = deals.filter(deal => {
+    if (dealSearchTerm && !deal.companyName.toLowerCase().includes(dealSearchTerm.toLowerCase())) {
+      return false;
+    }
+    
+    return true;
+  });
+
+  const handleCloseDealEditor = () => {
+    setEditDealId(null);
+    setShowCreateDealDialog(false);
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -83,117 +103,255 @@ const AdminDashboard: React.FC = () => {
       
       <main className="container py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Application Management</h1>
+          <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
           <p className="text-muted-foreground">
-            Review and manage all applications.
+            Manage applications and deals.
           </p>
         </div>
         
-        <div className="mb-6 flex flex-col md:flex-row gap-4 justify-between">
-          <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search applications..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40"
-            />
-          </div>
+        <Tabs defaultValue="applications" value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="mb-6">
+            <TabsTrigger value="applications">Applications</TabsTrigger>
+            <TabsTrigger value="deals">Deals</TabsTrigger>
+          </TabsList>
           
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant={statusFilter === null ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => setStatusFilter(null)}
-            >
-              All
-            </Button>
-            <Button
-              variant={statusFilter === "pending" ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => setStatusFilter("pending")}
-              className="flex items-center"
-            >
-              <Clock className="h-4 w-4 mr-1" />
-              Pending
-            </Button>
-            <Button
-              variant={statusFilter === "reviewing" ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => setStatusFilter("reviewing")}
-              className="flex items-center"
-            >
-              <AlertCircle className="h-4 w-4 mr-1" />
-              Reviewing
-            </Button>
-            <Button
-              variant={statusFilter === "approved" ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => setStatusFilter("approved")}
-              className="flex items-center"
-            >
-              <CheckCircle className="h-4 w-4 mr-1" />
-              Approved
-            </Button>
-            <Button
-              variant={statusFilter === "rejected" ? "secondary" : "ghost"}
-              size="sm"
-              onClick={() => setStatusFilter("rejected")}
-              className="flex items-center"
-            >
-              <XCircle className="h-4 w-4 mr-1" />
-              Rejected
-            </Button>
-          </div>
-        </div>
-        
-        {filteredApplications.length === 0 ? (
-          <div className="text-center py-12 bg-muted rounded-lg">
-            <p className="text-muted-foreground">No applications match your filters.</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="border-b">
-                  <th className="py-3 px-4 text-left font-medium">Application ID</th>
-                  <th className="py-3 px-4 text-left font-medium">Submitted</th>
-                  <th className="py-3 px-4 text-left font-medium">Status</th>
-                  <th className="py-3 px-4 text-left font-medium">User ID</th>
-                  <th className="py-3 px-4 text-right font-medium">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredApplications.map((application) => (
-                  <tr key={application.id} className="border-b hover:bg-muted/50">
-                    <td className="py-3 px-4">#{application.id.split("-")[1]}</td>
-                    <td className="py-3 px-4">
-                      {new Date(application.submittedAt).toLocaleDateString()}
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(application.status)}`}>
-                        {getStatusIcon(application.status)}
-                        <span className="ml-1 capitalize">{application.status}</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4">{application.userId}</td>
-                    <td className="py-3 px-4 text-right">
-                      <Button
-                        variant="admin"
-                        size="sm"
-                        onClick={() => navigate(`/application/${application.id}?admin=true`)}
-                      >
-                        Review
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+          <TabsContent value="applications">
+            <div className="mb-6 flex flex-col md:flex-row gap-4 justify-between">
+              <div className="relative w-full md:w-64">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search applications..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40"
+                />
+              </div>
+              
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  variant={statusFilter === null ? "secondary" : "ghost"}
+                  size="sm"
+                  onClick={() => setStatusFilter(null)}
+                >
+                  All
+                </Button>
+                <Button
+                  variant={statusFilter === "pending" ? "secondary" : "ghost"}
+                  size="sm"
+                  onClick={() => setStatusFilter("pending")}
+                  className="flex items-center"
+                >
+                  <Clock className="h-4 w-4 mr-1" />
+                  Pending
+                </Button>
+                <Button
+                  variant={statusFilter === "reviewing" ? "secondary" : "ghost"}
+                  size="sm"
+                  onClick={() => setStatusFilter("reviewing")}
+                  className="flex items-center"
+                >
+                  <AlertCircle className="h-4 w-4 mr-1" />
+                  Reviewing
+                </Button>
+                <Button
+                  variant={statusFilter === "approved" ? "secondary" : "ghost"}
+                  size="sm"
+                  onClick={() => setStatusFilter("approved")}
+                  className="flex items-center"
+                >
+                  <CheckCircle className="h-4 w-4 mr-1" />
+                  Approved
+                </Button>
+                <Button
+                  variant={statusFilter === "rejected" ? "secondary" : "ghost"}
+                  size="sm"
+                  onClick={() => setStatusFilter("rejected")}
+                  className="flex items-center"
+                >
+                  <XCircle className="h-4 w-4 mr-1" />
+                  Rejected
+                </Button>
+              </div>
+            </div>
+            
+            {filteredApplications.length === 0 ? (
+              <div className="text-center py-12 bg-muted rounded-lg">
+                <p className="text-muted-foreground">No applications match your filters.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="py-3 px-4 text-left font-medium">Application ID</th>
+                      <th className="py-3 px-4 text-left font-medium">Submitted</th>
+                      <th className="py-3 px-4 text-left font-medium">Status</th>
+                      <th className="py-3 px-4 text-left font-medium">User ID</th>
+                      <th className="py-3 px-4 text-right font-medium">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredApplications.map((application) => (
+                      <tr key={application.id} className="border-b hover:bg-muted/50">
+                        <td className="py-3 px-4">#{application.id.split("-")[1]}</td>
+                        <td className="py-3 px-4">
+                          {new Date(application.submittedAt).toLocaleDateString()}
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(application.status)}`}>
+                            {getStatusIcon(application.status)}
+                            <span className="ml-1 capitalize">{application.status}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4">{application.userId}</td>
+                        <td className="py-3 px-4 text-right">
+                          <Button
+                            variant="admin"
+                            size="sm"
+                            onClick={() => navigate(`/application/${application.id}?admin=true`)}
+                          >
+                            Review
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </TabsContent>
+          
+          <TabsContent value="deals">
+            <div className="mb-6 flex flex-col md:flex-row gap-4 justify-between">
+              <div className="relative w-full md:w-64">
+                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search deals..."
+                  value={dealSearchTerm}
+                  onChange={(e) => setDealSearchTerm(e.target.value)}
+                  className="pl-10 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40"
+                />
+              </div>
+              
+              <Button
+                variant="admin"
+                size="sm"
+                onClick={() => setShowCreateDealDialog(true)}
+                className="flex items-center"
+              >
+                <Plus className="h-4 w-4 mr-1" />
+                New Deal
+              </Button>
+            </div>
+            
+            {filteredDeals.length === 0 ? (
+              <div className="text-center py-12 bg-muted rounded-lg">
+                <p className="text-muted-foreground">No deals found.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="py-3 px-4 text-left font-medium">Company</th>
+                      <th className="py-3 px-4 text-left font-medium">Min. Investment</th>
+                      <th className="py-3 px-4 text-left font-medium">Discount</th>
+                      <th className="py-3 px-4 text-left font-medium">Raised / Target</th>
+                      <th className="py-3 px-4 text-left font-medium">Status</th>
+                      <th className="py-3 px-4 text-right font-medium">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredDeals.map((deal) => (
+                      <tr key={deal.id} className="border-b hover:bg-muted/50">
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-muted rounded overflow-hidden">
+                              <img src={deal.logo} alt={deal.companyName} className="w-full h-full object-cover" />
+                            </div>
+                            <span className="font-medium">{deal.companyName}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4">€{deal.minInvestment.toLocaleString()}</td>
+                        <td className="py-3 px-4">{deal.noteDiscount}%</td>
+                        <td className="py-3 px-4">
+                          <div className="flex flex-col">
+                            <div className="flex justify-between mb-1 text-sm">
+                              <span>€{deal.raised.toLocaleString()}</span>
+                              <span>€{deal.target.toLocaleString()}</span>
+                            </div>
+                            <div className="w-full bg-slate-200 rounded-full h-2">
+                              <div 
+                                className="bg-blue-600 h-2 rounded-full"
+                                style={{width: `${Math.min(100, (deal.raised / deal.target) * 100)}%`}}
+                              ></div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4">
+                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${deal.isActive ? 'bg-green-100 text-green-800' : 'bg-slate-100 text-slate-800'}`}>
+                            {deal.isActive ? 
+                              <CheckCircle className="h-3 w-3 mr-1" /> : 
+                              <XCircle className="h-3 w-3 mr-1" />
+                            }
+                            <span>{deal.isActive ? 'Active' : 'Inactive'}</span>
+                          </div>
+                        </td>
+                        <td className="py-3 px-4 text-right">
+                          <div className="flex justify-end gap-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => toggleDealStatus(deal.id)}
+                              title={deal.isActive ? "Deactivate deal" : "Activate deal"}
+                            >
+                              {deal.isActive ? 
+                                <ToggleRight className="h-4 w-4 text-green-600" /> : 
+                                <ToggleLeft className="h-4 w-4 text-slate-600" />
+                              }
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => navigate(`/startup/${deal.id}`)}
+                              title="View deal"
+                            >
+                              <Search className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setEditDealId(deal.id)}
+                              title="Edit deal"
+                            >
+                              <PencilLine className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
       </main>
+      
+      <DealEditor 
+        dealId={editDealId}
+        isOpen={!!editDealId}
+        onClose={handleCloseDealEditor}
+      />
+      
+      <DealEditor 
+        dealId={null}
+        isOpen={showCreateDealDialog}
+        onClose={handleCloseDealEditor}
+        isCreate={true}
+      />
     </div>
   );
 };

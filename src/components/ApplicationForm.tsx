@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -18,11 +17,9 @@ const ApplicationForm: React.FC = () => {
   const [founders, setFounders] = useState<Array<{ name: string; linkedin: string }>>([]);
   const [files, setFiles] = useState<Record<string, File | null>>({});
 
-  // Handle changing form values
   const handleChange = (id: string, value: string) => {
     setFormData(prev => ({ ...prev, [id]: value }));
     
-    // Clear error when field is updated
     if (errors[id]) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -32,11 +29,9 @@ const ApplicationForm: React.FC = () => {
     }
   };
 
-  // Handle file uploads
   const handleFileChange = (id: string, file: File | null) => {
     setFiles(prev => ({ ...prev, [id]: file }));
     
-    // Clear error when field is updated
     if (errors[id]) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -46,11 +41,9 @@ const ApplicationForm: React.FC = () => {
     }
   };
 
-  // Add a new founder
   const handleAddFounder = () => {
     setFounders(prev => [...prev, { name: "", linkedin: "" }]);
     
-    // Clear the general founders error if it exists
     if (errors["founders"]) {
       setErrors(prev => {
         const newErrors = { ...prev };
@@ -60,16 +53,13 @@ const ApplicationForm: React.FC = () => {
     }
   };
 
-  // Update founder data
   const handleFounderChange = (index: number, field: "name" | "linkedin", value: string) => {
     const updatedFounders = [...founders];
     updatedFounders[index][field] = value;
     setFounders(updatedFounders);
 
-    // Store founders in form data as JSON string
     setFormData(prev => ({ ...prev, founders: JSON.stringify(updatedFounders) }));
     
-    // Clear error for this specific founder field
     const errorKey = `founder_${index}_${field}`;
     if (errors[errorKey]) {
       setErrors(prev => {
@@ -80,15 +70,12 @@ const ApplicationForm: React.FC = () => {
     }
   };
 
-  // Remove a founder
   const handleRemoveFounder = (index: number) => {
     const updatedFounders = founders.filter((_, i) => i !== index);
     setFounders(updatedFounders);
     
-    // Update form data
     setFormData(prev => ({ ...prev, founders: JSON.stringify(updatedFounders) }));
     
-    // Clear any errors related to this founder
     setErrors(prev => {
       const newErrors = { ...prev };
       delete newErrors[`founder_${index}_name`];
@@ -97,30 +84,25 @@ const ApplicationForm: React.FC = () => {
     });
   };
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Make sure founders are included in form data
     const dataToSubmit = {
       ...formData,
       founders: JSON.stringify(founders)
     };
     
-    // Add file names to form data (in a real app, you'd upload these files)
     Object.entries(files).forEach(([key, file]) => {
       if (file) {
         dataToSubmit[`${key}_filename`] = file.name;
       }
     });
     
-    // Validate all fields before submission
     const validationErrors = validateAllSections(dataToSubmit);
     
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       
-      // Focus the first field with an error
       const firstErrorField = Object.keys(validationErrors)[0];
       if (firstErrorField) {
         const element = document.getElementById(firstErrorField);
@@ -141,13 +123,11 @@ const ApplicationForm: React.FC = () => {
     
     try {
       if (!user) {
-        // Redirect to register page with form data in session storage
         sessionStorage.setItem("pendingApplication", JSON.stringify(dataToSubmit));
         navigate("/register");
         return;
       }
       
-      // Submit application through auth context
       const applicationId = await submitApplication(dataToSubmit);
       
       if (applicationId) {
@@ -162,7 +142,6 @@ const ApplicationForm: React.FC = () => {
     }
   };
 
-  // Render a conditional field that only appears based on a parent field's value
   const renderConditionalField = (parentId: string, parentValue: string, fieldId: string) => {
     const field = formSections
       .flatMap(section => section.fields)
@@ -187,7 +166,6 @@ const ApplicationForm: React.FC = () => {
     ) : null;
   };
 
-  // Render radio or select input
   const renderChoiceField = (field: any) => {
     if (field.type === "radio" && field.options) {
       return (
@@ -321,7 +299,6 @@ const ApplicationForm: React.FC = () => {
             </div>
             
             <div className="space-y-6">
-              {/* Special handling for founders section */}
               {section.id === "founders" && (
                 <div className="mb-8">
                   <div className="flex items-baseline justify-between mb-4">
@@ -430,14 +407,11 @@ const ApplicationForm: React.FC = () => {
                 </div>
               )}
               
-              {/* Render all fields for this section */}
               {section.fields.map((field) => {
-                // Handle special field types
                 if (field.type === "radio" || field.type === "select" || field.type === "file") {
                   return renderChoiceField(field);
                 }
                 
-                // Skip conditional fields, they'll be rendered after their parent field
                 if (
                   field.id === "previouslyWorkedDetails" ||
                   field.id === "locationChangeDetails" ||
@@ -446,12 +420,12 @@ const ApplicationForm: React.FC = () => {
                   field.id === "acceleratorDetails" ||
                   field.id === "legalEntityDetails" ||
                   field.id === "investmentDetails" ||
-                  field.id === "vcTimeline"
+                  field.id === "vcTimeline" ||
+                  field.id === "longTermTrendOther"
                 ) {
                   return null;
                 }
                 
-                // Regular input fields
                 return (
                   <React.Fragment key={field.id}>
                     <FormInput
@@ -466,7 +440,6 @@ const ApplicationForm: React.FC = () => {
                       required={field.required}
                     />
                     
-                    {/* Render conditional fields based on parent field value */}
                     {field.id === "previouslyWorked" && renderConditionalField("previouslyWorked", "Yes", "previouslyWorkedDetails")}
                     {field.id === "locationChange" && renderConditionalField("locationChange", "Yes", "locationChangeDetails")}
                     {field.id === "usersStatus" && renderConditionalField("usersStatus", "Yes", "usersDetails")}
@@ -475,6 +448,7 @@ const ApplicationForm: React.FC = () => {
                     {field.id === "legalEntity" && renderConditionalField("legalEntity", "Yes", "legalEntityDetails")}
                     {field.id === "investmentStatus" && renderConditionalField("investmentStatus", "Yes", "investmentDetails")}
                     {field.id === "vcPlans" && renderConditionalField("vcPlans", "Yes", "vcTimeline")}
+                    {field.id === "longTermTrend" && renderConditionalField("longTermTrend", "Other", "longTermTrendOther")}
                   </React.Fragment>
                 );
               })}

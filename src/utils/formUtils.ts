@@ -233,6 +233,29 @@ export const formSections: FormSection[] = [
         required: true,
       },
       {
+        id: "longTermTrend",
+        label: "What long-term trend is your company playing into?",
+        type: "select",
+        options: [
+          "AI & AGI (Artificial General Intelligence)",
+          "Longevity & Human Enhancement",
+          "Robotics & Automation",
+          "Web3, Blockchain & Crypto",
+          "Space Economy & Moonshot Ventures",
+          "The Future of Work & Investing",
+          "The Convergence of Exponential Technologies",
+          "Other"
+        ],
+        required: true,
+      },
+      {
+        id: "longTermTrendOther",
+        label: "If you selected 'Other', please describe the long-term trend",
+        type: "textarea",
+        placeholder: "Describe the long-term trend your company is playing into...",
+        required: false,
+      },
+      {
         id: "category",
         label: "Which category best applies to your company?",
         type: "select",
@@ -519,7 +542,6 @@ export const validateAllSections = (formData: Record<string, string>): Record<st
     allErrors = { ...allErrors, ...sectionErrors };
   });
   
-  // Validate founders array if it exists
   const foundersData = formData.founders ? JSON.parse(formData.founders) : [];
   if (foundersData.length === 0) {
     allErrors["founders"] = "Please add at least one founder";
@@ -534,7 +556,6 @@ export const validateAllSections = (formData: Record<string, string>): Record<st
     });
   }
   
-  // Conditionally validate fields that depend on radio/select values
   if (formData.previouslyWorked === 'Yes' && !formData.previouslyWorkedDetails) {
     allErrors.previouslyWorkedDetails = "Please provide details about previous collaborations";
   }
@@ -565,6 +586,10 @@ export const validateAllSections = (formData: Record<string, string>): Record<st
   
   if (formData.vcPlans === 'Yes' && !formData.vcTimeline) {
     allErrors.vcTimeline = "Please provide your VC funding timeline";
+  }
+  
+  if (formData.longTermTrend === 'Other' && !formData.longTermTrendOther) {
+    allErrors.longTermTrendOther = "Please describe the long-term trend your company is playing into";
   }
   
   return allErrors;

@@ -65,7 +65,7 @@ const Dashboard: React.FC = () => {
           <Link to="/" className="flex items-center space-x-2">
             <div className="flex items-center">
               <div className="flex items-center scale-[0.7] origin-left">
-                <span className="bg-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">KAAS</span>
+                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">KAAS</span>
                 <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">X</span>
               </div>
             </div>

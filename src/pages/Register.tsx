@@ -73,9 +73,10 @@ const Register: React.FC = () => {
         <div className="container flex h-16 items-center">
           <Link to="/" className="mr-4 flex items-center space-x-2">
             <div className="flex items-center">
-              <RocketIcon className="h-8 w-8 text-kaas-pink" />
-              <TrendingUpIcon className="h-6 w-6 text-kaas-darkpink -ml-2 -mt-3" />
-              <span className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-kaas-pink to-kaas-darkpink ml-1">KaasX</span>
+              <div className="flex items-center scale-[0.7] origin-left">
+                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">KAAS</span>
+                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">X</span>
+              </div>
             </div>
           </Link>
         </div>

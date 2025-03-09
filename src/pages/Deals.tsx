@@ -43,6 +43,11 @@ const Deals = () => {
     setEmail("");
   };
   
+  // Calculate percentage left in round
+  const getPercentageLeft = (progress) => {
+    return 100 - progress;
+  };
+  
   // Sample deals data with improved information
   const deals = [
     {
@@ -52,7 +57,6 @@ const Deals = () => {
       description: "AI-powered platform revolutionizing property management for independent landlords.",
       image: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
       industry: "PropTech / AI",
-      raising: "$1.5M",
       team: "5 members",
       progress: 65,
       stage: "Pre-Seed",
@@ -88,7 +92,6 @@ const Deals = () => {
       description: "Healthcare scheduling platform connecting patients with specialists.",
       image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRoY2FyZXxlbnwwfHwwfHx8MA%3D%3D",
       industry: "HealthTech",
-      raising: "$2M",
       team: "7 members",
       progress: 40,
       stage: "Seed",
@@ -124,7 +127,6 @@ const Deals = () => {
       description: "Sustainability metrics platform for businesses to track carbon footprint.",
       image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZW4lMjBlbmVyZ3l8ZW58MHx8MHx8fDA%3D",
       industry: "CleanTech",
-      raising: "$1.2M",
       team: "4 members",
       progress: 30,
       stage: "Pre-Seed",
@@ -206,7 +208,9 @@ const Deals = () => {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                  <Badge className="bg-kaas-pink hover:bg-kaas-pink mb-1">{deal.stage}</Badge>
+                  <Badge className="bg-red-500 hover:bg-red-600 mb-1">
+                    Only {getPercentageLeft(deal.progress)}% left
+                  </Badge>
                   <h2 className="text-lg font-bold text-white">{deal.name}</h2>
                 </div>
               </div>
@@ -239,8 +243,8 @@ const Deals = () => {
                   <div className="flex items-center gap-1.5">
                     <CircleDollarSign className="h-3.5 w-3.5 text-kaas-pink" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Raising</p>
-                      <p className="text-xs font-medium">{deal.raising}</p>
+                      <p className="text-xs text-muted-foreground">Stage</p>
+                      <p className="text-xs font-medium">{deal.stage}</p>
                     </div>
                   </div>
                 </div>
@@ -319,15 +323,41 @@ const Deals = () => {
               Submit your investment commitment now to secure your allocation in this fast-moving deal.
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 py-2">
+          
+          <div className="bg-amber-50 border border-amber-200 px-4 py-2 rounded-md mb-4 text-amber-800 flex items-center">
+            <span className="mr-2">🔥</span>
+            <span className="text-sm font-medium">Only €250,000 left – closing soon!</span>
+          </div>
+          
+          <div className="space-y-5 py-2">
+            <div className="bg-slate-50 border border-slate-200 p-4 rounded-md">
+              <h3 className="font-medium text-base mb-3 flex items-center">
+                <span className="mr-2">💰</span> Investor Benefits:
+              </h3>
+              <ul className="space-y-2">
+                <li className="flex">
+                  <span className="mr-2">✅</span>
+                  <span className="text-sm">Exclusive early investor perks (Preferred shares, priority future rounds)</span>
+                </li>
+                <li className="flex">
+                  <span className="mr-2">✅</span>
+                  <span className="text-sm">High-growth opportunity in a €2T market</span>
+                </li>
+                <li className="flex">
+                  <span className="mr-2">✅</span>
+                  <span className="text-sm">Secure and verified investment process</span>
+                </li>
+              </ul>
+            </div>
+            
             <div className="space-y-2">
-              <label htmlFor="amount" className="text-sm font-medium">
-                Investment Amount (€)
+              <label htmlFor="amount" className="text-sm font-medium flex items-center">
+                <span className="mr-2">💳</span> Investment Amount (€)
               </label>
               <Input
                 id="amount"
                 type="text"
-                placeholder="e.g., 1000"
+                placeholder="Enter Amount"
                 value={commitAmount}
                 onChange={(e) => setCommitAmount(e.target.value)}
               />
@@ -335,9 +365,10 @@ const Deals = () => {
                 Investment range: €500 - €10,000
               </p>
             </div>
+            
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email Address
+              <label htmlFor="email" className="text-sm font-medium flex items-center">
+                <span className="mr-2">📩</span> Email Address
               </label>
               <Input
                 id="email"
@@ -350,18 +381,20 @@ const Deals = () => {
                 You'll receive investment details and secure payment instructions.
               </p>
             </div>
+            
             <div className="mt-4 p-3 bg-slate-50 rounded-md text-xs text-slate-600">
               <p>
                 <strong>Note:</strong> This is a non-binding expression of interest. Firm commitments will be made through the secure link sent to your email after submission.
               </p>
             </div>
           </div>
+          
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button variant="kaas" onClick={handleSubmitCommitment}>
-              Secure My Investment
+            <Button variant="kaas" onClick={handleSubmitCommitment} className="flex items-center">
+              <span className="mr-1">👉</span> Reserve My Allocation
             </Button>
           </DialogFooter>
         </DialogContent>

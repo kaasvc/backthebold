@@ -1,12 +1,16 @@
 
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import { formSections, submitForm, validateAllSections } from "@/utils/formUtils";
 import { Button } from "@/components/ui/button";
 import FormInput from "./FormInput";
 import { Plus, Trash2 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ApplicationForm: React.FC = () => {
+  const { user, submitApplication } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -136,10 +140,19 @@ const ApplicationForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      const success = await submitForm(dataToSubmit);
-      if (success) {
+      if (!user) {
+        // Redirect to register page with form data in session storage
+        sessionStorage.setItem("pendingApplication", JSON.stringify(dataToSubmit));
+        navigate("/register");
+        return;
+      }
+      
+      // Submit application through auth context
+      const applicationId = await submitApplication(dataToSubmit);
+      
+      if (applicationId) {
         setIsSubmitted(true);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        navigate(`/application/${applicationId}`);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -283,6 +296,13 @@ const ApplicationForm: React.FC = () => {
           <p className="mb-4">
             Thank you for submitting your application to KaasX. Our team will review your information and get back to you soon.
           </p>
+          <Button 
+            variant="kaas" 
+            onClick={() => navigate("/dashboard")}
+            className="mt-4"
+          >
+            Go to Dashboard
+          </Button>
         </div>
       </div>
     );

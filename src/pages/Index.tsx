@@ -1,10 +1,16 @@
 
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import ApplicationForm from "@/components/ApplicationForm";
 import { cn } from "@/lib/utils";
-import { RocketIcon, TrendingUpIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { RocketIcon, TrendingUpIcon, LogIn, UserPlus } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -17,15 +23,40 @@ const Index = () => {
             </div>
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">
-            <nav className="flex items-center space-x-2">
+            <nav className="flex items-center space-x-4">
               <a
-                href="mailto:support@kaasx.com"
+                href="mailto:hello@kaas.vc"
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary"
                 )}
               >
                 Contact Support
               </a>
+              
+              {user ? (
+                <Button 
+                  variant="kaas" 
+                  size="sm"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  Dashboard
+                </Button>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant="outline" size="sm" className="flex items-center">
+                      <LogIn className="h-4 w-4 mr-1" />
+                      Login
+                    </Button>
+                  </Link>
+                  <Link to="/register">
+                    <Button variant="kaas" size="sm" className="flex items-center">
+                      <UserPlus className="h-4 w-4 mr-1" />
+                      Register
+                    </Button>
+                  </Link>
+                </>
+              )}
             </nav>
           </div>
         </div>
@@ -33,7 +64,7 @@ const Index = () => {
       
       <main className="container py-10">
         <div className="mb-10 text-center">
-          <h1 className="text-4xl font-bold tracking-tight mb-3">KaasX Startup Application</h1>
+          <h1 className="text-4xl font-bold tracking-tight mb-3">KaasX Funding Application</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Thank you for your interest in KaasX. Please complete the application below to be considered 
             for our funding program. All fields marked with an asterisk (*) are required.

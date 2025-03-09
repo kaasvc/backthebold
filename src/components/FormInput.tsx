@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 interface FormInputProps {
   id: string;
   label: string;
-  type: "text" | "textarea" | "email" | "number" | "url";
+  type: "text" | "textarea" | "email" | "number" | "url" | "radio" | "select" | "file";
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -13,6 +13,7 @@ interface FormInputProps {
   error?: string;
   required?: boolean;
   className?: string;
+  options?: string[];
 }
 
 const FormInput: React.FC<FormInputProps> = ({
@@ -26,9 +27,10 @@ const FormInput: React.FC<FormInputProps> = ({
   error,
   required = false,
   className,
+  options = [],
 }) => {
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     onChange(e.target.value);
   };
@@ -56,6 +58,23 @@ const FormInput: React.FC<FormInputProps> = ({
             error ? "border-red-500" : "border-input"
           )}
         />
+      ) : type === "select" && options && options.length > 0 ? (
+        <select
+          id={id}
+          value={value}
+          onChange={handleChange}
+          className={cn(
+            "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40 disabled:cursor-not-allowed disabled:opacity-50",
+            error ? "border-red-500" : "border-input"
+          )}
+        >
+          <option value="">Select an option</option>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       ) : (
         <input
           id={id}

@@ -12,10 +12,25 @@ const ApplicationForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [founders, setFounders] = useState<Array<{ name: string; linkedin: string }>>([]);
+  const [files, setFiles] = useState<Record<string, File | null>>({});
 
   // Handle changing form values
   const handleChange = (id: string, value: string) => {
     setFormData(prev => ({ ...prev, [id]: value }));
+    
+    // Clear error when field is updated
+    if (errors[id]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[id];
+        return newErrors;
+      });
+    }
+  };
+
+  // Handle file uploads
+  const handleFileChange = (id: string, file: File | null) => {
+    setFiles(prev => ({ ...prev, [id]: file }));
     
     // Clear error when field is updated
     if (errors[id]) {
@@ -88,6 +103,13 @@ const ApplicationForm: React.FC = () => {
       founders: JSON.stringify(founders)
     };
     
+    // Add file names to form data (in a real app, you'd upload these files)
+    Object.entries(files).forEach(([key, file]) => {
+      if (file) {
+        dataToSubmit[`${key}_filename`] = file.name;
+      }
+    });
+    
     // Validate all fields before submission
     const validationErrors = validateAllSections(dataToSubmit);
     
@@ -127,6 +149,132 @@ const ApplicationForm: React.FC = () => {
     }
   };
 
+  // Render a conditional field that only appears based on a parent field's value
+  const renderConditionalField = (parentId: string, parentValue: string, fieldId: string) => {
+    const field = formSections
+      .flatMap(section => section.fields)
+      .find(field => field.id === fieldId);
+    
+    if (!field) return null;
+    
+    return formData[parentId] === parentValue ? (
+      <FormInput
+        key={field.id}
+        id={field.id}
+        label={field.label}
+        type={field.type}
+        value={formData[field.id] || ""}
+        onChange={(value) => handleChange(field.id, value)}
+        placeholder={field.placeholder}
+        helperText={field.helperText}
+        error={errors[field.id]}
+        required={field.required}
+        className="ml-6 mt-4 border-l-2 border-muted pl-4"
+      />
+    ) : null;
+  };
+
+  // Render radio or select input
+  const renderChoiceField = (field: any) => {
+    if (field.type === "radio" && field.options) {
+      return (
+        <div className="form-question w-full space-y-2" key={field.id}>
+          <div className="flex items-baseline justify-between">
+            <label className="text-sm font-medium leading-none">
+              {field.label}
+              {field.required && <span className="text-red-500 ml-1">*</span>}
+            </label>
+          </div>
+          <div className="flex flex-col gap-2 mt-2">
+            {field.options.map((option: string) => (
+              <label key={option} className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  id={`${field.id}-${option}`}
+                  name={field.id}
+                  value={option}
+                  checked={formData[field.id] === option}
+                  onChange={(e) => handleChange(field.id, e.target.value)}
+                  className="h-4 w-4 rounded-full border-gray-300 text-primary focus:ring-primary"
+                />
+                <span className="text-sm">{option}</span>
+              </label>
+            ))}
+          </div>
+          {errors[field.id] && (
+            <p className="text-sm text-red-500">{errors[field.id]}</p>
+          )}
+        </div>
+      );
+    } else if (field.type === "select" && field.options) {
+      return (
+        <div className="form-question w-full space-y-2" key={field.id}>
+          <div className="flex items-baseline justify-between">
+            <label
+              htmlFor={field.id}
+              className="text-sm font-medium leading-none"
+            >
+              {field.label}
+              {field.required && <span className="text-red-500 ml-1">*</span>}
+            </label>
+          </div>
+          <select
+            id={field.id}
+            value={formData[field.id] || ""}
+            onChange={(e) => handleChange(field.id, e.target.value)}
+            className={`flex h-10 w-full rounded-md border ${
+              errors[field.id] ? "border-red-500" : "border-input"
+            } bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40 disabled:cursor-not-allowed disabled:opacity-50`}
+          >
+            <option value="">Select an option</option>
+            {field.options.map((option: string) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          {errors[field.id] && (
+            <p className="text-sm text-red-500">{errors[field.id]}</p>
+          )}
+        </div>
+      );
+    } else if (field.type === "file") {
+      return (
+        <div className="form-question w-full space-y-2" key={field.id}>
+          <div className="flex items-baseline justify-between">
+            <label
+              htmlFor={field.id}
+              className="text-sm font-medium leading-none"
+            >
+              {field.label}
+              {field.required && <span className="text-red-500 ml-1">*</span>}
+            </label>
+          </div>
+          <input
+            id={field.id}
+            type="file"
+            onChange={(e) => {
+              const file = e.target.files ? e.target.files[0] : null;
+              handleFileChange(field.id, file);
+            }}
+            className={`flex w-full rounded-md border ${
+              errors[field.id] ? "border-red-500" : "border-input"
+            } bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40 disabled:cursor-not-allowed disabled:opacity-50`}
+          />
+          {files[field.id] && (
+            <p className="text-sm text-muted-foreground">
+              Selected file: {files[field.id]?.name}
+            </p>
+          )}
+          {errors[field.id] && (
+            <p className="text-sm text-red-500">{errors[field.id]}</p>
+          )}
+        </div>
+      );
+    }
+    return null;
+  };
+
   if (isSubmitted) {
     return (
       <div className="w-full max-w-3xl mx-auto text-center py-12">
@@ -158,7 +306,7 @@ const ApplicationForm: React.FC = () => {
                 <div className="mb-8">
                   <div className="flex items-baseline justify-between mb-4">
                     <label className="text-sm font-medium leading-none">
-                      Founders <span className="text-red-500">*</span>
+                      List all co-founders and their roles <span className="text-red-500">*</span>
                     </label>
                   </div>
                   
@@ -263,20 +411,53 @@ const ApplicationForm: React.FC = () => {
               )}
               
               {/* Render all fields for this section */}
-              {section.fields.map((field) => (
-                <FormInput
-                  key={field.id}
-                  id={field.id}
-                  label={field.label}
-                  type={field.type}
-                  value={formData[field.id] || ""}
-                  onChange={(value) => handleChange(field.id, value)}
-                  placeholder={field.placeholder}
-                  helperText={field.helperText}
-                  error={errors[field.id]}
-                  required={field.required}
-                />
-              ))}
+              {section.fields.map((field) => {
+                // Handle special field types
+                if (field.type === "radio" || field.type === "select" || field.type === "file") {
+                  return renderChoiceField(field);
+                }
+                
+                // Skip conditional fields, they'll be rendered after their parent field
+                if (
+                  field.id === "previouslyWorkedDetails" ||
+                  field.id === "locationChangeDetails" ||
+                  field.id === "usersDetails" ||
+                  field.id === "revenueDetails" ||
+                  field.id === "acceleratorDetails" ||
+                  field.id === "legalEntityDetails" ||
+                  field.id === "investmentDetails" ||
+                  field.id === "vcTimeline"
+                ) {
+                  return null;
+                }
+                
+                // Regular input fields
+                return (
+                  <React.Fragment key={field.id}>
+                    <FormInput
+                      id={field.id}
+                      label={field.label}
+                      type={field.type}
+                      value={formData[field.id] || ""}
+                      onChange={(value) => handleChange(field.id, value)}
+                      placeholder={field.placeholder}
+                      helperText={field.helperText}
+                      error={errors[field.id]}
+                      required={field.required}
+                    />
+                    
+                    {/* Render conditional fields based on parent field value */}
+                    {field.id === "previouslyWorked" && renderConditionalField("previouslyWorked", "Yes", "previouslyWorkedDetails")}
+                    {field.id === "locationChange" && renderConditionalField("locationChange", "Yes", "locationChangeDetails")}
+                    {field.id === "usersStatus" && renderConditionalField("usersStatus", "Yes", "usersDetails")}
+                    {field.id === "revenueStatus" && renderConditionalField("revenueStatus", "Yes", "revenueDetails")}
+                    {field.id === "acceleratorStatus" && renderConditionalField("acceleratorStatus", "Yes", "acceleratorDetails")}
+                    {field.id === "legalEntity" && renderConditionalField("legalEntity", "Yes", "legalEntityDetails")}
+                    {field.id === "investmentStatus" && renderConditionalField("investmentStatus", "Yes", "investmentDetails")}
+                    {field.id === "vcPlans" && renderConditionalField("vcPlans", "Yes", "vcTimeline")}
+                  </React.Fragment>
+                );
+              })}
             </div>
           </div>
         ))}

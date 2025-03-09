@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, ChartBar } from "lucide-react";
+import { Building, Users, Briefcase, ChartBar, TrendingUp, Award, CircleDollarSign } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Deals = () => {
@@ -43,11 +43,12 @@ const Deals = () => {
     setEmail("");
   };
   
-  // Sample deals data
+  // Sample deals data with improved information
   const deals = [
     {
       id: 1,
       name: "ProprHome.com",
+      tagline: "The Airbnb for Independent Landlords: AI-Driven Property Management",
       description: "AI-powered platform revolutionizing property management for independent landlords.",
       image: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
       industry: "PropTech / AI",
@@ -56,11 +57,22 @@ const Deals = () => {
       team: "5 members",
       progress: 65,
       stage: "Pre-Seed",
-      hasDetailPage: true
+      hasDetailPage: true,
+      metrics: {
+        arr: "$500K",
+        unitsManaged: "10K+",
+        growth: "30% MoM"
+      },
+      market: {
+        size: "$2 Trillion",
+        fundingLeft: "$500K"
+      },
+      investors: "Backed by ex-Airbnb & YC Investors"
     },
     {
       id: 2,
       name: "MediSync",
+      tagline: "The Uber for Healthcare: On-Demand Specialist Appointments",
       description: "Healthcare scheduling platform connecting patients with specialists.",
       image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRoY2FyZXxlbnwwfHwwfHx8MA%3D%3D",
       industry: "HealthTech",
@@ -69,11 +81,22 @@ const Deals = () => {
       team: "7 members",
       progress: 40,
       stage: "Seed",
-      hasDetailPage: false
+      hasDetailPage: false,
+      metrics: {
+        arr: "$750K",
+        appointments: "25K+",
+        growth: "25% MoM"
+      },
+      market: {
+        size: "$4 Trillion",
+        fundingLeft: "$1.2M"
+      },
+      investors: "Backed by Top Healthcare VCs"
     },
     {
       id: 3,
       name: "EcoTrack",
+      tagline: "The Salesforce for Sustainability: Enterprise Carbon Management",
       description: "Sustainability metrics platform for businesses to track carbon footprint.",
       image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZW4lMjBlbmVyZ3l8ZW58MHx8MHx8fDA%3D",
       industry: "CleanTech",
@@ -82,7 +105,17 @@ const Deals = () => {
       team: "4 members",
       progress: 30,
       stage: "Pre-Seed",
-      hasDetailPage: false
+      hasDetailPage: false,
+      metrics: {
+        arr: "$300K",
+        customers: "50+",
+        growth: "20% MoM"
+      },
+      market: {
+        size: "$1.5 Trillion",
+        fundingLeft: "$840K"
+      },
+      investors: "Backed by Climate Tech Angels"
     }
   ];
   
@@ -143,39 +176,65 @@ const Deals = () => {
               </div>
               
               <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground mb-3 line-clamp-2 h-10">
-                  {deal.description}
-                </p>
+                <h3 className="font-bold text-sm mb-2 line-clamp-2 h-10">
+                  {deal.tagline}
+                </h3>
                 
-                <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
-                  <div className="flex items-center gap-2">
+                {/* Traction Metrics */}
+                <div className="mb-3 p-2 bg-slate-50 rounded-md">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <TrendingUp className="h-3.5 w-3.5 text-kaas-pink" />
+                    <p className="text-xs font-semibold">Key Metrics</p>
+                  </div>
+                  <p className="text-xs text-slate-700">
+                    {deal.metrics.arr} ARR | {deal.metrics.unitsManaged || deal.metrics.appointments || deal.metrics.customers} | Growing {deal.metrics.growth}
+                  </p>
+                </div>
+                
+                {/* Market & Funding */}
+                <div className="flex justify-between mb-3 text-xs">
+                  <div className="flex items-center gap-1.5">
                     <Building className="h-3.5 w-3.5 text-kaas-pink" />
                     <div>
                       <p className="text-xs text-muted-foreground">Industry</p>
                       <p className="text-xs font-medium">{deal.industry}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <ChartBar className="h-3.5 w-3.5 text-kaas-pink" />
+                  <div className="flex items-center gap-1.5">
+                    <CircleDollarSign className="h-3.5 w-3.5 text-kaas-pink" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Raising</p>
-                      <p className="text-xs font-medium">{deal.raising}</p>
+                      <p className="text-xs text-muted-foreground">Valuation</p>
+                      <p className="text-xs font-medium">{deal.valuation}</p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="mb-4">
+                {/* Investor Credibility */}
+                <div className="flex items-center gap-1.5 mb-3">
+                  <Award className="h-3.5 w-3.5 text-kaas-pink" />
+                  <p className="text-xs text-slate-700">{deal.investors}</p>
+                </div>
+                
+                {/* Progress Bar */}
+                <div className="mb-3">
                   <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
                     <div 
                       className="h-full bg-kaas-pink rounded-full" 
                       style={{ width: `${deal.progress}%` }}
                     ></div>
                   </div>
-                  <div className="flex justify-between mt-1 text-xs text-muted-foreground">
-                    <p>{deal.progress}% funded</p>
+                  <div className="flex justify-between mt-1 text-xs">
+                    <p className="text-muted-foreground">{deal.progress}% funded</p>
+                    <p className="font-medium text-kaas-pink">Only {deal.market.fundingLeft} left</p>
                   </div>
                 </div>
                 
+                {/* Market Size */}
+                <p className="text-xs text-slate-600 mb-3">
+                  {deal.market.size} Market Opportunity
+                </p>
+                
+                {/* CTAs */}
                 <div className="grid grid-cols-2 gap-2">
                   <Button 
                     variant="outline" 
@@ -183,7 +242,7 @@ const Deals = () => {
                     className="w-full text-xs h-8"
                     onClick={() => handleViewDetails(deal.name)}
                   >
-                    View Details
+                    View Deal
                   </Button>
                   <Button 
                     variant="kaas" 
@@ -191,7 +250,7 @@ const Deals = () => {
                     className="w-full text-xs h-8"
                     onClick={() => handleCommit(deal.name)}
                   >
-                    Express Interest
+                    Invest Now
                   </Button>
                 </div>
               </CardContent>
@@ -204,9 +263,9 @@ const Deals = () => {
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Express Interest in {selectedDeal}</DialogTitle>
+            <DialogTitle>Invest in {selectedDeal}</DialogTitle>
             <DialogDescription>
-              Indicate your interest in investing. After submission, you will receive a link to complete your investment.
+              Submit your investment commitment now to secure your allocation in this fast-moving deal.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -237,7 +296,7 @@ const Deals = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
-                We'll send a confirmation link to this email.
+                You'll receive investment details and secure payment instructions.
               </p>
             </div>
           </div>
@@ -246,7 +305,7 @@ const Deals = () => {
               <Button variant="outline">Cancel</Button>
             </DialogClose>
             <Button variant="kaas" onClick={handleSubmitCommitment}>
-              Submit
+              Secure My Investment
             </Button>
           </DialogFooter>
         </DialogContent>

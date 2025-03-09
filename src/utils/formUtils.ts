@@ -255,7 +255,7 @@ export const formSections: FormSection[] = [
       },
       {
         id: "minimumFunding",
-        label: "What is the minimum amount of funding you need to execute your next stage of growth?",
+        label: "How much funding do you need to execute on your next stage of growth?",
         type: "text",
         placeholder: "e.g., $50,000",
         required: true,

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ApplicationForm from "@/components/ApplicationForm";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Gem, Sparkles, LogIn } from "lucide-react";
+import { Rocket, Sparkles, LogIn } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
@@ -16,7 +16,7 @@ const Index = () => {
         <div className="container flex h-16 items-center">
           <div className="mr-4 flex items-center space-x-2">
             <div className="flex items-center">
-              <Gem className="h-8 w-8 text-kaas-pink" />
+              <Rocket className="h-8 w-8 text-kaas-pink" />
               <Sparkles className="h-6 w-6 text-kaas-darkpink -ml-2 -mt-3" />
               <span className="font-bold text-2xl ml-1">
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-kaas-pink to-kaas-darkpink">Kaas</span>

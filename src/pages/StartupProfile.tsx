@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -34,7 +33,6 @@ const StartupProfile = () => {
     setEmail("");
   };
   
-  // Notable investors data
   const notableInvestors = [
     {
       name: "TechFront Ventures",
@@ -517,7 +515,6 @@ const StartupProfile = () => {
                     <span className="font-medium">20%</span>
                   </div>
                   
-                  {/* Adding backers count */}
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Backers</span>
                     <div className="flex items-center">
@@ -571,14 +568,11 @@ const StartupProfile = () => {
                 <div className="space-y-4">
                   {notableInvestors.map((investor, index) => (
                     <div key={index} className="border-b pb-3 last:border-0 last:pb-0">
-                      <div className="flex justify-between items-start">
+                      <div className="flex items-start">
                         <div>
                           <h3 className="font-medium text-sm">{investor.name}</h3>
                           <p className="text-xs text-muted-foreground">{investor.description}</p>
                         </div>
-                        <Badge variant="outline" className="text-kaas-pink border-kaas-pink/30">
-                          {investor.amount}
-                        </Badge>
                       </div>
                     </div>
                   ))}

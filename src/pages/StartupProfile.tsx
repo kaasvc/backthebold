@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -676,30 +677,57 @@ const StartupProfile = () => {
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Express Interest in ProprHome.com</DialogTitle>
+            <DialogTitle>Invest in ProprHome.com</DialogTitle>
             <DialogDescription>
-              Indicate your interest in investing. After submission, you will receive a link to complete your investment.
+              Indicate your interest in investing. This is a non-binding offer. Firm commitments will be made through the link sent to your email.
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4 py-2">
+          
+          <div className="bg-amber-50 border border-amber-200 px-4 py-2 rounded-md mb-4 text-amber-800 flex items-center">
+            <span className="mr-2">🔥</span>
+            <span className="text-sm font-medium">Only €250,000 left – closing soon!</span>
+          </div>
+          
+          <div className="space-y-5 py-2">
+            <div className="bg-slate-50 border border-slate-200 p-4 rounded-md">
+              <h3 className="font-medium text-base mb-3 flex items-center">
+                <span className="mr-2">💰</span> Investor Benefits:
+              </h3>
+              <ul className="space-y-2">
+                <li className="flex">
+                  <span className="mr-2">✅</span>
+                  <span className="text-sm">Exclusive early investor perks (Preferred shares, priority future rounds)</span>
+                </li>
+                <li className="flex">
+                  <span className="mr-2">✅</span>
+                  <span className="text-sm">High-growth opportunity in a €2T market</span>
+                </li>
+                <li className="flex">
+                  <span className="mr-2">✅</span>
+                  <span className="text-sm">Secure and verified investment process</span>
+                </li>
+              </ul>
+            </div>
+            
             <div className="space-y-2">
-              <label htmlFor="amount" className="text-sm font-medium">
-                Investment Amount ($)
+              <label htmlFor="amount" className="text-sm font-medium flex items-center">
+                <span className="mr-2">💳</span> Investment Amount (€)
               </label>
               <Input
                 id="amount"
                 type="text"
-                placeholder="e.g., 25000"
+                placeholder="Enter Amount"
                 value={commitAmount}
                 onChange={(e) => setCommitAmount(e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
-                Minimum investment: $10,000
+                Minimum investment: €10,000
               </p>
             </div>
+            
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email Address
+              <label htmlFor="email" className="text-sm font-medium flex items-center">
+                <span className="mr-2">📩</span> Email Address
               </label>
               <Input
                 id="email"
@@ -713,12 +741,13 @@ const StartupProfile = () => {
               </p>
             </div>
           </div>
+          
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button variant="kaas" onClick={handleSubmitCommitment}>
-              Submit
+            <Button variant="kaas" onClick={handleSubmitCommitment} className="flex items-center">
+              <span className="mr-1">👉</span> Reserve My Allocation
             </Button>
           </DialogFooter>
         </DialogContent>

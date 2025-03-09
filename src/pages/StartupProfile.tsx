@@ -551,7 +551,7 @@ const StartupProfile = () => {
                       className="w-full"
                       onClick={handleCommit}
                     >
-                      Express Interest
+                      Invest Now
                     </Button>
                   </div>
                 </div>

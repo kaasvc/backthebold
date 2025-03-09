@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, ChartBar, TrendingUp, Award, CircleDollarSign, Linkedin } from "lucide-react";
+import { Building, Users, Briefcase, ChartBar, TrendingUp, Award, CircleDollarSign } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Deals = () => {
@@ -53,7 +53,6 @@ const Deals = () => {
       image: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
       industry: "PropTech / AI",
       raising: "$1.5M",
-      valuation: "$8M",
       team: "5 members",
       progress: 65,
       stage: "Pre-Seed",
@@ -69,12 +68,14 @@ const Deals = () => {
       },
       founders: [
         {
-          name: "Sarah Chen",
+          name: "Sarah",
+          fullName: "Sarah Chen",
           title: "ex-Airbnb PM",
           linkedin: "https://linkedin.com/in/sarahchen"
         },
         {
-          name: "David Rodriguez",
+          name: "David",
+          fullName: "David Rodriguez",
           title: "MIT AI Lab",
           linkedin: "https://linkedin.com/in/davidrodriguez"
         }
@@ -88,7 +89,6 @@ const Deals = () => {
       image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRoY2FyZXxlbnwwfHwwfHx8MA%3D%3D",
       industry: "HealthTech",
       raising: "$2M",
-      valuation: "$10M",
       team: "7 members",
       progress: 40,
       stage: "Seed",
@@ -104,12 +104,14 @@ const Deals = () => {
       },
       founders: [
         {
-          name: "Dr. Maya Johnson",
+          name: "Maya",
+          fullName: "Dr. Maya Johnson",
           title: "Stanford Med",
           linkedin: "https://linkedin.com/in/mayajohnson"
         },
         {
-          name: "Raj Patel",
+          name: "Raj",
+          fullName: "Raj Patel",
           title: "ex-Zocdoc CTO",
           linkedin: "https://linkedin.com/in/rajpatel"
         }
@@ -123,7 +125,6 @@ const Deals = () => {
       image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZW4lMjBlbmVyZ3l8ZW58MHx8MHx8fDA%3D",
       industry: "CleanTech",
       raising: "$1.2M",
-      valuation: "$7M",
       team: "4 members",
       progress: 30,
       stage: "Pre-Seed",
@@ -139,12 +140,14 @@ const Deals = () => {
       },
       founders: [
         {
-          name: "Emma Torres",
+          name: "Emma",
+          fullName: "Emma Torres",
           title: "Climate Scientist",
           linkedin: "https://linkedin.com/in/emmatorres"
         },
         {
-          name: "Alex Kim",
+          name: "Alex",
+          fullName: "Alex Kim",
           title: "Serial CleanTech Entrepreneur",
           linkedin: "https://linkedin.com/in/alexkim"
         }
@@ -236,8 +239,8 @@ const Deals = () => {
                   <div className="flex items-center gap-1.5">
                     <CircleDollarSign className="h-3.5 w-3.5 text-kaas-pink" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Valuation</p>
-                      <p className="text-xs font-medium">{deal.valuation}</p>
+                      <p className="text-xs text-muted-foreground">Raising</p>
+                      <p className="text-xs font-medium">{deal.raising}</p>
                     </div>
                   </div>
                 </div>
@@ -252,9 +255,9 @@ const Deals = () => {
                           href={founder.linkedin} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="hover:text-kaas-pink inline-flex items-center"
+                          className="hover:text-kaas-pink"
                         >
-                          {founder.name} <Linkedin className="h-3 w-3 ml-0.5 inline" />
+                          {founder.name}
                         </a>
                         {founder.title && <span> ({founder.title})</span>}
                         {index < deal.founders.length - 1 && <span> & </span>}

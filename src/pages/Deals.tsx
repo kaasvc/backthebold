@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -18,7 +17,6 @@ const Deals = () => {
   const [selectedDeal, setSelectedDeal] = useState("ProprHome.com");
   
   const handleViewDetails = (dealName) => {
-    // For now, only ProprHome has a detail page
     if (dealName === "ProprHome.com") {
       navigate("/startup/proprhome");
     } else {
@@ -43,12 +41,10 @@ const Deals = () => {
     setEmail("");
   };
   
-  // Calculate percentage left in round
   const getPercentageLeft = (progress) => {
     return 100 - progress;
   };
   
-  // Sample deals data with improved information
   const deals = [
     {
       id: 1,
@@ -220,7 +216,6 @@ const Deals = () => {
                   {deal.tagline}
                 </h3>
                 
-                {/* Traction Metrics */}
                 <div className="mb-3 p-2 bg-slate-50 rounded-md">
                   <div className="flex items-center gap-1.5 mb-1">
                     <TrendingUp className="h-3.5 w-3.5 text-kaas-pink" />
@@ -231,7 +226,6 @@ const Deals = () => {
                   </p>
                 </div>
                 
-                {/* Market & Funding */}
                 <div className="flex justify-between mb-3 text-xs">
                   <div className="flex items-center gap-1.5">
                     <Building className="h-3.5 w-3.5 text-kaas-pink" />
@@ -249,7 +243,6 @@ const Deals = () => {
                   </div>
                 </div>
                 
-                {/* Founder Information */}
                 <div className="flex items-center gap-1.5 mb-3">
                   <Users className="h-3.5 w-3.5 text-kaas-pink" />
                   <div className="text-xs text-slate-700">
@@ -270,7 +263,6 @@ const Deals = () => {
                   </div>
                 </div>
                 
-                {/* Progress Bar */}
                 <div className="mb-3">
                   <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
                     <div 
@@ -284,12 +276,10 @@ const Deals = () => {
                   </div>
                 </div>
                 
-                {/* Market Size */}
                 <p className="text-xs text-slate-600 mb-3">
                   {deal.market.size} Market Opportunity
                 </p>
                 
-                {/* CTAs */}
                 <div className="grid grid-cols-2 gap-2">
                   <Button 
                     variant="outline" 
@@ -314,61 +304,34 @@ const Deals = () => {
         </div>
       </main>
       
-      {/* Commit Dialog */}
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Invest in {selectedDeal}</DialogTitle>
-            <DialogDescription>
-              Submit your investment commitment now to secure your allocation in this fast-moving deal.
-            </DialogDescription>
           </DialogHeader>
           
-          <div className="bg-amber-50 border border-amber-200 px-4 py-2 rounded-md mb-4 text-amber-800 flex items-center">
-            <span className="mr-2">🔥</span>
-            <span className="text-sm font-medium">Only €250,000 left – closing soon!</span>
+          <div className="bg-amber-50 border border-amber-200 px-3 py-2 rounded-md mb-3 text-amber-800 flex items-center text-sm">
+            <span className="mr-1.5">🔥</span>
+            <span className="font-medium">Only €250,000 left – closing soon!</span>
           </div>
           
-          <div className="space-y-5 py-2">
-            <div className="bg-slate-50 border border-slate-200 p-4 rounded-md">
-              <h3 className="font-medium text-base mb-3 flex items-center">
-                <span className="mr-2">💰</span> Investor Benefits:
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex">
-                  <span className="mr-2">✅</span>
-                  <span className="text-sm">Exclusive early investor perks (Preferred shares, priority future rounds)</span>
-                </li>
-                <li className="flex">
-                  <span className="mr-2">✅</span>
-                  <span className="text-sm">High-growth opportunity in a €2T market</span>
-                </li>
-                <li className="flex">
-                  <span className="mr-2">✅</span>
-                  <span className="text-sm">Secure and verified investment process</span>
-                </li>
-              </ul>
-            </div>
-            
+          <div className="space-y-4">            
             <div className="space-y-2">
               <label htmlFor="amount" className="text-sm font-medium flex items-center">
-                <span className="mr-2">💳</span> Investment Amount (€)
+                <span className="mr-1.5">💳</span> Investment Amount (€)
               </label>
               <Input
                 id="amount"
                 type="text"
-                placeholder="Enter Amount"
+                placeholder="Enter Amount (€500 - €10,000)"
                 value={commitAmount}
                 onChange={(e) => setCommitAmount(e.target.value)}
               />
-              <p className="text-xs text-muted-foreground">
-                Investment range: €500 - €10,000
-              </p>
             </div>
             
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium flex items-center">
-                <span className="mr-2">📩</span> Email Address
+                <span className="mr-1.5">📩</span> Email Address
               </label>
               <Input
                 id="email"
@@ -377,24 +340,15 @@ const Deals = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <p className="text-xs text-muted-foreground">
-                You'll receive investment details and secure payment instructions.
-              </p>
-            </div>
-            
-            <div className="mt-4 p-3 bg-slate-50 rounded-md text-xs text-slate-600">
-              <p>
-                <strong>Note:</strong> This is a non-binding expression of interest. Firm commitments will be made through the secure link sent to your email after submission.
-              </p>
             </div>
           </div>
           
-          <DialogFooter>
+          <DialogFooter className="mt-2">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" size="sm">Cancel</Button>
             </DialogClose>
-            <Button variant="kaas" onClick={handleSubmitCommitment} className="flex items-center">
-              <span className="mr-1">👉</span> Reserve My Allocation
+            <Button variant="kaas" size="sm" onClick={handleSubmitCommitment} className="flex items-center gap-1">
+              <span>👉</span> Reserve My Allocation
             </Button>
           </DialogFooter>
         </DialogContent>

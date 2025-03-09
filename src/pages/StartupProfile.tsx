@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart } from "lucide-react";
+import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound } from "lucide-react";
 
 const StartupProfile = () => {
   const navigate = useNavigate();
@@ -33,6 +33,25 @@ const StartupProfile = () => {
     setCommitAmount("");
     setEmail("");
   };
+  
+  // Notable investors data
+  const notableInvestors = [
+    {
+      name: "TechFront Ventures",
+      description: "Led by Marc Johnson, invested in 3 unicorns",
+      amount: "€150,000"
+    },
+    {
+      name: "PropTech Angels",
+      description: "Real estate focused angel syndicate",
+      amount: "€120,000"
+    },
+    {
+      name: "Susan Miller",
+      description: "Ex-CTO of RealtyTech (IPO 2022)",
+      amount: "€75,000"
+    }
+  ];
   
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -498,6 +517,15 @@ const StartupProfile = () => {
                     <span className="font-medium">20%</span>
                   </div>
                   
+                  {/* Adding backers count */}
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Backers</span>
+                    <div className="flex items-center">
+                      <UsersRound className="h-4 w-4 text-kaas-pink mr-1.5" />
+                      <span className="font-medium">42</span>
+                    </div>
+                  </div>
+                  
                   <Separator />
                   
                   <div className="pt-2">
@@ -528,6 +556,32 @@ const StartupProfile = () => {
                       Express Interest
                     </Button>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Notable Investors Section */}
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <Award className="h-5 w-5 text-kaas-pink" />
+                  <h2 className="text-lg font-semibold">Notable Investors</h2>
+                </div>
+                
+                <div className="space-y-4">
+                  {notableInvestors.map((investor, index) => (
+                    <div key={index} className="border-b pb-3 last:border-0 last:pb-0">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="font-medium text-sm">{investor.name}</h3>
+                          <p className="text-xs text-muted-foreground">{investor.description}</p>
+                        </div>
+                        <Badge variant="outline" className="text-kaas-pink border-kaas-pink/30">
+                          {investor.amount}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>

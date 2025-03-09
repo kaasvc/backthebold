@@ -40,6 +40,17 @@ const ProtectedRoute = ({
   return <>{children}</>;
 };
 
+// Registration route that checks for pending application
+const RegistrationRoute = ({ children }: { children: React.ReactNode }) => {
+  const pendingApp = sessionStorage.getItem("pendingApplication");
+  
+  if (!pendingApp) {
+    return <Navigate to="/" replace />;
+  }
+  
+  return <>{children}</>;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -50,7 +61,14 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route 
+              path="/register" 
+              element={
+                <RegistrationRoute>
+                  <Register />
+                </RegistrationRoute>
+              } 
+            />
             <Route 
               path="/dashboard" 
               element={

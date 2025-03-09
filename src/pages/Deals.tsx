@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, ChartBar, TrendingUp, Award, CircleDollarSign } from "lucide-react";
+import { Building, Users, Briefcase, ChartBar, TrendingUp, Award, CircleDollarSign, Check } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Deals = () => {
@@ -310,7 +311,28 @@ const Deals = () => {
             <DialogTitle>Invest in {selectedDeal}</DialogTitle>
           </DialogHeader>
           
-          <div className="space-y-4">            
+          <div className="space-y-4">
+            <div className="bg-slate-50 p-3 rounded-md border border-slate-200">
+              <h4 className="text-sm font-medium mb-2 flex items-center">
+                <Award className="h-4 w-4 mr-1.5 text-kaas-pink" />
+                Investor Benefits
+              </h4>
+              <ul className="space-y-1.5">
+                <li className="text-xs flex items-start">
+                  <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" />
+                  <span>Early access to platform features and updates</span>
+                </li>
+                <li className="text-xs flex items-start">
+                  <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" />
+                  <span>Quarterly investor calls with founding team</span>
+                </li>
+                <li className="text-xs flex items-start">
+                  <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" />
+                  <span>Networking opportunities with other KaasX investors</span>
+                </li>
+              </ul>
+            </div>
+            
             <div className="space-y-2">
               <label htmlFor="amount" className="text-sm font-medium flex items-center">
                 <span className="mr-1.5">💳</span> Investment Amount (€)
@@ -335,6 +357,10 @@ const Deals = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+            </div>
+            
+            <div className="bg-blue-50 border border-blue-100 px-3 py-2 rounded-md text-xs text-blue-700 italic">
+              This is a non-binding expression of interest. Formal commitments will be made via email with official documentation after you submit this form.
             </div>
           </div>
           

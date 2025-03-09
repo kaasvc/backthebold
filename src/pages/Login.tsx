@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -35,9 +36,9 @@ const Login: React.FC = () => {
         <div className="container flex h-16 items-center">
           <Link to="/" className="mr-4 flex items-center space-x-2">
             <div className="flex items-center">
-              <div className="flex items-center">
-                <span className="bg-kaas-pink text-white font-bold text-2xl px-2 py-1 rounded-l-md">KAAS</span>
-                <span className="bg-kaas-darkpink text-white font-bold text-2xl px-2 py-1 rounded-r-md">X</span>
+              <div className="flex items-center scale-[0.7] origin-left">
+                <span className="bg-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">KAAS</span>
+                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">X</span>
               </div>
             </div>
           </Link>

@@ -15,6 +15,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ApplicationDetail from "./pages/ApplicationDetail";
+import StartupProfile from "./pages/StartupProfile";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const App = () => (
             <Route path="/landing" element={<Landing />} />
             <Route path="/apply" element={<Apply />} />
             <Route path="/deals" element={<Deals />} />
+            <Route path="/startup/proprhome" element={<StartupProfile />} />
             <Route path="/login" element={<Login />} />
             <Route 
               path="/register" 

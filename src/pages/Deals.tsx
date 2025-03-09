@@ -1,63 +1,25 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-
-// Mock deal data
-const mockDeals = [
-  {
-    id: "deal-1",
-    name: "TechFlow AI",
-    description: "AI-powered workflow automation platform for enterprise teams",
-    industry: "SaaS / AI",
-    raising: "$2.5M",
-    valuation: "$12M",
-    committed: "$1.8M",
-    progress: 72,
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dGVjaG5vbG9neXxlbnwwfHwwfHx8MA%3D%3D"
-  },
-  {
-    id: "deal-2",
-    name: "GreenHarvest",
-    description: "Sustainable vertical farming solution for urban environments",
-    industry: "AgTech",
-    raising: "$3.2M",
-    valuation: "$18M",
-    committed: "$2.1M",
-    progress: 65,
-    image: "https://images.unsplash.com/photo-1585153335750-2d578fd816c8?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGFncmljdWx0dXJlfGVufDB8fDB8fHww"
-  },
-  {
-    id: "deal-3",
-    name: "MediTrack",
-    description: "Healthcare supply chain optimization using blockchain",
-    industry: "Healthcare",
-    raising: "$1.8M",
-    valuation: "$9M",
-    committed: "$1.2M",
-    progress: 67,
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGhlYWx0aGNhcmV8ZW58MHx8MHx8fDA%3D"
-  }
-];
+import { Badge } from "@/components/ui/badge";
+import { Building, Users, Briefcase, ChartBar } from "lucide-react";
 
 const Deals = () => {
-  const [selectedDeal, setSelectedDeal] = useState<typeof mockDeals[0] | null>(null);
-  const [showDetailsDialog, setShowDetailsDialog] = useState(false);
+  const navigate = useNavigate();
   const [showCommitDialog, setShowCommitDialog] = useState(false);
   const [commitAmount, setCommitAmount] = useState("");
   const [email, setEmail] = useState("");
   
-  const handleViewDetails = (deal: typeof mockDeals[0]) => {
-    setSelectedDeal(deal);
-    setShowDetailsDialog(true);
+  const handleViewDetails = () => {
+    navigate("/startup/proprhome");
   };
   
-  const handleCommit = (deal: typeof mockDeals[0]) => {
-    setSelectedDeal(deal);
+  const handleCommit = () => {
     setShowCommitDialog(true);
   };
   
@@ -67,7 +29,6 @@ const Deals = () => {
       return;
     }
     
-    // This would send the data to the backend in a real app
     toast.success("Thank you for your commitment! A confirmation link has been sent to your email.");
     setShowCommitDialog(false);
     setCommitAmount("");
@@ -115,151 +76,99 @@ const Deals = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mockDeals.map((deal) => (
-            <div key={deal.id} className="bg-background border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-              <div className="h-48 overflow-hidden">
-                <img 
-                  src={deal.image} 
-                  alt={deal.name} 
-                  className="w-full h-full object-cover"
-                />
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-background border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <div className="h-64 relative overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D" 
+                alt="ProprHome.com" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <Badge className="bg-kaas-pink hover:bg-kaas-pink mb-2">Pre-Seed</Badge>
+                <h2 className="text-2xl font-bold text-white">ProprHome.com</h2>
               </div>
-              <div className="p-6">
-                <h2 className="text-xl font-bold mb-2">{deal.name}</h2>
-                <p className="text-sm text-muted-foreground mb-4">{deal.description}</p>
-                
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
+            </div>
+            
+            <div className="p-6">
+              <p className="text-lg text-muted-foreground mb-4">
+                AI-powered platform revolutionizing property management for independent landlords and small property managers.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-6">
+                <div className="flex items-center gap-3">
+                  <Building className="h-5 w-5 text-kaas-pink" />
                   <div>
                     <p className="text-xs text-muted-foreground">Industry</p>
-                    <p className="text-sm font-medium">{deal.industry}</p>
+                    <p className="text-sm font-medium">PropTech / AI</p>
                   </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <ChartBar className="h-5 w-5 text-kaas-pink" />
                   <div>
                     <p className="text-xs text-muted-foreground">Raising</p>
-                    <p className="text-sm font-medium">{deal.raising}</p>
+                    <p className="text-sm font-medium">$1.5M</p>
                   </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Briefcase className="h-5 w-5 text-kaas-pink" />
                   <div>
                     <p className="text-xs text-muted-foreground">Valuation</p>
-                    <p className="text-sm font-medium">{deal.valuation}</p>
+                    <p className="text-sm font-medium">$8M</p>
                   </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Users className="h-5 w-5 text-kaas-pink" />
                   <div>
-                    <p className="text-xs text-muted-foreground">Committed</p>
-                    <p className="text-sm font-medium">{deal.committed}</p>
+                    <p className="text-xs text-muted-foreground">Team</p>
+                    <p className="text-sm font-medium">5 members</p>
                   </div>
                 </div>
-                
-                <div className="mb-4">
-                  <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-kaas-pink rounded-full" 
-                      style={{ width: `${deal.progress}%` }}
-                    ></div>
-                  </div>
-                  <p className="text-xs text-right mt-1 text-muted-foreground">{deal.progress}% committed</p>
+              </div>
+              
+              <div className="mb-6">
+                <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-kaas-pink rounded-full" 
+                    style={{ width: "65%" }}
+                  ></div>
                 </div>
-                
-                <div className="flex space-x-3">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="flex-1"
-                    onClick={() => handleViewDetails(deal)}
-                  >
-                    View Details
-                  </Button>
-                  <Button 
-                    variant="kaas" 
-                    size="sm" 
-                    className="flex-1"
-                    onClick={() => handleCommit(deal)}
-                  >
-                    Commit
-                  </Button>
+                <div className="flex justify-between mt-2 text-xs text-muted-foreground">
+                  <p>$975k committed</p>
+                  <p>65% of $1.5M</p>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </main>
-      
-      {/* Details Dialog */}
-      <Dialog open={showDetailsDialog} onOpenChange={setShowDetailsDialog}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>{selectedDeal?.name}</DialogTitle>
-            <DialogDescription>{selectedDeal?.description}</DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <h3 className="font-medium text-sm mb-2">Company Overview</h3>
-              <p className="text-sm text-muted-foreground">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae fermentum metus. 
-                Sed eget tellus neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h3 className="font-medium text-sm mb-1">Industry</h3>
-                <p className="text-sm">{selectedDeal?.industry}</p>
-              </div>
-              <div>
-                <h3 className="font-medium text-sm mb-1">Founding Year</h3>
-                <p className="text-sm">2021</p>
-              </div>
-              <div>
-                <h3 className="font-medium text-sm mb-1">Team Size</h3>
-                <p className="text-sm">12 employees</p>
-              </div>
-              <div>
-                <h3 className="font-medium text-sm mb-1">Location</h3>
-                <p className="text-sm">San Francisco, CA</p>
-              </div>
-            </div>
-            
-            <div>
-              <h3 className="font-medium text-sm mb-2">Investment Terms</h3>
+              
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-xs text-muted-foreground">Raising</p>
-                  <p className="text-sm font-medium">{selectedDeal?.raising}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">Valuation</p>
-                  <p className="text-sm font-medium">{selectedDeal?.valuation}</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">Minimum Investment</p>
-                  <p className="text-sm font-medium">$25,000</p>
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">Instrument</p>
-                  <p className="text-sm font-medium">SAFE</p>
-                </div>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="w-full"
+                  onClick={handleViewDetails}
+                >
+                  View Details
+                </Button>
+                <Button 
+                  variant="kaas" 
+                  size="lg" 
+                  className="w-full"
+                  onClick={handleCommit}
+                >
+                  Express Interest
+                </Button>
               </div>
             </div>
           </div>
-          <DialogFooter>
-            <Button 
-              variant="kaas" 
-              onClick={() => {
-                setShowDetailsDialog(false);
-                setShowCommitDialog(true);
-              }}
-            >
-              Express Interest
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        </div>
+      </main>
       
       {/* Commit Dialog */}
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Commit to {selectedDeal?.name}</DialogTitle>
+            <DialogTitle>Express Interest in ProprHome.com</DialogTitle>
             <DialogDescription>
-              Express your interest in investing. After submission, you will receive a link to complete your investment.
+              Indicate your interest in investing. After submission, you will receive a link to complete your investment.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-2">
@@ -274,6 +183,9 @@ const Deals = () => {
                 value={commitAmount}
                 onChange={(e) => setCommitAmount(e.target.value)}
               />
+              <p className="text-xs text-muted-foreground">
+                Minimum investment: $10,000
+              </p>
             </div>
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium">

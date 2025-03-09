@@ -2,105 +2,110 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ 
 @layer base {
   :root {
-    --background: 210 20% 98%;
-    --foreground: 222 47% 11%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+ 
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+ 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-
-    --primary: 294 86% 61%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222 47% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
+    --popover-foreground: 240 10% 3.9%;
+ 
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+ 
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+ 
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+ 
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+ 
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+ 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 294 86% 61%;
-
+    --destructive-foreground: 0 0% 98%;
+ 
+    --ring: 240 5% 64.9%;
+ 
     --radius: 0.5rem;
+    
+    --kaas-pink: 330 86% 65%;
+    --kaas-darkpink: 330 86% 55%;
+  }
+ 
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+ 
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+ 
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+ 
+    --ring: 240 3.7% 15.9%;
   }
 }
 
+/* Soft pastel colors for backgrounds */
+.bg-soft-purple {
+  background-color: #E5DEFF;
+}
+
+.bg-soft-blue {
+  background-color: #D3E4FD;
+}
+
+.bg-soft-green {
+  background-color: #F2FCE2;
+}
+
+.bg-soft-orange {
+  background-color: #FEC6A1;
+}
+
+.bg-soft-pink {
+  background-color: #FFDEE2;
+}
+
+.bg-soft-yellow {
+  background-color: #FEF7CD;
+}
+
+.bg-soft-peach {
+  background-color: #FDE1D3;
+}
+ 
 @layer base {
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    @apply bg-background text-foreground;
   }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight;
-  }
-
-  h1 {
-    @apply text-3xl font-semibold;
-  }
-
-  h2 {
-    @apply text-2xl font-semibold;
-  }
-
-  h3 {
-    @apply text-xl font-semibold;
-  }
-
-  h4 {
-    @apply text-lg font-medium;
-  }
-
-  p {
-    @apply leading-relaxed;
-  }
-
-  input, textarea, select {
-    @apply placeholder:text-muted-foreground transition-all duration-200;
-  }
-
-  input:focus, textarea:focus, select:focus {
-    @apply outline-none ring-2 ring-primary ring-opacity-50;
-  }
-}
-
-@layer components {
-  .form-section {
-    @apply opacity-0 animate-fade-in;
-    animation-fill-mode: forwards;
-    animation-delay: 0.1s;
-  }
-
-  .form-question {
-    @apply opacity-0 translate-y-2 animate-slide-in;
-    animation-fill-mode: forwards;
-  }
-
-  .form-question:nth-child(1) { animation-delay: 0.1s; }
-  .form-question:nth-child(2) { animation-delay: 0.15s; }
-  .form-question:nth-child(3) { animation-delay: 0.2s; }
-  .form-question:nth-child(4) { animation-delay: 0.25s; }
-  .form-question:nth-child(5) { animation-delay: 0.3s; }
-  .form-question:nth-child(6) { animation-delay: 0.35s; }
-  .form-question:nth-child(7) { animation-delay: 0.4s; }
-  .form-question:nth-child(8) { animation-delay: 0.45s; }
-  .form-question:nth-child(9) { animation-delay: 0.5s; }
-  .form-question:nth-child(10) { animation-delay: 0.55s; }
 }

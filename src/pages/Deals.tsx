@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -67,7 +66,7 @@ const Deals = () => {
         size: "$2 Trillion",
         fundingLeft: "$500K"
       },
-      investors: "Backed by ex-Airbnb & YC Investors"
+      founders: "Founded by Sarah Chen (ex-Airbnb PM) & David Rodriguez (MIT AI Lab)"
     },
     {
       id: 2,
@@ -91,7 +90,7 @@ const Deals = () => {
         size: "$4 Trillion",
         fundingLeft: "$1.2M"
       },
-      investors: "Backed by Top Healthcare VCs"
+      founders: "Founded by Dr. Maya Johnson (Stanford Med) & Raj Patel (ex-Zocdoc CTO)"
     },
     {
       id: 3,
@@ -115,7 +114,7 @@ const Deals = () => {
         size: "$1.5 Trillion",
         fundingLeft: "$840K"
       },
-      investors: "Backed by Climate Tech Angels"
+      founders: "Founded by Emma Torres (Climate Scientist) & Alex Kim (Serial CleanTech Entrepreneur)"
     }
   ];
   
@@ -209,10 +208,10 @@ const Deals = () => {
                   </div>
                 </div>
                 
-                {/* Investor Credibility */}
+                {/* Founder Information */}
                 <div className="flex items-center gap-1.5 mb-3">
-                  <Award className="h-3.5 w-3.5 text-kaas-pink" />
-                  <p className="text-xs text-slate-700">{deal.investors}</p>
+                  <Users className="h-3.5 w-3.5 text-kaas-pink" />
+                  <p className="text-xs text-slate-700">{deal.founders}</p>
                 </div>
                 
                 {/* Progress Bar */}

@@ -1,4 +1,3 @@
-
 import { toast } from "sonner";
 
 export interface FormField {
@@ -147,13 +146,6 @@ export const formSections: FormSection[] = [
         label: "How far along are you?",
         type: "textarea",
         placeholder: "Do you have a working prototype or beta version? If not, when will you?",
-        required: true,
-      },
-      {
-        id: "timeWorking",
-        label: "How long have the founders been working on this? How much of that has been full-time?",
-        type: "textarea",
-        placeholder: "Describe your timeline and commitment so far...",
         required: true,
       },
       {

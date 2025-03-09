@@ -36,7 +36,7 @@ const Index = () => {
           <h1 className="text-4xl font-bold tracking-tight mb-3">KaasX Startup Application</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Thank you for your interest in KaasX. Please complete the application below to be considered 
-            for our crowdfunding program. All fields marked with an asterisk (*) are required.
+            for our funding program. All fields marked with an asterisk (*) are required.
           </p>
         </div>
         

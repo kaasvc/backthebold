@@ -310,11 +310,6 @@ const Deals = () => {
             <DialogTitle>Invest in {selectedDeal}</DialogTitle>
           </DialogHeader>
           
-          <div className="bg-amber-50 border border-amber-200 px-3 py-2 rounded-md mb-3 text-amber-800 flex items-center text-sm">
-            <span className="mr-1.5">🔥</span>
-            <span className="font-medium">Only €250,000 left – closing soon!</span>
-          </div>
-          
           <div className="space-y-4">            
             <div className="space-y-2">
               <label htmlFor="amount" className="text-sm font-medium flex items-center">

@@ -322,17 +322,17 @@ const Deals = () => {
           <div className="space-y-4 py-2">
             <div className="space-y-2">
               <label htmlFor="amount" className="text-sm font-medium">
-                Investment Amount ($)
+                Investment Amount (€)
               </label>
               <Input
                 id="amount"
                 type="text"
-                placeholder="e.g., 25000"
+                placeholder="e.g., 1000"
                 value={commitAmount}
                 onChange={(e) => setCommitAmount(e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
-                Minimum investment: $10,000
+                Investment range: €500 - €10,000
               </p>
             </div>
             <div className="space-y-2">
@@ -348,6 +348,11 @@ const Deals = () => {
               />
               <p className="text-xs text-muted-foreground">
                 You'll receive investment details and secure payment instructions.
+              </p>
+            </div>
+            <div className="mt-4 p-3 bg-slate-50 rounded-md text-xs text-slate-600">
+              <p>
+                <strong>Note:</strong> This is a non-binding expression of interest. Firm commitments will be made through the secure link sent to your email after submission.
               </p>
             </div>
           </div>

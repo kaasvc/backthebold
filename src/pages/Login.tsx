@@ -39,7 +39,10 @@ const Login: React.FC = () => {
             <div className="flex items-center">
               <RocketIcon className="h-8 w-8 text-kaas-pink" />
               <TrendingUpIcon className="h-6 w-6 text-kaas-darkpink -ml-2 -mt-3" />
-              <span className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-kaas-pink to-kaas-darkpink ml-1">KaasX</span>
+              <span className="font-bold text-2xl ml-1">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-kaas-pink to-kaas-darkpink">Kaas</span>
+                <span className="text-black">X</span>
+              </span>
             </div>
           </Link>
         </div>

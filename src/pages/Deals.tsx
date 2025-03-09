@@ -340,7 +340,7 @@ const Deals = () => {
               <Input
                 id="amount"
                 type="text"
-                placeholder="Enter Amount (€500 - €10,000)"
+                placeholder="Enter Amount (€500 minimum)"
                 value={commitAmount}
                 onChange={(e) => setCommitAmount(e.target.value)}
               />

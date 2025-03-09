@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -82,7 +81,6 @@ const StartupProfile = () => {
       
       <main className="container py-10">
         <div className="grid md:grid-cols-3 gap-8">
-          {/* Left Column - Company Info */}
           <div className="md:col-span-2 space-y-8">
             <div className="flex flex-col md:flex-row gap-6 items-start">
               <div className="w-20 h-20 bg-white rounded-lg shadow-sm overflow-hidden flex-shrink-0">
@@ -484,7 +482,6 @@ const StartupProfile = () => {
             </Tabs>
           </div>
           
-          {/* Right Column - Investment Details */}
           <div className="space-y-6">
             <Card>
               <CardContent className="p-6">
@@ -497,13 +494,8 @@ const StartupProfile = () => {
                   </div>
                   
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Valuation Cap</span>
-                    <span className="font-medium">$8M</span>
-                  </div>
-                  
-                  <div className="flex justify-between">
                     <span className="text-muted-foreground">Minimum Investment</span>
-                    <span className="font-medium">$10,000</span>
+                    <span className="font-medium">€500</span>
                   </div>
                   
                   <div className="flex justify-between">
@@ -513,7 +505,7 @@ const StartupProfile = () => {
                   
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Discount</span>
-                    <span className="font-medium">20%</span>
+                    <span className="font-medium">30%</span>
                   </div>
                   
                   <div className="flex justify-between">
@@ -558,7 +550,6 @@ const StartupProfile = () => {
               </CardContent>
             </Card>
             
-            {/* Notable Investors Section */}
             <Card>
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
@@ -673,7 +664,6 @@ const StartupProfile = () => {
         </div>
       </main>
       
-      {/* Commit Dialog */}
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -682,11 +672,6 @@ const StartupProfile = () => {
               Indicate your interest in investing. This is a non-binding offer. Firm commitments will be made through the link sent to your email.
             </DialogDescription>
           </DialogHeader>
-          
-          <div className="bg-amber-50 border border-amber-200 px-4 py-2 rounded-md mb-4 text-amber-800 flex items-center">
-            <span className="mr-2">🔥</span>
-            <span className="text-sm font-medium">Only €250,000 left – closing soon!</span>
-          </div>
           
           <div className="space-y-5 py-2">
             <div className="bg-slate-50 border border-slate-200 p-4 rounded-md">
@@ -721,7 +706,7 @@ const StartupProfile = () => {
                 onChange={(e) => setCommitAmount(e.target.value)}
               />
               <p className="text-xs text-muted-foreground">
-                Minimum investment: €10,000
+                Minimum investment: €500
               </p>
             </div>
             
@@ -739,6 +724,10 @@ const StartupProfile = () => {
               <p className="text-xs text-muted-foreground">
                 We'll send a confirmation link to this email.
               </p>
+            </div>
+            
+            <div className="bg-blue-50 border border-blue-100 px-3 py-2 rounded-md text-xs text-blue-700 italic">
+              This is a non-binding expression of interest. Formal commitments will be made via email with official documentation after you submit this form.
             </div>
           </div>
           

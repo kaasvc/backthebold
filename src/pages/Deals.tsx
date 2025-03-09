@@ -8,18 +8,26 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Building, Users, Briefcase, ChartBar } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 
 const Deals = () => {
   const navigate = useNavigate();
   const [showCommitDialog, setShowCommitDialog] = useState(false);
   const [commitAmount, setCommitAmount] = useState("");
   const [email, setEmail] = useState("");
+  const [selectedDeal, setSelectedDeal] = useState("ProprHome.com");
   
-  const handleViewDetails = () => {
-    navigate("/startup/proprhome");
+  const handleViewDetails = (dealName) => {
+    // For now, only ProprHome has a detail page
+    if (dealName === "ProprHome.com") {
+      navigate("/startup/proprhome");
+    } else {
+      toast.info("Details coming soon for this startup");
+    }
   };
   
-  const handleCommit = () => {
+  const handleCommit = (dealName) => {
+    setSelectedDeal(dealName);
     setShowCommitDialog(true);
   };
   
@@ -34,6 +42,49 @@ const Deals = () => {
     setCommitAmount("");
     setEmail("");
   };
+  
+  // Sample deals data
+  const deals = [
+    {
+      id: 1,
+      name: "ProprHome.com",
+      description: "AI-powered platform revolutionizing property management for independent landlords.",
+      image: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
+      industry: "PropTech / AI",
+      raising: "$1.5M",
+      valuation: "$8M",
+      team: "5 members",
+      progress: 65,
+      stage: "Pre-Seed",
+      hasDetailPage: true
+    },
+    {
+      id: 2,
+      name: "MediSync",
+      description: "Healthcare scheduling platform connecting patients with specialists.",
+      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRoY2FyZXxlbnwwfHwwfHx8MA%3D%3D",
+      industry: "HealthTech",
+      raising: "$2M",
+      valuation: "$10M",
+      team: "7 members",
+      progress: 40,
+      stage: "Seed",
+      hasDetailPage: false
+    },
+    {
+      id: 3,
+      name: "EcoTrack",
+      description: "Sustainability metrics platform for businesses to track carbon footprint.",
+      image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZW4lMjBlbmVyZ3l8ZW58MHx8MHx8fDA%3D",
+      industry: "CleanTech",
+      raising: "$1.2M",
+      valuation: "$7M",
+      team: "4 members",
+      progress: 30,
+      stage: "Pre-Seed",
+      hasDetailPage: false
+    }
+  ];
   
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -76,89 +127,76 @@ const Deals = () => {
           </p>
         </div>
         
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-background border border-border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-            <div className="h-64 relative overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D" 
-                alt="ProprHome.com" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <Badge className="bg-kaas-pink hover:bg-kaas-pink mb-2">Pre-Seed</Badge>
-                <h2 className="text-2xl font-bold text-white">ProprHome.com</h2>
-              </div>
-            </div>
-            
-            <div className="p-6">
-              <p className="text-lg text-muted-foreground mb-4">
-                AI-powered platform revolutionizing property management for independent landlords and small property managers.
-              </p>
-              
-              <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-6">
-                <div className="flex items-center gap-3">
-                  <Building className="h-5 w-5 text-kaas-pink" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Industry</p>
-                    <p className="text-sm font-medium">PropTech / AI</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <ChartBar className="h-5 w-5 text-kaas-pink" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Raising</p>
-                    <p className="text-sm font-medium">$1.5M</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Briefcase className="h-5 w-5 text-kaas-pink" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Valuation</p>
-                    <p className="text-sm font-medium">$8M</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Users className="h-5 w-5 text-kaas-pink" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Team</p>
-                    <p className="text-sm font-medium">5 members</p>
-                  </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {deals.map((deal) => (
+            <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow">
+              <div className="h-44 relative">
+                <img 
+                  src={deal.image} 
+                  alt={deal.name} 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                  <Badge className="bg-kaas-pink hover:bg-kaas-pink mb-1">{deal.stage}</Badge>
+                  <h2 className="text-lg font-bold text-white">{deal.name}</h2>
                 </div>
               </div>
               
-              <div className="mb-6">
-                <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-kaas-pink rounded-full" 
-                    style={{ width: "65%" }}
-                  ></div>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground mb-3 line-clamp-2 h-10">
+                  {deal.description}
+                </p>
+                
+                <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
+                  <div className="flex items-center gap-2">
+                    <Building className="h-3.5 w-3.5 text-kaas-pink" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Industry</p>
+                      <p className="text-xs font-medium">{deal.industry}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ChartBar className="h-3.5 w-3.5 text-kaas-pink" />
+                    <div>
+                      <p className="text-xs text-muted-foreground">Raising</p>
+                      <p className="text-xs font-medium">{deal.raising}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-                  <p>$975k committed</p>
-                  <p>65% of $1.5M</p>
+                
+                <div className="mb-4">
+                  <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-kaas-pink rounded-full" 
+                      style={{ width: `${deal.progress}%` }}
+                    ></div>
+                  </div>
+                  <div className="flex justify-between mt-1 text-xs text-muted-foreground">
+                    <p>{deal.progress}% funded</p>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="w-full"
-                  onClick={handleViewDetails}
-                >
-                  View Details
-                </Button>
-                <Button 
-                  variant="kaas" 
-                  size="lg" 
-                  className="w-full"
-                  onClick={handleCommit}
-                >
-                  Express Interest
-                </Button>
-              </div>
-            </div>
-          </div>
+                
+                <div className="grid grid-cols-2 gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full text-xs h-8"
+                    onClick={() => handleViewDetails(deal.name)}
+                  >
+                    View Details
+                  </Button>
+                  <Button 
+                    variant="kaas" 
+                    size="sm" 
+                    className="w-full text-xs h-8"
+                    onClick={() => handleCommit(deal.name)}
+                  >
+                    Express Interest
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </main>
       
@@ -166,7 +204,7 @@ const Deals = () => {
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Express Interest in ProprHome.com</DialogTitle>
+            <DialogTitle>Express Interest in {selectedDeal}</DialogTitle>
             <DialogDescription>
               Indicate your interest in investing. After submission, you will receive a link to complete your investment.
             </DialogDescription>

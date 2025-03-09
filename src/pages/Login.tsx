@@ -1,9 +1,7 @@
-
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
-import { Rocket, Sparkles } from "lucide-react";
 
 const Login: React.FC = () => {
   const { login, user } = useAuth();
@@ -37,12 +35,10 @@ const Login: React.FC = () => {
         <div className="container flex h-16 items-center">
           <Link to="/" className="mr-4 flex items-center space-x-2">
             <div className="flex items-center">
-              <Rocket className="h-8 w-8 text-kaas-pink" />
-              <Sparkles className="h-6 w-6 text-kaas-darkpink -ml-2 -mt-3" />
-              <span className="font-bold text-2xl ml-1">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-kaas-pink to-kaas-darkpink">Kaas</span>
-                <span className="text-black">X</span>
-              </span>
+              <div className="flex items-center">
+                <span className="bg-kaas-pink text-white font-bold text-2xl px-2 py-1 rounded-l-md">KAAS</span>
+                <span className="bg-kaas-darkpink text-white font-bold text-2xl px-2 py-1 rounded-r-md">X</span>
+              </div>
             </div>
           </Link>
         </div>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -346,13 +347,16 @@ const Deals = () => {
                   </div>
                 </div>
                 
-                {deal.backers.notable && (
-                  <div className="flex justify-end text-xs mb-4">
+                <div className="flex items-center justify-between text-xs mb-4">
+                  <div className="text-slate-600">
+                    {deal.backers.count} backers
+                  </div>
+                  {deal.backers.notable && (
                     <div className="text-kaas-pink font-medium">
                       Including {deal.backers.notable}
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
                 
                 <div className="grid grid-cols-2 gap-2">
                   <Button 

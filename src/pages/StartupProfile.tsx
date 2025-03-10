@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound, Flag } from "lucide-react";
+import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound, Flag, Linkedin, ExternalLink } from "lucide-react";
 
 const StartupProfile = () => {
   const navigate = useNavigate();
@@ -113,110 +113,13 @@ const StartupProfile = () => {
               </div>
             </div>
             
-            <Tabs defaultValue="team" className="w-full">
+            <Tabs defaultValue="overview" className="w-full">
               <TabsList className="mb-4">
-                <TabsTrigger value="team">Team</TabsTrigger>
                 <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="team">Team</TabsTrigger>
                 <TabsTrigger value="market">Market & Traction</TabsTrigger>
                 <TabsTrigger value="financials">Financials</TabsTrigger>
               </TabsList>
-              
-              <TabsContent value="team" className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-semibold mb-4">Leadership Team</h2>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="flex gap-4">
-                      <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                        <img 
-                          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D" 
-                          alt="CEO" 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">Sarah Chen</h3>
-                        <p className="text-sm text-kaas-pink mb-1">CEO & Co-Founder</p>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Former product lead at Zillow, 10+ years in PropTech
-                        </p>
-                        <a href="#" className="text-xs text-primary hover:underline">LinkedIn</a>
-                      </div>
-                    </div>
-                    
-                    <div className="flex gap-4">
-                      <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                        <img 
-                          src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D" 
-                          alt="CTO" 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">Michael Rodriguez</h3>
-                        <p className="text-sm text-kaas-pink mb-1">CTO & Co-Founder</p>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Ex-Google AI engineer, built ML systems for real estate forecasting
-                        </p>
-                        <a href="#" className="text-xs text-primary hover:underline">LinkedIn</a>
-                      </div>
-                    </div>
-                    
-                    <div className="flex gap-4">
-                      <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                        <img 
-                          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww" 
-                          alt="VP Product" 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">Alisha Washington</h3>
-                        <p className="text-sm text-kaas-pink mb-1">VP of Product</p>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Previously led product teams at Apartments.com and Airbnb
-                        </p>
-                        <a href="#" className="text-xs text-primary hover:underline">LinkedIn</a>
-                      </div>
-                    </div>
-                    
-                    <div className="flex gap-4">
-                      <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                        <img 
-                          src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww" 
-                          alt="VP Sales" 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold">David Patel</h3>
-                        <p className="text-sm text-kaas-pink mb-1">VP of Growth</p>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Scaled multiple SaaS startups, former property management consultant
-                        </p>
-                        <a href="#" className="text-xs text-primary hover:underline">LinkedIn</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-4">Advisors</h2>
-                  <div className="grid grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-semibold">Jordan Williams</h3>
-                      <p className="text-sm text-muted-foreground mb-1">
-                        Former CEO of PropertyManagement.com (acquired)
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">Dr. Emily Zhao</h3>
-                      <p className="text-sm text-muted-foreground mb-1">
-                        AI Research Director at Stanford Real Estate Technology Initiative
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
               
               <TabsContent value="overview" className="space-y-6">
                 <div>
@@ -279,6 +182,129 @@ const StartupProfile = () => {
                         Simplified interface with industry-leading mobile experience for on-the-go management
                       </p>
                     </div>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="team" className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-4">Founder(s)</h2>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                      <CardContent className="pt-6 flex gap-4">
+                        <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                          <img 
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D" 
+                            alt="CEO" 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Sarah Chen</h3>
+                          <p className="text-sm text-kaas-pink mb-1">CEO & Co-Founder</p>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Former product lead at Zillow, 10+ years in PropTech
+                          </p>
+                          <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1">
+                            <Linkedin className="h-3 w-3" /> LinkedIn
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                      <CardContent className="pt-6 flex gap-4">
+                        <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                          <img 
+                            src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D" 
+                            alt="CTO" 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Michael Rodriguez</h3>
+                          <p className="text-sm text-kaas-pink mb-1">CTO & Co-Founder</p>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Ex-Google AI engineer, built ML systems for real estate forecasting
+                          </p>
+                          <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1">
+                            <Linkedin className="h-3 w-3" /> LinkedIn
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                      <CardContent className="pt-6 flex gap-4">
+                        <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                          <img 
+                            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww" 
+                            alt="VP Product" 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Alisha Washington</h3>
+                          <p className="text-sm text-kaas-pink mb-1">VP of Product</p>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Previously led product teams at Apartments.com and Airbnb
+                          </p>
+                          <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1">
+                            <Linkedin className="h-3 w-3" /> LinkedIn
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                      <CardContent className="pt-6 flex gap-4">
+                        <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                          <img 
+                            src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww" 
+                            alt="VP Sales" 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">David Patel</h3>
+                          <p className="text-sm text-kaas-pink mb-1">VP of Growth</p>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Scaled multiple SaaS startups, former property management consultant
+                          </p>
+                          <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1">
+                            <Linkedin className="h-3 w-3" /> LinkedIn
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-4">Advisors</h2>
+                  <div className="grid grid-cols-2 gap-6">
+                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                      <CardContent className="pt-6">
+                        <h3 className="font-semibold">Jordan Williams</h3>
+                        <p className="text-sm text-muted-foreground mb-1">
+                          Former CEO of PropertyManagement.com (acquired)
+                        </p>
+                        <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1 mt-2">
+                          <Linkedin className="h-3 w-3" /> LinkedIn
+                        </a>
+                      </CardContent>
+                    </Card>
+                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                      <CardContent className="pt-6">
+                        <h3 className="font-semibold">Dr. Emily Zhao</h3>
+                        <p className="text-sm text-muted-foreground mb-1">
+                          AI Research Director at Stanford Real Estate Technology Initiative
+                        </p>
+                        <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1 mt-2">
+                          <Linkedin className="h-3 w-3" /> LinkedIn
+                        </a>
+                      </CardContent>
+                    </Card>
                   </div>
                 </div>
               </TabsContent>

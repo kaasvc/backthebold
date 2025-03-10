@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -7,7 +8,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHighlight } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -192,7 +193,7 @@ const Deals = () => {
       hasDetailPage: false,
       type: "B2B",
       location: "Sweden",
-      status: "closed",
+      status: "raising", // Changed from "closed" to "raising"
       foundedYear: "2021",
       backers: {
         count: 5,
@@ -208,7 +209,7 @@ const Deals = () => {
           fullName: "Emma Torres",
           title: "Climate Scientist",
           linkedin: "https://linkedin.com/in/emmatorres",
-          image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
+          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         },
         {
           name: "Alex",
@@ -222,7 +223,7 @@ const Deals = () => {
           fullName: "Marco Rossi",
           title: "Sustainability PhD",
           linkedin: "https://linkedin.com/in/marcorossi",
-          image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
+          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         }
       ]
     }
@@ -474,7 +475,7 @@ const Deals = () => {
                   </div>
                   
                   <div className="mb-4 flex-grow">
-                    <div className="flex items-center justify-between h-full">
+                    <div className="flex items-start justify-between h-full">
                       <div className="flex-1 mr-4">
                         <div className="flex items-center mb-2">
                           <Users className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
@@ -497,7 +498,7 @@ const Deals = () => {
                       </div>
                       
                       <div className="flex items-center justify-center">
-                        {deal.founders.map((founder, index) => (
+                        {deal.founders.slice(0, 3).map((founder, index) => (
                           <div 
                             key={index} 
                             className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm"
@@ -505,7 +506,6 @@ const Deals = () => {
                             style={{ 
                               marginLeft: index === 0 ? '0' : '-10px',
                               zIndex: deal.founders.length - index,
-                              maxWidth: 'calc(100% - 20px)' // Ensure images stay within container margins
                             }}
                           >
                             <img 
@@ -559,13 +559,12 @@ const Deals = () => {
                       View Deal
                     </Button>
                     <Button 
-                      variant={deal.status === "closed" ? "outline" : "kaas"}
+                      variant="kaas"
                       size="sm" 
                       className="w-full text-xs h-8"
                       onClick={() => handleCommit(deal.name)}
-                      disabled={deal.status === "closed"}
                     >
-                      {deal.status === "closed" ? "Closed" : "Invest Now"}
+                      Invest Now
                     </Button>
                   </div>
                 </CardContent>

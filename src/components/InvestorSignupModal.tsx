@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -356,6 +355,16 @@ const InvestorSignupModal = ({
             
             <div className="bg-blue-50 p-3 rounded-md text-xs text-blue-700 border border-blue-100">
               <p>By creating your investor profile, you're joining our community of investors. Founders will be able to see your profile when you express interest in their ventures.</p>
+            </div>
+            
+            <div className="bg-purple-50 p-4 rounded-md border border-purple-100 mt-3">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-4 w-4 text-purple-600" />
+                <h3 className="font-semibold text-purple-600 text-sm">What's Next?</h3>
+              </div>
+              <p className="text-sm text-gray-700">
+                After completing your profile, you'll be able to view all available deals and start investing in promising startups that match your interests!
+              </p>
             </div>
           </div>
         );

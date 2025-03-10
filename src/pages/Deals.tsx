@@ -346,14 +346,13 @@ const Deals = () => {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between text-xs mb-4">
-                  <div className="text-slate-600">
-                    {deal.backers.count} backers
+                {deal.backers.notable && (
+                  <div className="flex justify-end text-xs mb-4">
+                    <div className="text-kaas-pink font-medium">
+                      Including {deal.backers.notable}
+                    </div>
                   </div>
-                  <div className="text-kaas-pink font-medium">
-                    Including {deal.backers.notable}
-                  </div>
-                </div>
+                )}
                 
                 <div className="grid grid-cols-2 gap-2">
                   <Button 
@@ -482,4 +481,3 @@ const Deals = () => {
 };
 
 export default Deals;
-

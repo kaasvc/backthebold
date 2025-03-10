@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -99,7 +100,7 @@ const Deals = () => {
       industry: "PropTech / AI",
       team: "5 members",
       progress: 65,
-      stage: "Pre-Seed",
+      stage: "€750K",
       hasDetailPage: true,
       metrics: {
         arr: "$500K",
@@ -134,7 +135,7 @@ const Deals = () => {
       industry: "HealthTech",
       team: "7 members",
       progress: 40,
-      stage: "Seed",
+      stage: "€1.2M",
       hasDetailPage: false,
       metrics: {
         arr: "$750K",
@@ -169,7 +170,7 @@ const Deals = () => {
       industry: "CleanTech",
       team: "4 members",
       progress: 30,
-      stage: "Pre-Seed",
+      stage: "€840K",
       hasDetailPage: false,
       metrics: {
         arr: "$300K",
@@ -281,7 +282,7 @@ const Deals = () => {
                   <div className="flex items-center gap-1.5">
                     <CircleDollarSign className="h-3.5 w-3.5 text-kaas-pink" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Stage</p>
+                      <p className="text-xs text-muted-foreground">Target</p>
                       <p className="text-xs font-medium">{deal.stage}</p>
                     </div>
                   </div>
@@ -451,4 +452,3 @@ const Deals = () => {
 };
 
 export default Deals;
-

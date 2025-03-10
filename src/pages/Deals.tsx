@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -116,7 +117,7 @@ const Deals = () => {
       hasDetailPage: true,
       type: "B2B",
       location: "Portugal",
-      status: "raising",
+      status: "trending", // Changed from "raising" to "trending"
       backers: {
         count: 12,
         notable: "Notable Investors"
@@ -155,7 +156,7 @@ const Deals = () => {
       hasDetailPage: false,
       type: "Consumer",
       location: "Germany",
-      status: "raising",
+      status: "raising", // Keep as "raising"
       backers: {
         count: 8,
         notable: "Notable Investors"
@@ -423,16 +424,24 @@ const Deals = () => {
                               }
                               {deal.type}
                             </Badge>
-                            <Badge 
-                              variant={deal.status === "raising" ? "default" : "outline"} 
-                              className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
-                            >
-                              {deal.status === "raising" ? 
-                                <TrendingUp className="h-2.5 w-2.5" /> : 
+                            {deal.status === "trending" && (
+                              <Badge 
+                                variant="default" 
+                                className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                              >
+                                <TrendingUp className="h-2.5 w-2.5" />
+                                Trending
+                              </Badge>
+                            )}
+                            {deal.status === "closed" && (
+                              <Badge 
+                                variant="outline" 
+                                className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                              >
                                 <Check className="h-2.5 w-2.5" />
-                              }
-                              {deal.status === "raising" ? "Now Raising" : "Closed"}
-                            </Badge>
+                                Closed
+                              </Badge>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -498,7 +507,7 @@ const Deals = () => {
                         </div>
                         <div className="flex justify-between mt-1 text-xs">
                           <p className="text-muted-foreground">{deal.progress}% funded</p>
-                          <p className={deal.progress >= 50 ? "text-kaas-pink font-medium" : "text-black font-normal"}>
+                          <p className={deal.progress >= 50 ? "text-kaas-pink font-medium" : "text-muted-foreground"}>
                             {deal.progress >= 50 ? (
                               <>Only {deal.market.fundingLeft} left</>
                             ) : (

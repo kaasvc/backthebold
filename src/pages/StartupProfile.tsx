@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound, Flag, Linkedin, ExternalLink } from "lucide-react";
+import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound, Flag, ExternalLink } from "lucide-react";
 
 const StartupProfile = () => {
   const navigate = useNavigate();
@@ -205,8 +205,8 @@ const StartupProfile = () => {
                           <p className="text-sm text-muted-foreground mb-2">
                             Former product lead at Zillow, 10+ years in PropTech
                           </p>
-                          <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1">
-                            <Linkedin className="h-3 w-3" /> LinkedIn
+                          <a href="#" className="text-xs text-primary hover:underline">
+                            LinkedIn
                           </a>
                         </div>
                       </CardContent>
@@ -227,8 +227,8 @@ const StartupProfile = () => {
                           <p className="text-sm text-muted-foreground mb-2">
                             Ex-Google AI engineer, built ML systems for real estate forecasting
                           </p>
-                          <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1">
-                            <Linkedin className="h-3 w-3" /> LinkedIn
+                          <a href="#" className="text-xs text-primary hover:underline">
+                            LinkedIn
                           </a>
                         </div>
                       </CardContent>
@@ -249,8 +249,8 @@ const StartupProfile = () => {
                           <p className="text-sm text-muted-foreground mb-2">
                             Previously led product teams at Apartments.com and Airbnb
                           </p>
-                          <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1">
-                            <Linkedin className="h-3 w-3" /> LinkedIn
+                          <a href="#" className="text-xs text-primary hover:underline">
+                            LinkedIn
                           </a>
                         </div>
                       </CardContent>
@@ -271,8 +271,8 @@ const StartupProfile = () => {
                           <p className="text-sm text-muted-foreground mb-2">
                             Scaled multiple SaaS startups, former property management consultant
                           </p>
-                          <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1">
-                            <Linkedin className="h-3 w-3" /> LinkedIn
+                          <a href="#" className="text-xs text-primary hover:underline">
+                            LinkedIn
                           </a>
                         </div>
                       </CardContent>
@@ -289,8 +289,8 @@ const StartupProfile = () => {
                         <p className="text-sm text-muted-foreground mb-1">
                           Former CEO of PropertyManagement.com (acquired)
                         </p>
-                        <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1 mt-2">
-                          <Linkedin className="h-3 w-3" /> LinkedIn
+                        <a href="#" className="text-xs text-primary hover:underline mt-2 inline-block">
+                          LinkedIn
                         </a>
                       </CardContent>
                     </Card>
@@ -300,8 +300,8 @@ const StartupProfile = () => {
                         <p className="text-sm text-muted-foreground mb-1">
                           AI Research Director at Stanford Real Estate Technology Initiative
                         </p>
-                        <a href="#" className="text-xs text-primary hover:underline flex items-center gap-1 mt-2">
-                          <Linkedin className="h-3 w-3" /> LinkedIn
+                        <a href="#" className="text-xs text-primary hover:underline mt-2 inline-block">
+                          LinkedIn
                         </a>
                       </CardContent>
                     </Card>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -259,8 +258,8 @@ const Deals = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {deals.map((deal) => (
-            <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow">
-              <CardContent className="p-4">
+            <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
+              <CardContent className="p-4 flex flex-col h-full">
                 <div className="flex items-start mb-4">
                   <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
                     <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
@@ -308,16 +307,19 @@ const Deals = () => {
                   </p>
                 </div>
                 
-                <div className="mb-4">
-                  <div className="flex items-center justify-between">
+                <div className="mb-4 flex-grow">
+                  <div className="flex items-center justify-between h-full">
                     <div className="flex-1 mr-4">
                       <div className="flex items-center mb-2">
                         <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
                         <span className="text-xs text-slate-600">Founded in 2024 by:</span>
                       </div>
-                      <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5">
+                      <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5 min-h-[4.5em]">
                         {deal.founders.slice(0, 3).map((founder, idx) => (
                           <li key={idx} className="truncate">{founder.title}</li>
+                        ))}
+                        {Array.from({ length: Math.max(0, 3 - deal.founders.length) }).map((_, idx) => (
+                          <li key={`empty-${idx}`} className="invisible">Empty space</li>
                         ))}
                       </ul>
                     </div>
@@ -337,7 +339,7 @@ const Deals = () => {
                           <img 
                             src={founder.image} 
                             alt={founder.name} 
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover rounded-full"
                           />
                         </div>
                       ))}
@@ -371,7 +373,7 @@ const Deals = () => {
                   )}
                 </div>
                 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2 mt-auto">
                   <Button 
                     variant="outline" 
                     size="sm" 

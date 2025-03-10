@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -162,13 +161,6 @@ const Deals = () => {
           title: "Stanford Med",
           linkedin: "https://linkedin.com/in/mayajohnson",
           image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
-        },
-        {
-          name: "Raj",
-          fullName: "Raj Patel",
-          title: "ex-Zocdoc CTO",
-          linkedin: "https://linkedin.com/in/rajpatel",
-          image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
         }
       ]
     },
@@ -497,3 +489,4 @@ const Deals = () => {
 };
 
 export default Deals;
+

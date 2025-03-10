@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound } from "lucide-react";
+import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound, Flag } from "lucide-react";
 
 const StartupProfile = () => {
   const navigate = useNavigate();
@@ -95,6 +95,10 @@ const StartupProfile = () => {
                 <div className="flex flex-wrap items-center gap-3 mb-2">
                   <h1 className="text-3xl font-bold tracking-tight">ProprHome.com</h1>
                   <Badge className="bg-kaas-pink hover:bg-kaas-pink">Pre-Seed</Badge>
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <Flag className="h-4 w-4 text-kaas-pink" />
+                    <span>Portugal</span>
+                  </div>
                 </div>
                 <p className="text-lg text-muted-foreground mb-4 max-w-2xl">
                   AI-powered platform revolutionizing property management for independent landlords and small property managers.
@@ -506,6 +510,14 @@ const StartupProfile = () => {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Discount</span>
                     <span className="font-medium">30%</span>
+                  </div>
+                  
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Location</span>
+                    <div className="flex items-center gap-1.5">
+                      <Flag className="h-4 w-4 text-kaas-pink" />
+                      <span className="font-medium">Portugal</span>
+                    </div>
                   </div>
                   
                   <div className="flex justify-between">

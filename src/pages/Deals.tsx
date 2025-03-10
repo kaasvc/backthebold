@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,6 @@ const Deals = () => {
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
   
   useEffect(() => {
-    // Check if investor has already registered
     const investorProfile = localStorage.getItem("kaasInvestorProfile");
     if (investorProfile) {
       setIsInvestorRegistered(true);
@@ -212,14 +210,14 @@ const Deals = () => {
           </Link>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-4">
-              <a
-                href="mailto:hello@kaas.vc"
+              <Link
+                to="/support"
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary"
                 )}
               >
                 Contact Support
-              </a>
+              </Link>
               
               <Link to="/">
                 <Button variant="outline" size="sm">
@@ -419,7 +417,6 @@ const Deals = () => {
         </DialogContent>
       </Dialog>
       
-      {/* Investor Signup Modal */}
       <InvestorSignupModal 
         isOpen={showInvestorSignup}
         onClose={() => setShowInvestorSignup(false)}
@@ -453,3 +450,4 @@ const Deals = () => {
 };
 
 export default Deals;
+

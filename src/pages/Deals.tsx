@@ -25,8 +25,7 @@ const Deals = () => {
   
   const [filters, setFilters] = useState({
     type: "all",
-    country: "all",
-    status: "all"
+    country: "all"
   });
   
   useEffect(() => {
@@ -228,10 +227,7 @@ const Deals = () => {
   const filteredDeals = deals.filter(deal => {
     return (
       (filters.type === 'all' || deal.type === filters.type) &&
-      (filters.country === 'all' || deal.location === filters.country) &&
-      (filters.status === 'all' || 
-        (filters.status === 'raising' && deal.status === 'raising') ||
-        (filters.status === 'closed' && deal.status === 'closed'))
+      (filters.country === 'all' || deal.location === filters.country)
     );
   });
 
@@ -365,50 +361,6 @@ const Deals = () => {
                     ))}
                   </div>
                 </div>
-                
-                <Separator />
-                
-                <div>
-                  <Label className="mb-2 block">Deal Status</Label>
-                  <div className="grid grid-cols-1 gap-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => setFilters({...filters, status: 'all'})}
-                      className={cn(
-                        "justify-start",
-                        filters.status === 'all' ? "border-kaas-pink text-kaas-pink" : ""
-                      )}
-                    >
-                      <Briefcase className="mr-2 h-4 w-4" />
-                      All Deals
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => setFilters({...filters, status: 'raising'})}
-                      className={cn(
-                        "justify-start",
-                        filters.status === 'raising' ? "border-kaas-pink text-kaas-pink" : ""
-                      )}
-                    >
-                      <TrendingUp className="mr-2 h-4 w-4" />
-                      Now Raising
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm"
-                      onClick={() => setFilters({...filters, status: 'closed'})}
-                      className={cn(
-                        "justify-start",
-                        filters.status === 'closed' ? "border-kaas-pink text-kaas-pink" : ""
-                      )}
-                    >
-                      <Check className="mr-2 h-4 w-4" />
-                      Closed Rounds
-                    </Button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -421,7 +373,7 @@ const Deals = () => {
                 <p className="text-muted-foreground mb-4">Try adjusting your filter criteria to see more deals.</p>
                 <Button 
                   variant="outline" 
-                  onClick={() => setFilters({type: 'all', country: 'all', status: 'all'})}
+                  onClick={() => setFilters({type: 'all', country: 'all'})}
                 >
                   Reset All Filters
                 </Button>

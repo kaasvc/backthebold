@@ -536,7 +536,8 @@ const StartupProfile = () => {
                   
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">HQ</span>
-                    <div className="flex items-center">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-base">🇵🇹</span>
                       <span className="font-medium">Portugal</span>
                     </div>
                   </div>

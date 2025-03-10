@@ -36,7 +36,7 @@ const Landing = () => {
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-4">Welcome to KaasX</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            We back founders 10X-ing people's lives, connecting them with smart capital, strategic network, and the right know-how, to hit it out of the park from day 1.
+            Connecting Europe's top founders with strategic investors - crowdfunding the next generation of loved businesses.
           </p>
         </div>
         

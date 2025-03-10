@@ -281,276 +281,283 @@ const Deals = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-          <div className="lg:col-span-1">
-            <Card className="overflow-hidden shadow-sm hover:shadow transition-shadow">
-              <Collapsible
-                open={isFilterOpen}
-                onOpenChange={setIsFilterOpen}
-                className="w-full"
-              >
-                <div className="flex items-center justify-between p-4 border-b border-border/60">
-                  <h3 className="font-medium flex items-center gap-2">
-                    <Filter className="h-4 w-4 text-kaas-pink" />
-                    Filter Deals
-                  </h3>
-                  <CollapsibleTrigger asChild>
-                    <Button variant="ghost" size="sm" className="p-1 h-8 w-8 rounded-full">
-                      {isFilterOpen ? (
-                        <ChevronUp className="h-4 w-4" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4" />
-                      )}
+        {/* Filter section moved above deal cards */}
+        <Card className="mb-6 overflow-hidden shadow-sm hover:shadow transition-shadow">
+          <Collapsible
+            open={isFilterOpen}
+            onOpenChange={setIsFilterOpen}
+            className="w-full"
+          >
+            <div className="flex items-center justify-between p-4 border-b border-border/60">
+              <h3 className="font-medium flex items-center gap-2">
+                <Filter className="h-4 w-4 text-kaas-pink" />
+                Filter Deals
+              </h3>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm" className="p-1 h-8 w-8 rounded-full">
+                  {isFilterOpen ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </Button>
+              </CollapsibleTrigger>
+            </div>
+            
+            <CollapsibleContent>
+              <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label className="mb-3 block text-sm font-medium text-muted-foreground">Deal Type</Label>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <Button 
+                      variant={filters.type === 'all' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, type: 'all'})}
+                      className="justify-start"
+                    >
+                      <Briefcase className="mr-2 h-4 w-4" />
+                      All Types
                     </Button>
-                  </CollapsibleTrigger>
+                    <Button 
+                      variant={filters.type === 'B2B' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, type: 'B2B'})}
+                      className="justify-start"
+                    >
+                      <Building className="mr-2 h-4 w-4" />
+                      B2B
+                    </Button>
+                    <Button 
+                      variant={filters.type === 'Consumer' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, type: 'Consumer'})}
+                      className="justify-start"
+                    >
+                      <User className="mr-2 h-4 w-4" />
+                      Consumer
+                    </Button>
+                  </div>
                 </div>
                 
-                <CollapsibleContent>
-                  <div className="p-4 space-y-6">
-                    <div>
-                      <Label className="mb-3 block text-sm font-medium text-muted-foreground">Deal Type</Label>
-                      <div className="grid grid-cols-1 gap-2">
-                        <Button 
-                          variant={filters.type === 'all' ? "kaas" : "outline"} 
-                          size="sm"
-                          onClick={() => setFilters({...filters, type: 'all'})}
-                          className="justify-start"
-                        >
-                          <Briefcase className="mr-2 h-4 w-4" />
-                          All Types
-                        </Button>
-                        <Button 
-                          variant={filters.type === 'B2B' ? "kaas" : "outline"} 
-                          size="sm"
-                          onClick={() => setFilters({...filters, type: 'B2B'})}
-                          className="justify-start"
-                        >
-                          <Building className="mr-2 h-4 w-4" />
-                          B2B
-                        </Button>
-                        <Button 
-                          variant={filters.type === 'Consumer' ? "kaas" : "outline"} 
-                          size="sm"
-                          onClick={() => setFilters({...filters, type: 'Consumer'})}
-                          className="justify-start"
-                        >
-                          <User className="mr-2 h-4 w-4" />
-                          Consumer
-                        </Button>
+                <div>
+                  <Label className="mb-3 block text-sm font-medium text-muted-foreground">Country</Label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <Button 
+                      variant={filters.country === 'all' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, country: 'all'})}
+                      className="justify-start"
+                    >
+                      <MapPin className="mr-2 h-4 w-4" />
+                      All Countries
+                    </Button>
+                    {countries.map((country) => (
+                      <Button 
+                        key={country}
+                        variant={filters.country === country ? "kaas" : "outline"} 
+                        size="sm"
+                        onClick={() => setFilters({...filters, country})}
+                        className="justify-start"
+                      >
+                        <MapPin className="mr-2 h-4 w-4" />
+                        {country}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        </Card>
+        
+        {/* Search section moved with deal cards */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="relative w-full md:w-64">
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search deals..."
+              value={dealSearchTerm}
+              onChange={(e) => setDealSearchTerm(e.target.value)}
+              className="pl-10 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40"
+            />
+          </div>
+        </div>
+        
+        {filteredDeals.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-64 bg-slate-50 rounded-lg border p-8 text-center">
+            <TrendingUp className="h-12 w-12 text-slate-300 mb-4" />
+            <h3 className="text-xl font-semibold mb-2">No matching deals found</h3>
+            <p className="text-muted-foreground mb-4">Try adjusting your filter criteria to see more deals.</p>
+            <Button 
+              variant="outline" 
+              onClick={() => setFilters({type: 'all', country: 'all'})}
+            >
+              Reset All Filters
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {filteredDeals.map((deal) => (
+              <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
+                <CardContent className="p-4 flex flex-col h-full">
+                  <div className="flex items-start mb-4">
+                    <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
+                      <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
+                        deal.name === "ProprHome.com" ? "bg-soft-blue" : 
+                        deal.name === "MediSync" ? "bg-soft-pink" : "bg-soft-green"
+                      )}>
+                        {deal.name === "ProprHome.com" && (
+                          <Building className="h-6 w-6 text-kaas-pink" />
+                        )}
+                        {deal.name === "MediSync" && (
+                          <Award className="h-6 w-6 text-kaas-pink" />
+                        )}
+                        {deal.name === "EcoTrack" && (
+                          <TrendingUp className="h-6 w-6 text-kaas-pink" />
+                        )}
                       </div>
                     </div>
                     
-                    <Separator className="bg-border/60" />
-                    
-                    <div>
-                      <Label className="mb-3 block text-sm font-medium text-muted-foreground">Country</Label>
-                      <div className="grid grid-cols-1 gap-2">
-                        <Button 
-                          variant={filters.country === 'all' ? "kaas" : "outline"} 
-                          size="sm"
-                          onClick={() => setFilters({...filters, country: 'all'})}
-                          className="justify-start"
+                    <div className="ml-3 flex-1">
+                      <div className="flex items-center">
+                        <h2 className="text-lg font-bold">{deal.name}</h2>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-slate-600">
+                        <div className="flex items-center">
+                          <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                          {deal.location}
+                        </div>
+                        <Badge 
+                          variant="outline"
+                          className={cn(
+                            "flex items-center gap-1 text-[10px] py-0 px-1.5 h-4",
+                            deal.type === "B2B" ? "" : ""
+                          )}
                         >
-                          <MapPin className="mr-2 h-4 w-4" />
-                          All Countries
-                        </Button>
-                        {countries.map((country) => (
-                          <Button 
-                            key={country}
-                            variant={filters.country === country ? "kaas" : "outline"} 
-                            size="sm"
-                            onClick={() => setFilters({...filters, country})}
-                            className="justify-start"
+                          {deal.type === "B2B" ? 
+                            <Building className="h-2.5 w-2.5" /> : 
+                            <User className="h-2.5 w-2.5" />
+                          }
+                          {deal.type}
+                        </Badge>
+                        <Badge 
+                          variant="outline" 
+                          className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                        >
+                          <Calendar className="h-2.5 w-2.5" />
+                          {deal.foundedYear}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <p className="text-sm text-slate-600 mb-1">
+                      {deal.description}
+                    </p>
+                  </div>
+                  
+                  <div className="mb-4 flex-grow">
+                    <div className="flex items-center justify-between h-full">
+                      <div className="flex-1 mr-4">
+                        <div className="flex items-center mb-2">
+                          <Users className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
+                          <span className="text-xs text-slate-600">Founded by:</span>
+                        </div>
+                        <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5 min-h-[4.5em]">
+                          {deal.founders.slice(0, 3).map((founder, idx) => (
+                            <li key={idx} className="truncate flex items-start">
+                              <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
+                              <span>{founder.title}</span>
+                            </li>
+                          ))}
+                          {Array.from({ length: Math.max(0, 3 - deal.founders.length) }).map((_, idx) => (
+                            <li key={`empty-${idx}`} className="invisible flex items-start h-[1.5em]">
+                              <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
+                              <span>Empty space</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className="flex items-center justify-center">
+                        {deal.founders.map((founder, index) => (
+                          <div 
+                            key={index} 
+                            className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm"
+                            title={`${founder.fullName} - ${founder.title}`}
+                            style={{ 
+                              marginLeft: index === 0 ? '0' : '-10px',
+                              zIndex: deal.founders.length - index,
+                              maxWidth: 'calc(100% - 20px)' // Ensure images stay within container margins
+                            }}
                           >
-                            <MapPin className="mr-2 h-4 w-4" />
-                            {country}
-                          </Button>
+                            <img 
+                              src={founder.image} 
+                              alt={founder.name} 
+                              className="w-full h-full object-cover rounded-full"
+                            />
+                          </div>
                         ))}
                       </div>
                     </div>
                   </div>
-                </CollapsibleContent>
-              </Collapsible>
-            </Card>
-          </div>
-          
-          <div className="lg:col-span-3">
-            {filteredDeals.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-64 bg-slate-50 rounded-lg border p-8 text-center">
-                <TrendingUp className="h-12 w-12 text-slate-300 mb-4" />
-                <h3 className="text-xl font-semibold mb-2">No matching deals found</h3>
-                <p className="text-muted-foreground mb-4">Try adjusting your filter criteria to see more deals.</p>
-                <Button 
-                  variant="outline" 
-                  onClick={() => setFilters({type: 'all', country: 'all'})}
-                >
-                  Reset All Filters
-                </Button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {filteredDeals.map((deal) => (
-                  <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
-                    <CardContent className="p-4 flex flex-col h-full">
-                      <div className="flex items-start mb-4">
-                        <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
-                          <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
-                            deal.name === "ProprHome.com" ? "bg-soft-blue" : 
-                            deal.name === "MediSync" ? "bg-soft-pink" : "bg-soft-green"
-                          )}>
-                            {deal.name === "ProprHome.com" && (
-                              <Building className="h-6 w-6 text-kaas-pink" />
-                            )}
-                            {deal.name === "MediSync" && (
-                              <Award className="h-6 w-6 text-kaas-pink" />
-                            )}
-                            {deal.name === "EcoTrack" && (
-                              <TrendingUp className="h-6 w-6 text-kaas-pink" />
-                            )}
-                          </div>
-                        </div>
-                        
-                        <div className="ml-3 flex-1">
-                          <div className="flex items-center">
-                            <h2 className="text-lg font-bold">{deal.name}</h2>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-slate-600">
-                            <div className="flex items-center">
-                              <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                              {deal.location}
-                            </div>
-                            <Badge 
-                              variant="outline"
-                              className={cn(
-                                "flex items-center gap-1 text-[10px] py-0 px-1.5 h-4",
-                                deal.type === "B2B" ? "" : ""
-                              )}
-                            >
-                              {deal.type === "B2B" ? 
-                                <Building className="h-2.5 w-2.5" /> : 
-                                <User className="h-2.5 w-2.5" />
-                              }
-                              {deal.type}
-                            </Badge>
-                            <Badge 
-                              variant="outline" 
-                              className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
-                            >
-                              <Calendar className="h-2.5 w-2.5" />
-                              {deal.foundedYear}
-                            </Badge>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="mb-4">
-                        <p className="text-sm text-slate-600 mb-1">
-                          {deal.description}
-                        </p>
-                      </div>
-                      
-                      <div className="mb-4 flex-grow">
-                        <div className="flex items-center justify-between h-full">
-                          <div className="flex-1 mr-4">
-                            <div className="flex items-center mb-2">
-                              <Users className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                              <span className="text-xs text-slate-600">Founded by:</span>
-                            </div>
-                            <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5 min-h-[4.5em]">
-                              {deal.founders.slice(0, 3).map((founder, idx) => (
-                                <li key={idx} className="truncate flex items-start">
-                                  <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
-                                  <span>{founder.title}</span>
-                                </li>
-                              ))}
-                              {Array.from({ length: Math.max(0, 3 - deal.founders.length) }).map((_, idx) => (
-                                <li key={`empty-${idx}`} className="invisible flex items-start h-[1.5em]">
-                                  <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
-                                  <span>Empty space</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          
-                          <div className="flex items-center justify-center">
-                            {deal.founders.map((founder, index) => (
-                              <div 
-                                key={index} 
-                                className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm"
-                                title={`${founder.fullName} - ${founder.title}`}
-                                style={{ 
-                                  marginLeft: index === 0 ? '0' : '-10px',
-                                  zIndex: deal.founders.length - index,
-                                  maxWidth: 'calc(100% - 20px)' // Ensure images stay within container margins
-                                }}
-                              >
-                                <img 
-                                  src={founder.image} 
-                                  alt={founder.name} 
-                                  className="w-full h-full object-cover rounded-full"
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="mb-3">
-                        <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-kaas-pink rounded-full" 
-                            style={{ width: `${deal.progress}%` }}
-                          ></div>
-                        </div>
-                        <div className="flex justify-between mt-1 text-xs">
-                          <p className="text-muted-foreground">{deal.progress}% funded</p>
-                          <p className={deal.progress >= 50 ? "text-kaas-pink font-medium" : "text-muted-foreground"}>
-                            {deal.progress >= 50 ? (
-                              <>Only {deal.market.fundingLeft} left</>
-                            ) : (
-                              <>{deal.market.fundingLeft} left</>
-                            )}
-                          </p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between text-xs mb-4">
-                        <div className="text-slate-600">
-                          {deal.backers.count} backers
-                        </div>
-                        {deal.backers.notable && (
-                          <div className="text-kaas-pink font-medium">
-                            Including Notable Investors
-                          </div>
+                  
+                  <div className="mb-3">
+                    <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-kaas-pink rounded-full" 
+                        style={{ width: `${deal.progress}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between mt-1 text-xs">
+                      <p className="text-muted-foreground">{deal.progress}% funded</p>
+                      <p className={deal.progress >= 50 ? "text-kaas-pink font-medium" : "text-muted-foreground"}>
+                        {deal.progress >= 50 ? (
+                          <>Only {deal.market.fundingLeft} left</>
+                        ) : (
+                          <>{deal.market.fundingLeft} left</>
                         )}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between text-xs mb-4">
+                    <div className="text-slate-600">
+                      {deal.backers.count} backers
+                    </div>
+                    {deal.backers.notable && (
+                      <div className="text-kaas-pink font-medium">
+                        Including Notable Investors
                       </div>
-                      
-                      <div className="grid grid-cols-2 gap-2 mt-auto">
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="w-full text-xs h-8"
-                          onClick={() => handleViewDetails(deal.name)}
-                        >
-                          View Deal
-                        </Button>
-                        <Button 
-                          variant={deal.status === "closed" ? "outline" : "kaas"}
-                          size="sm" 
-                          className="w-full text-xs h-8"
-                          onClick={() => handleCommit(deal.name)}
-                          disabled={deal.status === "closed"}
-                        >
-                          {deal.status === "closed" ? "Closed" : "Invest Now"}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
+                    )}
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2 mt-auto">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full text-xs h-8"
+                      onClick={() => handleViewDetails(deal.name)}
+                    >
+                      View Deal
+                    </Button>
+                    <Button 
+                      variant={deal.status === "closed" ? "outline" : "kaas"}
+                      size="sm" 
+                      className="w-full text-xs h-8"
+                      onClick={() => handleCommit(deal.name)}
+                      disabled={deal.status === "closed"}
+                    >
+                      {deal.status === "closed" ? "Closed" : "Invest Now"}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        </div>
+        )}
       </main>
       
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>

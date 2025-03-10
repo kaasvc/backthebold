@@ -215,7 +215,14 @@ export const formSections: FormSection[] = [
         id: "ideaOrigin",
         label: "Why did you pick this idea to work on?",
         type: "textarea",
-        placeholder: "Do you have domain expertise in this area? How do you know people need what you're making?",
+        placeholder: "Explain what inspired you to work on this idea...",
+        required: true,
+      },
+      {
+        id: "domainExpertise",
+        label: "Do you have domain expertise in this area? How do you know people need what you're making?",
+        type: "textarea",
+        placeholder: "Describe your background in this field and your understanding of user needs...",
         required: true,
       },
       {

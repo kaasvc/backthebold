@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -110,7 +111,7 @@ const Deals = () => {
       location: "Portugal",
       backers: {
         count: 12,
-        notable: "TechStars, PropertyVentures"
+        notable: "Notable Investors"
       },
       market: {
         size: "$2 Trillion",
@@ -148,7 +149,7 @@ const Deals = () => {
       location: "Germany",
       backers: {
         count: 8,
-        notable: "Atomico, Creandum"
+        notable: "Notable Investors"
       },
       market: {
         size: "$4 Trillion",
@@ -186,7 +187,7 @@ const Deals = () => {
       location: "Sweden",
       backers: {
         count: 5,
-        notable: "EQT Ventures, Norrsken VC"
+        notable: "Notable Investors"
       },
       market: {
         size: "$1.5 Trillion",

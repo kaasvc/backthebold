@@ -96,7 +96,7 @@ const StartupProfile = () => {
                   <h1 className="text-3xl font-bold tracking-tight">ProprHome.com</h1>
                   <Badge className="bg-kaas-pink hover:bg-kaas-pink">Pre-Seed</Badge>
                   <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <Flag className="h-4 w-4 text-kaas-pink" />
+                    <span className="text-base">🇵🇹</span>
                     <span>Portugal</span>
                   </div>
                 </div>
@@ -515,7 +515,7 @@ const StartupProfile = () => {
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Location</span>
                     <div className="flex items-center gap-1.5">
-                      <Flag className="h-4 w-4 text-kaas-pink" />
+                      <span className="text-base">🇵🇹</span>
                       <span className="font-medium">Portugal</span>
                     </div>
                   </div>
@@ -656,124 +656,4 @@ const StartupProfile = () => {
                   <li>
                     <a href="#" className="flex items-center gap-2 text-primary hover:underline">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <span>Financial Projections</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="flex items-center gap-2 text-primary hover:underline">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <span>Market Analysis</span>
-                    </a>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </main>
-      
-      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Invest in ProprHome.com</DialogTitle>
-          </DialogHeader>
-          
-          <div className="space-y-5 py-2">
-            <div className="bg-slate-50 border border-slate-200 p-4 rounded-md">
-              <h3 className="font-medium text-base mb-3 flex items-center">
-                <span className="mr-2">💰</span> Investor Benefits:
-              </h3>
-              <ul className="space-y-2">
-                <li className="flex">
-                  <span className="mr-2">✅</span>
-                  <span className="text-sm">Exclusive early investor perks (Preferred shares, priority future rounds)</span>
-                </li>
-                <li className="flex">
-                  <span className="mr-2">✅</span>
-                  <span className="text-sm">High-growth opportunity in a €2T market</span>
-                </li>
-                <li className="flex">
-                  <span className="mr-2">✅</span>
-                  <span className="text-sm">Secure and verified investment process</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="amount" className="text-sm font-medium flex items-center">
-                <span className="mr-2">💳</span> Investment Amount (€)
-              </label>
-              <Input
-                id="amount"
-                type="text"
-                placeholder="Enter Amount"
-                value={commitAmount}
-                onChange={(e) => setCommitAmount(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                Minimum investment: €500
-              </p>
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium flex items-center">
-                <span className="mr-2">📩</span> Email Address
-              </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                We'll send a confirmation link to this email.
-              </p>
-            </div>
-            
-            <div className="bg-blue-50 border border-blue-100 px-3 py-2 rounded-md text-xs text-blue-700 italic">
-              This is a non-binding expression of interest. Formal commitments will be made via email with official documentation after you submit this form.
-            </div>
-          </div>
-          
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button variant="kaas" onClick={handleSubmitCommitment} className="flex items-center">
-              <span className="mr-1">👉</span> Reserve My Allocation
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      
-      <footer className="border-t border-border/40 bg-background py-6">
-        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} KaasX. All rights reserved.
-          </p>
-          <div className="flex items-center gap-4">
-            <a 
-              href="#" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a 
-              href="#" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Terms of Service
-            </a>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-};
-
-export default StartupProfile;
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.4

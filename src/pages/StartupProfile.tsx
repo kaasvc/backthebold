@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
@@ -10,14 +10,32 @@ import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound, Flag, ExternalLink } from "lucide-react";
+import InvestorSignupModal from "@/components/InvestorSignupModal";
 
 const StartupProfile = () => {
   const navigate = useNavigate();
   const [showCommitDialog, setShowCommitDialog] = useState(false);
   const [commitAmount, setCommitAmount] = useState("");
   const [email, setEmail] = useState("");
+  const [showInvestorSignup, setShowInvestorSignup] = useState(false);
+  const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+  
+  useEffect(() => {
+    const investorProfile = localStorage.getItem("kaasInvestorProfile");
+    setIsInvestorRegistered(!!investorProfile);
+    
+    if (!investorProfile && !initialLoadComplete) {
+      setShowInvestorSignup(true);
+      setInitialLoadComplete(true);
+    }
+  }, [initialLoadComplete]);
   
   const handleCommit = () => {
+    if (!isInvestorRegistered) {
+      setShowInvestorSignup(true);
+      return;
+    }
     setShowCommitDialog(true);
   };
   
@@ -31,6 +49,11 @@ const StartupProfile = () => {
     setShowCommitDialog(false);
     setCommitAmount("");
     setEmail("");
+  };
+  
+  const handleInvestorProfileComplete = (dealName: string) => {
+    setShowInvestorSignup(false);
+    setIsInvestorRegistered(true);
   };
   
   const notableInvestors = [
@@ -689,6 +712,13 @@ const StartupProfile = () => {
           </div>
         </div>
       </main>
+      
+      <InvestorSignupModal 
+        isOpen={showInvestorSignup}
+        onClose={() => setShowInvestorSignup(false)}
+        dealName="ProprHome.com"
+        onComplete={handleInvestorProfileComplete}
+      />
       
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent>

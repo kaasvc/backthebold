@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { ChevronRight, User, Briefcase, Building, Landmark, Globe } from "lucide-react";
+import { ChevronRight, User, Briefcase, Building, Landmark, Globe, Sparkles, Trophy, Star, Zap } from "lucide-react";
 
 interface InvestorSignupModalProps {
   isOpen: boolean;
@@ -78,6 +78,16 @@ const InvestorSignupModal = ({
       case 1:
         return (
           <div className="space-y-4">
+            <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-4 rounded-lg mb-4 border border-purple-200">
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-5 w-5 text-[#8B5CF6]" />
+                <h3 className="font-semibold text-[#8B5CF6]">Join the KaasX Investor Community</h3>
+              </div>
+              <p className="text-sm text-gray-700">
+                Get exclusive early access to promising startups and connect with visionary founders. Your profile helps founders understand your potential strategic value beyond capital.
+              </p>
+            </div>
+            
             <div className="space-y-2">
               <Label htmlFor="fullName" className="flex items-center gap-2">
                 <User className="h-4 w-4 text-kaas-pink" />
@@ -114,6 +124,16 @@ const InvestorSignupModal = ({
       case 2:
         return (
           <div className="space-y-4">
+            <div className="bg-gradient-to-r from-blue-100 to-purple-100 p-4 rounded-lg mb-4 border border-blue-200">
+              <div className="flex items-center gap-2 mb-2">
+                <Trophy className="h-5 w-5 text-[#0EA5E9]" />
+                <h3 className="font-semibold text-[#0EA5E9]">Your Expertise Matters</h3>
+              </div>
+              <p className="text-sm text-gray-700">
+                Founders are looking for smart money. Your professional background could make you the perfect strategic investor for the right startup.
+              </p>
+            </div>
+            
             <div className="space-y-2">
               <Label htmlFor="profession" className="flex items-center gap-2">
                 <Briefcase className="h-4 w-4 text-kaas-pink" />
@@ -162,6 +182,16 @@ const InvestorSignupModal = ({
       case 3:
         return (
           <div className="space-y-4">
+            <div className="bg-gradient-to-r from-orange-100 to-yellow-100 p-4 rounded-lg mb-4 border border-orange-200">
+              <div className="flex items-center gap-2 mb-2">
+                <Zap className="h-5 w-5 text-[#F97316]" />
+                <h3 className="font-semibold text-[#F97316]">Unlock Investment Opportunities</h3>
+              </div>
+              <p className="text-sm text-gray-700">
+                Tell us your investment preferences to get matched with startups that align with your interests. This helps us personalize your deal flow.
+              </p>
+            </div>
+            
             <div className="space-y-2">
               <Label htmlFor="investmentExperience" className="flex items-center gap-2">
                 <Landmark className="h-4 w-4 text-kaas-pink" />
@@ -209,6 +239,16 @@ const InvestorSignupModal = ({
       case 4:
         return (
           <div className="space-y-4">
+            <div className="bg-gradient-to-r from-green-100 to-teal-100 p-4 rounded-lg mb-4 border border-green-200">
+              <div className="flex items-center gap-2 mb-2">
+                <Star className="h-5 w-5 text-emerald-600" />
+                <h3 className="font-semibold text-emerald-600">You're Almost There!</h3>
+              </div>
+              <p className="text-sm text-gray-700">
+                Join our community of forward-thinking investors backing Europe's most innovative startups. Complete your profile to get started.
+              </p>
+            </div>
+            
             <div className="bg-slate-50 p-4 rounded-md border border-slate-200">
               <h3 className="font-medium text-sm mb-3">Your Investor Profile Summary</h3>
               <ul className="space-y-2 text-sm">
@@ -252,17 +292,25 @@ const InvestorSignupModal = ({
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md" overlayClassName="bg-black/80 backdrop-blur-sm">
         <DialogHeader>
-          <DialogTitle>
-            {step < 4 ? `Investor Profile (${step}/4)` : "Confirm Your Profile"}
+          <DialogTitle className="text-center text-xl">
+            {step < 4 ? (
+              <span className="flex items-center justify-center gap-2">
+                <Sparkles className="h-5 w-5 text-[#D946EF]" />
+                Become a KaasX Investor
+                <Sparkles className="h-5 w-5 text-[#D946EF]" />
+              </span>
+            ) : (
+              "Confirm Your Profile"
+            )}
           </DialogTitle>
         </DialogHeader>
         
         <div className="mb-4">
           <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
             <div 
-              className="h-full bg-kaas-pink transition-all duration-300 ease-in-out" 
+              className="h-full bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] transition-all duration-300 ease-in-out" 
               style={{ width: `${(step / 4) * 100}%` }}
             ></div>
           </div>
@@ -296,7 +344,7 @@ const InvestorSignupModal = ({
             size="sm" 
             onClick={handleNextStep}
             disabled={!isStepComplete()}
-            className="flex items-center gap-1 sm:w-auto w-full"
+            className="flex items-center gap-1 sm:w-auto w-full bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] hover:from-[#7C3AED] hover:to-[#C026D3]"
           >
             {step === 4 ? "Complete Profile" : "Continue"}
             <ChevronRight className="h-4 w-4" />

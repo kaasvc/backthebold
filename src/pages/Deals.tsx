@@ -295,28 +295,37 @@ const Deals = () => {
                   <Label className="mb-2 block">Deal Type</Label>
                   <div className="grid grid-cols-1 gap-2">
                     <Button 
-                      variant={filters.type === 'all' ? "kaas" : "outline"} 
+                      variant={filters.type === 'all' ? "outline" : "outline"} 
                       size="sm"
                       onClick={() => setFilters({...filters, type: 'all'})}
-                      className="justify-start"
+                      className={cn(
+                        "justify-start",
+                        filters.type === 'all' ? "border-kaas-pink text-kaas-pink" : ""
+                      )}
                     >
                       <Briefcase className="mr-2 h-4 w-4" />
                       All Types
                     </Button>
                     <Button 
-                      variant={filters.type === 'B2B' ? "kaas" : "outline"} 
+                      variant={filters.type === 'B2B' ? "outline" : "outline"} 
                       size="sm"
                       onClick={() => setFilters({...filters, type: 'B2B'})}
-                      className="justify-start"
+                      className={cn(
+                        "justify-start",
+                        filters.type === 'B2B' ? "border-kaas-pink text-kaas-pink" : ""
+                      )}
                     >
                       <Building className="mr-2 h-4 w-4" />
                       B2B
                     </Button>
                     <Button 
-                      variant={filters.type === 'Consumer' ? "kaas" : "outline"} 
+                      variant={filters.type === 'Consumer' ? "outline" : "outline"} 
                       size="sm"
                       onClick={() => setFilters({...filters, type: 'Consumer'})}
-                      className="justify-start"
+                      className={cn(
+                        "justify-start",
+                        filters.type === 'Consumer' ? "border-kaas-pink text-kaas-pink" : ""
+                      )}
                     >
                       <User className="mr-2 h-4 w-4" />
                       Consumer
@@ -330,10 +339,13 @@ const Deals = () => {
                   <Label className="mb-2 block">Country</Label>
                   <div className="grid grid-cols-1 gap-2">
                     <Button 
-                      variant={filters.country === 'all' ? "kaas" : "outline"} 
+                      variant={filters.country === 'all' ? "outline" : "outline"} 
                       size="sm"
                       onClick={() => setFilters({...filters, country: 'all'})}
-                      className="justify-start"
+                      className={cn(
+                        "justify-start",
+                        filters.country === 'all' ? "border-kaas-pink text-kaas-pink" : ""
+                      )}
                     >
                       <MapPin className="mr-2 h-4 w-4" />
                       All Countries
@@ -341,10 +353,13 @@ const Deals = () => {
                     {countries.map((country) => (
                       <Button 
                         key={country}
-                        variant={filters.country === country ? "kaas" : "outline"} 
+                        variant={filters.country === country ? "outline" : "outline"} 
                         size="sm"
                         onClick={() => setFilters({...filters, country})}
-                        className="justify-start"
+                        className={cn(
+                          "justify-start",
+                          filters.country === country ? "border-kaas-pink text-kaas-pink" : ""
+                        )}
                       >
                         <MapPin className="mr-2 h-4 w-4" />
                         {country}
@@ -359,28 +374,37 @@ const Deals = () => {
                   <Label className="mb-2 block">Deal Status</Label>
                   <div className="grid grid-cols-1 gap-2">
                     <Button 
-                      variant={filters.status === 'all' ? "kaas" : "outline"} 
+                      variant={filters.status === 'all' ? "outline" : "outline"} 
                       size="sm"
                       onClick={() => setFilters({...filters, status: 'all'})}
-                      className="justify-start"
+                      className={cn(
+                        "justify-start",
+                        filters.status === 'all' ? "border-kaas-pink text-kaas-pink" : ""
+                      )}
                     >
                       <Briefcase className="mr-2 h-4 w-4" />
                       All Deals
                     </Button>
                     <Button 
-                      variant={filters.status === 'raising' ? "kaas" : "outline"} 
+                      variant={filters.status === 'raising' ? "outline" : "outline"} 
                       size="sm"
                       onClick={() => setFilters({...filters, status: 'raising'})}
-                      className="justify-start"
+                      className={cn(
+                        "justify-start",
+                        filters.status === 'raising' ? "border-kaas-pink text-kaas-pink" : ""
+                      )}
                     >
                       <TrendingUp className="mr-2 h-4 w-4" />
                       Now Raising
                     </Button>
                     <Button 
-                      variant={filters.status === 'closed' ? "kaas" : "outline"} 
+                      variant={filters.status === 'closed' ? "outline" : "outline"} 
                       size="sm"
                       onClick={() => setFilters({...filters, status: 'closed'})}
-                      className="justify-start"
+                      className={cn(
+                        "justify-start",
+                        filters.status === 'closed' ? "border-kaas-pink text-kaas-pink" : ""
+                      )}
                     >
                       <Check className="mr-2 h-4 w-4" />
                       Closed Rounds

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -64,9 +63,6 @@ const InvestorSignupModal = ({
   };
   
   const handleSubmit = () => {
-    // In a real application, this would send the data to a server
-    
-    // Store investor data in localStorage for persistence
     localStorage.setItem("kaasInvestorProfile", JSON.stringify(formData));
     
     toast.success("Investor profile created successfully!");
@@ -298,10 +294,6 @@ const InvestorSignupModal = ({
             {step === 1 ? (
               <div className="space-y-1">
                 <p className="font-bold text-2xl">Sign up as Investor</p>
-                <p className="text-kaas-pink font-medium text-lg flex items-center justify-center gap-2">
-                  <Sparkles className="h-5 w-5" />
-                  Join the KaasX Community
-                </p>
               </div>
             ) : (
               step < 4 ? (

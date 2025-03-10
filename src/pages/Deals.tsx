@@ -90,6 +90,12 @@ const Deals = () => {
     return 100 - progress;
   };
   
+  // Calculate funding left based on progress percentage
+  const calculateFundingLeft = (totalFunding, progressPercentage) => {
+    const fundingLeft = (totalFunding * (100 - progressPercentage)) / 100;
+    return `€${Math.round(fundingLeft)}K`;
+  };
+  
   const deals = [
     {
       id: 1,
@@ -109,7 +115,7 @@ const Deals = () => {
       },
       market: {
         size: "$2 Trillion",
-        fundingLeft: "€150K"
+        fundingLeft: calculateFundingLeft(150, 65)
       },
       founders: [
         {
@@ -144,7 +150,7 @@ const Deals = () => {
       },
       market: {
         size: "$4 Trillion",
-        fundingLeft: "€150K"
+        fundingLeft: calculateFundingLeft(150, 40)
       },
       founders: [
         {
@@ -179,7 +185,7 @@ const Deals = () => {
       },
       market: {
         size: "$1.5 Trillion",
-        fundingLeft: "€150K"
+        fundingLeft: calculateFundingLeft(150, 30)
       },
       founders: [
         {

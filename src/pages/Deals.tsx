@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -262,7 +261,7 @@ const Deals = () => {
               </Link>
               
               <Link to="/login">
-                <Button variant="outline" size="sm">
+                <Button variant="login" size="sm">
                   Login
                 </Button>
               </Link>
@@ -281,105 +280,95 @@ const Deals = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg border p-4 sticky top-20">
+            <Card className="overflow-hidden shadow-sm hover:shadow transition-shadow">
               <Collapsible
                 open={isFilterOpen}
                 onOpenChange={setIsFilterOpen}
                 className="w-full"
               >
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-medium text-lg">Filter Deals</h3>
+                <div className="flex items-center justify-between p-4 border-b border-border/60">
+                  <h3 className="font-medium flex items-center gap-2">
+                    <Filter className="h-4 w-4 text-kaas-pink" />
+                    Filter Deals
+                  </h3>
                   <CollapsibleTrigger asChild>
-                    <Button variant="ghost" size="sm" className="p-1 h-auto">
+                    <Button variant="ghost" size="sm" className="p-1 h-8 w-8 rounded-full">
                       {isFilterOpen ? (
-                        <ChevronUp className="h-4 w-4 text-slate-500" />
+                        <ChevronUp className="h-4 w-4" />
                       ) : (
-                        <ChevronDown className="h-4 w-4 text-slate-500" />
+                        <ChevronDown className="h-4 w-4" />
                       )}
                     </Button>
                   </CollapsibleTrigger>
                 </div>
                 
-                <CollapsibleContent className="space-y-4">
-                  <div>
-                    <Label className="mb-2 block">Deal Type</Label>
-                    <div className="grid grid-cols-1 gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => setFilters({...filters, type: 'all'})}
-                        className={cn(
-                          "justify-start",
-                          filters.type === 'all' ? "border-kaas-pink text-kaas-pink" : ""
-                        )}
-                      >
-                        <Briefcase className="mr-2 h-4 w-4" />
-                        All Types
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => setFilters({...filters, type: 'B2B'})}
-                        className={cn(
-                          "justify-start",
-                          filters.type === 'B2B' ? "border-kaas-pink text-kaas-pink" : ""
-                        )}
-                      >
-                        <Building className="mr-2 h-4 w-4" />
-                        B2B
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => setFilters({...filters, type: 'Consumer'})}
-                        className={cn(
-                          "justify-start",
-                          filters.type === 'Consumer' ? "border-kaas-pink text-kaas-pink" : ""
-                        )}
-                      >
-                        <User className="mr-2 h-4 w-4" />
-                        Consumer
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div>
-                    <Label className="mb-2 block">Country</Label>
-                    <div className="grid grid-cols-1 gap-2">
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => setFilters({...filters, country: 'all'})}
-                        className={cn(
-                          "justify-start",
-                          filters.country === 'all' ? "border-kaas-pink text-kaas-pink" : ""
-                        )}
-                      >
-                        <MapPin className="mr-2 h-4 w-4" />
-                        All Countries
-                      </Button>
-                      {countries.map((country) => (
+                <CollapsibleContent>
+                  <div className="p-4 space-y-6">
+                    <div>
+                      <Label className="mb-3 block text-sm font-medium text-muted-foreground">Deal Type</Label>
+                      <div className="grid grid-cols-1 gap-2">
                         <Button 
-                          key={country}
-                          variant="outline" 
+                          variant={filters.type === 'all' ? "kaas" : "outline"} 
                           size="sm"
-                          onClick={() => setFilters({...filters, country})}
-                          className={cn(
-                            "justify-start",
-                            filters.country === country ? "border-kaas-pink text-kaas-pink" : ""
-                          )}
+                          onClick={() => setFilters({...filters, type: 'all'})}
+                          className="justify-start"
+                        >
+                          <Briefcase className="mr-2 h-4 w-4" />
+                          All Types
+                        </Button>
+                        <Button 
+                          variant={filters.type === 'B2B' ? "kaas" : "outline"} 
+                          size="sm"
+                          onClick={() => setFilters({...filters, type: 'B2B'})}
+                          className="justify-start"
+                        >
+                          <Building className="mr-2 h-4 w-4" />
+                          B2B
+                        </Button>
+                        <Button 
+                          variant={filters.type === 'Consumer' ? "kaas" : "outline"} 
+                          size="sm"
+                          onClick={() => setFilters({...filters, type: 'Consumer'})}
+                          className="justify-start"
+                        >
+                          <User className="mr-2 h-4 w-4" />
+                          Consumer
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    <Separator className="bg-border/60" />
+                    
+                    <div>
+                      <Label className="mb-3 block text-sm font-medium text-muted-foreground">Country</Label>
+                      <div className="grid grid-cols-1 gap-2">
+                        <Button 
+                          variant={filters.country === 'all' ? "kaas" : "outline"} 
+                          size="sm"
+                          onClick={() => setFilters({...filters, country: 'all'})}
+                          className="justify-start"
                         >
                           <MapPin className="mr-2 h-4 w-4" />
-                          {country}
+                          All Countries
                         </Button>
-                      ))}
+                        {countries.map((country) => (
+                          <Button 
+                            key={country}
+                            variant={filters.country === country ? "kaas" : "outline"} 
+                            size="sm"
+                            onClick={() => setFilters({...filters, country})}
+                            className="justify-start"
+                          >
+                            <MapPin className="mr-2 h-4 w-4" />
+                            {country}
+                          </Button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </CollapsibleContent>
               </Collapsible>
-            </div>
+            </Card>
           </div>
           
           <div className="lg:col-span-3">

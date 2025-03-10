@@ -30,8 +30,8 @@ const InvestorSignupModal = ({
     email: "",
     profession: "",
     company: "",
-    investmentExperience: "",
-    investmentInterests: [],
+    investmentExperience: [] as string[],
+    investmentInterests: [] as string[],
     linkedinProfile: "",
     referralSource: ""
   });
@@ -61,8 +61,21 @@ const InvestorSignupModal = ({
     setFormData(prev => ({ ...prev, [name]: value }));
   };
   
-  const handleExperienceSelect = (value: string) => {
-    setFormData(prev => ({ ...prev, investmentExperience: value }));
+  const handleExperienceToggle = (experience: string) => {
+    setFormData(prev => {
+      const currentExperience = prev.investmentExperience as string[];
+      if (currentExperience.includes(experience)) {
+        return { 
+          ...prev, 
+          investmentExperience: currentExperience.filter(item => item !== experience) 
+        };
+      } else {
+        return { 
+          ...prev, 
+          investmentExperience: [...currentExperience, experience] 
+        };
+      }
+    });
   };
   
   const handleIndustryToggle = (industry: string) => {
@@ -88,7 +101,7 @@ const InvestorSignupModal = ({
     } else if (step === 2) {
       return formData.profession && formData.company;
     } else if (step === 3) {
-      return formData.investmentExperience && 
+      return (formData.investmentExperience as string[]).length > 0 && 
              (formData.investmentInterests as string[]).length > 0;
     }
     return true;
@@ -236,29 +249,26 @@ const InvestorSignupModal = ({
             <div className="space-y-2">
               <Label className="flex items-center gap-2 mb-2">
                 <Landmark className="h-4 w-4 text-kaas-pink" />
-                Investment Experience *
+                Investment Experience * ({formData.investmentExperience.length} selected)
               </Label>
-              <Tabs 
-                defaultValue={formData.investmentExperience || ""}
-                onValueChange={handleExperienceSelect}
-                className="w-full"
-              >
-                <TabsList className="grid grid-cols-3 gap-1 w-full h-auto p-1 mb-2">
-                  {investmentExperienceOptions.map((option) => (
-                    <TabsTrigger 
-                      key={option}
-                      value={option}
-                      className={`px-3 py-2 text-xs md:text-sm whitespace-normal h-auto ${
-                        formData.investmentExperience === option 
-                          ? "bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-white" 
-                          : "text-gray-700"
+              <div className="flex flex-wrap gap-2">
+                {investmentExperienceOptions.map((experience) => {
+                  const isSelected = (formData.investmentExperience as string[]).includes(experience);
+                  return (
+                    <Badge
+                      key={experience}
+                      onClick={() => handleExperienceToggle(experience)}
+                      className={`cursor-pointer px-3 py-1 border ${
+                        isSelected 
+                          ? "bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-white border-transparent" 
+                          : "bg-white text-gray-700 border-gray-200 hover:bg-gray-100"
                       }`}
                     >
-                      {option}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </Tabs>
+                      {experience}
+                    </Badge>
+                  );
+                })}
+              </div>
             </div>
             
             <div className="space-y-2">
@@ -333,11 +343,11 @@ const InvestorSignupModal = ({
                   <span className="text-slate-500">Company:</span>
                   <span className="font-medium">{formData.company}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex flex-col">
                   <span className="text-slate-500">Experience:</span>
-                  <span className="font-medium">{formData.investmentExperience}</span>
+                  <span className="font-medium">{(formData.investmentExperience as string[]).join(", ")}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex flex-col">
                   <span className="text-slate-500">Interests:</span>
                   <span className="font-medium">{(formData.investmentInterests as string[]).join(", ")}</span>
                 </li>

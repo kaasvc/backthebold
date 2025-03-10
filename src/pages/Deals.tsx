@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -325,10 +326,10 @@ const Deals = () => {
                       {deal.founders.map((founder, index) => (
                         <div 
                           key={index} 
-                          className="w-9 h-9 rounded-full overflow-hidden border-2 border-white shadow-sm mb-1"
+                          className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm mb-1"
                           title={`${founder.fullName} - ${founder.title}`}
                           style={{ 
-                            marginLeft: index === 0 ? '0' : '-8px',
+                            marginLeft: index === 0 ? '0' : '-10px',
                             zIndex: deal.founders.length - index
                           }}
                         >
@@ -352,7 +353,9 @@ const Deals = () => {
                   </div>
                   <div className="flex justify-between mt-1 text-xs">
                     <p className="text-muted-foreground">{deal.progress}% funded</p>
-                    <p className="font-medium text-kaas-pink">Only {deal.market.fundingLeft} left</p>
+                    <p className="font-medium text-kaas-pink">
+                      {deal.progress >= 50 ? "Only " : ""}{deal.market.fundingLeft} left
+                    </p>
                   </div>
                 </div>
                 

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp } from "lucide-react";
+import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp, Search } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -24,6 +25,7 @@ const Deals = () => {
   const [pendingDealAction, setPendingDealAction] = useState<{type: 'view' | 'invest', name: string} | null>(null);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [dealSearchTerm, setDealSearchTerm] = useState("");
   
   const [filters, setFilters] = useState({
     type: "all",
@@ -232,7 +234,9 @@ const Deals = () => {
   const filteredDeals = deals.filter(deal => {
     return (
       (filters.type === 'all' || deal.type === filters.type) &&
-      (filters.country === 'all' || deal.location === filters.country)
+      (filters.country === 'all' || deal.location === filters.country) &&
+      (dealSearchTerm === "" || deal.name.toLowerCase().includes(dealSearchTerm.toLowerCase()) || 
+       deal.description.toLowerCase().includes(dealSearchTerm.toLowerCase()))
     );
   });
 
@@ -264,7 +268,7 @@ const Deals = () => {
               </Link>
               
               <Link to="/login">
-                <Button variant="login" size="sm">
+                <Button variant="kaas" size="sm">
                   Login
                 </Button>
               </Link>
@@ -370,7 +374,7 @@ const Deals = () => {
           </Collapsible>
         </Card>
         
-        {/* Search section moved with deal cards */}
+        {/* Search section */}
         <div className="mb-6 flex items-center justify-between">
           <div className="relative w-full md:w-64">
             <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />

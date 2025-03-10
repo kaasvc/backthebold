@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -311,26 +310,13 @@ const Deals = () => {
                 <div className="mb-4">
                   <div className="flex items-center mb-2">
                     <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                    <span className="text-xs text-slate-600">Founded in 2024 by: {deal.founders.map(f => f.title).join(" + ")}</span>
+                    <span className="text-xs text-slate-600">Founded in 2024 by:</span>
                   </div>
-                  
-                  <div className="flex items-center gap-2">
-                    {deal.founders.map((founder, index) => (
-                      <div key={index} className="flex flex-col items-center">
-                        <div 
-                          className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm mb-1"
-                          title={`${founder.fullName} - ${founder.title}`}
-                        >
-                          <img 
-                            src={founder.image} 
-                            alt={founder.name} 
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <span className="text-xs font-medium">{founder.name}</span>
-                      </div>
+                  <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5">
+                    {deal.founders.map((founder, idx) => (
+                      <li key={idx}>{founder.title}</li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
                 
                 <div className="mb-3">

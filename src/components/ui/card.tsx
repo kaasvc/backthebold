@@ -77,4 +77,31 @@ const CardFooter = React.forwardRef<
 ))
 CardFooter.displayName = "CardFooter"
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+const CardHighlight = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & { color?: "blue" | "pink" | "green" | "purple" | "orange" | "yellow" }
+>(({ className, color = "blue", ...props }, ref) => {
+  const colorClasses = {
+    blue: "bg-soft-blue",
+    pink: "bg-soft-pink",
+    green: "bg-soft-green",
+    purple: "bg-soft-purple",
+    orange: "bg-soft-orange",
+    yellow: "bg-soft-yellow"
+  };
+
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "rounded-md p-3",
+        colorClasses[color],
+        className
+      )}
+      {...props}
+    />
+  );
+})
+CardHighlight.displayName = "CardHighlight"
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, CardHighlight }

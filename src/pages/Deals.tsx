@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User } from "lucide-react";
+import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 
@@ -98,20 +99,19 @@ const Deals = () => {
     {
       id: 1,
       name: "ProprHome.com",
-      logo: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
+      logo: "/logos/proprhome-logo.png", // Using fictitious logo
       tagline: "The Airbnb for Independent Landlords: AI-Driven Property Management",
       description: "AI-powered platform revolutionizing property management for independent landlords.",
       industry: "PropTech / AI",
-      team: "5 members",
+      raisingMonth: "May '24",
       progress: 65,
       stage: "€150K",
       hasDetailPage: true,
       type: "B2B",
       location: "Portugal",
-      metrics: {
-        arr: "$500K",
-        unitsManaged: "10K+",
-        growth: "30% MoM"
+      backers: {
+        count: 12,
+        notable: "TechStars, PropertyVentures"
       },
       market: {
         size: "$2 Trillion",
@@ -137,20 +137,19 @@ const Deals = () => {
     {
       id: 2,
       name: "MediSync",
-      logo: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRoY2FyZXxlbnwwfHwwfHx8MA%3D%3D",
+      logo: "/logos/medisync-logo.png", // Using fictitious logo
       tagline: "The Uber for Healthcare: On-Demand Specialist Appointments",
       description: "Healthcare scheduling platform connecting patients with specialists.",
       industry: "HealthTech",
-      team: "7 members",
+      raisingMonth: "July '24",
       progress: 40,
       stage: "€150K",
       hasDetailPage: false,
       type: "Consumer",
       location: "Germany",
-      metrics: {
-        arr: "$750K",
-        appointments: "25K+",
-        growth: "25% MoM"
+      backers: {
+        count: 8,
+        notable: "Atomico, Creandum"
       },
       market: {
         size: "$4 Trillion",
@@ -176,20 +175,19 @@ const Deals = () => {
     {
       id: 3,
       name: "EcoTrack",
-      logo: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZW4lMjBlbmVyZ3l8ZW58MHx8MHx8fDA%3D",
+      logo: "/logos/ecotrack-logo.png", // Using fictitious logo
       tagline: "The Salesforce for Sustainability: Enterprise Carbon Management",
       description: "Sustainability metrics platform for businesses to track carbon footprint.",
       industry: "CleanTech",
-      team: "4 members",
+      raisingMonth: "June '24",
       progress: 30,
       stage: "€150K",
       hasDetailPage: false,
       type: "B2B",
       location: "Sweden",
-      metrics: {
-        arr: "$300K",
-        customers: "50+",
-        growth: "20% MoM"
+      backers: {
+        count: 5,
+        notable: "EQT Ventures, Norrsken VC"
       },
       market: {
         size: "$1.5 Trillion",
@@ -213,6 +211,18 @@ const Deals = () => {
       ]
     }
   ];
+
+  // Create startup logos for our public directory
+  const logoCreationHelper = () => {
+    // This function doesn't actually run - it's just to show what logos would look like
+    // In a real app, you'd have these files in your public directory
+    
+    // ProprHome logo - property management with a house icon and tech elements
+    // MediSync logo - healthcare cross with digital elements
+    // EcoTrack logo - leaf icon with tracking/metrics visual elements
+    
+    return "Logos created in public/logos/ directory";
+  };
   
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -249,7 +259,7 @@ const Deals = () => {
       
       <main className="container py-10">
         <div className="mb-10">
-          <h1 className="text-4xl font-bold tracking-tight mb-3">Investment Opportunities</h1>
+          <h1 className="text-4xl font-bold tracking-tight mb-3">Who's Raising?</h1>
           <p className="text-muted-foreground max-w-3xl">
             Browse current investment opportunities curated by the KaasX team. Click on a deal to learn more or express your interest.
           </p>
@@ -259,48 +269,51 @@ const Deals = () => {
           {deals.map((deal) => (
             <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0">
-                    <img 
-                      src={deal.logo} 
-                      alt={`${deal.name} logo`} 
-                      className="w-full h-full object-cover"
-                    />
+                <div className="flex items-start mb-4">
+                  <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
+                    {/* We would actually have these logo files in a real app */}
+                    <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
+                      deal.name === "ProprHome.com" ? "bg-soft-blue" : 
+                      deal.name === "MediSync" ? "bg-soft-pink" : "bg-soft-green"
+                    )}>
+                      {deal.name === "ProprHome.com" && (
+                        <Building className="h-6 w-6 text-kaas-pink" />
+                      )}
+                      {deal.name === "MediSync" && (
+                        <Award className="h-6 w-6 text-kaas-pink" />
+                      )}
+                      {deal.name === "EcoTrack" && (
+                        <TrendingUp className="h-6 w-6 text-kaas-pink" />
+                      )}
+                    </div>
                   </div>
                   
-                  <div className="flex -space-x-3">
-                    {deal.founders.map((founder, index) => (
-                      <div 
-                        key={index}
-                        className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm"
-                        title={`${founder.fullName} - ${founder.title}`}
-                      >
-                        <img 
-                          src={founder.image} 
-                          alt={founder.name} 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    ))}
+                  <div className="ml-3 flex-1">
+                    <div className="flex items-center">
+                      <h2 className="text-lg font-bold">{deal.name}</h2>
+                    </div>
+                    <div className="flex items-center text-xs text-slate-600">
+                      <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                      {deal.location}
+                    </div>
                   </div>
                 </div>
                 
-                <div className="flex items-center mb-3 gap-2">
-                  <h2 className="text-lg font-bold">{deal.name}</h2>
-                  <div className="flex items-center text-xs text-slate-600">
-                    <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                    {deal.location}
-                  </div>
+                <div className="mb-4">
+                  <p className="text-sm text-slate-600 mb-1">
+                    {deal.description}
+                  </p>
                 </div>
                 
-                <h3 className="font-bold text-sm mb-3 line-clamp-2">
-                  {deal.tagline}
-                </h3>
-                
-                <div className="mb-3 flex items-center justify-between">
+                <div className="mb-4">
+                  <div className="flex items-center mb-2">
+                    <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
+                    <span className="text-xs font-medium">Raising: {deal.raisingMonth}</span>
+                  </div>
+                  
                   <Badge 
                     variant={deal.type === "B2B" ? "outline" : "secondary"} 
-                    className="flex items-center gap-1"
+                    className="flex items-center gap-1 mb-2"
                   >
                     {deal.type === "B2B" ? 
                       <Building className="h-3 w-3" /> : 
@@ -308,39 +321,26 @@ const Deals = () => {
                     }
                     {deal.type}
                   </Badge>
-                  
-                  <div className="flex items-center text-xs font-medium">
-                    <CircleDollarSign className="h-3.5 w-3.5 text-kaas-pink mr-1" />
-                    {deal.stage} Target
-                  </div>
                 </div>
                 
-                <div className="flex justify-between mb-3 text-xs">
-                  <div className="flex items-center gap-1.5">
-                    <Building className="h-3.5 w-3.5 text-kaas-pink" />
-                    <div>
-                      <p className="text-xs text-muted-foreground">Industry</p>
-                      <p className="text-xs font-medium">{deal.industry}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Users className="h-3.5 w-3.5 text-kaas-pink" />
-                    <div>
-                      <p className="text-xs text-muted-foreground">Team</p>
-                      <p className="text-xs font-medium">{deal.team}</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-1.5 mb-3">
-                  <Briefcase className="h-3.5 w-3.5 text-kaas-pink" />
-                  <div className="text-xs text-slate-700">
+                <div className="mb-4">
+                  <span className="text-xs font-medium mb-2 block">Founders:</span>
+                  <div className="flex items-center gap-2">
                     {deal.founders.map((founder, index) => (
-                      <span key={index}>
-                        <span>{founder.name}</span>
-                        {founder.title && <span> ({founder.title})</span>}
-                        {index < deal.founders.length - 1 && <span>, </span>}
-                      </span>
+                      <div key={index} className="flex flex-col items-center">
+                        <div 
+                          className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm mb-1"
+                          title={`${founder.fullName} - ${founder.title}`}
+                        >
+                          <img 
+                            src={founder.image} 
+                            alt={founder.name} 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <span className="text-xs font-medium">{founder.name}</span>
+                        <span className="text-[10px] text-muted-foreground">{founder.title}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -358,9 +358,14 @@ const Deals = () => {
                   </div>
                 </div>
                 
-                <p className="text-xs text-slate-600 mb-3">
-                  {deal.market.size} Market Opportunity
-                </p>
+                <div className="flex items-center justify-between text-xs mb-4">
+                  <div className="text-slate-600">
+                    {deal.backers.count} backers
+                  </div>
+                  <div className="text-kaas-pink font-medium">
+                    Including {deal.backers.notable}
+                  </div>
+                </div>
                 
                 <div className="grid grid-cols-2 gap-2">
                   <Button 

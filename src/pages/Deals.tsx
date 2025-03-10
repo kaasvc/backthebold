@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Building, Users, Briefcase, ChartBar, TrendingUp, Award, CircleDollarSign, Check } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import InvestorSignupModal from "@/components/InvestorSignupModal";
 
 const Deals = () => {
   const navigate = useNavigate();
@@ -16,8 +17,25 @@ const Deals = () => {
   const [commitAmount, setCommitAmount] = useState("");
   const [email, setEmail] = useState("");
   const [selectedDeal, setSelectedDeal] = useState("ProprHome.com");
+  const [showInvestorSignup, setShowInvestorSignup] = useState(false);
+  const [pendingDealAction, setPendingDealAction] = useState<{type: 'view' | 'invest', name: string} | null>(null);
+  const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
+  
+  useEffect(() => {
+    // Check if investor has already registered
+    const investorProfile = localStorage.getItem("kaasInvestorProfile");
+    if (investorProfile) {
+      setIsInvestorRegistered(true);
+    }
+  }, []);
   
   const handleViewDetails = (dealName) => {
+    if (!isInvestorRegistered) {
+      setPendingDealAction({type: 'view', name: dealName});
+      setShowInvestorSignup(true);
+      return;
+    }
+    
     if (dealName === "ProprHome.com") {
       navigate("/startup/proprhome");
     } else {
@@ -26,8 +44,34 @@ const Deals = () => {
   };
   
   const handleCommit = (dealName) => {
+    if (!isInvestorRegistered) {
+      setPendingDealAction({type: 'invest', name: dealName});
+      setShowInvestorSignup(true);
+      return;
+    }
+    
     setSelectedDeal(dealName);
     setShowCommitDialog(true);
+  };
+  
+  const handleInvestorProfileComplete = (dealName) => {
+    setShowInvestorSignup(false);
+    setIsInvestorRegistered(true);
+    
+    if (pendingDealAction) {
+      if (pendingDealAction.type === 'view') {
+        if (dealName === "ProprHome.com") {
+          navigate("/startup/proprhome");
+        } else {
+          toast.info("Details coming soon for this startup");
+        }
+      } else if (pendingDealAction.type === 'invest') {
+        setSelectedDeal(dealName);
+        setShowCommitDialog(true);
+      }
+      
+      setPendingDealAction(null);
+    }
   };
   
   const handleSubmitCommitment = () => {
@@ -374,6 +418,14 @@ const Deals = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      
+      {/* Investor Signup Modal */}
+      <InvestorSignupModal 
+        isOpen={showInvestorSignup}
+        onClose={() => setShowInvestorSignup(false)}
+        dealName={pendingDealAction?.name || ""}
+        onComplete={handleInvestorProfileComplete}
+      />
       
       <footer className="border-t border-border/40 bg-background py-6">
         <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">

@@ -35,8 +35,8 @@ const Landing = () => {
       <main className="container py-16">
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-4">Welcome to KaasX</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Connecting innovative founders with strategic investors
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            We invest in founders who 10X people's lives, backing them with capital, network, and ongoing collaboration—before, during, and after the raise
           </p>
         </div>
         

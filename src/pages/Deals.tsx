@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -212,15 +211,7 @@ const Deals = () => {
     }
   ];
 
-  // Create startup logos for our public directory
   const logoCreationHelper = () => {
-    // This function doesn't actually run - it's just to show what logos would look like
-    // In a real app, you'd have these files in your public directory
-    
-    // ProprHome logo - property management with a house icon and tech elements
-    // MediSync logo - healthcare cross with digital elements
-    // EcoTrack logo - leaf icon with tracking/metrics visual elements
-    
     return "Logos created in public/logos/ directory";
   };
   
@@ -271,7 +262,6 @@ const Deals = () => {
               <CardContent className="p-4">
                 <div className="flex items-start mb-4">
                   <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
-                    {/* We would actually have these logo files in a real app */}
                     <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
                       deal.name === "ProprHome.com" ? "bg-soft-blue" : 
                       deal.name === "MediSync" ? "bg-soft-pink" : "bg-soft-green"
@@ -292,9 +282,21 @@ const Deals = () => {
                     <div className="flex items-center">
                       <h2 className="text-lg font-bold">{deal.name}</h2>
                     </div>
-                    <div className="flex items-center text-xs text-slate-600">
-                      <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                      {deal.location}
+                    <div className="flex items-center gap-2 text-xs text-slate-600">
+                      <div className="flex items-center">
+                        <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                        {deal.location}
+                      </div>
+                      <Badge 
+                        variant={deal.type === "B2B" ? "outline" : "secondary"} 
+                        className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                      >
+                        {deal.type === "B2B" ? 
+                          <Building className="h-2.5 w-2.5" /> : 
+                          <User className="h-2.5 w-2.5" />
+                        }
+                        {deal.type}
+                      </Badge>
                     </div>
                   </div>
                 </div>
@@ -308,23 +310,9 @@ const Deals = () => {
                 <div className="mb-4">
                   <div className="flex items-center mb-2">
                     <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                    <span className="text-xs font-medium">Raising: {deal.raisingMonth}</span>
+                    <span className="text-xs font-medium">Launched in 2024 by:</span>
                   </div>
                   
-                  <Badge 
-                    variant={deal.type === "B2B" ? "outline" : "secondary"} 
-                    className="flex items-center gap-1 mb-2"
-                  >
-                    {deal.type === "B2B" ? 
-                      <Building className="h-3 w-3" /> : 
-                      <User className="h-3 w-3" />
-                    }
-                    {deal.type}
-                  </Badge>
-                </div>
-                
-                <div className="mb-4">
-                  <span className="text-xs font-medium mb-2 block">Founders:</span>
                   <div className="flex items-center gap-2">
                     {deal.founders.map((founder, index) => (
                       <div key={index} className="flex flex-col items-center">
@@ -494,3 +482,4 @@ const Deals = () => {
 };
 
 export default Deals;
+

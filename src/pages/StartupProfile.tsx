@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -96,10 +95,6 @@ const StartupProfile = () => {
                 <div className="flex flex-wrap items-center gap-3 mb-2">
                   <h1 className="text-3xl font-bold tracking-tight">ProprHome.com</h1>
                   <Badge className="bg-kaas-pink hover:bg-kaas-pink">Pre-Seed</Badge>
-                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <span className="text-base">🇵🇹</span>
-                    <span>Portugal</span>
-                  </div>
                 </div>
                 <p className="text-lg text-muted-foreground mb-4 max-w-2xl">
                   AI-powered platform revolutionizing property management for independent landlords and small property managers.
@@ -540,9 +535,8 @@ const StartupProfile = () => {
                   </div>
                   
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Location</span>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-base">🇵🇹</span>
+                    <span className="text-muted-foreground">HQ</span>
+                    <div className="flex items-center">
                       <span className="font-medium">Portugal</span>
                     </div>
                   </div>

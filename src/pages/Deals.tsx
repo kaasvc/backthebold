@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, ChartBar, TrendingUp, Award, CircleDollarSign, Check } from "lucide-react";
+import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 
@@ -100,6 +100,7 @@ const Deals = () => {
     {
       id: 1,
       name: "ProprHome.com",
+      logo: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
       tagline: "The Airbnb for Independent Landlords: AI-Driven Property Management",
       description: "AI-powered platform revolutionizing property management for independent landlords.",
       image: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
@@ -108,6 +109,8 @@ const Deals = () => {
       progress: 65,
       stage: "€150K",
       hasDetailPage: true,
+      type: "B2B",
+      location: "Portugal",
       metrics: {
         arr: "$500K",
         unitsManaged: "10K+",
@@ -122,19 +125,22 @@ const Deals = () => {
           name: "Sarah",
           fullName: "Sarah Chen",
           title: "ex-Airbnb PM",
-          linkedin: "https://linkedin.com/in/sarahchen"
+          linkedin: "https://linkedin.com/in/sarahchen",
+          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         },
         {
           name: "David",
           fullName: "David Rodriguez",
           title: "MIT AI Lab",
-          linkedin: "https://linkedin.com/in/davidrodriguez"
+          linkedin: "https://linkedin.com/in/davidrodriguez",
+          image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         }
       ]
     },
     {
       id: 2,
       name: "MediSync",
+      logo: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRoY2FyZXxlbnwwfHwwfHx8MA%3D%3D",
       tagline: "The Uber for Healthcare: On-Demand Specialist Appointments",
       description: "Healthcare scheduling platform connecting patients with specialists.",
       image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRoY2FyZXxlbnwwfHwwfHx8MA%3D%3D",
@@ -143,6 +149,8 @@ const Deals = () => {
       progress: 40,
       stage: "€150K",
       hasDetailPage: false,
+      type: "Consumer",
+      location: "Germany",
       metrics: {
         arr: "$750K",
         appointments: "25K+",
@@ -157,19 +165,22 @@ const Deals = () => {
           name: "Maya",
           fullName: "Dr. Maya Johnson",
           title: "Stanford Med",
-          linkedin: "https://linkedin.com/in/mayajohnson"
+          linkedin: "https://linkedin.com/in/mayajohnson",
+          image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
         },
         {
           name: "Raj",
           fullName: "Raj Patel",
           title: "ex-Zocdoc CTO",
-          linkedin: "https://linkedin.com/in/rajpatel"
+          linkedin: "https://linkedin.com/in/rajpatel",
+          image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
         }
       ]
     },
     {
       id: 3,
       name: "EcoTrack",
+      logo: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZW4lMjBlbmVyZ3l8ZW58MHx8MHx8fDA%3D",
       tagline: "The Salesforce for Sustainability: Enterprise Carbon Management",
       description: "Sustainability metrics platform for businesses to track carbon footprint.",
       image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZW4lMjBlbmVyZ3l8ZW58MHx8MHx8fDA%3D",
@@ -178,6 +189,8 @@ const Deals = () => {
       progress: 30,
       stage: "€150K",
       hasDetailPage: false,
+      type: "B2B",
+      location: "Sweden",
       metrics: {
         arr: "$300K",
         customers: "50+",
@@ -192,13 +205,15 @@ const Deals = () => {
           name: "Emma",
           fullName: "Emma Torres",
           title: "Climate Scientist",
-          linkedin: "https://linkedin.com/in/emmatorres"
+          linkedin: "https://linkedin.com/in/emmatorres",
+          image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
         },
         {
           name: "Alex",
           fullName: "Alex Kim",
           title: "Serial CleanTech Entrepreneur",
-          linkedin: "https://linkedin.com/in/alexkim"
+          linkedin: "https://linkedin.com/in/alexkim",
+          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         }
       ]
     }
@@ -258,7 +273,34 @@ const Deals = () => {
                   <Badge className="bg-red-500 hover:bg-red-600 mb-1">
                     Only {getPercentageLeft(deal.progress)}% left
                   </Badge>
-                  <h2 className="text-lg font-bold text-white">{deal.name}</h2>
+                  
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white flex-shrink-0">
+                      <img 
+                        src={deal.logo} 
+                        alt={`${deal.name} logo`} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <h2 className="text-lg font-bold text-white">{deal.name}</h2>
+                  </div>
+                </div>
+                
+                {/* Founder images in small overlapping circles */}
+                <div className="absolute top-3 right-3 flex -space-x-2">
+                  {deal.founders.map((founder, index) => (
+                    <div 
+                      key={index}
+                      className="w-8 h-8 rounded-full overflow-hidden border-2 border-white"
+                      title={founder.fullName}
+                    >
+                      <img 
+                        src={founder.image} 
+                        alt={founder.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
               
@@ -267,14 +309,22 @@ const Deals = () => {
                   {deal.tagline}
                 </h3>
                 
-                <div className="mb-3 p-2 bg-slate-50 rounded-md">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <TrendingUp className="h-3.5 w-3.5 text-kaas-pink" />
-                    <p className="text-xs font-semibold">Key Metrics</p>
+                <div className="mb-3 flex items-center justify-between">
+                  <Badge 
+                    variant={deal.type === "B2B" ? "outline" : "secondary"} 
+                    className="flex items-center gap-1"
+                  >
+                    {deal.type === "B2B" ? 
+                      <Building className="h-3 w-3" /> : 
+                      <User className="h-3 w-3" />
+                    }
+                    {deal.type}
+                  </Badge>
+                  
+                  <div className="flex items-center text-xs text-slate-600">
+                    <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                    {deal.location}
                   </div>
-                  <p className="text-xs text-slate-700">
-                    {deal.metrics.arr} ARR | {deal.metrics.unitsManaged || deal.metrics.appointments || deal.metrics.customers} | Growing {deal.metrics.growth}
-                  </p>
                 </div>
                 
                 <div className="flex justify-between mb-3 text-xs">

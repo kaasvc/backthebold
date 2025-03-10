@@ -126,6 +126,14 @@ const InvestorSignupModal = ({
     onComplete(dealName);
   };
   
+  const handleBypass = () => {
+    localStorage.setItem("kaasInvestorBypass", "true");
+    if (dealName === "ProprHome.com") {
+      navigate("/startup/proprhome");
+    }
+    onClose();
+  };
+  
   const renderStepContent = () => {
     switch (step) {
       case 1:
@@ -139,6 +147,15 @@ const InvestorSignupModal = ({
               <p className="text-sm text-gray-700">
                 Get exclusive early access to promising startups and connect with visionary founders. Your profile helps founders understand your potential strategic value beyond capital.
               </p>
+            </div>
+            
+            <div className="text-center">
+              <button
+                onClick={handleBypass}
+                className="text-sm text-muted-foreground hover:text-primary underline mb-4"
+              >
+                Skip for now (temporary)
+              </button>
             </div>
             
             <div className="space-y-2">

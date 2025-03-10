@@ -22,7 +22,8 @@ const Deals = () => {
   
   useEffect(() => {
     const investorProfile = localStorage.getItem("kaasInvestorProfile");
-    if (investorProfile) {
+    const investorBypass = localStorage.getItem("kaasInvestorBypass");
+    if (investorProfile || investorBypass) {
       setIsInvestorRegistered(true);
     }
   }, []);

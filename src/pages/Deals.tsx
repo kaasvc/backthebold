@@ -309,24 +309,24 @@ const Deals = () => {
                 </div>
                 
                 <div className="mb-4">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 mr-4">
                       <div className="flex items-center mb-2">
                         <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
                         <span className="text-xs text-slate-600">Founded in 2024 by:</span>
                       </div>
                       <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5">
-                        {deal.founders.map((founder, idx) => (
-                          <li key={idx}>{founder.title}</li>
+                        {deal.founders.slice(0, 3).map((founder, idx) => (
+                          <li key={idx} className="truncate">{founder.title}</li>
                         ))}
                       </ul>
                     </div>
                     
-                    <div className="flex items-center h-14 ml-2">
+                    <div className="flex items-center justify-center">
                       {deal.founders.map((founder, index) => (
                         <div 
                           key={index} 
-                          className="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm mb-1"
+                          className="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm"
                           title={`${founder.fullName} - ${founder.title}`}
                           style={{ 
                             marginLeft: index === 0 ? '0' : '-12px',

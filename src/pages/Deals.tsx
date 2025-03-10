@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,6 @@ const Deals = () => {
   const [pendingDealAction, setPendingDealAction] = useState<{type: 'view' | 'invest', name: string} | null>(null);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
   
-  // Filter states
   const [filters, setFilters] = useState({
     type: "all",
     country: "all",
@@ -295,7 +293,7 @@ const Deals = () => {
                   <Label className="mb-2 block">Deal Type</Label>
                   <div className="grid grid-cols-1 gap-2">
                     <Button 
-                      variant={filters.type === 'all' ? "outline" : "outline"} 
+                      variant="outline" 
                       size="sm"
                       onClick={() => setFilters({...filters, type: 'all'})}
                       className={cn(
@@ -307,7 +305,7 @@ const Deals = () => {
                       All Types
                     </Button>
                     <Button 
-                      variant={filters.type === 'B2B' ? "outline" : "outline"} 
+                      variant="outline" 
                       size="sm"
                       onClick={() => setFilters({...filters, type: 'B2B'})}
                       className={cn(
@@ -319,7 +317,7 @@ const Deals = () => {
                       B2B
                     </Button>
                     <Button 
-                      variant={filters.type === 'Consumer' ? "outline" : "outline"} 
+                      variant="outline" 
                       size="sm"
                       onClick={() => setFilters({...filters, type: 'Consumer'})}
                       className={cn(
@@ -339,7 +337,7 @@ const Deals = () => {
                   <Label className="mb-2 block">Country</Label>
                   <div className="grid grid-cols-1 gap-2">
                     <Button 
-                      variant={filters.country === 'all' ? "outline" : "outline"} 
+                      variant="outline" 
                       size="sm"
                       onClick={() => setFilters({...filters, country: 'all'})}
                       className={cn(
@@ -353,7 +351,7 @@ const Deals = () => {
                     {countries.map((country) => (
                       <Button 
                         key={country}
-                        variant={filters.country === country ? "outline" : "outline"} 
+                        variant="outline" 
                         size="sm"
                         onClick={() => setFilters({...filters, country})}
                         className={cn(
@@ -374,7 +372,7 @@ const Deals = () => {
                   <Label className="mb-2 block">Deal Status</Label>
                   <div className="grid grid-cols-1 gap-2">
                     <Button 
-                      variant={filters.status === 'all' ? "outline" : "outline"} 
+                      variant="outline" 
                       size="sm"
                       onClick={() => setFilters({...filters, status: 'all'})}
                       className={cn(
@@ -386,7 +384,7 @@ const Deals = () => {
                       All Deals
                     </Button>
                     <Button 
-                      variant={filters.status === 'raising' ? "outline" : "outline"} 
+                      variant="outline" 
                       size="sm"
                       onClick={() => setFilters({...filters, status: 'raising'})}
                       className={cn(
@@ -398,7 +396,7 @@ const Deals = () => {
                       Now Raising
                     </Button>
                     <Button 
-                      variant={filters.status === 'closed' ? "outline" : "outline"} 
+                      variant="outline" 
                       size="sm"
                       onClick={() => setFilters({...filters, status: 'closed'})}
                       className={cn(

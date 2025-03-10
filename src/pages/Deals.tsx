@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -270,7 +271,7 @@ const Deals = () => {
       
       <main className="container py-10">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold tracking-tight mb-3">Investment Opportunities</h1>
+          <h1 className="text-4xl font-bold tracking-tight mb-3">Live Deals</h1>
           <p className="text-muted-foreground max-w-3xl">
             Browse current investment opportunities curated by the KaasX team. Click on a deal to learn more or express your interest.
           </p>
@@ -411,8 +412,11 @@ const Deals = () => {
                               {deal.location}
                             </div>
                             <Badge 
-                              variant={deal.type === "B2B" ? "outline" : "secondary"} 
-                              className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                              variant="outline"
+                              className={cn(
+                                "flex items-center gap-1 text-[10px] py-0 px-1.5 h-4",
+                                deal.type === "B2B" ? "" : ""
+                              )}
                             >
                               {deal.type === "B2B" ? 
                                 <Building className="h-2.5 w-2.5" /> : 
@@ -421,7 +425,7 @@ const Deals = () => {
                               {deal.type}
                             </Badge>
                             <Badge 
-                              variant={deal.status === "raising" ? "kaas" : "outline"} 
+                              variant={deal.status === "raising" ? "default" : "outline"} 
                               className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
                             >
                               {deal.status === "raising" ? 
@@ -495,8 +499,12 @@ const Deals = () => {
                         </div>
                         <div className="flex justify-between mt-1 text-xs">
                           <p className="text-muted-foreground">{deal.progress}% funded</p>
-                          <p className="font-medium text-kaas-pink">
-                            {deal.progress >= 50 ? "Only " : ""}{deal.market.fundingLeft} left
+                          <p className="text-black font-normal">
+                            {deal.progress >= 50 ? (
+                              <><span className="text-kaas-pink font-medium">Only </span>{deal.market.fundingLeft} left</>
+                            ) : (
+                              <>{deal.market.fundingLeft} left</>
+                            )}
                           </p>
                         </div>
                       </div>
@@ -522,9 +530,12 @@ const Deals = () => {
                           View Deal
                         </Button>
                         <Button 
-                          variant="kaas" 
+                          variant={deal.status === "closed" ? "outline" : "default"} 
                           size="sm" 
-                          className="w-full text-xs h-8"
+                          className={cn(
+                            "w-full text-xs h-8",
+                            deal.status === "raising" ? "bg-kaas-pink hover:bg-kaas-darkpink" : ""
+                          )}
                           onClick={() => handleCommit(deal.name)}
                           disabled={deal.status === "closed"}
                         >

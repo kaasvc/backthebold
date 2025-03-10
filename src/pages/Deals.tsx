@@ -316,10 +316,16 @@ const Deals = () => {
                       </div>
                       <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5 min-h-[4.5em]">
                         {deal.founders.slice(0, 3).map((founder, idx) => (
-                          <li key={idx} className="truncate">{founder.title}</li>
+                          <li key={idx} className="truncate flex items-start">
+                            <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
+                            <span>{founder.title}</span>
+                          </li>
                         ))}
                         {Array.from({ length: Math.max(0, 3 - deal.founders.length) }).map((_, idx) => (
-                          <li key={`empty-${idx}`} className="invisible">Empty space</li>
+                          <li key={`empty-${idx}`} className="invisible flex items-start h-[1.5em]">
+                            <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
+                            <span>Empty space</span>
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -328,7 +334,7 @@ const Deals = () => {
                       {deal.founders.map((founder, index) => (
                         <div 
                           key={index} 
-                          className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm"
+                          className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm"
                           title={`${founder.fullName} - ${founder.title}`}
                           style={{ 
                             marginLeft: index === 0 ? '0' : '-10px',

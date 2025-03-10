@@ -98,7 +98,7 @@ const Deals = () => {
     {
       id: 1,
       name: "ProprHome.com",
-      logo: "/logos/proprhome-logo.png", // Using fictitious logo
+      logo: "/logos/proprhome-logo.png",
       tagline: "The Airbnb for Independent Landlords: AI-Driven Property Management",
       description: "AI-powered platform revolutionizing property management for independent landlords.",
       industry: "PropTech / AI",
@@ -136,7 +136,7 @@ const Deals = () => {
     {
       id: 2,
       name: "MediSync",
-      logo: "/logos/medisync-logo.png", // Using fictitious logo
+      logo: "/logos/medisync-logo.png",
       tagline: "The Uber for Healthcare: On-Demand Specialist Appointments",
       description: "Healthcare scheduling platform connecting patients with specialists.",
       industry: "HealthTech",
@@ -174,7 +174,7 @@ const Deals = () => {
     {
       id: 3,
       name: "EcoTrack",
-      logo: "/logos/ecotrack-logo.png", // Using fictitious logo
+      logo: "/logos/ecotrack-logo.png",
       tagline: "The Salesforce for Sustainability: Enterprise Carbon Management",
       description: "Sustainability metrics platform for businesses to track carbon footprint.",
       industry: "CleanTech",
@@ -310,7 +310,7 @@ const Deals = () => {
                 <div className="mb-4">
                   <div className="flex items-center mb-2">
                     <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                    <span className="text-xs font-medium">Founded in 2024 by: {deal.founders.map(f => f.title).join(" + ")}</span>
+                    <span className="text-xs text-slate-600">Founded in 2024 by: {deal.founders.map(f => f.title).join(" + ")}</span>
                   </div>
                   
                   <div className="flex items-center gap-2">

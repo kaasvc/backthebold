@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp, Search } from "lucide-react";
+import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -25,11 +25,11 @@ const Deals = () => {
   const [pendingDealAction, setPendingDealAction] = useState<{type: 'view' | 'invest', name: string} | null>(null);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [dealSearchTerm, setDealSearchTerm] = useState("");
   
   const [filters, setFilters] = useState({
     type: "all",
-    country: "all"
+    country: "all",
+    year: "all"
   });
   
   useEffect(() => {
@@ -230,13 +230,13 @@ const Deals = () => {
   ];
 
   const countries = [...new Set(deals.map(deal => deal.location))];
+  const foundingYears = [...new Set(deals.map(deal => deal.foundedYear))];
   
   const filteredDeals = deals.filter(deal => {
     return (
       (filters.type === 'all' || deal.type === filters.type) &&
       (filters.country === 'all' || deal.location === filters.country) &&
-      (dealSearchTerm === "" || deal.name.toLowerCase().includes(dealSearchTerm.toLowerCase()) || 
-       deal.description.toLowerCase().includes(dealSearchTerm.toLowerCase()))
+      (filters.year === 'all' || deal.foundedYear === filters.year)
     );
   });
 
@@ -309,7 +309,7 @@ const Deals = () => {
             </div>
             
             <CollapsibleContent>
-              <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                   <Label className="mb-3 block text-sm font-medium text-muted-foreground">Deal Type</Label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -369,24 +369,37 @@ const Deals = () => {
                     ))}
                   </div>
                 </div>
+                
+                <div>
+                  <Label className="mb-3 block text-sm font-medium text-muted-foreground">Founded Year</Label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <Button 
+                      variant={filters.year === 'all' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, year: 'all'})}
+                      className="justify-start"
+                    >
+                      <Calendar className="mr-2 h-4 w-4" />
+                      All Years
+                    </Button>
+                    {foundingYears.map((year) => (
+                      <Button 
+                        key={year}
+                        variant={filters.year === year ? "kaas" : "outline"} 
+                        size="sm"
+                        onClick={() => setFilters({...filters, year})}
+                        className="justify-start"
+                      >
+                        <Calendar className="mr-2 h-4 w-4" />
+                        {year}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </CollapsibleContent>
           </Collapsible>
         </Card>
-        
-        {/* Search section */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search deals..."
-              value={dealSearchTerm}
-              onChange={(e) => setDealSearchTerm(e.target.value)}
-              className="pl-10 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40"
-            />
-          </div>
-        </div>
         
         {filteredDeals.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 bg-slate-50 rounded-lg border p-8 text-center">
@@ -395,7 +408,7 @@ const Deals = () => {
             <p className="text-muted-foreground mb-4">Try adjusting your filter criteria to see more deals.</p>
             <Button 
               variant="outline" 
-              onClick={() => setFilters({type: 'all', country: 'all'})}
+              onClick={() => setFilters({type: 'all', country: 'all', year: 'all'})}
             >
               Reset All Filters
             </Button>

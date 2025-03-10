@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -90,7 +89,6 @@ const Deals = () => {
     return 100 - progress;
   };
   
-  // Calculate funding left based on progress percentage
   const calculateFundingLeft = (totalFunding, progressPercentage) => {
     const fundingLeft = (totalFunding * (100 - progressPercentage)) / 100;
     return `€${Math.round(fundingLeft)}K`;
@@ -103,7 +101,6 @@ const Deals = () => {
       logo: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
       tagline: "The Airbnb for Independent Landlords: AI-Driven Property Management",
       description: "AI-powered platform revolutionizing property management for independent landlords.",
-      image: "https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
       industry: "PropTech / AI",
       team: "5 members",
       progress: 65,
@@ -143,7 +140,6 @@ const Deals = () => {
       logo: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRoY2FyZXxlbnwwfHwwfHx8MA%3D%3D",
       tagline: "The Uber for Healthcare: On-Demand Specialist Appointments",
       description: "Healthcare scheduling platform connecting patients with specialists.",
-      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhbHRoY2FyZXxlbnwwfHwwfHx8MA%3D%3D",
       industry: "HealthTech",
       team: "7 members",
       progress: 40,
@@ -183,7 +179,6 @@ const Deals = () => {
       logo: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZW4lMjBlbmVyZ3l8ZW58MHx8MHx8fDA%3D",
       tagline: "The Salesforce for Sustainability: Enterprise Carbon Management",
       description: "Sustainability metrics platform for businesses to track carbon footprint.",
-      image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZW4lMjBlbmVyZ3l8ZW58MHx8MHx8fDA%3D",
       industry: "CleanTech",
       team: "4 members",
       progress: 30,
@@ -263,49 +258,42 @@ const Deals = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {deals.map((deal) => (
             <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow">
-              <div className="h-44 relative">
-                <img 
-                  src={deal.image} 
-                  alt={deal.name} 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                  <Badge className="bg-red-500 hover:bg-red-600 mb-1">
-                    Only {getPercentageLeft(deal.progress)}% left
-                  </Badge>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-16 h-16 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0">
+                    <img 
+                      src={deal.logo} 
+                      alt={`${deal.name} logo`} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                   
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-white flex-shrink-0">
-                      <img 
-                        src={deal.logo} 
-                        alt={`${deal.name} logo`} 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <h2 className="text-lg font-bold text-white">{deal.name}</h2>
+                  <div className="flex -space-x-3">
+                    {deal.founders.map((founder, index) => (
+                      <div 
+                        key={index}
+                        className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm"
+                        title={`${founder.fullName} - ${founder.title}`}
+                      >
+                        <img 
+                          src={founder.image} 
+                          alt={founder.name} 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
                   </div>
                 </div>
                 
-                {/* Founder images in small overlapping circles */}
-                <div className="absolute top-3 right-3 flex -space-x-2">
-                  {deal.founders.map((founder, index) => (
-                    <div 
-                      key={index}
-                      className="w-8 h-8 rounded-full overflow-hidden border-2 border-white"
-                      title={founder.fullName}
-                    >
-                      <img 
-                        src={founder.image} 
-                        alt={founder.name} 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
+                <div className="flex items-center mb-3 gap-2">
+                  <h2 className="text-lg font-bold">{deal.name}</h2>
+                  <div className="flex items-center text-xs text-slate-600">
+                    <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                    {deal.location}
+                  </div>
                 </div>
-              </div>
-              
-              <CardContent className="p-4">
-                <h3 className="font-bold text-sm mb-2 line-clamp-2 h-10">
+                
+                <h3 className="font-bold text-sm mb-3 line-clamp-2">
                   {deal.tagline}
                 </h3>
                 
@@ -321,9 +309,9 @@ const Deals = () => {
                     {deal.type}
                   </Badge>
                   
-                  <div className="flex items-center text-xs text-slate-600">
-                    <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                    {deal.location}
+                  <div className="flex items-center text-xs font-medium">
+                    <CircleDollarSign className="h-3.5 w-3.5 text-kaas-pink mr-1" />
+                    {deal.stage} Target
                   </div>
                 </div>
                 
@@ -336,29 +324,22 @@ const Deals = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <CircleDollarSign className="h-3.5 w-3.5 text-kaas-pink" />
+                    <Users className="h-3.5 w-3.5 text-kaas-pink" />
                     <div>
-                      <p className="text-xs text-muted-foreground">Target</p>
-                      <p className="text-xs font-medium">{deal.stage}</p>
+                      <p className="text-xs text-muted-foreground">Team</p>
+                      <p className="text-xs font-medium">{deal.team}</p>
                     </div>
                   </div>
                 </div>
                 
                 <div className="flex items-center gap-1.5 mb-3">
-                  <Users className="h-3.5 w-3.5 text-kaas-pink" />
+                  <Briefcase className="h-3.5 w-3.5 text-kaas-pink" />
                   <div className="text-xs text-slate-700">
                     {deal.founders.map((founder, index) => (
                       <span key={index}>
-                        <a 
-                          href={founder.linkedin} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="hover:text-kaas-pink"
-                        >
-                          {founder.name}
-                        </a>
+                        <span>{founder.name}</span>
                         {founder.title && <span> ({founder.title})</span>}
-                        {index < deal.founders.length - 1 && <span> & </span>}
+                        {index < deal.founders.length - 1 && <span>, </span>}
                       </span>
                     ))}
                   </div>

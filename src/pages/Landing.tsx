@@ -37,7 +37,7 @@ const Landing = () => {
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-4">Welcome to KaasX</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Helping Europe's most loved startups raise their first round - backed by strategic investors who bring more than capital, to hit it out of the park from day one.
+            Helping Europe's most loved startups raise their first round from strategic investors who bring more than capital, to hit it out of the park from day one.
           </p>
         </div>
         

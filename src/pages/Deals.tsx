@@ -100,7 +100,7 @@ const Deals = () => {
       industry: "PropTech / AI",
       team: "5 members",
       progress: 65,
-      stage: "€750K",
+      stage: "€150K",
       hasDetailPage: true,
       metrics: {
         arr: "$500K",
@@ -109,7 +109,7 @@ const Deals = () => {
       },
       market: {
         size: "$2 Trillion",
-        fundingLeft: "$500K"
+        fundingLeft: "€150K"
       },
       founders: [
         {
@@ -135,7 +135,7 @@ const Deals = () => {
       industry: "HealthTech",
       team: "7 members",
       progress: 40,
-      stage: "€1.2M",
+      stage: "€150K",
       hasDetailPage: false,
       metrics: {
         arr: "$750K",
@@ -144,7 +144,7 @@ const Deals = () => {
       },
       market: {
         size: "$4 Trillion",
-        fundingLeft: "$1.2M"
+        fundingLeft: "€150K"
       },
       founders: [
         {
@@ -170,7 +170,7 @@ const Deals = () => {
       industry: "CleanTech",
       team: "4 members",
       progress: 30,
-      stage: "€840K",
+      stage: "€150K",
       hasDetailPage: false,
       metrics: {
         arr: "$300K",
@@ -179,7 +179,7 @@ const Deals = () => {
       },
       market: {
         size: "$1.5 Trillion",
-        fundingLeft: "$840K"
+        fundingLeft: "€150K"
       },
       founders: [
         {

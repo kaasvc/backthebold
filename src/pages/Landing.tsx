@@ -50,7 +50,7 @@ const Landing = () => {
             </div>
             <h2 className="text-2xl font-bold mb-2">For Founders</h2>
             <p className="text-muted-foreground text-center mb-6">
-              Raising capital? Get funded by strategic investors who bring more than money.
+              Raising capital? Get funded by strategic investors who bring more than just money.
             </p>
             <Link to="/apply" className="mt-auto">
               <Button variant="kaas" size="lg">

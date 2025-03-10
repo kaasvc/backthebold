@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -6,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { ChevronRight, User, Briefcase, Building, Landmark, Globe, Sparkles, Trophy, Star, Zap } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface InvestorSignupModalProps {
   isOpen: boolean;
@@ -28,14 +31,55 @@ const InvestorSignupModal = ({
     profession: "",
     company: "",
     investmentExperience: "",
-    investmentInterests: "",
+    investmentInterests: [],
     linkedinProfile: "",
     referralSource: ""
   });
   
+  const investmentExperienceOptions = [
+    "Angel Investments", 
+    "Venture Capital", 
+    "Private Equity", 
+    "Real Estate", 
+    "Hedge Funds", 
+    "None"
+  ];
+  
+  const industriesOptions = [
+    "FinTech", 
+    "HealthTech", 
+    "AI", 
+    "Climate", 
+    "SaaS", 
+    "Real Estate", 
+    "Consumer Goods", 
+    "Biotech"
+  ];
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+  
+  const handleExperienceSelect = (value: string) => {
+    setFormData(prev => ({ ...prev, investmentExperience: value }));
+  };
+  
+  const handleIndustryToggle = (industry: string) => {
+    setFormData(prev => {
+      const currentInterests = prev.investmentInterests as string[];
+      if (currentInterests.includes(industry)) {
+        return { 
+          ...prev, 
+          investmentInterests: currentInterests.filter(item => item !== industry) 
+        };
+      } else {
+        return { 
+          ...prev, 
+          investmentInterests: [...currentInterests, industry] 
+        };
+      }
+    });
   };
   
   const isStepComplete = () => {
@@ -44,7 +88,8 @@ const InvestorSignupModal = ({
     } else if (step === 2) {
       return formData.profession && formData.company;
     } else if (step === 3) {
-      return formData.investmentExperience && formData.investmentInterests;
+      return formData.investmentExperience && 
+             (formData.investmentInterests as string[]).length > 0;
     }
     return true;
   };
@@ -189,32 +234,56 @@ const InvestorSignupModal = ({
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="investmentExperience" className="flex items-center gap-2">
+              <Label className="flex items-center gap-2 mb-2">
                 <Landmark className="h-4 w-4 text-kaas-pink" />
                 Investment Experience *
               </Label>
-              <Input
-                id="investmentExperience"
-                name="investmentExperience"
-                value={formData.investmentExperience}
-                onChange={handleChange}
-                placeholder="e.g. Angel investor, First-time investor, etc."
-                required
-              />
+              <Tabs 
+                defaultValue={formData.investmentExperience || ""}
+                onValueChange={handleExperienceSelect}
+                className="w-full"
+              >
+                <TabsList className="grid grid-cols-3 gap-1 w-full h-auto p-1 mb-2">
+                  {investmentExperienceOptions.map((option) => (
+                    <TabsTrigger 
+                      key={option}
+                      value={option}
+                      className={`px-3 py-2 text-xs md:text-sm whitespace-normal h-auto ${
+                        formData.investmentExperience === option 
+                          ? "bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-white" 
+                          : "text-gray-700"
+                      }`}
+                    >
+                      {option}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="investmentInterests" className="flex items-center gap-2">
-                Industries of Interest *
+              <Label className="flex items-center gap-2 mb-2">
+                <Star className="h-4 w-4 text-kaas-pink" />
+                Industries of Interest * ({(formData.investmentInterests as string[]).length} selected)
               </Label>
-              <Input
-                id="investmentInterests"
-                name="investmentInterests"
-                value={formData.investmentInterests}
-                onChange={handleChange}
-                placeholder="e.g. FinTech, HealthTech, AI, Climate, etc."
-                required
-              />
+              <div className="flex flex-wrap gap-2">
+                {industriesOptions.map((industry) => {
+                  const isSelected = (formData.investmentInterests as string[]).includes(industry);
+                  return (
+                    <Badge
+                      key={industry}
+                      onClick={() => handleIndustryToggle(industry)}
+                      className={`cursor-pointer px-3 py-1 border ${
+                        isSelected 
+                          ? "bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-white border-transparent" 
+                          : "bg-white text-gray-700 border-gray-200 hover:bg-gray-100"
+                      }`}
+                    >
+                      {industry}
+                    </Badge>
+                  );
+                })}
+              </div>
             </div>
             
             <div className="space-y-2">
@@ -270,7 +339,7 @@ const InvestorSignupModal = ({
                 </li>
                 <li className="flex justify-between">
                   <span className="text-slate-500">Interests:</span>
-                  <span className="font-medium">{formData.investmentInterests}</span>
+                  <span className="font-medium">{(formData.investmentInterests as string[]).join(", ")}</span>
                 </li>
               </ul>
             </div>

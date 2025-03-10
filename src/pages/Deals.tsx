@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -117,7 +116,7 @@ const Deals = () => {
       hasDetailPage: true,
       type: "B2B",
       location: "Portugal",
-      status: "trending", // Changed from "raising" to "trending"
+      status: "trending",
       backers: {
         count: 12,
         notable: "Notable Investors"
@@ -156,7 +155,7 @@ const Deals = () => {
       hasDetailPage: false,
       type: "Consumer",
       location: "Germany",
-      status: "raising", // Keep as "raising"
+      status: "raising",
       backers: {
         count: 8,
         notable: "Notable Investors"
@@ -538,12 +537,9 @@ const Deals = () => {
                           View Deal
                         </Button>
                         <Button 
-                          variant={deal.status === "closed" ? "outline" : "default"} 
+                          variant={deal.status === "closed" ? "outline" : "kaas"}
                           size="sm" 
-                          className={cn(
-                            "w-full text-xs h-8",
-                            deal.status === "raising" ? "bg-kaas-pink hover:bg-kaas-darkpink" : ""
-                          )}
+                          className="w-full text-xs h-8"
                           onClick={() => handleCommit(deal.name)}
                           disabled={deal.status === "closed"}
                         >

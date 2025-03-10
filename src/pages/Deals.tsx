@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -285,7 +284,6 @@ const Deals = () => {
           </p>
         </div>
         
-        {/* Filter section moved above deal cards */}
         <Card className="mb-6 overflow-hidden shadow-sm hover:shadow transition-shadow">
           <Collapsible
             open={isFilterOpen}
@@ -414,7 +412,7 @@ const Deals = () => {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredDeals.map((deal) => (
               <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
                 <CardContent className="p-4 flex flex-col h-full">

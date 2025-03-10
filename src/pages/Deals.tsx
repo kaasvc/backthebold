@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,8 +7,11 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar } from "lucide-react";
+import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 
 const Deals = () => {
@@ -19,6 +23,13 @@ const Deals = () => {
   const [showInvestorSignup, setShowInvestorSignup] = useState(false);
   const [pendingDealAction, setPendingDealAction] = useState<{type: 'view' | 'invest', name: string} | null>(null);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
+  
+  // Filter states
+  const [filters, setFilters] = useState({
+    type: "all",
+    country: "all",
+    status: "all"
+  });
   
   useEffect(() => {
     const investorProfile = localStorage.getItem("kaasInvestorProfile");
@@ -108,6 +119,7 @@ const Deals = () => {
       hasDetailPage: true,
       type: "B2B",
       location: "Portugal",
+      status: "raising",
       backers: {
         count: 12,
         notable: "Notable Investors"
@@ -146,6 +158,7 @@ const Deals = () => {
       hasDetailPage: false,
       type: "Consumer",
       location: "Germany",
+      status: "raising",
       backers: {
         count: 8,
         notable: "Notable Investors"
@@ -177,6 +190,7 @@ const Deals = () => {
       hasDetailPage: false,
       type: "B2B",
       location: "Sweden",
+      status: "closed",
       backers: {
         count: 5,
         notable: "Notable Investors"
@@ -210,6 +224,18 @@ const Deals = () => {
       ]
     }
   ];
+
+  const countries = [...new Set(deals.map(deal => deal.location))];
+  
+  const filteredDeals = deals.filter(deal => {
+    return (
+      (filters.type === 'all' || deal.type === filters.type) &&
+      (filters.country === 'all' || deal.location === filters.country) &&
+      (filters.status === 'all' || 
+        (filters.status === 'raising' && deal.status === 'raising') ||
+        (filters.status === 'closed' && deal.status === 'closed'))
+    );
+  });
 
   const logoCreationHelper = () => {
     return "Logos created in public/logos/ directory";
@@ -249,157 +275,294 @@ const Deals = () => {
       </header>
       
       <main className="container py-10">
-        <div className="mb-10">
-          <h1 className="text-4xl font-bold tracking-tight mb-3">Who's Raising?</h1>
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold tracking-tight mb-3">Investment Opportunities</h1>
           <p className="text-muted-foreground max-w-3xl">
             Browse current investment opportunities curated by the KaasX team. Click on a deal to learn more or express your interest.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {deals.map((deal) => (
-            <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
-              <CardContent className="p-4 flex flex-col h-full">
-                <div className="flex items-start mb-4">
-                  <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
-                    <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
-                      deal.name === "ProprHome.com" ? "bg-soft-blue" : 
-                      deal.name === "MediSync" ? "bg-soft-pink" : "bg-soft-green"
-                    )}>
-                      {deal.name === "ProprHome.com" && (
-                        <Building className="h-6 w-6 text-kaas-pink" />
-                      )}
-                      {deal.name === "MediSync" && (
-                        <Award className="h-6 w-6 text-kaas-pink" />
-                      )}
-                      {deal.name === "EcoTrack" && (
-                        <TrendingUp className="h-6 w-6 text-kaas-pink" />
-                      )}
-                    </div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-lg border p-4 sticky top-20">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-medium text-lg">Filter Deals</h3>
+                <Filter className="h-4 w-4 text-slate-500" />
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <Label className="mb-2 block">Deal Type</Label>
+                  <div className="grid grid-cols-1 gap-2">
+                    <Button 
+                      variant={filters.type === 'all' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, type: 'all'})}
+                      className="justify-start"
+                    >
+                      <Briefcase className="mr-2 h-4 w-4" />
+                      All Types
+                    </Button>
+                    <Button 
+                      variant={filters.type === 'B2B' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, type: 'B2B'})}
+                      className="justify-start"
+                    >
+                      <Building className="mr-2 h-4 w-4" />
+                      B2B
+                    </Button>
+                    <Button 
+                      variant={filters.type === 'Consumer' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, type: 'Consumer'})}
+                      className="justify-start"
+                    >
+                      <User className="mr-2 h-4 w-4" />
+                      Consumer
+                    </Button>
                   </div>
-                  
-                  <div className="ml-3 flex-1">
-                    <div className="flex items-center">
-                      <h2 className="text-lg font-bold">{deal.name}</h2>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-600">
-                      <div className="flex items-center">
-                        <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                        {deal.location}
-                      </div>
-                      <Badge 
-                        variant={deal.type === "B2B" ? "outline" : "secondary"} 
-                        className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                </div>
+                
+                <Separator />
+                
+                <div>
+                  <Label className="mb-2 block">Country</Label>
+                  <div className="grid grid-cols-1 gap-2">
+                    <Button 
+                      variant={filters.country === 'all' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, country: 'all'})}
+                      className="justify-start"
+                    >
+                      <MapPin className="mr-2 h-4 w-4" />
+                      All Countries
+                    </Button>
+                    {countries.map((country) => (
+                      <Button 
+                        key={country}
+                        variant={filters.country === country ? "kaas" : "outline"} 
+                        size="sm"
+                        onClick={() => setFilters({...filters, country})}
+                        className="justify-start"
                       >
-                        {deal.type === "B2B" ? 
-                          <Building className="h-2.5 w-2.5" /> : 
-                          <User className="h-2.5 w-2.5" />
-                        }
-                        {deal.type}
-                      </Badge>
-                    </div>
+                        <MapPin className="mr-2 h-4 w-4" />
+                        {country}
+                      </Button>
+                    ))}
                   </div>
                 </div>
                 
-                <div className="mb-4">
-                  <p className="text-sm text-slate-600 mb-1">
-                    {deal.description}
-                  </p>
-                </div>
+                <Separator />
                 
-                <div className="mb-4 flex-grow">
-                  <div className="flex items-center justify-between h-full">
-                    <div className="flex-1 mr-4">
-                      <div className="flex items-center mb-2">
-                        <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                        <span className="text-xs text-slate-600">Founded in 2024 by:</span>
-                      </div>
-                      <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5 min-h-[4.5em]">
-                        {deal.founders.slice(0, 3).map((founder, idx) => (
-                          <li key={idx} className="truncate flex items-start">
-                            <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
-                            <span>{founder.title}</span>
-                          </li>
-                        ))}
-                        {Array.from({ length: Math.max(0, 3 - deal.founders.length) }).map((_, idx) => (
-                          <li key={`empty-${idx}`} className="invisible flex items-start h-[1.5em]">
-                            <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
-                            <span>Empty space</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="flex items-center justify-center">
-                      {deal.founders.map((founder, index) => (
-                        <div 
-                          key={index} 
-                          className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm"
-                          title={`${founder.fullName} - ${founder.title}`}
-                          style={{ 
-                            marginLeft: index === 0 ? '0' : '-10px',
-                            zIndex: deal.founders.length - index,
-                            maxWidth: 'calc(100% - 20px)' // Ensure images stay within container margins
-                          }}
-                        >
-                          <img 
-                            src={founder.image} 
-                            alt={founder.name} 
-                            className="w-full h-full object-cover rounded-full"
-                          />
+                <div>
+                  <Label className="mb-2 block">Deal Status</Label>
+                  <div className="grid grid-cols-1 gap-2">
+                    <Button 
+                      variant={filters.status === 'all' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, status: 'all'})}
+                      className="justify-start"
+                    >
+                      <Briefcase className="mr-2 h-4 w-4" />
+                      All Deals
+                    </Button>
+                    <Button 
+                      variant={filters.status === 'raising' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, status: 'raising'})}
+                      className="justify-start"
+                    >
+                      <TrendingUp className="mr-2 h-4 w-4" />
+                      Now Raising
+                    </Button>
+                    <Button 
+                      variant={filters.status === 'closed' ? "kaas" : "outline"} 
+                      size="sm"
+                      onClick={() => setFilters({...filters, status: 'closed'})}
+                      className="justify-start"
+                    >
+                      <Check className="mr-2 h-4 w-4" />
+                      Closed Rounds
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="lg:col-span-3">
+            {filteredDeals.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-64 bg-slate-50 rounded-lg border p-8 text-center">
+                <TrendingUp className="h-12 w-12 text-slate-300 mb-4" />
+                <h3 className="text-xl font-semibold mb-2">No matching deals found</h3>
+                <p className="text-muted-foreground mb-4">Try adjusting your filter criteria to see more deals.</p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setFilters({type: 'all', country: 'all', status: 'all'})}
+                >
+                  Reset All Filters
+                </Button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {filteredDeals.map((deal) => (
+                  <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
+                    <CardContent className="p-4 flex flex-col h-full">
+                      <div className="flex items-start mb-4">
+                        <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
+                          <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
+                            deal.name === "ProprHome.com" ? "bg-soft-blue" : 
+                            deal.name === "MediSync" ? "bg-soft-pink" : "bg-soft-green"
+                          )}>
+                            {deal.name === "ProprHome.com" && (
+                              <Building className="h-6 w-6 text-kaas-pink" />
+                            )}
+                            {deal.name === "MediSync" && (
+                              <Award className="h-6 w-6 text-kaas-pink" />
+                            )}
+                            {deal.name === "EcoTrack" && (
+                              <TrendingUp className="h-6 w-6 text-kaas-pink" />
+                            )}
+                          </div>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="mb-3">
-                  <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-kaas-pink rounded-full" 
-                      style={{ width: `${deal.progress}%` }}
-                    ></div>
-                  </div>
-                  <div className="flex justify-between mt-1 text-xs">
-                    <p className="text-muted-foreground">{deal.progress}% funded</p>
-                    <p className="font-medium text-kaas-pink">
-                      {deal.progress >= 50 ? "Only " : ""}{deal.market.fundingLeft} left
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between text-xs mb-4">
-                  <div className="text-slate-600">
-                    {deal.backers.count} backers
-                  </div>
-                  {deal.backers.notable && (
-                    <div className="text-kaas-pink font-medium">
-                      Including Notable Investors
-                    </div>
-                  )}
-                </div>
-                
-                <div className="grid grid-cols-2 gap-2 mt-auto">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full text-xs h-8"
-                    onClick={() => handleViewDetails(deal.name)}
-                  >
-                    View Deal
-                  </Button>
-                  <Button 
-                    variant="kaas" 
-                    size="sm" 
-                    className="w-full text-xs h-8"
-                    onClick={() => handleCommit(deal.name)}
-                  >
-                    Invest Now
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                        
+                        <div className="ml-3 flex-1">
+                          <div className="flex items-center">
+                            <h2 className="text-lg font-bold">{deal.name}</h2>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs text-slate-600">
+                            <div className="flex items-center">
+                              <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                              {deal.location}
+                            </div>
+                            <Badge 
+                              variant={deal.type === "B2B" ? "outline" : "secondary"} 
+                              className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                            >
+                              {deal.type === "B2B" ? 
+                                <Building className="h-2.5 w-2.5" /> : 
+                                <User className="h-2.5 w-2.5" />
+                              }
+                              {deal.type}
+                            </Badge>
+                            <Badge 
+                              variant={deal.status === "raising" ? "kaas" : "outline"} 
+                              className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                            >
+                              {deal.status === "raising" ? 
+                                <TrendingUp className="h-2.5 w-2.5" /> : 
+                                <Check className="h-2.5 w-2.5" />
+                              }
+                              {deal.status === "raising" ? "Now Raising" : "Closed"}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mb-4">
+                        <p className="text-sm text-slate-600 mb-1">
+                          {deal.description}
+                        </p>
+                      </div>
+                      
+                      <div className="mb-4 flex-grow">
+                        <div className="flex items-center justify-between h-full">
+                          <div className="flex-1 mr-4">
+                            <div className="flex items-center mb-2">
+                              <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
+                              <span className="text-xs text-slate-600">Founded in 2024 by:</span>
+                            </div>
+                            <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5 min-h-[4.5em]">
+                              {deal.founders.slice(0, 3).map((founder, idx) => (
+                                <li key={idx} className="truncate flex items-start">
+                                  <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
+                                  <span>{founder.title}</span>
+                                </li>
+                              ))}
+                              {Array.from({ length: Math.max(0, 3 - deal.founders.length) }).map((_, idx) => (
+                                <li key={`empty-${idx}`} className="invisible flex items-start h-[1.5em]">
+                                  <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
+                                  <span>Empty space</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          
+                          <div className="flex items-center justify-center">
+                            {deal.founders.map((founder, index) => (
+                              <div 
+                                key={index} 
+                                className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm"
+                                title={`${founder.fullName} - ${founder.title}`}
+                                style={{ 
+                                  marginLeft: index === 0 ? '0' : '-10px',
+                                  zIndex: deal.founders.length - index,
+                                  maxWidth: 'calc(100% - 20px)' // Ensure images stay within container margins
+                                }}
+                              >
+                                <img 
+                                  src={founder.image} 
+                                  alt={founder.name} 
+                                  className="w-full h-full object-cover rounded-full"
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mb-3">
+                        <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-kaas-pink rounded-full" 
+                            style={{ width: `${deal.progress}%` }}
+                          ></div>
+                        </div>
+                        <div className="flex justify-between mt-1 text-xs">
+                          <p className="text-muted-foreground">{deal.progress}% funded</p>
+                          <p className="font-medium text-kaas-pink">
+                            {deal.progress >= 50 ? "Only " : ""}{deal.market.fundingLeft} left
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between text-xs mb-4">
+                        <div className="text-slate-600">
+                          {deal.backers.count} backers
+                        </div>
+                        {deal.backers.notable && (
+                          <div className="text-kaas-pink font-medium">
+                            Including Notable Investors
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-2 mt-auto">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full text-xs h-8"
+                          onClick={() => handleViewDetails(deal.name)}
+                        >
+                          View Deal
+                        </Button>
+                        <Button 
+                          variant="kaas" 
+                          size="sm" 
+                          className="w-full text-xs h-8"
+                          onClick={() => handleCommit(deal.name)}
+                          disabled={deal.status === "closed"}
+                        >
+                          {deal.status === "closed" ? "Closed" : "Invest Now"}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </main>
       

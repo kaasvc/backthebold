@@ -326,11 +326,12 @@ const Deals = () => {
                       {deal.founders.map((founder, index) => (
                         <div 
                           key={index} 
-                          className="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm"
+                          className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm"
                           title={`${founder.fullName} - ${founder.title}`}
                           style={{ 
-                            marginLeft: index === 0 ? '0' : '-12px',
-                            zIndex: deal.founders.length - index
+                            marginLeft: index === 0 ? '0' : '-10px',
+                            zIndex: deal.founders.length - index,
+                            maxWidth: 'calc(100% - 20px)' // Ensure images stay within container margins
                           }}
                         >
                           <img 

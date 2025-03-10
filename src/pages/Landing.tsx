@@ -1,8 +1,8 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Hammer } from "lucide-react";
 
 const Landing = () => {
   return (
@@ -44,9 +44,7 @@ const Landing = () => {
           {/* Founder Card */}
           <div className="bg-background border border-border rounded-lg p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
             <div className="h-20 w-20 bg-gradient-to-r from-purple-600 to-kaas-pink rounded-full flex items-center justify-center mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+              <Hammer className="h-10 w-10 text-white" />
             </div>
             <h2 className="text-2xl font-bold mb-2">For Founders</h2>
             <p className="text-muted-foreground text-center mb-6">

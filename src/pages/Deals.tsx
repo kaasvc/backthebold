@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -199,6 +200,13 @@ const Deals = () => {
           title: "Serial CleanTech Entrepreneur",
           linkedin: "https://linkedin.com/in/alexkim",
           image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
+        },
+        {
+          name: "Marco",
+          fullName: "Marco Rossi",
+          title: "Sustainability PhD",
+          linkedin: "https://linkedin.com/in/marcorossi",
+          image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
         }
       ]
     }
@@ -314,14 +322,14 @@ const Deals = () => {
                       </ul>
                     </div>
                     
-                    <div className="flex items-center h-12 ml-2">
+                    <div className="flex items-center h-14 ml-2">
                       {deal.founders.map((founder, index) => (
                         <div 
                           key={index} 
-                          className="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm mb-1"
+                          className="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm mb-1"
                           title={`${founder.fullName} - ${founder.title}`}
                           style={{ 
-                            marginLeft: index === 0 ? '0' : '-10px',
+                            marginLeft: index === 0 ? '0' : '-12px',
                             zIndex: deal.founders.length - index
                           }}
                         >
@@ -489,4 +497,3 @@ const Deals = () => {
 };
 
 export default Deals;
-

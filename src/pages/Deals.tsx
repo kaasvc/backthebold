@@ -119,6 +119,7 @@ const Deals = () => {
       type: "B2B",
       location: "Portugal",
       status: "trending",
+      foundedYear: "2022",
       backers: {
         count: 12,
         notable: "Notable Investors"
@@ -158,6 +159,7 @@ const Deals = () => {
       type: "Consumer",
       location: "Germany",
       status: "raising",
+      foundedYear: "2023",
       backers: {
         count: 8,
         notable: "Notable Investors"
@@ -190,6 +192,7 @@ const Deals = () => {
       type: "B2B",
       location: "Sweden",
       status: "closed",
+      foundedYear: "2021",
       backers: {
         count: 5,
         notable: "Notable Investors"
@@ -429,24 +432,13 @@ const Deals = () => {
                               }
                               {deal.type}
                             </Badge>
-                            {deal.status === "trending" && (
-                              <Badge 
-                                variant="default" 
-                                className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
-                              >
-                                <TrendingUp className="h-2.5 w-2.5" />
-                                Trending
-                              </Badge>
-                            )}
-                            {deal.status === "closed" && (
-                              <Badge 
-                                variant="outline" 
-                                className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
-                              >
-                                <Check className="h-2.5 w-2.5" />
-                                Closed
-                              </Badge>
-                            )}
+                            <Badge 
+                              variant="outline" 
+                              className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                            >
+                              <Calendar className="h-2.5 w-2.5" />
+                              {deal.foundedYear}
+                            </Badge>
                           </div>
                         </div>
                       </div>
@@ -461,8 +453,8 @@ const Deals = () => {
                         <div className="flex items-center justify-between h-full">
                           <div className="flex-1 mr-4">
                             <div className="flex items-center mb-2">
-                              <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                              <span className="text-xs text-slate-600">Founded in 2024 by:</span>
+                              <Users className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
+                              <span className="text-xs text-slate-600">Founded by:</span>
                             </div>
                             <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5 min-h-[4.5em]">
                               {deal.founders.slice(0, 3).map((founder, idx) => (

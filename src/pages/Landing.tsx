@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -19,14 +20,14 @@ const Landing = () => {
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-4">
-              <a
-                href="mailto:hello@kaas.vc"
+              <Link
+                to="/support"
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary"
                 )}
               >
                 Contact Support
-              </a>
+              </Link>
             </nav>
           </div>
         </div>

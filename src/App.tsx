@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,10 +15,10 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ApplicationDetail from "./pages/ApplicationDetail";
 import StartupProfile from "./pages/StartupProfile";
+import ContactSupport from "./pages/ContactSupport";
 
 const queryClient = new QueryClient();
 
-// Protected route wrapper
 const ProtectedRoute = ({ 
   children, 
   allowedRoles 
@@ -44,7 +43,6 @@ const ProtectedRoute = ({
   return <>{children}</>;
 };
 
-// Registration route that checks for pending application
 const RegistrationRoute = ({ children }: { children: React.ReactNode }) => {
   const pendingApp = sessionStorage.getItem("pendingApplication");
   
@@ -69,6 +67,7 @@ const App = () => (
             <Route path="/deals" element={<Deals />} />
             <Route path="/startup/proprhome" element={<StartupProfile />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/support" element={<ContactSupport />} />
             <Route 
               path="/register" 
               element={

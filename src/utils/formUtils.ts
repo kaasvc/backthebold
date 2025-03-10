@@ -34,8 +34,8 @@ export const formSections: FormSection[] = [
         id: "foundersHistory",
         label: "How long have the founders known one another, and how did you meet?",
         type: "textarea",
-        placeholder: "Describe your history as a team...",
-        required: true,
+        placeholder: "Only applicable for multiple founders. Skip if you're a solo founder.",
+        required: false,
       },
       {
         id: "previouslyWorked",

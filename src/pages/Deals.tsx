@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -311,7 +310,7 @@ const Deals = () => {
                 <div className="mb-4">
                   <div className="flex items-center mb-2">
                     <Calendar className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                    <span className="text-xs font-medium">Launched in 2024 by:</span>
+                    <span className="text-xs font-medium">Founded in 2024 by: {deal.founders.map(f => f.title).join(" + ")}</span>
                   </div>
                   
                   <div className="flex items-center gap-2">
@@ -328,7 +327,6 @@ const Deals = () => {
                           />
                         </div>
                         <span className="text-xs font-medium">{founder.name}</span>
-                        <span className="text-[10px] text-muted-foreground">{founder.title}</span>
                       </div>
                     ))}
                   </div>

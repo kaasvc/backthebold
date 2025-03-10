@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -77,10 +78,10 @@ const InvestorSignupModal = ({
       case 1:
         return (
           <div className="space-y-4">
-            <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-4 rounded-lg mb-4 border border-purple-200">
-              <div className="flex items-center gap-2 mb-2">
+            <div className="bg-purple-100 p-6 rounded-lg mb-4">
+              <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="h-5 w-5 text-[#8B5CF6]" />
-                <h3 className="font-semibold text-[#8B5CF6]">Join the KaasX Investor Community</h3>
+                <h3 className="font-semibold text-lg text-[#8B5CF6]">Join the KaasX Investor Community</h3>
               </div>
               <p className="text-sm text-gray-700">
                 Get exclusive early access to promising startups and connect with visionary founders. Your profile helps founders understand your potential strategic value beyond capital.
@@ -294,14 +295,24 @@ const InvestorSignupModal = ({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center text-xl">
-            {step < 4 ? (
-              <span className="flex items-center justify-center gap-2">
-                <Sparkles className="h-5 w-5 text-[#D946EF]" />
-                Become a KaasX Investor
-                <Sparkles className="h-5 w-5 text-[#D946EF]" />
-              </span>
+            {step === 1 ? (
+              <div className="space-y-1">
+                <p className="font-bold text-2xl">Sign up as Investor</p>
+                <p className="text-kaas-pink font-medium text-lg flex items-center justify-center gap-2">
+                  <Sparkles className="h-5 w-5" />
+                  Join the KaasX Community
+                </p>
+              </div>
             ) : (
-              "Confirm Your Profile"
+              step < 4 ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Sparkles className="h-5 w-5 text-[#D946EF]" />
+                  Become a KaasX Investor
+                  <Sparkles className="h-5 w-5 text-[#D946EF]" />
+                </span>
+              ) : (
+                "Confirm Your Profile"
+              )
             )}
           </DialogTitle>
         </DialogHeader>

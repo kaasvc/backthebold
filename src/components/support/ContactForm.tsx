@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Mail, Phone, Send, CheckCircle } from "lucide-react";
+import { Mail, Send, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const ContactForm = () => {
@@ -165,26 +164,6 @@ const ContactForm = () => {
               </a>
               <p className="text-sm text-muted-foreground mt-1">
                 For general inquiries and support
-              </p>
-            </div>
-          </div>
-          
-          <Separator />
-          
-          <div className="flex items-start gap-4">
-            <div className="bg-muted p-3 rounded-full">
-              <Phone className="h-6 w-6 text-kaas-pink" />
-            </div>
-            <div>
-              <h3 className="font-medium">Phone</h3>
-              <a 
-                href="tel:+31201234567" 
-                className="text-blue-600 hover:underline"
-              >
-                +31 20 123 4567
-              </a>
-              <p className="text-sm text-muted-foreground mt-1">
-                Mon-Fri from 9am to 5pm CET
               </p>
             </div>
           </div>

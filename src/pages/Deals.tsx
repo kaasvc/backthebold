@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -104,6 +103,12 @@ const Deals = () => {
   const calculateFundingLeft = (totalFunding, progressPercentage) => {
     const fundingLeft = (totalFunding * (100 - progressPercentage)) / 100;
     return `€${Math.round(fundingLeft)}K`;
+  };
+  
+  const handleFounderClick = (founder) => {
+    toast.info(`${founder.fullName} - ${founder.title}`, {
+      description: `${founder.achievements || founder.experience} years of experience`
+    });
   };
   
   const deals = [
@@ -499,37 +504,39 @@ const Deals = () => {
                         Founding Team
                       </h3>
                       
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          {deal.founders.slice(0, 3).map((founder, idx) => (
-                            <div key={idx} className="flex items-center mb-2 last:mb-0">
-                              <div className="w-8 h-8 rounded-full overflow-hidden mr-2 border border-white shadow-sm flex-shrink-0">
-                                <img 
-                                  src={founder.image} 
-                                  alt={founder.name} 
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                              <div>
-                                <p className="text-xs font-medium">
-                                  {founder.fullName}
-                                  {founder.exits > 0 && (
-                                    <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
-                                      {founder.exits}x Exit
-                                    </span>
-                                  )}
-                                </p>
-                                <div className="flex items-center gap-2">
-                                  <p className="text-[10px] text-slate-600">{founder.title}</p>
-                                  <span className="text-[10px] text-slate-500 flex items-center">
-                                    <Briefcase className="h-2 w-2 mr-0.5" />
-                                    {founder.experience}
+                      <div className="flex-1">
+                        {deal.founders.slice(0, 3).map((founder, idx) => (
+                          <div 
+                            key={idx} 
+                            className="flex items-center mb-2 last:mb-0 p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors"
+                            onClick={() => handleFounderClick(founder)}
+                          >
+                            <div className="w-8 h-8 rounded-full overflow-hidden mr-2 border border-white shadow-sm flex-shrink-0">
+                              <img 
+                                src={founder.image} 
+                                alt={founder.name} 
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div>
+                              <p className="text-xs font-medium">
+                                {founder.fullName}
+                                {founder.exits > 0 && (
+                                  <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
+                                    {founder.exits}x Exit
                                   </span>
-                                </div>
+                                )}
+                              </p>
+                              <div className="flex items-center gap-2">
+                                <p className="text-[10px] text-slate-600">{founder.title}</p>
+                                <span className="text-[10px] text-slate-500 flex items-center">
+                                  <Briefcase className="h-2 w-2 mr-0.5" />
+                                  {founder.experience}
+                                </span>
                               </div>
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>

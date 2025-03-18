@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp } from "lucide-react";
+import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp, Star } from "lucide-react";
 import { Card, CardContent, CardHighlight } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -135,6 +135,9 @@ const Deals = () => {
           name: "Sarah",
           fullName: "Sarah Chen",
           title: "ex-Airbnb PM",
+          experience: "15 years",
+          achievements: "Led Zillow rental growth by 300%",
+          exits: 1,
           linkedin: "https://linkedin.com/in/sarahchen",
           image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         },
@@ -142,6 +145,9 @@ const Deals = () => {
           name: "David",
           fullName: "David Rodriguez",
           title: "MIT AI Lab",
+          experience: "12 years",
+          achievements: "Led Google AI Research team",
+          exits: 0,
           linkedin: "https://linkedin.com/in/davidrodriguez",
           image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         }
@@ -175,6 +181,9 @@ const Deals = () => {
           name: "Maya",
           fullName: "Dr. Maya Johnson",
           title: "Stanford Med",
+          experience: "10 years",
+          achievements: "Former Chief Medical Officer",
+          exits: 1,
           linkedin: "https://linkedin.com/in/mayajohnson",
           image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
         }
@@ -193,7 +202,7 @@ const Deals = () => {
       hasDetailPage: false,
       type: "B2B",
       location: "Sweden",
-      status: "raising", // Changed from "closed" to "raising"
+      status: "raising", 
       foundedYear: "2021",
       backers: {
         count: 5,
@@ -208,6 +217,9 @@ const Deals = () => {
           name: "Emma",
           fullName: "Emma Torres",
           title: "Climate Scientist",
+          experience: "8 years",
+          achievements: "Led $20M research initiative",
+          exits: 0,
           linkedin: "https://linkedin.com/in/emmatorres",
           image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         },
@@ -215,6 +227,9 @@ const Deals = () => {
           name: "Alex",
           fullName: "Alex Kim",
           title: "Serial CleanTech Entrepreneur",
+          experience: "15 years",
+          achievements: "2 previous sustainability startups",
+          exits: 1,
           linkedin: "https://linkedin.com/in/alexkim",
           image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         },
@@ -222,6 +237,9 @@ const Deals = () => {
           name: "Marco",
           fullName: "Marco Rossi",
           title: "Sustainability PhD",
+          experience: "6 years",
+          achievements: "Advisor to EU Climate Commission",
+          exits: 0,
           linkedin: "https://linkedin.com/in/marcorossi",
           image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
         }
@@ -474,47 +492,44 @@ const Deals = () => {
                     </p>
                   </div>
                   
-                  <div className="mb-4 flex-grow">
-                    <div className="flex items-start justify-between h-full">
-                      <div className="flex-1 mr-4">
-                        <div className="flex items-center mb-2">
-                          <Users className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                          <span className="text-xs text-slate-600">Founded by:</span>
-                        </div>
-                        <ul className="text-xs text-slate-600 list-disc ml-5 space-y-0.5 min-h-[4.5em]">
-                          {deal.founders.slice(0, 3).map((founder, idx) => (
-                            <li key={idx} className="truncate flex items-start">
-                              <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
-                              <span>{founder.title}</span>
-                            </li>
-                          ))}
-                          {Array.from({ length: Math.max(0, 3 - deal.founders.length) }).map((_, idx) => (
-                            <li key={`empty-${idx}`} className="invisible flex items-start h-[1.5em]">
-                              <span className="inline-block min-w-[6px] min-h-[6px] rounded-full bg-slate-600 mt-1.5 mr-2"></span>
-                              <span>Empty space</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                  <div className="mb-5 flex-grow">
+                    <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                      <h3 className="font-medium text-sm mb-2 flex items-center">
+                        <Star className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
+                        Founding Team
+                      </h3>
                       
-                      <div className="flex items-center justify-center">
-                        {deal.founders.slice(0, 3).map((founder, index) => (
-                          <div 
-                            key={index} 
-                            className="w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-sm"
-                            title={`${founder.fullName} - ${founder.title}`}
-                            style={{ 
-                              marginLeft: index === 0 ? '0' : '-10px',
-                              zIndex: deal.founders.length - index,
-                            }}
-                          >
-                            <img 
-                              src={founder.image} 
-                              alt={founder.name} 
-                              className="w-full h-full object-cover rounded-full"
-                            />
-                          </div>
-                        ))}
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          {deal.founders.slice(0, 3).map((founder, idx) => (
+                            <div key={idx} className="flex items-center mb-2 last:mb-0">
+                              <div className="w-8 h-8 rounded-full overflow-hidden mr-2 border border-white shadow-sm flex-shrink-0">
+                                <img 
+                                  src={founder.image} 
+                                  alt={founder.name} 
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div>
+                                <p className="text-xs font-medium">
+                                  {founder.fullName}
+                                  {founder.exits > 0 && (
+                                    <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
+                                      {founder.exits}x Exit
+                                    </span>
+                                  )}
+                                </p>
+                                <div className="flex items-center gap-2">
+                                  <p className="text-[10px] text-slate-600">{founder.title}</p>
+                                  <span className="text-[10px] text-slate-500 flex items-center">
+                                    <Briefcase className="h-2 w-2 mr-0.5" />
+                                    {founder.experience}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -5,11 +5,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHighlight } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound, Flag, ExternalLink } from "lucide-react";
+import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, Twitter, Bookmark, Mail } from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 
 const StartupProfile = () => {
@@ -55,6 +55,77 @@ const StartupProfile = () => {
     setShowInvestorSignup(false);
     setIsInvestorRegistered(true);
   };
+  
+  const founders = [
+    {
+      name: "Sarah Chen",
+      title: "CEO & Co-Founder",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
+      bio: "Former product lead at Zillow, 10+ years in PropTech",
+      experience: "15 years",
+      previousStartups: 2,
+      previousExits: 1,
+      linkedin: "https://linkedin.com/in/sarahchen",
+      twitter: "https://twitter.com/sarahchen",
+      education: "MBA, Stanford University",
+      highlights: [
+        "Led product team that grew Zillow's rental platform by 300%",
+        "Successfully exited PropManage.io to Airbnb for $14M",
+        "Angel investor in 5 PropTech startups, 2 exits"
+      ]
+    },
+    {
+      name: "Michael Rodriguez",
+      title: "CTO & Co-Founder",
+      image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
+      bio: "Ex-Google AI engineer, built ML systems for real estate forecasting",
+      experience: "12 years",
+      previousStartups: 1,
+      previousExits: 0,
+      linkedin: "https://linkedin.com/in/michaelrodriguez",
+      twitter: "https://twitter.com/michaelrodriguez",
+      education: "PhD in Computer Science, MIT",
+      highlights: [
+        "Led a team of 25 engineers at Google's AI Research division",
+        "Published 8 papers on AI applications in real estate valuation",
+        "Developed proprietary AI algorithm that's 40% more accurate than industry standard"
+      ]
+    },
+    {
+      name: "Alisha Washington",
+      title: "VP of Product",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww",
+      bio: "Previously led product teams at Apartments.com and Airbnb",
+      experience: "9 years",
+      previousStartups: 1,
+      previousExits: 0,
+      linkedin: "https://linkedin.com/in/alishawashington",
+      twitter: "https://twitter.com/alishawashington",
+      education: "BS in Computer Science, UC Berkeley",
+      highlights: [
+        "Led team that increased Airbnb host retention by 35%",
+        "Created Apartments.com's first mobile app (4.8 stars, 1M+ downloads)",
+        "Mentors female product managers through Women in Product"
+      ]
+    },
+    {
+      name: "David Patel",
+      title: "VP of Growth",
+      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww",
+      bio: "Scaled multiple SaaS startups, former property management consultant",
+      experience: "8 years",
+      previousStartups: 1,
+      previousExits: 1,
+      linkedin: "https://linkedin.com/in/davidpatel",
+      twitter: "https://twitter.com/davidpatel",
+      education: "MBA, Harvard Business School",
+      highlights: [
+        "Grew RentSimple from $0 to $6M ARR in 18 months (acquired for $28M)",
+        "Reduced CAC by 45% at PropertyHub through strategic channel optimization",
+        "Advisor to 3 YCombinator startups in PropTech space"
+      ]
+    }
+  ];
   
   const notableInvestors = [
     {
@@ -206,108 +277,171 @@ const StartupProfile = () => {
               
               <TabsContent value="team" className="space-y-6">
                 <div>
-                  <h2 className="text-xl font-semibold mb-4">Founder(s)</h2>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
-                      <CardContent className="pt-6 flex gap-4">
-                        <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                          <img 
-                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D" 
-                            alt="CEO" 
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold">Sarah Chen</h3>
-                          <p className="text-sm text-kaas-pink mb-1">CEO & Co-Founder</p>
-                          <p className="text-sm text-muted-foreground mb-2">
-                            Former product lead at Zillow, 10+ years in PropTech
-                          </p>
-                          <a href="#" className="text-xs text-primary hover:underline">
-                            LinkedIn
-                          </a>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
-                      <CardContent className="pt-6 flex gap-4">
-                        <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                          <img 
-                            src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D" 
-                            alt="CTO" 
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold">Michael Rodriguez</h3>
-                          <p className="text-sm text-kaas-pink mb-1">CTO & Co-Founder</p>
-                          <p className="text-sm text-muted-foreground mb-2">
-                            Ex-Google AI engineer, built ML systems for real estate forecasting
-                          </p>
-                          <a href="#" className="text-xs text-primary hover:underline">
-                            LinkedIn
-                          </a>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
-                      <CardContent className="pt-6 flex gap-4">
-                        <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                          <img 
-                            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww" 
-                            alt="VP Product" 
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold">Alisha Washington</h3>
-                          <p className="text-sm text-kaas-pink mb-1">VP of Product</p>
-                          <p className="text-sm text-muted-foreground mb-2">
-                            Previously led product teams at Apartments.com and Airbnb
-                          </p>
-                          <a href="#" className="text-xs text-primary hover:underline">
-                            LinkedIn
-                          </a>
-                        </div>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
-                      <CardContent className="pt-6 flex gap-4">
-                        <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                          <img 
-                            src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww" 
-                            alt="VP Sales" 
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="font-semibold">David Patel</h3>
-                          <p className="text-sm text-kaas-pink mb-1">VP of Growth</p>
-                          <p className="text-sm text-muted-foreground mb-2">
-                            Scaled multiple SaaS startups, former property management consultant
-                          </p>
-                          <a href="#" className="text-xs text-primary hover:underline">
-                            LinkedIn
-                          </a>
-                        </div>
-                      </CardContent>
-                    </Card>
+                  <h2 className="text-xl font-semibold mb-6 flex items-center">
+                    <Star className="h-5 w-5 text-kaas-pink mr-2" />
+                    <span>Founding Team</span>
+                  </h2>
+                  
+                  <div className="grid grid-cols-1 gap-8">
+                    {founders.slice(0, 2).map((founder, index) => (
+                      <Card key={index} className="border border-blue-200 hover:border-blue-400 transition-colors overflow-hidden">
+                        <CardContent className="p-0">
+                          <div className="grid md:grid-cols-3 w-full">
+                            <div className="bg-gradient-to-br from-slate-50 to-slate-100 p-6 flex flex-col items-center justify-center">
+                              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-md mb-4">
+                                <img 
+                                  src={founder.image} 
+                                  alt={founder.name} 
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <h3 className="font-bold text-lg text-center">{founder.name}</h3>
+                              <p className="text-kaas-pink font-medium text-center">{founder.title}</p>
+                              <p className="text-sm text-center text-muted-foreground mt-1">{founder.education}</p>
+                              
+                              <div className="flex items-center gap-3 mt-4">
+                                <a 
+                                  href={founder.linkedin} 
+                                  className="text-slate-700 hover:text-blue-600 transition-colors"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <Linkedin className="h-5 w-5" />
+                                </a>
+                                <a 
+                                  href={founder.twitter} 
+                                  className="text-slate-700 hover:text-blue-400 transition-colors"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <Twitter className="h-5 w-5" />
+                                </a>
+                                <a 
+                                  href={`mailto:${founder.name.toLowerCase().replace(' ', '.')}@proprhome.com`} 
+                                  className="text-slate-700 hover:text-kaas-pink transition-colors"
+                                >
+                                  <Mail className="h-5 w-5" />
+                                </a>
+                              </div>
+                            </div>
+                            
+                            <div className="md:col-span-2 p-6">
+                              <div className="flex flex-wrap gap-2 mb-4">
+                                <Badge variant="outline" className="flex items-center gap-1">
+                                  <Briefcase className="h-3 w-3" />
+                                  {founder.experience} experience
+                                </Badge>
+                                {founder.previousStartups > 0 && (
+                                  <Badge variant="outline" className="flex items-center gap-1">
+                                    <Star className="h-3 w-3" />
+                                    {founder.previousStartups}x Founder
+                                  </Badge>
+                                )}
+                                {founder.previousExits > 0 && (
+                                  <Badge className="bg-green-500 text-white flex items-center gap-1">
+                                    <TrendingUp className="h-3 w-3" />
+                                    {founder.previousExits} Successful {founder.previousExits === 1 ? 'Exit' : 'Exits'}
+                                  </Badge>
+                                )}
+                              </div>
+                              
+                              <p className="text-muted-foreground mb-4">{founder.bio}</p>
+                              
+                              <div className="mb-4">
+                                <h4 className="font-medium mb-2 text-sm flex items-center">
+                                  <Award className="h-4 w-4 mr-1.5 text-kaas-pink" />
+                                  Key Achievements
+                                </h4>
+                                <ul className="space-y-2">
+                                  {founder.highlights.map((highlight, idx) => (
+                                    <li key={idx} className="flex items-start">
+                                      <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-soft-blue mr-2 text-xs font-medium mt-0.5 flex-shrink-0">
+                                        {idx + 1}
+                                      </span>
+                                      <span className="text-sm">{highlight}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
                   </div>
                 </div>
                 
                 <div>
-                  <h2 className="text-xl font-semibold mb-4">Advisors</h2>
+                  <h2 className="text-xl font-semibold mb-4 flex items-center">
+                    <Users className="h-5 w-5 text-kaas-pink mr-2" />
+                    <span>Leadership Team</span>
+                  </h2>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {founders.slice(2).map((founder, index) => (
+                      <Card key={index} className="border border-blue-200 hover:border-blue-400 transition-colors">
+                        <CardContent className="pt-6 flex gap-4">
+                          <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                            <img 
+                              src={founder.image} 
+                              alt={founder.name} 
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <h3 className="font-semibold">{founder.name}</h3>
+                              {founder.previousExits > 0 && (
+                                <Badge className="bg-green-500 text-white text-[10px] py-0">
+                                  {founder.previousExits}x Exit
+                                </Badge>
+                              )}
+                            </div>
+                            <p className="text-sm text-kaas-pink mb-1">{founder.title}</p>
+                            <p className="text-sm text-muted-foreground mb-2">
+                              {founder.bio}
+                            </p>
+                            <div className="flex gap-2">
+                              <Badge variant="outline" className="flex items-center gap-1 text-xs">
+                                <Briefcase className="h-3 w-3" />
+                                {founder.experience}
+                              </Badge>
+                              {founder.previousStartups > 0 && (
+                                <Badge variant="outline" className="flex items-center gap-1 text-xs">
+                                  <Flag className="h-3 w-3" />
+                                  {founder.previousStartups}x Founder
+                                </Badge>
+                              )}
+                            </div>
+                            <div className="flex items-center mt-2">
+                              <a href={founder.linkedin} className="text-xs text-primary hover:underline flex items-center">
+                                <Linkedin className="h-3 w-3 mr-1" />
+                                LinkedIn
+                              </a>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-4 flex items-center">
+                    <Bookmark className="h-5 w-5 text-kaas-pink mr-2" />
+                    <span>Advisors</span>
+                  </h2>
+                  
                   <div className="grid grid-cols-2 gap-6">
                     <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
                       <CardContent className="pt-6">
                         <h3 className="font-semibold">Jordan Williams</h3>
-                        <p className="text-sm text-muted-foreground mb-1">
-                          Former CEO of PropertyManagement.com (acquired)
+                        <p className="text-sm text-muted-foreground mb-2">
+                          Former CEO of PropertyManagement.com (acquired for $85M)
                         </p>
-                        <a href="#" className="text-xs text-primary hover:underline mt-2 inline-block">
+                        <Badge variant="outline" className="mb-2">Real Estate Tech Expert</Badge>
+                        <a href="#" className="text-xs text-primary hover:underline mt-2 inline-block flex items-center">
+                          <Linkedin className="h-3 w-3 mr-1" />
                           LinkedIn
                         </a>
                       </CardContent>
@@ -315,10 +449,12 @@ const StartupProfile = () => {
                     <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
                       <CardContent className="pt-6">
                         <h3 className="font-semibold">Dr. Emily Zhao</h3>
-                        <p className="text-sm text-muted-foreground mb-1">
+                        <p className="text-sm text-muted-foreground mb-2">
                           AI Research Director at Stanford Real Estate Technology Initiative
                         </p>
-                        <a href="#" className="text-xs text-primary hover:underline mt-2 inline-block">
+                        <Badge variant="outline" className="mb-2">AI & PropTech Specialist</Badge>
+                        <a href="#" className="text-xs text-primary hover:underline mt-2 inline-block flex items-center">
+                          <Linkedin className="h-3 w-3 mr-1" />
                           LinkedIn
                         </a>
                       </CardContent>
@@ -519,258 +655,4 @@ const StartupProfile = () => {
                     <li className="flex items-start gap-2">
                       <Badge className="mt-0.5" variant="outline">Current</Badge>
                       <div>
-                        <p className="text-sm font-medium">$1.5M | Q1 2024</p>
-                        <p className="text-xs text-muted-foreground">
-                          Raising from institutional investors and strategic angels
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-          
-          <div className="space-y-6">
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Investment Details</h2>
-                
-                <div className="space-y-4">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Raising</span>
-                    <span className="font-medium">$1.5M</span>
-                  </div>
-                  
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Minimum Investment</span>
-                    <span className="font-medium">€500</span>
-                  </div>
-                  
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Instrument</span>
-                    <span className="font-medium">SAFE</span>
-                  </div>
-                  
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Discount</span>
-                    <span className="font-medium">30%</span>
-                  </div>
-                  
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">HQ</span>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-base">🇵🇹</span>
-                      <span className="font-medium">Portugal</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Backers</span>
-                    <div className="flex items-center">
-                      <UsersRound className="h-4 w-4 text-kaas-pink mr-1.5" />
-                      <span className="font-medium">42</span>
-                    </div>
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="pt-2">
-                    <p className="text-sm font-medium mb-2">Funds committed</p>
-                    <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-kaas-pink rounded-full" 
-                        style={{ width: "65%" }}
-                      ></div>
-                    </div>
-                    <div className="flex justify-between mt-2 text-xs">
-                      <p className="text-muted-foreground">$975,000 of $1.5M</p>
-                      <p className="text-muted-foreground">65%</p>
-                    </div>
-                  </div>
-                  
-                  <div className="pt-2">
-                    <p className="text-xs text-muted-foreground mb-4">
-                      This round is expected to close by April 15, 2024
-                    </p>
-                    
-                    <Button 
-                      variant="kaas" 
-                      size="lg" 
-                      className="w-full"
-                      onClick={handleCommit}
-                    >
-                      Invest Now
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <Award className="h-5 w-5 text-kaas-pink" />
-                  <h2 className="text-lg font-semibold">Notable Investors</h2>
-                </div>
-                
-                <div className="space-y-4">
-                  {notableInvestors.map((investor, index) => (
-                    <div key={index} className="border-b pb-3 last:border-0 last:pb-0">
-                      <div className="flex items-start">
-                        <div>
-                          <h3 className="font-medium text-sm">{investor.name}</h3>
-                          <p className="text-xs text-muted-foreground">{investor.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-lg font-semibold mb-4">Use of Funds</h2>
-                
-                <div className="space-y-3">
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Product Development</span>
-                      <span>45%</span>
-                    </div>
-                    <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                      <div className="h-full bg-kaas-pink rounded-full" style={{ width: "45%" }}></div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Sales & Marketing</span>
-                      <span>30%</span>
-                    </div>
-                    <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                      <div className="h-full bg-kaas-pink rounded-full" style={{ width: "30%" }}></div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Operations</span>
-                      <span>15%</span>
-                    </div>
-                    <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                      <div className="h-full bg-kaas-pink rounded-full" style={{ width: "15%" }}></div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="flex justify-between text-sm mb-1">
-                      <span>Reserve</span>
-                      <span>10%</span>
-                    </div>
-                    <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                      <div className="h-full bg-kaas-pink rounded-full" style={{ width: "10%" }}></div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="p-6">
-                <h2 className="text-lg font-semibold mb-4">Documents</h2>
-                
-                <ul className="space-y-3">
-                  <li>
-                    <a href="#" className="flex items-center gap-2 text-primary hover:underline">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <span>Pitch Deck</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="flex items-center gap-2 text-primary hover:underline">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <span>SAFE Agreement</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="flex items-center gap-2 text-primary hover:underline">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      <span>Financial Model</span>
-                    </a>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </main>
-      
-      <InvestorSignupModal 
-        isOpen={showInvestorSignup}
-        onClose={() => setShowInvestorSignup(false)}
-        dealName="ProprHome.com"
-        onComplete={handleInvestorProfileComplete}
-      />
-      
-      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Invest in ProprHome.com</DialogTitle>
-            <DialogDescription>
-              Enter the amount you would like to invest and your email address to receive the confirmation link.
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="space-y-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="amount" className="text-right text-sm font-medium">
-                Amount (€)
-              </label>
-              <Input
-                id="amount"
-                type="number"
-                min="500"
-                step="100"
-                value={commitAmount}
-                onChange={(e) => setCommitAmount(e.target.value)}
-                className="col-span-3"
-              />
-            </div>
-            
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="email" className="text-right text-sm font-medium">
-                Email
-              </label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="col-span-3"
-              />
-            </div>
-          </div>
-          
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button variant="kaas" onClick={handleSubmitCommitment}>
-              Confirm Investment
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
-  );
-};
-
-export default StartupProfile;
+                        <p className="text-sm font-medium">$1.5M | Q1 2024</

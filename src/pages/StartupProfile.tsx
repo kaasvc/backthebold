@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -818,7 +817,7 @@ const StartupProfile = () => {
       </Dialog>
       
       <InvestorSignupModal
-        open={showInvestorSignup} 
+        isOpen={showInvestorSignup} 
         onOpenChange={setShowInvestorSignup}
         onComplete={handleInvestorProfileComplete}
         dealName="ProprHome.com"

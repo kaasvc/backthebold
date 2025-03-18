@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -445,6 +446,7 @@ const Deals = () => {
             {filteredDeals.map((deal) => (
               <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
                 <CardContent className="p-4 flex flex-col h-full">
+                  {/* Startup Information Section - Moved to top */}
                   <div className="flex items-start mb-4">
                     <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
                       <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
@@ -496,65 +498,46 @@ const Deals = () => {
                     </div>
                   </div>
                   
+                  {/* Description moved up */}
                   <div className="mb-4">
                     <p className="text-sm text-slate-600 mb-1">
                       {deal.description}
                     </p>
                   </div>
                   
-                  <div className="mb-5 flex-grow">
-                    <div className="rounded-lg">
-                      <h3 className="font-medium text-sm mb-2 flex items-center">
-                        <Star className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                        Founding Team
-                      </h3>
-                      
-                      <div className="flex-1">
-                        {deal.founders.slice(0, 3).map((founder, idx) => (
-                          <div 
-                            key={idx} 
-                            className="flex items-center mb-2 last:mb-0 p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-slate-50"
-                            onClick={() => handleFounderClick(founder)}
-                          >
-                            <div className="w-8 h-8 rounded-full overflow-hidden mr-2 border border-white shadow-sm flex-shrink-0">
-                              <img 
-                                src={founder.image} 
-                                alt={founder.name} 
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                            <div>
-                              <p className="text-xs font-medium">
-                                {founder.fullName}
-                                {founder.exits > 0 && (
-                                  <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
-                                    {founder.exits}x Exit
-                                  </span>
-                                )}
-                              </p>
-                              <div className="flex items-center gap-2">
-                                <p className="text-[10px] text-slate-600">{founder.title}</p>
-                                <span className="text-[10px] text-slate-500 flex items-center">
-                                  <Briefcase className="h-2 w-2 mr-0.5" />
-                                  {founder.experience}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
+                  {/* Funding Information - Moved up and enhanced */}
+                  <div className="mb-5 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center">
+                        <CircleDollarSign className="h-4 w-4 text-kaas-pink mr-1.5" />
+                        <span className="text-sm font-medium">Funding Status</span>
                       </div>
+                      <span className="text-xs font-medium bg-kaas-pink/10 text-kaas-pink px-2 py-0.5 rounded-full">
+                        Raising {deal.stage}
+                      </span>
                     </div>
-                  </div>
-                  
-                  <div className="mb-3">
+                    
+                    <div className="flex items-center justify-between text-xs mb-1.5">
+                      <span className="font-medium">
+                        Funding to date: {calculateFundingToDate(150, deal.progress)}
+                      </span>
+                      <span className="font-medium">
+                        {deal.progress}% complete
+                      </span>
+                    </div>
+                    
                     <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
                       <div 
                         className="h-full bg-kaas-pink rounded-full" 
                         style={{ width: `${deal.progress}%` }}
                       ></div>
                     </div>
-                    <div className="flex justify-between mt-1 text-xs">
-                      <p className="text-muted-foreground">{deal.progress}% funded</p>
+                    
+                    <div className="flex justify-between mt-1.5 text-xs">
+                      <div className="flex items-center">
+                        <Users className="h-3 w-3 mr-1 text-slate-500" />
+                        <span>{deal.backers.count} backers</span>
+                      </div>
                       <p className={deal.progress >= 50 ? "text-kaas-pink font-medium" : "text-muted-foreground"}>
                         {deal.progress >= 50 ? (
                           <>Only {deal.market.fundingLeft} left</>
@@ -563,23 +546,60 @@ const Deals = () => {
                         )}
                       </p>
                     </div>
-                    <div className="flex items-center mt-2">
-                      <CircleDollarSign className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                      <span className="text-xs font-medium">Funding to date: {calculateFundingToDate(150, deal.progress)}</span>
+                  </div>
+                  
+                  {/* Founding Team Section */}
+                  <div className="mb-5 flex-grow">
+                    <h3 className="font-medium text-sm mb-2 flex items-center">
+                      <Star className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
+                      Founding Team
+                    </h3>
+                    
+                    <div className="flex-1">
+                      {deal.founders.slice(0, 3).map((founder, idx) => (
+                        <div 
+                          key={idx} 
+                          className="flex items-center mb-2 last:mb-0 p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-slate-50"
+                          onClick={() => handleFounderClick(founder)}
+                        >
+                          <div className="w-8 h-8 rounded-full overflow-hidden mr-2 border border-white shadow-sm flex-shrink-0">
+                            <img 
+                              src={founder.image} 
+                              alt={founder.name} 
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-xs font-medium">
+                              {founder.fullName}
+                              {founder.exits > 0 && (
+                                <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
+                                  {founder.exits}x Exit
+                                </span>
+                              )}
+                            </p>
+                            <div className="flex items-center gap-2">
+                              <p className="text-[10px] text-slate-600">{founder.title}</p>
+                              <span className="text-[10px] text-slate-500 flex items-center">
+                                <Briefcase className="h-2 w-2 mr-0.5" />
+                                {founder.experience}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between text-xs mb-4">
-                    <div className="text-slate-600">
-                      {deal.backers.count} backers
+                  {/* Notable Investors - if present */}
+                  {deal.backers.notable && (
+                    <div className="text-xs mb-4 text-kaas-pink font-medium flex items-center">
+                      <Award className="h-3.5 w-3.5 mr-1.5" />
+                      Including Notable Investors
                     </div>
-                    {deal.backers.notable && (
-                      <div className="text-kaas-pink font-medium">
-                        Including Notable Investors
-                      </div>
-                    )}
-                  </div>
+                  )}
                   
+                  {/* Action Buttons */}
                   <div className="grid grid-cols-2 gap-2 mt-auto">
                     <Button 
                       variant="outline" 

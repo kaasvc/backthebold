@@ -105,6 +105,11 @@ const Deals = () => {
     return `€${Math.round(fundingLeft)}K`;
   };
   
+  const calculateFundingToDate = (totalFunding, progressPercentage) => {
+    const fundingToDate = (totalFunding * progressPercentage) / 100;
+    return `€${Math.round(fundingToDate)}K`;
+  };
+  
   const handleFounderClick = (founder) => {
     toast.info(`${founder.fullName} - ${founder.title}`, {
       description: `${founder.achievements || founder.experience} years of experience`
@@ -557,6 +562,10 @@ const Deals = () => {
                           <>{deal.market.fundingLeft} left</>
                         )}
                       </p>
+                    </div>
+                    <div className="flex items-center mt-2">
+                      <CircleDollarSign className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
+                      <span className="text-xs font-medium">Funding to date: {calculateFundingToDate(150, deal.progress)}</span>
                     </div>
                   </div>
                   

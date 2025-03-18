@@ -498,7 +498,7 @@ const Deals = () => {
                   </div>
                   
                   <div className="mb-5 flex-grow">
-                    <div className="bg-slate-50 rounded-lg p-3 border border-slate-100">
+                    <div className="rounded-lg">
                       <h3 className="font-medium text-sm mb-2 flex items-center">
                         <Star className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
                         Founding Team
@@ -508,7 +508,7 @@ const Deals = () => {
                         {deal.founders.slice(0, 3).map((founder, idx) => (
                           <div 
                             key={idx} 
-                            className="flex items-center mb-2 last:mb-0 p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors"
+                            className="flex items-center mb-2 last:mb-0 p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-slate-50"
                             onClick={() => handleFounderClick(founder)}
                           >
                             <div className="w-8 h-8 rounded-full overflow-hidden mr-2 border border-white shadow-sm flex-shrink-0">

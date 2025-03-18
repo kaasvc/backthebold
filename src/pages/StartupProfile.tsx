@@ -56,6 +56,10 @@ const StartupProfile = () => {
     setIsInvestorRegistered(true);
   };
   
+  const handleCloseInvestorModal = () => {
+    setShowInvestorSignup(false);
+  };
+  
   const founders = [
     {
       name: "Sarah Chen",
@@ -818,7 +822,7 @@ const StartupProfile = () => {
       
       <InvestorSignupModal
         isOpen={showInvestorSignup} 
-        onOpenChange={setShowInvestorSignup}
+        onClose={handleCloseInvestorModal}
         onComplete={handleInvestorProfileComplete}
         dealName="ProprHome.com"
       />
@@ -827,3 +831,4 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
+

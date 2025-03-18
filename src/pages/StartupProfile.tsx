@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -655,4 +656,175 @@ const StartupProfile = () => {
                     <li className="flex items-start gap-2">
                       <Badge className="mt-0.5" variant="outline">Current</Badge>
                       <div>
-                        <p className="text-sm font-medium">$1.5M | Q1 2024</
+                        <p className="text-sm font-medium">$1.5M | Q1 2024</p>
+                        <p className="text-xs text-muted-foreground">
+                          Seeking investment from strategic investors with PropTech experience
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+          
+          <div className="space-y-6">
+            <Card className="border-kaas-pink shadow-sm">
+              <CardContent className="pt-6">
+                <h2 className="text-xl font-semibold mb-4">Deal Terms</h2>
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-medium flex items-center">
+                      <DollarSign className="h-4 w-4 mr-2 text-kaas-pink" />
+                      Round Size
+                    </p>
+                    <p className="text-sm ml-6">$1.5M</p>
+                  </div>
+                  <div>
+                    <p className="font-medium flex items-center">
+                      <LineChart className="h-4 w-4 mr-2 text-kaas-pink" />
+                      Valuation Cap
+                    </p>
+                    <p className="text-sm ml-6">$8.5M</p>
+                  </div>
+                  <div>
+                    <p className="font-medium flex items-center">
+                      <Building className="h-4 w-4 mr-2 text-kaas-pink" />
+                      Investment Instrument
+                    </p>
+                    <p className="text-sm ml-6">SAFE, SEIS eligible</p>
+                  </div>
+                  <div>
+                    <p className="font-medium flex items-center">
+                      <Users className="h-4 w-4 mr-2 text-kaas-pink" />
+                      Minimum Investment
+                    </p>
+                    <p className="text-sm ml-6">€20,000</p>
+                  </div>
+                  <div>
+                    <p className="font-medium flex items-center">
+                      <Award className="h-4 w-4 mr-2 text-kaas-pink" />
+                      Lead Investor
+                    </p>
+                    <p className="text-sm ml-6">TechFront Ventures (€150K committed)</p>
+                  </div>
+                  <div>
+                    <p className="font-medium flex items-center">
+                      <Flag className="h-4 w-4 mr-2 text-kaas-pink" />
+                      Closing Date
+                    </p>
+                    <p className="text-sm ml-6">April 30, 2024 (estimated)</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="pt-6 space-y-4">
+                <h2 className="text-xl font-semibold">Notable Investors</h2>
+                {notableInvestors.map((investor, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-full bg-soft-purple flex items-center justify-center flex-shrink-0">
+                      <User className="w-4 h-4 text-kaas-pink" />
+                    </div>
+                    <div>
+                      <p className="font-medium">{investor.name}</p>
+                      <p className="text-sm text-muted-foreground">{investor.description}</p>
+                      <p className="text-sm text-kaas-pink font-medium mt-1">{investor.amount}</p>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="pt-6">
+                <h2 className="text-xl font-semibold mb-4">Use of Funds</h2>
+                <ul className="list-disc pl-5 space-y-2 text-sm">
+                  <li>
+                    <span className="font-medium">Engineering (45%):</span> Expand development team and accelerate product roadmap
+                  </li>
+                  <li>
+                    <span className="font-medium">Marketing (30%):</span> Increase customer acquisition through targeted campaigns
+                  </li>
+                  <li>
+                    <span className="font-medium">Operations (15%):</span> Improve customer support and onboarding processes
+                  </li>
+                  <li>
+                    <span className="font-medium">Reserve (10%):</span> Working capital for unexpected opportunities
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+            
+            <div className="flex flex-col gap-4">
+              <Button 
+                className="py-6 text-base bg-kaas-pink hover:bg-kaas-pink-600"
+                onClick={handleCommit}
+              >
+                Commit to Invest
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="py-6 text-base flex items-center gap-2"
+                asChild
+              >
+                <a href="https://proprhome.com" target="_blank" rel="noopener noreferrer">
+                  Visit Website
+                  <ExternalLink className="h-4 w-4 ml-1" />
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Commit to Invest</DialogTitle>
+            <DialogDescription>
+              Enter your commitment details below. You'll receive a confirmation email with further instructions.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <p className="text-sm font-medium">Investment Amount (€)</p>
+              <Input
+                type="text"
+                placeholder="Min. €20,000"
+                value={commitAmount}
+                onChange={(e) => setCommitAmount(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm font-medium">Email</p>
+              <Input
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button onClick={handleSubmitCommitment}>Submit</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      <InvestorSignupModal
+        open={showInvestorSignup} 
+        onOpenChange={setShowInvestorSignup}
+        onComplete={handleInvestorProfileComplete}
+        dealName="ProprHome.com"
+      />
+    </div>
+  );
+};
+
+export default StartupProfile;

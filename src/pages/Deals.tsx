@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -14,6 +13,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 const Deals = () => {
   const navigate = useNavigate();
@@ -449,111 +449,96 @@ const Deals = () => {
             {filteredDeals.map((deal) => (
               <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
                 <CardContent className="p-4 flex flex-col h-full">
-                  {/* Startup Information Section - Compact info at top */}
-                  <div className="flex items-start mb-3">
-                    <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
-                      <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
-                        deal.name === "ProprHome.com" ? "bg-soft-blue" : 
-                        deal.name === "MediSync" ? "bg-soft-pink" : "bg-soft-green"
-                      )}>
-                        {deal.name === "ProprHome.com" && (
-                          <Building className="h-6 w-6 text-kaas-pink" />
-                        )}
-                        {deal.name === "MediSync" && (
-                          <Award className="h-6 w-6 text-kaas-pink" />
-                        )}
-                        {deal.name === "EcoTrack" && (
-                          <TrendingUp className="h-6 w-6 text-kaas-pink" />
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="ml-3 flex-1">
-                      <div className="flex items-center">
-                        <h2 className="text-lg font-bold">{deal.name}</h2>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-slate-600">
-                        <div className="flex items-center">
-                          <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                          {deal.location}
-                        </div>
-                        <Badge 
-                          variant="outline"
-                          className={cn(
-                            "flex items-center gap-1 text-[10px] py-0 px-1.5 h-4",
-                            deal.type === "B2B" ? "" : ""
-                          )}
-                        >
-                          {deal.type === "B2B" ? 
-                            <Building className="h-2.5 w-2.5" /> : 
-                            <User className="h-2.5 w-2.5" />
-                          }
-                          {deal.type}
-                        </Badge>
-                        <Badge 
-                          variant="outline" 
-                          className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
-                        >
-                          <Calendar className="h-2.5 w-2.5" />
-                          {deal.foundedYear}
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Founding Team Section - Moved to top and Enhanced */}
                   <div className="mb-4">
-                    <h3 className="font-medium text-sm mb-2 flex items-center">
-                      <Star className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                      Founding Team
-                    </h3>
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <Star className="h-4 w-4 text-amber-500" />
+                        <h3 className="font-semibold text-sm">Exceptional Founding Team</h3>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs">
+                        <Badge variant="outline" className="bg-amber-50 border-amber-200">
+                          {deal.founders.filter(f => f.exits > 0).length > 0 ? "Proven Founders" : "Rising Stars"}
+                        </Badge>
+                      </div>
+                    </div>
                     
-                    <p className="text-xs text-slate-600 italic mb-2">{deal.founderIntro}</p>
-                    
-                    <div className="flex-1">
-                      {deal.founders.slice(0, 3).map((founder, idx) => (
-                        <div 
-                          key={idx} 
-                          className="flex items-center mb-2 last:mb-0 p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-slate-50"
-                          onClick={() => handleFounderClick(founder)}
-                        >
-                          <div className="w-8 h-8 rounded-full overflow-hidden mr-2 border border-white shadow-sm flex-shrink-0">
-                            <img 
-                              src={founder.image} 
-                              alt={founder.name} 
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div>
-                            <p className="text-xs font-medium">
-                              {founder.fullName}
-                              {founder.exits > 0 && (
-                                <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
-                                  {founder.exits}x Exit
-                                </span>
-                              )}
-                            </p>
-                            <div className="flex items-center gap-2">
-                              <p className="text-[10px] text-slate-600">{founder.title}</p>
-                              <span className="text-[10px] text-slate-500 flex items-center">
-                                <Briefcase className="h-2 w-2 mr-0.5" />
-                                {founder.experience}
-                              </span>
+                    <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 mb-2">
+                      <p className="text-sm text-slate-700 mb-2 font-medium italic">"{deal.founderIntro}"</p>
+                      
+                      <div className="flex flex-wrap -mx-1 mt-2">
+                        {deal.founders.slice(0, 3).map((founder, idx) => (
+                          <div key={idx} className="px-1 w-full mb-2">
+                            <div 
+                              className="flex items-center p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-white"
+                              onClick={() => handleFounderClick(founder)}
+                            >
+                              <Avatar className="w-10 h-10 border-2 border-white shadow-sm">
+                                <AvatarImage src={founder.image} alt={founder.name} />
+                                <AvatarFallback className="bg-kaas-pink text-white">
+                                  {founder.name.substring(0, 2)}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div className="ml-3">
+                                <p className="text-sm font-medium flex items-center">
+                                  {founder.fullName}
+                                  {founder.exits > 0 && (
+                                    <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
+                                      {founder.exits}x Exit
+                                    </span>
+                                  )}
+                                </p>
+                                <div className="flex items-center gap-2">
+                                  <p className="text-[11px] text-slate-600">{founder.title}</p>
+                                  <span className="text-[11px] text-slate-500 flex items-center">
+                                    <Briefcase className="h-2.5 w-2.5 mr-0.5" />
+                                    {founder.experience}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
                   
-                  {/* Description moved up */}
                   <div className="mb-4">
-                    <p className="text-sm text-slate-600 mb-1">
+                    <div className="flex justify-between items-center gap-2">
+                      <h2 className="text-lg font-bold">{deal.name}</h2>
+                      <div className="flex items-center gap-1.5">
+                        <Badge variant="outline" className="text-[10px]">
+                          {deal.industry}
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-600 mt-1">
+                      <div className="flex items-center">
+                        <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                        {deal.location}
+                      </div>
+                      <Badge 
+                        variant="outline"
+                        className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                      >
+                        {deal.type === "B2B" ? 
+                          <Building className="h-2.5 w-2.5" /> : 
+                          <User className="h-2.5 w-2.5" />
+                        }
+                        {deal.type}
+                      </Badge>
+                      <Badge 
+                        variant="outline" 
+                        className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
+                      >
+                        <Calendar className="h-2.5 w-2.5" />
+                        {deal.foundedYear}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-slate-600 mt-2">
                       {deal.description}
                     </p>
                   </div>
                   
-                  {/* Funding Information */}
                   <div className="mb-5 bg-slate-50 p-3 rounded-lg border border-slate-200">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center">
@@ -596,7 +581,6 @@ const Deals = () => {
                     </div>
                   </div>
                   
-                  {/* Notable Investors - if present */}
                   {deal.backers.notable && (
                     <div className="text-xs mb-4 text-kaas-pink font-medium flex items-center">
                       <Award className="h-3.5 w-3.5 mr-1.5" />
@@ -604,7 +588,6 @@ const Deals = () => {
                     </div>
                   )}
                   
-                  {/* Action Buttons */}
                   <div className="grid grid-cols-2 gap-2 mt-auto">
                     <Button 
                       variant="outline" 

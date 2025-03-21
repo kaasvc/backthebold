@@ -555,43 +555,43 @@ const Deals = () => {
                         </div>
                       </div>
                       
-                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 mb-2">
-                        <p className="text-sm text-slate-700 mb-2 font-medium italic">"{deal.founderIntro}"</p>
-                        
-                        <div className="flex flex-wrap -mx-1 mt-2">
-                          {deal.founders.slice(0, 3).map((founder, idx) => (
-                            <div key={idx} className="px-1 w-full mb-2">
-                              <div 
-                                className="flex items-center p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-white"
-                                onClick={() => handleFounderClick(founder)}
-                              >
-                                <Avatar className="w-10 h-10 border-2 border-white shadow-sm">
-                                  <AvatarImage src={founder.image} alt={founder.name} />
-                                  <AvatarFallback className="bg-kaas-pink text-white">
-                                    {founder.name.substring(0, 2)}
-                                  </AvatarFallback>
-                                </Avatar>
-                                <div className="ml-3">
-                                  <p className="text-sm font-medium flex items-center">
-                                    {founder.fullName}
-                                    {founder.exits > 0 && (
-                                      <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
-                                        {founder.exits}x Exit
-                                      </span>
-                                    )}
-                                  </p>
-                                  <div className="flex items-center gap-2">
-                                    <p className="text-[11px] text-slate-600">{founder.title}</p>
-                                    <span className="text-[11px] text-slate-500 flex items-center">
-                                      <Briefcase className="h-2.5 w-2.5 mr-0.5" />
-                                      {founder.experience}
+                      <div className="flex flex-wrap -mx-1 mt-2">
+                        {deal.founders.slice(0, 3).map((founder, idx) => (
+                          <div key={idx} className="px-1 w-full mb-2">
+                            <div 
+                              className="flex items-center p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-white"
+                              onClick={() => handleFounderClick(founder)}
+                            >
+                              <Avatar className="w-10 h-10 border-2 border-white shadow-sm">
+                                <AvatarImage src={founder.image} alt={founder.name} />
+                                <AvatarFallback className="bg-kaas-pink text-white">
+                                  {founder.name.substring(0, 2)}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div className="ml-3">
+                                <p className="text-sm font-medium flex items-center">
+                                  {founder.fullName}
+                                  {founder.exits > 0 && (
+                                    <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
+                                      {founder.exits}x Exit
                                     </span>
-                                  </div>
+                                  )}
+                                </p>
+                                <div className="flex items-center gap-2">
+                                  <p className="text-[11px] text-slate-600">{founder.title}</p>
+                                  <span className="text-[11px] text-slate-500 flex items-center">
+                                    <Briefcase className="h-2.5 w-2.5 mr-0.5" />
+                                    {founder.experience}
+                                  </span>
                                 </div>
                               </div>
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
+                        <p className="text-sm text-slate-700 mb-2 font-medium italic">"{deal.founderIntro}"</p>
                       </div>
                     </div>
                     

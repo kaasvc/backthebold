@@ -595,44 +595,18 @@ const Deals = () => {
                       </div>
                     </div>
                     
-                    <div className="mb-4">
-                      <div className="flex justify-between items-center gap-2">
-                        <h2 className="text-lg font-bold">{deal.name}</h2>
-                        <div className="flex items-center gap-1.5">
-                          <Badge variant="outline" className="text-[10px]">
-                            {deal.industry}
-                          </Badge>
-                        </div>
-                      </div>
+                    <div className="mb-2">
+                      <p className="text-lg font-bold">{deal.name}</p>
                       <div className="flex items-center gap-2 text-xs text-slate-600 mt-1">
                         <div className="flex items-center">
                           <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
                           {deal.location}
                         </div>
-                        <Badge 
-                          variant="outline"
-                          className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
-                        >
-                          {deal.type === "B2B" ? 
-                            <Building className="h-2.5 w-2.5" /> : 
-                            <User className="h-2.5 w-2.5" />
-                          }
-                          {deal.type}
-                        </Badge>
-                        <Badge 
-                          variant="outline" 
-                          className="flex items-center gap-1 text-[10px] py-0 px-1.5 h-4"
-                        >
-                          <Calendar className="h-2.5 w-2.5" />
-                          {deal.foundedYear}
-                        </Badge>
+                        <Badge variant="outline" className="text-[10px]">{deal.industry}</Badge>
                       </div>
-                      <p className="text-sm text-slate-600 mt-2">
-                        {deal.description}
-                      </p>
                     </div>
                     
-                    <div className="mb-5 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                    <div className="mb-4 mt-2 bg-slate-50 p-3 rounded-lg border border-slate-200">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center">
                           <CircleDollarSign className="h-4 w-4 text-kaas-pink mr-1.5" />
@@ -673,13 +647,6 @@ const Deals = () => {
                         </p>
                       </div>
                     </div>
-                    
-                    {deal.backers.notable && (
-                      <div className="text-xs mb-4 text-kaas-pink font-medium flex items-center">
-                        <Award className="h-3.5 w-3.5 mr-1.5" />
-                        Including Notable Investors
-                      </div>
-                    )}
                     
                     <div className="grid grid-cols-2 gap-2 mt-auto">
                       <Button 
@@ -810,4 +777,3 @@ const Deals = () => {
 };
 
 export default Deals;
-

@@ -141,6 +141,7 @@ const Deals = () => {
         size: "$2 Trillion",
         fundingLeft: calculateFundingLeft(150, 65)
       },
+      founderIntro: "Led by former Airbnb product leaders and MIT AI researchers, this team combines deep PropTech experience with cutting-edge AI expertise.",
       founders: [
         {
           name: "Sarah",
@@ -187,6 +188,7 @@ const Deals = () => {
         size: "$4 Trillion",
         fundingLeft: calculateFundingLeft(150, 40)
       },
+      founderIntro: "Founded by a Stanford-trained physician with a passion for improving healthcare accessibility through technology.",
       founders: [
         {
           name: "Maya",
@@ -223,6 +225,7 @@ const Deals = () => {
         size: "$1.5 Trillion",
         fundingLeft: calculateFundingLeft(150, 30)
       },
+      founderIntro: "This diverse team combines climate science expertise, sustainability policy experience, and technical prowess to tackle enterprise carbon management.",
       founders: [
         {
           name: "Emma",
@@ -446,8 +449,8 @@ const Deals = () => {
             {filteredDeals.map((deal) => (
               <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
                 <CardContent className="p-4 flex flex-col h-full">
-                  {/* Startup Information Section - Moved to top */}
-                  <div className="flex items-start mb-4">
+                  {/* Startup Information Section - Compact info at top */}
+                  <div className="flex items-start mb-3">
                     <div className="w-14 h-14 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0 flex items-center justify-center bg-slate-50">
                       <div className={cn("w-10 h-10 rounded-md flex items-center justify-center", 
                         deal.name === "ProprHome.com" ? "bg-soft-blue" : 
@@ -498,6 +501,51 @@ const Deals = () => {
                     </div>
                   </div>
                   
+                  {/* Founding Team Section - Moved to top and Enhanced */}
+                  <div className="mb-4">
+                    <h3 className="font-medium text-sm mb-2 flex items-center">
+                      <Star className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
+                      Founding Team
+                    </h3>
+                    
+                    <p className="text-xs text-slate-600 italic mb-2">{deal.founderIntro}</p>
+                    
+                    <div className="flex-1">
+                      {deal.founders.slice(0, 3).map((founder, idx) => (
+                        <div 
+                          key={idx} 
+                          className="flex items-center mb-2 last:mb-0 p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-slate-50"
+                          onClick={() => handleFounderClick(founder)}
+                        >
+                          <div className="w-8 h-8 rounded-full overflow-hidden mr-2 border border-white shadow-sm flex-shrink-0">
+                            <img 
+                              src={founder.image} 
+                              alt={founder.name} 
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-xs font-medium">
+                              {founder.fullName}
+                              {founder.exits > 0 && (
+                                <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
+                                  {founder.exits}x Exit
+                                </span>
+                              )}
+                            </p>
+                            <div className="flex items-center gap-2">
+                              <p className="text-[10px] text-slate-600">{founder.title}</p>
+                              <span className="text-[10px] text-slate-500 flex items-center">
+                                <Briefcase className="h-2 w-2 mr-0.5" />
+                                {founder.experience}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
                   {/* Description moved up */}
                   <div className="mb-4">
                     <p className="text-sm text-slate-600 mb-1">
@@ -505,7 +553,7 @@ const Deals = () => {
                     </p>
                   </div>
                   
-                  {/* Funding Information - Moved up and enhanced */}
+                  {/* Funding Information */}
                   <div className="mb-5 bg-slate-50 p-3 rounded-lg border border-slate-200">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center">
@@ -545,49 +593,6 @@ const Deals = () => {
                           <>{deal.market.fundingLeft} left</>
                         )}
                       </p>
-                    </div>
-                  </div>
-                  
-                  {/* Founding Team Section */}
-                  <div className="mb-5 flex-grow">
-                    <h3 className="font-medium text-sm mb-2 flex items-center">
-                      <Star className="h-3.5 w-3.5 text-kaas-pink mr-1.5" />
-                      Founding Team
-                    </h3>
-                    
-                    <div className="flex-1">
-                      {deal.founders.slice(0, 3).map((founder, idx) => (
-                        <div 
-                          key={idx} 
-                          className="flex items-center mb-2 last:mb-0 p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-slate-50"
-                          onClick={() => handleFounderClick(founder)}
-                        >
-                          <div className="w-8 h-8 rounded-full overflow-hidden mr-2 border border-white shadow-sm flex-shrink-0">
-                            <img 
-                              src={founder.image} 
-                              alt={founder.name} 
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div>
-                            <p className="text-xs font-medium">
-                              {founder.fullName}
-                              {founder.exits > 0 && (
-                                <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
-                                  {founder.exits}x Exit
-                                </span>
-                              )}
-                            </p>
-                            <div className="flex items-center gap-2">
-                              <p className="text-[10px] text-slate-600">{founder.title}</p>
-                              <span className="text-[10px] text-slate-500 flex items-center">
-                                <Briefcase className="h-2 w-2 mr-0.5" />
-                                {founder.experience}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
                     </div>
                   </div>
                   

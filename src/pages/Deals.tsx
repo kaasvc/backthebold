@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -119,12 +118,9 @@ const Deals = () => {
     });
   };
 
-  // Helper function to get founder quality tag
   const getFounderQualityTag = (founders) => {
-    // Check if any founder has exits
-    const hasExits = founders.some(f => f.exits > 0);
-    if (hasExits) {
-      const exitsCount = founders.reduce((total, f) => total + f.exits, 0);
+    const exitsCount = founders.reduce((total, f) => total + (f.exits || 0), 0);
+    if (exitsCount > 0) {
       return {
         label: `${exitsCount}x Exit${exitsCount > 1 ? 's' : ''}`,
         icon: Trophy,
@@ -132,7 +128,6 @@ const Deals = () => {
       };
     }
 
-    // Check for experience
     const totalExperience = founders.reduce((total, f) => {
       const years = parseInt(f.experience) || 0;
       return total + years;
@@ -152,7 +147,6 @@ const Deals = () => {
       };
     }
 
-    // Check for academic backgrounds or special achievements
     if (founders.some(f => f.title.includes("PhD") || f.title.includes("MIT") || f.title.includes("Stanford"))) {
       return {
         label: "Academic Excellence",
@@ -161,7 +155,22 @@ const Deals = () => {
       };
     }
 
-    // Default tag for rising stars
+    if (founders.some(f => f.followers && f.followers >= 50000)) {
+      return {
+        label: "50K+ Followers",
+        icon: Star,
+        color: "bg-pink-50 border-pink-200 text-pink-700"
+      };
+    }
+
+    if (founders.length >= 2 && founders.some(f => f.relationship === "Best Friends")) {
+      return {
+        label: "Best Friends Co-Founders",
+        icon: Users,
+        color: "bg-green-50 border-green-200 text-green-700"
+      };
+    }
+
     return {
       label: "Rising Stars",
       icon: Rocket,
@@ -203,7 +212,8 @@ const Deals = () => {
           achievements: "Led Zillow rental growth by 300%",
           exits: 1,
           linkedin: "https://linkedin.com/in/sarahchen",
-          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
+          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
+          followers: 25000
         },
         {
           name: "David",
@@ -213,7 +223,8 @@ const Deals = () => {
           achievements: "Led Google AI Research team",
           exits: 0,
           linkedin: "https://linkedin.com/in/davidrodriguez",
-          image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
+          image: "https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
+          relationship: "Best Friends"
         }
       ]
     },
@@ -250,7 +261,8 @@ const Deals = () => {
           achievements: "Former Chief Medical Officer",
           exits: 1,
           linkedin: "https://linkedin.com/in/mayajohnson",
-          image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww"
+          image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fHww",
+          followers: 60000
         }
       ]
     },
@@ -297,7 +309,8 @@ const Deals = () => {
           achievements: "2 previous sustainability startups",
           exits: 1,
           linkedin: "https://linkedin.com/in/alexkim",
-          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D"
+          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
+          relationship: "Best Friends"
         },
         {
           name: "Marco",
@@ -313,24 +326,29 @@ const Deals = () => {
     }
   ];
 
-  // Generate all possible founder tags for filtering
   const founderTags = [
     { label: "All Founders", value: "all", icon: Users },
-    { label: "Previous Exits", value: "exits", icon: Trophy },
+    { label: "1x Exit", value: "1x-exit", icon: Trophy },
+    { label: "2x+ Exits", value: "multiple-exits", icon: Trophy },
     { label: "20+ Years Experience", value: "expert", icon: Award },
     { label: "10+ Years Experience", value: "experienced", icon: Briefcase },
     { label: "Academic Excellence", value: "academic", icon: GraduationCap },
+    { label: "50K+ Followers", value: "influential", icon: Star },
+    { label: "Best Friends", value: "best-friends", icon: Users },
     { label: "Rising Stars", value: "rising", icon: Rocket }
   ];
 
-  // Filter deals by founder quality
   const filterByFounderTag = (deal, tagValue) => {
     if (tagValue === "all") return true;
     
     const founders = deal.founders;
     
-    if (tagValue === "exits") {
-      return founders.some(f => f.exits > 0);
+    if (tagValue === "1x-exit") {
+      return founders.some(f => f.exits === 1);
+    }
+    
+    if (tagValue === "multiple-exits") {
+      return founders.some(f => f.exits && f.exits > 1);
     }
     
     if (tagValue === "expert") {
@@ -351,6 +369,14 @@ const Deals = () => {
     
     if (tagValue === "academic") {
       return founders.some(f => f.title.includes("PhD") || f.title.includes("MIT") || f.title.includes("Stanford"));
+    }
+    
+    if (tagValue === "influential") {
+      return founders.some(f => f.followers && f.followers >= 50000);
+    }
+    
+    if (tagValue === "best-friends") {
+      return founders.some(f => f.relationship === "Best Friends");
     }
     
     if (tagValue === "rising") {
@@ -418,7 +444,7 @@ const Deals = () => {
       
       <main className="container py-10">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold tracking-tight mb-3">Live Deals</h1>
+          <h1 className="text-4xl font-bold tracking-tight mb-3">Who's Raising?</h1>
           <p className="text-muted-foreground max-w-3xl">
             Browse current investment opportunities curated by the KaasX team. Click on a deal to learn more or express your interest.
           </p>
@@ -433,7 +459,7 @@ const Deals = () => {
             <div className="flex items-center justify-between p-4 border-b border-border/60">
               <h3 className="font-medium flex items-center gap-2">
                 <Filter className="h-4 w-4 text-kaas-pink" />
-                Filter Deals
+                Filter by Founder Quality
               </h3>
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm" className="p-1 h-8 w-8 rounded-full">
@@ -449,8 +475,7 @@ const Deals = () => {
             <CollapsibleContent>
               <div className="p-4 grid grid-cols-1 gap-6">
                 <div>
-                  <Label className="mb-3 block text-sm font-medium text-muted-foreground">Founder Quality</Label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2">
                     {founderTags.map((tag) => (
                       <Button 
                         key={tag.value}
@@ -463,39 +488,6 @@ const Deals = () => {
                         {tag.label}
                       </Button>
                     ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <Label className="mb-3 block text-sm font-medium text-muted-foreground">Deal Type</Label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    <Button 
-                      variant={filters.type === 'all' ? "kaas" : "outline"} 
-                      size="sm"
-                      onClick={() => setFilters({...filters, type: 'all'})}
-                      className="justify-start"
-                    >
-                      <Briefcase className="mr-2 h-4 w-4" />
-                      All Types
-                    </Button>
-                    <Button 
-                      variant={filters.type === 'B2B' ? "kaas" : "outline"} 
-                      size="sm"
-                      onClick={() => setFilters({...filters, type: 'B2B'})}
-                      className="justify-start"
-                    >
-                      <Building className="mr-2 h-4 w-4" />
-                      B2B
-                    </Button>
-                    <Button 
-                      variant={filters.type === 'Consumer' ? "kaas" : "outline"} 
-                      size="sm"
-                      onClick={() => setFilters({...filters, type: 'Consumer'})}
-                      className="justify-start"
-                    >
-                      <User className="mr-2 h-4 w-4" />
-                      Consumer
-                    </Button>
                   </div>
                 </div>
                 
@@ -521,33 +513,6 @@ const Deals = () => {
                       >
                         <MapPin className="mr-2 h-4 w-4" />
                         {country}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <Label className="mb-3 block text-sm font-medium text-muted-foreground">Founded Year</Label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <Button 
-                      variant={filters.year === 'all' ? "kaas" : "outline"} 
-                      size="sm"
-                      onClick={() => setFilters({...filters, year: 'all'})}
-                      className="justify-start"
-                    >
-                      <Calendar className="mr-2 h-4 w-4" />
-                      All Years
-                    </Button>
-                    {foundingYears.map((year) => (
-                      <Button 
-                        key={year}
-                        variant={filters.year === year ? "kaas" : "outline"} 
-                        size="sm"
-                        onClick={() => setFilters({...filters, year})}
-                        className="justify-start"
-                      >
-                        <Calendar className="mr-2 h-4 w-4" />
-                        {year}
                       </Button>
                     ))}
                   </div>
@@ -845,3 +810,4 @@ const Deals = () => {
 };
 
 export default Deals;
+

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -529,8 +528,7 @@ const Deals = () => {
                     <div className="mb-4">
                       <div className="mb-2 flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
-                          <founderQualityTag.icon className="h-4 w-4 text-amber-500" />
-                          <h3 className="font-semibold text-sm">{founderQualityTag.label}</h3>
+                          <h3 className="font-semibold text-base">{deal.name}</h3>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs">
                           <Badge variant="outline" className={cn("bg-slate-50 border-slate-200 text-slate-700")}>
@@ -578,10 +576,6 @@ const Deals = () => {
                       <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
                         <p className="text-sm text-slate-700 mb-2 font-medium italic">"{deal.founderIntro}"</p>
                       </div>
-                    </div>
-                    
-                    <div className="mb-2">
-                      <p className="text-lg font-bold">{deal.name}</p>
                     </div>
                     
                     <div className="mb-4 mt-2 bg-slate-50 p-3 rounded-lg border border-slate-200">
@@ -748,3 +742,4 @@ const Deals = () => {
 };
 
 export default Deals;
+

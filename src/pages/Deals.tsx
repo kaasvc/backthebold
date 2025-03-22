@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp, Star, Trophy, Rocket, GraduationCap, Lightbulb, Plus, Mail, Settings } from "lucide-react";
+import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, 
+  ChevronDown, ChevronUp, Star, Trophy, Rocket, GraduationCap, Lightbulb, Plus, Mail, Settings, 
+  ShieldCheck, TrendingUpIcon, Zap, Target, ThumbsUp, BarChart, Heart } from "lucide-react";
 import { Card, CardContent, CardHighlight } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -145,6 +147,71 @@ const Deals = () => {
       icon: Rocket,
       color: "bg-pink-50 border-pink-200 text-pink-700"
     };
+  };
+  
+  const getTrustIndicators = (deal) => {
+    const indicators = [];
+    
+    const totalExperience = deal.founders.reduce((total, f) => {
+      const years = parseInt(f.experience) || 0;
+      return total + years;
+    }, 0);
+    
+    if (totalExperience >= 15) {
+      indicators.push({
+        label: "Experienced Team",
+        icon: Award,
+        color: "bg-amber-100 text-amber-800"
+      });
+    }
+    
+    const exitCount = deal.founders.reduce((count, f) => count + (f.exits || 0), 0);
+    if (exitCount > 0) {
+      indicators.push({
+        label: `${exitCount}x Previous Exit${exitCount > 1 ? 's' : ''}`,
+        icon: Trophy,
+        color: "bg-green-100 text-green-800"
+      });
+    }
+    
+    if (deal.progress > 40) {
+      indicators.push({
+        label: `${deal.progress}% Funded`,
+        icon: BarChart,
+        color: "bg-blue-100 text-blue-800"
+      });
+    }
+    
+    if (deal.market?.size && deal.market.size.includes("Trillion")) {
+      indicators.push({
+        label: "Trillion $ Market",
+        icon: Target,
+        color: "bg-purple-100 text-purple-800"
+      });
+    }
+    
+    indicators.push({
+      label: "KaasX Verified",
+      icon: ShieldCheck,
+      color: "bg-emerald-100 text-emerald-800"
+    });
+    
+    return indicators;
+  };
+  
+  const getDealCardStyle = (deal, index) => {
+    const bgColors = [
+      "bg-white hover:bg-slate-50",
+      "bg-white hover:bg-slate-50 border-l-4 border-kaas-pink",
+      "bg-white hover:bg-slate-50 border-l-4 border-blue-500",
+      "bg-white hover:bg-slate-50 border-l-4 border-purple-500"
+    ];
+    
+    if (deal.status === "trending") {
+      return "bg-gradient-to-r from-white to-soft-pink hover:from-white hover:to-soft-pink/90 shadow-md";
+    }
+    
+    return bgColors[index % bgColors.length];
   };
   
   const deals = [
@@ -518,25 +585,42 @@ const Deals = () => {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredDeals.map((deal) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredDeals.map((deal, index) => {
               const founderQualityTag = getFounderQualityTag(deal.founders);
+              const trustIndicators = getTrustIndicators(deal);
+              const cardStyle = getDealCardStyle(deal, index);
               
               return (
-                <Card key={deal.id} className="overflow-hidden hover:shadow-md transition-shadow h-full">
+                <Card 
+                  key={deal.id} 
+                  className={cn("overflow-hidden transition-shadow h-full", cardStyle)}
+                >
                   <CardContent className="p-4 flex flex-col h-full">
+                    <div className="mb-4 flex items-center justify-between">
+                      <h3 className="font-semibold text-base flex items-center gap-1">
+                        {deal.status === "trending" && (
+                          <TrendingUpIcon className="h-4 w-4 text-kaas-pink" />
+                        )}
+                        {deal.name}
+                      </h3>
+                      <Badge variant="outline" className={cn("bg-slate-50 border-slate-200 text-slate-700")}>
+                        <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                        {deal.location}
+                      </Badge>
+                    </div>
+                    
+                    <div className="mb-3 flex flex-wrap gap-2">
+                      {trustIndicators.map((indicator, idx) => (
+                        <Badge key={idx} variant="outline" className={cn("flex items-center", indicator.color)}>
+                          <indicator.icon className="h-3 w-3 mr-1" />
+                          {indicator.label}
+                        </Badge>
+                      ))}
+                    </div>
+                    
                     <div className="mb-4">
-                      <div className="mb-2 flex items-center justify-between">
-                        <div className="flex items-center gap-1.5">
-                          <h3 className="font-semibold text-base">{deal.name}</h3>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-xs">
-                          <Badge variant="outline" className={cn("bg-slate-50 border-slate-200 text-slate-700")}>
-                            <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                            {deal.location}
-                          </Badge>
-                        </div>
-                      </div>
+                      <p className="text-sm text-slate-700 mb-3">{deal.description || deal.tagline}</p>
                       
                       <div className="flex flex-wrap -mx-1 mt-2">
                         {deal.founders.slice(0, 3).map((founder, idx) => (
@@ -571,10 +655,6 @@ const Deals = () => {
                             </div>
                           </div>
                         ))}
-                      </div>
-                      
-                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 mt-2">
-                        <p className="text-sm text-slate-700 mb-2 font-medium italic">"{deal.founderIntro}"</p>
                       </div>
                     </div>
                     
@@ -630,12 +710,12 @@ const Deals = () => {
                         View Deal
                       </Button>
                       <Button 
-                        variant="kaas"
+                        variant={deal.status === "trending" ? "trusted" : "trust"}
                         size="sm" 
                         className="w-full text-xs h-8"
                         onClick={() => handleCommit(deal.name)}
                       >
-                        Invest Now
+                        <Heart className="h-3 w-3 mr-1" /> Invest Now
                       </Button>
                     </div>
                   </CardContent>
@@ -649,7 +729,10 @@ const Deals = () => {
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Invest in {selectedDeal}</DialogTitle>
+            <DialogTitle className="flex items-center">
+              <ShieldCheck className="h-5 w-5 text-green-600 mr-2" />
+              Invest in {selectedDeal}
+            </DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4">
@@ -672,6 +755,17 @@ const Deals = () => {
                   <span>Networking opportunities with other KaasX investors</span>
                 </li>
               </ul>
+            </div>
+            
+            <div className="bg-emerald-50 p-3 rounded-md border border-emerald-200">
+              <h4 className="text-sm font-medium mb-2 flex items-center text-emerald-800">
+                <ShieldCheck className="h-4 w-4 mr-1.5 text-emerald-700" />
+                KaasX Verified
+              </h4>
+              <p className="text-xs text-emerald-800">
+                This opportunity has been vetted by our investment team for authenticity, 
+                founder background checks, and business model validation.
+              </p>
             </div>
             
             <div className="space-y-2">
@@ -709,8 +803,8 @@ const Deals = () => {
             <DialogClose asChild>
               <Button variant="outline" size="sm">Cancel</Button>
             </DialogClose>
-            <Button variant="kaas" size="sm" onClick={handleSubmitCommitment} className="flex items-center gap-1">
-              <span>👉</span> Reserve My Allocation
+            <Button variant="trusted" size="sm" onClick={handleSubmitCommitment} className="flex items-center gap-1">
+              <ShieldCheck className="h-4 w-4" /> Reserve My Allocation
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -742,4 +836,3 @@ const Deals = () => {
 };
 
 export default Deals;
-

@@ -23,6 +23,8 @@ const buttonVariants = cva(
         admin: "bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700",
         login: "border-blue-500 text-blue-500 hover:bg-blue-50",
         founder: "bg-gradient-to-r from-kaas-pink to-purple-600 text-white hover:from-kaas-darkpink hover:to-purple-700",
+        trust: "bg-green-600 text-white hover:bg-green-700 focus:bg-green-700",
+        trusted: "bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700",
       },
       size: {
         default: "h-10 px-4 py-2",

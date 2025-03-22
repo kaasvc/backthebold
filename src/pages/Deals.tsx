@@ -549,8 +549,9 @@ const Deals = () => {
                           <h3 className="font-semibold text-sm">{founderQualityTag.label}</h3>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs">
-                          <Badge variant="outline" className={founderQualityTag.color}>
-                            {deal.founders.filter(f => f.exits > 0).length > 0 ? "Proven Founders" : "Rising Stars"}
+                          <Badge variant="outline" className={cn("bg-slate-50 border-slate-200 text-slate-700")}>
+                            <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                            {deal.location}
                           </Badge>
                         </div>
                       </div>
@@ -597,13 +598,6 @@ const Deals = () => {
                     
                     <div className="mb-2">
                       <p className="text-lg font-bold">{deal.name}</p>
-                      <div className="flex items-center gap-2 text-xs text-slate-600 mt-1">
-                        <div className="flex items-center">
-                          <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                          {deal.location}
-                        </div>
-                        <Badge variant="outline" className="text-[10px]">{deal.industry}</Badge>
-                      </div>
                     </div>
                     
                     <div className="mb-4 mt-2 bg-slate-50 p-3 rounded-lg border border-slate-200">
@@ -777,3 +771,4 @@ const Deals = () => {
 };
 
 export default Deals;
+

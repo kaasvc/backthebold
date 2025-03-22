@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp, Star, Trophy, Rocket, GraduationCap, Lightbulb } from "lucide-react";
+import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, ChevronDown, ChevronUp, Star, Trophy, Rocket, GraduationCap, Lightbulb, Plus } from "lucide-react";
 import { Card, CardContent, CardHighlight } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -22,8 +22,6 @@ const Deals = () => {
   const [email, setEmail] = useState("");
   const [selectedDeal, setSelectedDeal] = useState("ProprHome.com");
   const [showInvestorSignup, setShowInvestorSignup] = useState(false);
-  const [pendingDealAction, setPendingDealAction] = useState<{type: 'view' | 'invest', name: string} | null>(null);
-  const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   
   const [filters, setFilters] = useState({
@@ -33,21 +31,7 @@ const Deals = () => {
     founderTag: "all"
   });
   
-  useEffect(() => {
-    const investorProfile = localStorage.getItem("kaasInvestorProfile");
-    const investorBypass = localStorage.getItem("kaasInvestorBypass");
-    if (investorProfile || investorBypass) {
-      setIsInvestorRegistered(true);
-    }
-  }, []);
-  
   const handleViewDetails = (dealName) => {
-    if (!isInvestorRegistered) {
-      setPendingDealAction({type: 'view', name: dealName});
-      setShowInvestorSignup(true);
-      return;
-    }
-    
     if (dealName === "ProprHome.com") {
       navigate("/startup/proprhome");
     } else {
@@ -56,34 +40,13 @@ const Deals = () => {
   };
   
   const handleCommit = (dealName) => {
-    if (!isInvestorRegistered) {
-      setPendingDealAction({type: 'invest', name: dealName});
-      setShowInvestorSignup(true);
-      return;
-    }
-    
     setSelectedDeal(dealName);
     setShowCommitDialog(true);
   };
   
-  const handleInvestorProfileComplete = (dealName) => {
-    setShowInvestorSignup(false);
-    setIsInvestorRegistered(true);
-    
-    if (pendingDealAction) {
-      if (pendingDealAction.type === 'view') {
-        if (dealName === "ProprHome.com") {
-          navigate("/startup/proprhome");
-        } else {
-          toast.info("Details coming soon for this startup");
-        }
-      } else if (pendingDealAction.type === 'invest') {
-        setSelectedDeal(dealName);
-        setShowCommitDialog(true);
-      }
-      
-      setPendingDealAction(null);
-    }
+  const handleAddYourDeal = () => {
+    navigate("/apply");
+    toast.success("Let's add your startup to KaasX!");
   };
   
   const handleSubmitCommitment = () => {
@@ -432,11 +395,19 @@ const Deals = () => {
                 Contact Support
               </Link>
               
-              <Link to="/login">
-                <Button variant="kaas" size="sm">
-                  Login
-                </Button>
+              <Link
+                to="/login"
+                className={cn(
+                  "text-sm font-medium transition-colors hover:text-primary"
+                )}
+              >
+                Login
               </Link>
+              
+              <Button variant="founder" size="sm" onClick={handleAddYourDeal} className="flex items-center gap-1">
+                <Plus className="h-4 w-4" />
+                Add Your Deal
+              </Button>
             </nav>
           </div>
         </div>
@@ -738,13 +709,6 @@ const Deals = () => {
         </DialogContent>
       </Dialog>
       
-      <InvestorSignupModal 
-        isOpen={showInvestorSignup}
-        onClose={() => setShowInvestorSignup(false)}
-        dealName={pendingDealAction?.name || ""}
-        onComplete={handleInvestorProfileComplete}
-      />
-      
       <footer className="border-t border-border/40 bg-background py-6">
         <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-sm text-muted-foreground">
@@ -771,4 +735,3 @@ const Deals = () => {
 };
 
 export default Deals;
-

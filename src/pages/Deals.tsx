@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -212,9 +213,9 @@ const Deals = () => {
   const getDealCardStyle = (deal, index) => {
     const bgColors = [
       "bg-white hover:bg-slate-50",
-      "bg-white hover:bg-slate-50 border-l-4 border-kaas-pink",
-      "bg-white hover:bg-slate-50 border-l-4 border-blue-500",
-      "bg-white hover:bg-slate-50 border-l-4 border-purple-500"
+      "bg-white hover:bg-slate-50",
+      "bg-white hover:bg-slate-50",
+      "bg-white hover:bg-slate-50"
     ];
     
     if (deal.status === "trending") {
@@ -639,7 +640,11 @@ const Deals = () => {
                   <HoverCardTrigger asChild>
                     <div className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
                       <Card 
-                        className={cn("overflow-hidden h-full cursor-pointer", cardStyle)}
+                        className={cn(
+                          "overflow-hidden h-full cursor-pointer border transition-all duration-200",
+                          cardStyle,
+                          "hover:border-kaas-pink hover:border-2"
+                        )}
                       >
                         <CardContent className="p-4 flex flex-col h-full">
                           <div className="mb-4 flex items-center justify-between">

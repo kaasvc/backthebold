@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -303,61 +302,6 @@ const StartupProfile = () => {
                                   ))}
                                 </ul>
                               </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-4 flex items-center">
-                    <Users className="h-5 w-5 text-kaas-pink mr-2" />
-                    <span>Leadership Team</span>
-                  </h2>
-                  
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {founders.slice(2).map((founder, index) => (
-                      <Card key={index} className="border border-blue-200 hover:border-blue-400 transition-colors">
-                        <CardContent className="pt-6 flex gap-4">
-                          <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
-                            <img 
-                              src={founder.image} 
-                              alt={founder.name} 
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <h3 className="font-semibold">{founder.name}</h3>
-                              {founder.previousExits > 0 && (
-                                <Badge className="bg-green-500 text-white text-[10px] py-0">
-                                  {founder.previousExits}x Exit
-                                </Badge>
-                              )}
-                            </div>
-                            <p className="text-sm text-kaas-pink mb-1">{founder.title}</p>
-                            <p className="text-sm text-muted-foreground mb-2">
-                              {founder.bio}
-                            </p>
-                            <div className="flex gap-2">
-                              <Badge variant="outline" className="flex items-center gap-1 text-xs">
-                                <Briefcase className="h-3 w-3" />
-                                {founder.experience}
-                              </Badge>
-                              {founder.previousStartups > 0 && (
-                                <Badge variant="outline" className="flex items-center gap-1 text-xs">
-                                  <Flag className="h-3 w-3" />
-                                  {founder.previousStartups}x Founder
-                                </Badge>
-                              )}
-                            </div>
-                            <div className="flex items-center mt-2">
-                              <a href={founder.linkedin} className="text-xs text-primary hover:underline flex items-center">
-                                <Linkedin className="h-3 w-3 mr-1" />
-                                LinkedIn
-                              </a>
                             </div>
                           </div>
                         </CardContent>

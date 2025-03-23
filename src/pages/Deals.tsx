@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -23,6 +22,8 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const Deals = () => {
   const navigate = useNavigate();
@@ -90,6 +91,13 @@ const Deals = () => {
     });
   };
 
+  const handleFilterChange = (filterType, value) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterType]: value
+    }));
+  };
+  
   const getFounderQualityTag = (founders) => {
     const exitsCount = founders.reduce((total, f) => total + (f.exits || 0), 0);
     if (exitsCount > 0) {
@@ -375,6 +383,7 @@ const Deals = () => {
     { label: "Rising Stars", value: "rising", icon: Rocket }
   ];
 
+  
   const filterByFounderTag = (deal, tagValue) => {
     if (tagValue === "all") return true;
     
@@ -446,6 +455,8 @@ const Deals = () => {
     return "Logos created in public/logos/ directory";
   };
   
+  const activeFilterCount = Object.values(filters).filter(value => value !== 'all').length;
+  
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -501,77 +512,107 @@ const Deals = () => {
           </p>
         </div>
         
-        <Card className="mb-6 overflow-hidden shadow-sm hover:shadow transition-shadow">
-          <Collapsible
-            open={isFilterOpen}
-            onOpenChange={setIsFilterOpen}
-            className="w-full"
-          >
-            <div className="flex items-center justify-between p-4 border-b border-border/60">
-              <h3 className="font-medium flex items-center gap-2">
-                <Filter className="h-4 w-4 text-kaas-pink" />
-                Filter by Founder Quality
-              </h3>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="p-1 h-8 w-8 rounded-full">
-                  {isFilterOpen ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-            
-            <CollapsibleContent>
-              <div className="p-4 grid grid-cols-1 gap-6">
-                <div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                    {founderTags.map((tag) => (
-                      <Button 
-                        key={tag.value}
-                        variant={filters.founderTag === tag.value ? "kaas" : "outline"} 
-                        size="sm"
-                        onClick={() => setFilters({...filters, founderTag: tag.value})}
-                        className="justify-start"
+        <div className="mb-6 flex items-center justify-between">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className={cn("flex items-center gap-2", activeFilterCount > 0 && "bg-blue-50")}
+              >
+                <Filter className="h-4 w-4" />
+                Filter Deals
+                {activeFilterCount > 0 && (
+                  <Badge variant="secondary" className="ml-1 bg-blue-100">
+                    {activeFilterCount}
+                  </Badge>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 p-0" align="start">
+              <div className="p-4 border-b">
+                <h4 className="font-medium mb-2">Founder Experience</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  {founderTags.slice(0, 6).map((tag) => (
+                    <div key={tag.value} className="flex items-center space-x-2 text-sm">
+                      <Checkbox 
+                        id={`tag-${tag.value}`}
+                        checked={filters.founderTag === tag.value}
+                        onCheckedChange={() => handleFilterChange('founderTag', tag.value)}
+                      />
+                      <label 
+                        htmlFor={`tag-${tag.value}`}
+                        className="flex items-center cursor-pointer"
                       >
-                        <tag.icon className="mr-2 h-4 w-4" />
-                        {tag.label}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <Label className="mb-3 block text-sm font-medium text-muted-foreground">Country</Label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    <Button 
-                      variant={filters.country === 'all' ? "kaas" : "outline"} 
-                      size="sm"
-                      onClick={() => setFilters({...filters, country: 'all'})}
-                      className="justify-start"
-                    >
-                      <MapPin className="mr-2 h-4 w-4" />
-                      All Countries
-                    </Button>
-                    {countries.map((country) => (
-                      <Button 
-                        key={country}
-                        variant={filters.country === country ? "kaas" : "outline"} 
-                        size="sm"
-                        onClick={() => setFilters({...filters, country})}
-                        className="justify-start"
-                      >
-                        <MapPin className="mr-2 h-4 w-4" />
-                        {country}
-                      </Button>
-                    ))}
-                  </div>
+                        <tag.icon className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
+                        <span className="text-xs">{tag.label}</span>
+                      </label>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </CollapsibleContent>
-          </Collapsible>
-        </Card>
+              
+              <div className="p-4">
+                <h4 className="font-medium mb-2">Location</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox 
+                      id="location-all"
+                      checked={filters.country === 'all'}
+                      onCheckedChange={() => handleFilterChange('country', 'all')}
+                    />
+                    <label 
+                      htmlFor="location-all"
+                      className="text-xs cursor-pointer flex items-center"
+                    >
+                      <MapPin className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
+                      All Countries
+                    </label>
+                  </div>
+                  
+                  {countries.map((country) => (
+                    <div key={country} className="flex items-center space-x-2">
+                      <Checkbox 
+                        id={`location-${country}`}
+                        checked={filters.country === country}
+                        onCheckedChange={() => handleFilterChange('country', country)}
+                      />
+                      <label 
+                        htmlFor={`location-${country}`}
+                        className="text-xs cursor-pointer flex items-center"
+                      >
+                        <MapPin className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
+                        {country}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="p-3 bg-slate-50 border-t flex items-center justify-between">
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => setFilters({type: 'all', country: 'all', year: 'all', founderTag: 'all'})}
+                >
+                  Reset All
+                </Button>
+                <Button variant="kaas" size="sm">Apply Filters</Button>
+              </div>
+            </PopoverContent>
+          </Popover>
+          
+          {activeFilterCount > 0 && (
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="text-xs text-muted-foreground"
+              onClick={() => setFilters({type: 'all', country: 'all', year: 'all', founderTag: 'all'})}
+            >
+              Clear all filters
+            </Button>
+          )}
+        </div>
         
         {filteredDeals.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 bg-slate-50 rounded-lg border p-8 text-center">
@@ -679,161 +720,4 @@ const Deals = () => {
                         </span>
                       </div>
                       
-                      <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-                        <div 
-                          className="h-full bg-kaas-pink rounded-full" 
-                          style={{ width: `${deal.progress}%` }}
-                        ></div>
-                      </div>
-                      
-                      <div className="flex justify-between mt-1.5 text-xs">
-                        <div className="flex items-center">
-                          <Users className="h-3 w-3 mr-1 text-slate-500" />
-                          <span>{deal.backers.count} backers</span>
-                        </div>
-                        <p className={deal.progress >= 50 ? "text-kaas-pink font-medium" : "text-muted-foreground"}>
-                          {deal.progress >= 50 ? (
-                            <>Only {deal.market.fundingLeft} left</>
-                          ) : (
-                            <>{deal.market.fundingLeft} left</>
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-2 mt-auto">
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="w-full text-xs h-8"
-                        onClick={() => handleViewDetails(deal.name)}
-                      >
-                        View Deal
-                      </Button>
-                      <Button 
-                        variant={deal.status === "trending" ? "trusted" : "trust"}
-                        size="sm" 
-                        className="w-full text-xs h-8"
-                        onClick={() => handleCommit(deal.name)}
-                      >
-                        <Heart className="h-3 w-3 mr-1" /> Invest Now
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        )}
-      </main>
-      
-      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center">
-              <ShieldCheck className="h-5 w-5 text-green-600 mr-2" />
-              Invest in {selectedDeal}
-            </DialogTitle>
-          </DialogHeader>
-          
-          <div className="space-y-4">
-            <div className="bg-slate-50 p-3 rounded-md border border-slate-200">
-              <h4 className="text-sm font-medium mb-2 flex items-center">
-                <Award className="h-4 w-4 mr-1.5 text-kaas-pink" />
-                Investor Benefits
-              </h4>
-              <ul className="space-y-1.5">
-                <li className="text-xs flex items-start">
-                  <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" />
-                  <span>Early access to platform features and updates</span>
-                </li>
-                <li className="text-xs flex items-start">
-                  <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" />
-                  <span>Quarterly investor calls with founding team</span>
-                </li>
-                <li className="text-xs flex items-start">
-                  <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" />
-                  <span>Networking opportunities with other KaasX investors</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div className="bg-emerald-50 p-3 rounded-md border border-emerald-200">
-              <h4 className="text-sm font-medium mb-2 flex items-center text-emerald-800">
-                <ShieldCheck className="h-4 w-4 mr-1.5 text-emerald-700" />
-                KaasX Verified
-              </h4>
-              <p className="text-xs text-emerald-800">
-                This opportunity has been vetted by our investment team for authenticity, 
-                founder background checks, and business model validation.
-              </p>
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="amount" className="text-sm font-medium flex items-center">
-                <span className="mr-1.5">💳</span> Investment Amount (€)
-              </label>
-              <Input
-                id="amount"
-                type="text"
-                placeholder="Enter Amount (€500 minimum)"
-                value={commitAmount}
-                onChange={(e) => setCommitAmount(e.target.value)}
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium flex items-center">
-                <span className="mr-1.5">📩</span> Email Address
-              </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            
-            <div className="bg-blue-50 border border-blue-100 px-3 py-2 rounded-md text-xs text-blue-700 italic">
-              This is a non-binding expression of interest. Formal commitments will be made via email with official documentation after you submit this form.
-            </div>
-          </div>
-          
-          <DialogFooter className="mt-2">
-            <DialogClose asChild>
-              <Button variant="outline" size="sm">Cancel</Button>
-            </DialogClose>
-            <Button variant="trusted" size="sm" onClick={handleSubmitCommitment} className="flex items-center gap-1">
-              <ShieldCheck className="h-4 w-4" /> Reserve My Allocation
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      
-      <footer className="border-t border-border/40 bg-background py-6">
-        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} KaasX. All rights reserved.
-          </p>
-          <div className="flex items-center gap-4">
-            <a 
-              href="#" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a 
-              href="#" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Terms of Service
-            </a>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-};
-
-export default Deals;
+                      <div className="h-1.

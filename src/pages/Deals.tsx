@@ -803,8 +803,15 @@ const Deals = () => {
       </Dialog>
       
       <InvestorSignupModal 
-        open={showInvestorSignup} 
-        onOpenChange={setShowInvestorSignup} 
+        isOpen={showInvestorSignup}
+        onClose={() => setShowInvestorSignup(false)}
+        dealName={selectedDeal}
+        onComplete={(dealName) => {
+          setShowInvestorSignup(false);
+          if (dealName === "ProprHome.com") {
+            navigate("/startup/proprhome");
+          }
+        }}
       />
     </div>
   );

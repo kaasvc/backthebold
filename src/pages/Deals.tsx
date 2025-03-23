@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -510,7 +509,7 @@ const Deals = () => {
         <div className="mb-8">
           <h1 className="text-4xl font-bold tracking-tight mb-3">Who's Raising?</h1>
           <p className="text-muted-foreground max-w-3xl">
-            Discover founders currently raising rounds, whether on KaasX or elsewhere. Add your own deal to gain visibility, or explore opportunities verified by KaasX for direct investment through our platform.
+            Explore KaasX-verified startups currently raising investment through our platform. Each opportunity has been thoroughly vetted by our team to ensure quality and transparency for investors.
           </p>
         </div>
         
@@ -552,54 +551,6 @@ const Deals = () => {
                     </div>
                   ))}
                 </div>
-              </div>
-              
-              <div className="p-4">
-                <h4 className="font-medium mb-2">Location</h4>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="location-all"
-                      checked={filters.country === 'all'}
-                      onCheckedChange={() => handleFilterChange('country', 'all')}
-                    />
-                    <label 
-                      htmlFor="location-all"
-                      className="text-xs cursor-pointer flex items-center"
-                    >
-                      <MapPin className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
-                      All Countries
-                    </label>
-                  </div>
-                  
-                  {countries.map((country) => (
-                    <div key={country} className="flex items-center space-x-2">
-                      <Checkbox 
-                        id={`location-${country}`}
-                        checked={filters.country === country}
-                        onCheckedChange={() => handleFilterChange('country', country)}
-                      />
-                      <label 
-                        htmlFor={`location-${country}`}
-                        className="text-xs cursor-pointer flex items-center"
-                      >
-                        <MapPin className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
-                        {country}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="p-3 bg-slate-50 border-t flex items-center justify-between">
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onClick={() => setFilters({type: 'all', country: 'all', year: 'all', founderTag: 'all'})}
-                >
-                  Reset All
-                </Button>
-                <Button variant="kaas" size="sm">Apply Filters</Button>
               </div>
             </PopoverContent>
           </Popover>

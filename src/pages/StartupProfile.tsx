@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -206,78 +207,13 @@ const StartupProfile = () => {
               </div>
             </div>
             
-            <Tabs defaultValue="overview" className="w-full">
+            <Tabs defaultValue="team" className="w-full">
               <TabsList className="mb-4">
-                <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="team">Team</TabsTrigger>
+                <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="market">Market & Traction</TabsTrigger>
                 <TabsTrigger value="financials">Financials</TabsTrigger>
               </TabsList>
-              
-              <TabsContent value="overview" className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Company Overview</h2>
-                  <p className="text-muted-foreground mb-4">
-                    ProprHome.com is building an AI-powered platform that simplifies property management for independent landlords and small property managers. Our solution automates tenant screening, maintenance requests, rent collection, and financial reporting, enabling property owners to save time and increase profitability.
-                  </p>
-                  <p className="text-muted-foreground mb-4">
-                    Our platform integrates with existing property management workflows and leverages AI to provide predictive maintenance recommendations, optimized pricing strategies, and tenant relationship management, all within an easy-to-use dashboard.
-                  </p>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Problem & Solution</h2>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <Card>
-                      <CardContent className="pt-6">
-                        <h3 className="font-medium mb-2">Problem</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-                          <li>Independent landlords lack affordable, comprehensive property management tools</li>
-                          <li>Manual processes for tenant screening, maintenance, and rent collection are time-consuming</li>
-                          <li>Small property managers struggle with scalability and operational efficiency</li>
-                          <li>Limited data insights for making informed property management decisions</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card>
-                      <CardContent className="pt-6">
-                        <h3 className="font-medium mb-2">Solution</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-                          <li>All-in-one platform specifically designed for small-scale property managers</li>
-                          <li>AI-powered automation for tenant communications, maintenance dispatch, and rent collection</li>
-                          <li>Predictive analytics for maintenance needs and optimal pricing</li>
-                          <li>Mobile-first approach with intuitive, simple user interface</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Competitive Advantage</h2>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-soft-purple p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">AI Integration</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Our proprietary AI algorithms provide predictive insights unavailable in competing solutions
-                      </p>
-                    </div>
-                    <div className="bg-soft-blue p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Price Point</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Affordable subscription model designed specifically for small portfolios (1-20 units)
-                      </p>
-                    </div>
-                    <div className="bg-soft-green p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">User Experience</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Simplified interface with industry-leading mobile experience for on-the-go management
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
               
               <TabsContent value="team" className="space-y-6">
                 <div>
@@ -463,6 +399,71 @@ const StartupProfile = () => {
                         </a>
                       </CardContent>
                     </Card>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="overview" className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Company Overview</h2>
+                  <p className="text-muted-foreground mb-4">
+                    ProprHome.com is building an AI-powered platform that simplifies property management for independent landlords and small property managers. Our solution automates tenant screening, maintenance requests, rent collection, and financial reporting, enabling property owners to save time and increase profitability.
+                  </p>
+                  <p className="text-muted-foreground mb-4">
+                    Our platform integrates with existing property management workflows and leverages AI to provide predictive maintenance recommendations, optimized pricing strategies, and tenant relationship management, all within an easy-to-use dashboard.
+                  </p>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Problem & Solution</h2>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <Card>
+                      <CardContent className="pt-6">
+                        <h3 className="font-medium mb-2">Problem</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+                          <li>Independent landlords lack affordable, comprehensive property management tools</li>
+                          <li>Manual processes for tenant screening, maintenance, and rent collection are time-consuming</li>
+                          <li>Small property managers struggle with scalability and operational efficiency</li>
+                          <li>Limited data insights for making informed property management decisions</li>
+                        </ul>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card>
+                      <CardContent className="pt-6">
+                        <h3 className="font-medium mb-2">Solution</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+                          <li>All-in-one platform specifically designed for small-scale property managers</li>
+                          <li>AI-powered automation for tenant communications, maintenance dispatch, and rent collection</li>
+                          <li>Predictive analytics for maintenance needs and optimal pricing</li>
+                          <li>Mobile-first approach with intuitive, simple user interface</li>
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Competitive Advantage</h2>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="bg-soft-purple p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">AI Integration</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Our proprietary AI algorithms provide predictive insights unavailable in competing solutions
+                      </p>
+                    </div>
+                    <div className="bg-soft-blue p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">Price Point</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Affordable subscription model designed specifically for small portfolios (1-20 units)
+                      </p>
+                    </div>
+                    <div className="bg-soft-green p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">User Experience</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Simplified interface with industry-leading mobile experience for on-the-go management
+                      </p>
+                    </div>
                   </div>
                 </div>
               </TabsContent>
@@ -831,4 +832,3 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
-

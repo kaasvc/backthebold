@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -720,4 +721,93 @@ const Deals = () => {
                         </span>
                       </div>
                       
-                      <div className="h-1.
+                      <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden mb-1">
+                        <div 
+                          className="h-full bg-kaas-pink rounded-full" 
+                          style={{ width: `${deal.progress}%` }}
+                        ></div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between text-xs text-slate-500">
+                        <span>€0</span>
+                        <span>€150K</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-auto pt-3 flex items-center justify-between gap-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full"
+                        onClick={() => handleViewDetails(deal.name)}
+                      >
+                        View Details
+                      </Button>
+                      
+                      <Button 
+                        variant="kaas" 
+                        size="sm" 
+                        className="w-full"
+                        onClick={() => handleCommit(deal.name)}
+                      >
+                        Invest
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </main>
+      
+      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Commit to {selectedDeal}</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="amount" className="text-right">
+                Amount (€)
+              </Label>
+              <Input
+                id="amount"
+                type="number"
+                className="col-span-3"
+                value={commitAmount}
+                onChange={(e) => setCommitAmount(e.target.value)}
+                placeholder="Commitment amount"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className="text-right">
+                Email
+              </Label>
+              <Input
+                id="email"
+                className="col-span-3"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Your email address"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button onClick={handleSubmitCommitment}>Submit Commitment</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      <InvestorSignupModal 
+        open={showInvestorSignup} 
+        onOpenChange={setShowInvestorSignup} 
+      />
+    </div>
+  );
+};
+
+export default Deals;

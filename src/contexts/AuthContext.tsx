@@ -1,13 +1,15 @@
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "sonner";
 
-export type UserRole = "applicant" | "admin";
+export type UserRole = "applicant" | "admin" | "founder";
 
 export interface User {
   id: string;
   email: string;
   name: string;
   role: UserRole;
+  companyName?: string;
 }
 
 export interface Application {
@@ -30,6 +32,8 @@ export interface Deal {
   target: number;
   isActive: boolean;
   createdAt: string;
+  founderUserId?: string;
+  status: "draft" | "pending" | "approved" | "rejected";
 }
 
 interface AuthContextType {
@@ -46,6 +50,8 @@ interface AuthContextType {
   updateDeal: (dealId: string, dealData: Partial<Deal>) => Promise<boolean>;
   createDeal: (dealData: Omit<Deal, "id" | "createdAt">) => Promise<string | null>;
   toggleDealStatus: (dealId: string) => Promise<boolean>;
+  submitDealForReview: (dealId: string) => Promise<boolean>;
+  getFounderDeals: () => Deal[];
 }
 
 // Mock data for development purposes
@@ -55,6 +61,13 @@ const MOCK_USERS: User[] = [
     email: "admin@kaas.vc",
     name: "Admin User",
     role: "admin",
+  },
+  {
+    id: "founder-1",
+    email: "founder@example.com",
+    name: "Founder User",
+    role: "founder",
+    companyName: "PropRai",
   }
 ];
 
@@ -74,6 +87,8 @@ const MOCK_DEALS: Deal[] = [
     target: 750000,
     isActive: true,
     createdAt: new Date("2023-10-10").toISOString(),
+    status: "approved",
+    founderUserId: "founder-1"
   },
   {
     id: "deal-2",
@@ -87,6 +102,7 @@ const MOCK_DEALS: Deal[] = [
     target: 500000,
     isActive: true,
     createdAt: new Date("2023-11-15").toISOString(),
+    status: "approved"
   }
 ];
 
@@ -260,8 +276,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateDeal = async (dealId: string, dealData: Partial<Deal>): Promise<boolean> => {
-    if (!user || user.role !== "admin") {
-      toast.error("Only admins can update deals");
+    if (!user || (user.role !== "admin" && user.role !== "founder")) {
+      toast.error("You don't have permission to update deals");
       return false;
     }
     
@@ -272,6 +288,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const dealIndex = deals.findIndex(deal => deal.id === dealId);
       if (dealIndex === -1) {
         toast.error("Deal not found");
+        return false;
+      }
+      
+      // If user is founder, they can only update their own deals
+      if (user.role === "founder" && deals[dealIndex].founderUserId !== user.id) {
+        toast.error("You can only update your own deals");
         return false;
       }
       
@@ -289,8 +311,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const createDeal = async (dealData: Omit<Deal, "id" | "createdAt">): Promise<string | null> => {
-    if (!user || user.role !== "admin") {
-      toast.error("Only admins can create deals");
+    if (!user || (user.role !== "admin" && user.role !== "founder")) {
+      toast.error("You don't have permission to create deals");
       return null;
     }
     
@@ -298,10 +320,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
+      // If user is founder, set the founderUserId
+      const founderUserId = user.role === "founder" ? user.id : dealData.founderUserId;
+      
       const newDeal: Deal = {
         ...dealData,
         id: `deal-${Date.now()}`,
         createdAt: new Date().toISOString(),
+        founderUserId,
+        status: user.role === "admin" ? "approved" : "draft", // Admins create approved deals, founders create drafts
+        isActive: user.role === "admin" ? (dealData.isActive ?? true) : false, // Founder deals are inactive until approved
       };
       
       setDeals([...deals, newDeal]);
@@ -347,6 +375,63 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  // New function for founders to submit deals for review
+  const submitDealForReview = async (dealId: string): Promise<boolean> => {
+    if (!user || user.role !== "founder") {
+      toast.error("Only founders can submit deals for review");
+      return false;
+    }
+    
+    try {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const dealIndex = deals.findIndex(deal => deal.id === dealId);
+      if (dealIndex === -1) {
+        toast.error("Deal not found");
+        return false;
+      }
+      
+      // Can only submit own deals
+      if (deals[dealIndex].founderUserId !== user.id) {
+        toast.error("You can only submit your own deals for review");
+        return false;
+      }
+      
+      // Can only submit draft deals
+      if (deals[dealIndex].status !== "draft") {
+        toast.error(`Deal is already in ${deals[dealIndex].status} status`);
+        return false;
+      }
+      
+      const updatedDeals = [...deals];
+      updatedDeals[dealIndex] = { 
+        ...updatedDeals[dealIndex], 
+        status: "pending"
+      };
+      setDeals(updatedDeals);
+      
+      toast.success("Deal submitted for review");
+      // Send email notification to admin (simulated)
+      console.log("Sending email to admin@kaas.vc about new deal submission:", updatedDeals[dealIndex]);
+      
+      return true;
+    } catch (error) {
+      console.error("Deal submission error:", error);
+      toast.error("Failed to submit deal for review");
+      return false;
+    }
+  };
+
+  // Get all deals belonging to the current founder
+  const getFounderDeals = (): Deal[] => {
+    if (!user || user.role !== "founder") {
+      return [];
+    }
+    
+    return deals.filter(deal => deal.founderUserId === user.id);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -363,6 +448,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         updateDeal,
         createDeal,
         toggleDealStatus,
+        submitDealForReview,
+        getFounderDeals,
       }}
     >
       {children}

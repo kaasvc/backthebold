@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -5,11 +6,12 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { LogOut, Clock, CheckCircle, XCircle, AlertCircle, Search, Building, Plus, RefreshCw, ToggleLeft, ToggleRight, PencilLine } from "lucide-react";
+import { LogOut, Clock, CheckCircle, XCircle, AlertCircle, Search, Building, Plus, RefreshCw, ToggleLeft, ToggleRight, PencilLine, Filter } from "lucide-react";
 import DealEditor from "@/components/DealEditor";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 const AdminDashboard: React.FC = () => {
-  const { user, applications, deals, logout, toggleDealStatus } = useAuth();
+  const { user, applications, deals, logout, toggleDealStatus, updateDeal } = useAuth();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
@@ -17,6 +19,7 @@ const AdminDashboard: React.FC = () => {
   const [editDealId, setEditDealId] = useState<string | null>(null);
   const [showCreateDealDialog, setShowCreateDealDialog] = useState(false);
   const [dealSearchTerm, setDealSearchTerm] = useState("");
+  const [dealStatusFilter, setDealStatusFilter] = useState<string | null>(null);
 
   if (!user || user.role !== "admin") {
     return null; // Should be handled by ProtectedRoute
@@ -47,6 +50,8 @@ const AdminDashboard: React.FC = () => {
         return "bg-green-100 text-green-800";
       case "rejected":
         return "bg-red-100 text-red-800";
+      case "draft":
+        return "bg-slate-100 text-slate-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
@@ -65,6 +70,10 @@ const AdminDashboard: React.FC = () => {
   });
 
   const filteredDeals = deals.filter(deal => {
+    if (dealStatusFilter && deal.status !== dealStatusFilter) {
+      return false;
+    }
+    
     if (dealSearchTerm && !deal.companyName.toLowerCase().includes(dealSearchTerm.toLowerCase())) {
       return false;
     }
@@ -76,6 +85,29 @@ const AdminDashboard: React.FC = () => {
     setEditDealId(null);
     setShowCreateDealDialog(false);
   };
+
+  const handleApproveDeal = async (dealId: string) => {
+    const success = await updateDeal(dealId, { 
+      status: "approved",
+      isActive: true
+    });
+    if (success) {
+      // No need to refresh since updateDeal updates state
+    }
+  };
+
+  const handleRejectDeal = async (dealId: string) => {
+    const success = await updateDeal(dealId, { 
+      status: "rejected",
+      isActive: false
+    });
+    if (success) {
+      // No need to refresh since updateDeal updates state
+    }
+  };
+
+  // Count pending deals for notification
+  const pendingDealsCount = deals.filter(deal => deal.status === "pending").length;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -108,11 +140,28 @@ const AdminDashboard: React.FC = () => {
             Manage applications and deals.
           </p>
         </div>
+
+        {pendingDealsCount > 0 && (
+          <Alert className="mb-6 border-amber-200 bg-amber-50">
+            <AlertCircle className="h-4 w-4 text-amber-600" />
+            <AlertTitle className="text-amber-800">Pending Deal Reviews</AlertTitle>
+            <AlertDescription className="text-amber-700">
+              You have {pendingDealsCount} deal{pendingDealsCount > 1 ? 's' : ''} pending review from founders.
+            </AlertDescription>
+          </Alert>
+        )}
         
         <Tabs defaultValue="applications" value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="mb-6">
             <TabsTrigger value="applications">Applications</TabsTrigger>
-            <TabsTrigger value="deals">Deals</TabsTrigger>
+            <TabsTrigger value="deals">
+              Deals
+              {pendingDealsCount > 0 && (
+                <span className="ml-1.5 inline-flex items-center justify-center w-5 h-5 text-xs font-medium rounded-full bg-amber-100 text-amber-800">
+                  {pendingDealsCount}
+                </span>
+              )}
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="applications">
@@ -235,15 +284,47 @@ const AdminDashboard: React.FC = () => {
                 />
               </div>
               
-              <Button
-                variant="admin"
-                size="sm"
-                onClick={() => setShowCreateDealDialog(true)}
-                className="flex items-center"
-              >
-                <Plus className="h-4 w-4 mr-1" />
-                New Deal
-              </Button>
+              <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant={dealStatusFilter === null ? "secondary" : "ghost"}
+                    size="sm"
+                    onClick={() => setDealStatusFilter(null)}
+                    className="flex items-center"
+                  >
+                    <Filter className="h-3 w-3 mr-1" />
+                    All
+                  </Button>
+                  <Button
+                    variant={dealStatusFilter === "pending" ? "secondary" : "ghost"}
+                    size="sm"
+                    onClick={() => setDealStatusFilter("pending")}
+                    className="flex items-center"
+                  >
+                    <Clock className="h-3 w-3 mr-1" />
+                    Pending
+                  </Button>
+                  <Button
+                    variant={dealStatusFilter === "approved" ? "secondary" : "ghost"}
+                    size="sm"
+                    onClick={() => setDealStatusFilter("approved")}
+                    className="flex items-center"
+                  >
+                    <CheckCircle className="h-3 w-3 mr-1" />
+                    Approved
+                  </Button>
+                </div>
+                
+                <Button
+                  variant="admin"
+                  size="sm"
+                  onClick={() => setShowCreateDealDialog(true)}
+                  className="flex items-center ml-2"
+                >
+                  <Plus className="h-4 w-4 mr-1" />
+                  New Deal
+                </Button>
+              </div>
             </div>
             
             {filteredDeals.length === 0 ? (
@@ -265,13 +346,18 @@ const AdminDashboard: React.FC = () => {
                   </thead>
                   <tbody>
                     {filteredDeals.map((deal) => (
-                      <tr key={deal.id} className="border-b hover:bg-muted/50">
+                      <tr key={deal.id} className={`border-b hover:bg-muted/50 ${deal.status === "pending" ? "bg-amber-50" : ""}`}>
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-3">
                             <div className="w-8 h-8 bg-muted rounded overflow-hidden">
                               <img src={deal.logo} alt={deal.companyName} className="w-full h-full object-cover" />
                             </div>
-                            <span className="font-medium">{deal.companyName}</span>
+                            <div>
+                              <span className="font-medium">{deal.companyName}</span>
+                              {deal.founderUserId && (
+                                <p className="text-xs text-muted-foreground">Founder submitted</p>
+                              )}
+                            </div>
                           </div>
                         </td>
                         <td className="py-3 px-4">€{deal.minInvestment.toLocaleString()}</td>
@@ -291,43 +377,73 @@ const AdminDashboard: React.FC = () => {
                           </div>
                         </td>
                         <td className="py-3 px-4">
-                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${deal.isActive ? 'bg-green-100 text-green-800' : 'bg-slate-100 text-slate-800'}`}>
-                            {deal.isActive ? 
-                              <CheckCircle className="h-3 w-3 mr-1" /> : 
-                              <XCircle className="h-3 w-3 mr-1" />
+                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(deal.status)}`}>
+                            {deal.status === "approved" ? 
+                              (deal.isActive ? <CheckCircle className="h-3 w-3 mr-1" /> : <XCircle className="h-3 w-3 mr-1" />) : 
+                              deal.status === "pending" ? <Clock className="h-3 w-3 mr-1" /> :
+                              deal.status === "rejected" ? <XCircle className="h-3 w-3 mr-1" /> :
+                              <PencilLine className="h-3 w-3 mr-1" />
                             }
-                            <span>{deal.isActive ? 'Active' : 'Inactive'}</span>
+                            <span className="capitalize">{deal.status}</span>
+                            {deal.status === "approved" && !deal.isActive && <span> (Inactive)</span>}
                           </div>
                         </td>
                         <td className="py-3 px-4 text-right">
                           <div className="flex justify-end gap-2">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => toggleDealStatus(deal.id)}
-                              title={deal.isActive ? "Deactivate deal" : "Activate deal"}
-                            >
-                              {deal.isActive ? 
-                                <ToggleRight className="h-4 w-4 text-green-600" /> : 
-                                <ToggleLeft className="h-4 w-4 text-slate-600" />
-                              }
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => navigate(`/startup/${deal.id}`)}
-                              title="View deal"
-                            >
-                              <Search className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => setEditDealId(deal.id)}
-                              title="Edit deal"
-                            >
-                              <PencilLine className="h-4 w-4" />
-                            </Button>
+                            {deal.status === "pending" ? (
+                              <>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleRejectDeal(deal.id)}
+                                  title="Reject deal"
+                                  className="text-red-500 hover:text-red-700"
+                                >
+                                  <XCircle className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  variant="trust"
+                                  size="sm"
+                                  onClick={() => handleApproveDeal(deal.id)}
+                                  title="Approve deal"
+                                >
+                                  <CheckCircle className="h-4 w-4 mr-1" />
+                                  Approve
+                                </Button>
+                              </>
+                            ) : (
+                              <>
+                                {deal.status === "approved" && (
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => toggleDealStatus(deal.id)}
+                                    title={deal.isActive ? "Deactivate deal" : "Activate deal"}
+                                  >
+                                    {deal.isActive ? 
+                                      <ToggleRight className="h-4 w-4 text-green-600" /> : 
+                                      <ToggleLeft className="h-4 w-4 text-slate-600" />
+                                    }
+                                  </Button>
+                                )}
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => navigate(`/startup/${deal.id}`)}
+                                  title="View deal"
+                                >
+                                  <Search className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setEditDealId(deal.id)}
+                                  title="Edit deal"
+                                >
+                                  <PencilLine className="h-4 w-4" />
+                                </Button>
+                              </>
+                            )}
                           </div>
                         </td>
                       </tr>

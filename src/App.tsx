@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +14,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import FounderDashboard from "./pages/FounderDashboard";
 import ApplicationDetail from "./pages/ApplicationDetail";
 import StartupProfile from "./pages/StartupProfile";
 import ContactSupport from "./pages/ContactSupport";
@@ -24,7 +26,7 @@ const ProtectedRoute = ({
   allowedRoles 
 }: { 
   children: React.ReactNode, 
-  allowedRoles?: Array<"applicant" | "admin"> 
+  allowedRoles?: Array<"applicant" | "admin" | "founder"> 
 }) => {
   const { user, loading } = useAuth();
   
@@ -65,7 +67,7 @@ const App = () => (
             <Route path="/landing" element={<Landing />} />
             <Route path="/apply" element={<Apply />} />
             <Route path="/deals" element={<Deals />} />
-            <Route path="/startup/proprhome" element={<StartupProfile />} />
+            <Route path="/startup/:id" element={<StartupProfile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/support" element={<ContactSupport />} />
             <Route 
@@ -97,6 +99,14 @@ const App = () => (
               element={
                 <ProtectedRoute allowedRoles={["admin"]}>
                   <AdminDashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/founder" 
+              element={
+                <ProtectedRoute allowedRoles={["founder"]}>
+                  <FounderDashboard />
                 </ProtectedRoute>
               } 
             />

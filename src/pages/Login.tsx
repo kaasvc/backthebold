@@ -13,7 +13,13 @@ const Login: React.FC = () => {
 
   // Redirect if already logged in
   if (user) {
-    navigate(user.role === "admin" ? "/admin" : "/dashboard");
+    navigate(
+      user.role === "admin" 
+        ? "/admin" 
+        : user.role === "founder" 
+          ? "/founder" 
+          : "/dashboard"
+    );
     return null;
   }
 
@@ -57,7 +63,7 @@ const Login: React.FC = () => {
               <label htmlFor="email" className="text-sm font-medium">
                 Email
               </label>
-              <input
+              <Input
                 id="email"
                 type="email"
                 value={email}
@@ -72,7 +78,7 @@ const Login: React.FC = () => {
               <label htmlFor="password" className="text-sm font-medium">
                 Password
               </label>
-              <input
+              <Input
                 id="password"
                 type="password"
                 value={password}
@@ -113,8 +119,11 @@ const Login: React.FC = () => {
             
             <div className="mt-4 p-4 bg-muted rounded-md">
               <p className="text-xs text-muted-foreground mb-2">Demo Accounts:</p>
-              <p className="text-xs">
+              <p className="text-xs mb-1">
                 Admin: admin@kaas.vc / password
+              </p>
+              <p className="text-xs">
+                Founder: founder@example.com / password
               </p>
             </div>
           </div>

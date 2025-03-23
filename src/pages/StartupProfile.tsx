@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
@@ -19,17 +19,12 @@ const StartupProfile = () => {
   const [email, setEmail] = useState("");
   const [showInvestorSignup, setShowInvestorSignup] = useState(false);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
-  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   
-  useEffect(() => {
+  React.useEffect(() => {
     const investorProfile = localStorage.getItem("kaasInvestorProfile");
-    setIsInvestorRegistered(!!investorProfile);
-    
-    if (!investorProfile && !initialLoadComplete) {
-      setShowInvestorSignup(true);
-      setInitialLoadComplete(true);
-    }
-  }, [initialLoadComplete]);
+    const investorBypass = localStorage.getItem("kaasInvestorBypass");
+    setIsInvestorRegistered(!!investorProfile || !!investorBypass);
+  }, []);
   
   const handleCommit = () => {
     if (!isInvestorRegistered) {

@@ -15,7 +15,8 @@ import { cn } from "@/lib/utils";
 import { 
   Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, 
   UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, 
-  Twitter, Bookmark, Mail, Heart, MessageCircle, Share2, BookmarkCheck, SendHorizontal
+  Twitter, Bookmark, Mail, Heart, MessageCircle, Share2, BookmarkCheck, SendHorizontal,
+  MapPin
 } from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 

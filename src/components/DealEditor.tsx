@@ -131,7 +131,7 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-auto">
         <DialogHeader>
-          <DialogTitle>{isCreate ? "Create New Deal" : "Edit Deal"}</DialogTitle>
+          <DialogTitle>{isCreate ? "Start Your Raise" : "Edit Deal"}</DialogTitle>
           <DialogDescription>
             {isCreate 
               ? "Enter the details for the new deal." 
@@ -289,7 +289,7 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
             onClick={handleSubmit} 
             disabled={loading}
           >
-            {loading ? "Saving..." : isCreate ? "Create Deal" : "Save Changes"}
+            {loading ? "Saving..." : isCreate ? "Start Your Raise" : "Save Changes"}
           </Button>
         </DialogFooter>
       </DialogContent>

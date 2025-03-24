@@ -18,6 +18,15 @@ import {
   MapPin, FileText, Clock
 } from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 
 const StartupProfile = () => {
   const navigate = useNavigate();
@@ -218,15 +227,33 @@ const StartupProfile = () => {
           </Link>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-4">
-              <Link to="/deals" className="text-sm font-medium transition-colors hover:text-primary">
-                All Deals
-              </Link>
-              <a
-                href="mailto:hello@kaas.vc"
-                className="text-sm font-medium transition-colors hover:text-primary"
-              >
-                Contact Support
-              </a>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Options</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[200px] gap-3 p-4">
+                        <li>
+                          <Link 
+                            to="/deals"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            All Deals
+                          </Link>
+                        </li>
+                        <li>
+                          <Link 
+                            to="/support"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            Support
+                          </Link>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
             </nav>
           </div>
         </div>

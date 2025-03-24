@@ -26,7 +26,7 @@ const Landing = () => {
                   "text-sm font-medium transition-colors hover:text-primary"
                 )}
               >
-                Contact Support
+                Support
               </Link>
             </nav>
           </div>

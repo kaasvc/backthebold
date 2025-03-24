@@ -31,7 +31,7 @@ const Apply = () => {
                   "text-sm font-medium transition-colors hover:text-primary"
                 )}
               >
-                Contact Support
+                Support
               </a>
               
               {user ? (

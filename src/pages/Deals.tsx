@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -569,7 +568,6 @@ const Deals = () => {
           </p>
         </div>
         
-        {/* Enhanced filter and sort section with a more prominent design */}
         <div className="mb-8 bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <h3 className="font-medium text-base flex items-center mr-2">
@@ -947,7 +945,7 @@ const Deals = () => {
                           className="w-full"
                           onClick={() => handleCommit(deal.name)}
                         >
-                          Invest
+                          Back Now
                         </Button>
                       </div>
                     </CardContent>

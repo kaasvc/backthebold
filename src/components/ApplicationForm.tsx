@@ -16,7 +16,7 @@ import { useAuth } from "@/contexts/AuthContext";
 const steps = [
   {
     id: "founder-basics",
-    title: "Founder Basics: Who's Raising?",
+    title: "Founder Basics",
     description: "",
     icon: <Check className="h-5 w-5" />,
   },

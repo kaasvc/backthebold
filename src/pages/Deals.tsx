@@ -668,7 +668,7 @@ const Deals = () => {
                             </Badge>
                             <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
                               <Calendar className="h-3 w-3 mr-1" />
-                              Founded {deal.foundedYear}
+                              Since {deal.foundedYear}
                             </Badge>
                           </div>
                         </div>

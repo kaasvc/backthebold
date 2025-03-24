@@ -15,7 +15,7 @@ import {
   Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, 
   UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, 
   Twitter, Bookmark, Mail, Heart, MessageCircle, Share2, BookmarkCheck, SendHorizontal,
-  MapPin, FileText, Clock, MessageSquare, StarHalf, ThumbsUp, ChevronDown
+  MapPin, FileText, Clock, MessageSquare, StarHalf, ThumbsUp, ChevronDown, Globe
 } from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 import {

@@ -498,7 +498,7 @@ const Deals = () => {
               
               <Button variant="founder" size="sm" onClick={handleAddYourDeal} className="flex items-center gap-1">
                 <Plus className="h-4 w-4" />
-                Add Your Deal
+                Start Your Raise
               </Button>
             </nav>
           </div>

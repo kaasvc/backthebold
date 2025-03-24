@@ -68,7 +68,7 @@ const Landing = () => {
             </div>
             <h2 className="text-2xl font-bold mb-2">For Investors</h2>
             <p className="text-muted-foreground text-center mb-6">
-              Get early access to founders raising their next round, backed by their community.
+              Get early access to founders raising their next round, backed by their communities.
             </p>
             <Link to="/deals" className="mt-auto">
               <Button variant="outline" size="lg" className="border-blue-500 text-blue-500 hover:bg-blue-50">

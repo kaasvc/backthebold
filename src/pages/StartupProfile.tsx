@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -100,7 +99,7 @@ const StartupProfile = () => {
     const newComment = {
       id: comments.length + 1,
       author: "You",
-      avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      avatar: "https://images.unsplash.com/photo-1570295999919-5658abf4ff4e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
       content: commentText,
       date: "Just now",
       likes: 0
@@ -770,6 +769,7 @@ const StartupProfile = () => {
       <InvestorSignupModal 
         isOpen={showInvestorSignup}
         onClose={handleCloseInvestorModal}
+        dealName="ProprHome.com"
         onComplete={handleInvestorProfileComplete}
       />
     </div>

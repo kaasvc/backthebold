@@ -40,7 +40,7 @@ const Landing = () => {
             Turn supporters into your first investors - fast, simple, and legally sound.
           </p>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Welcome to the go-to platform to raise your perfect first round.
+            Welcome to the go-to platform to raise the perfect first round.
           </p>
         </div>
         

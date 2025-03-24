@@ -72,7 +72,7 @@ const Landing = () => {
             </p>
             <Link to="/deals" className="mt-auto">
               <Button variant="outline" size="lg" className="border-blue-500 text-blue-500 hover:bg-blue-50">
-                View Founders
+                View Deals
               </Button>
             </Link>
           </div>

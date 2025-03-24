@@ -1,12 +1,107 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import DealCard from "@/components/DealCard";
 import { mockDeals } from "@/data/mockDeals";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronDown, ChevronUp, Filter } from "lucide-react";
 
 const Landing = () => {
+  const [activeFilters, setActiveFilters] = useState<{
+    countries: string[];
+    categories: string[];
+    stages: string[];
+  }>({
+    countries: [],
+    categories: [],
+    stages: [],
+  });
+  
+  const [sortOption, setSortOption] = useState("popularity");
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  
+  const allCategories = [...new Set(mockDeals.flatMap(deal => deal.categories))].sort();
+  const allCountries = ["United States", "Canada", "United Kingdom", "Germany", "France", "Singapore"];
+  const allStages = ["Pre-seed", "Seed", "Series A", "Series B", "Growth"];
+  
+  const hasActiveFilters = () => {
+    return activeFilters.countries.length > 0 || 
+           activeFilters.categories.length > 0 || 
+           activeFilters.stages.length > 0;
+  };
+  
+  const toggleFilter = (type: 'countries' | 'categories' | 'stages', value: string) => {
+    setActiveFilters(prev => {
+      const current = [...prev[type]];
+      const index = current.indexOf(value);
+      
+      if (index === -1) {
+        current.push(value);
+      } else {
+        current.splice(index, 1);
+      }
+      
+      return {
+        ...prev,
+        [type]: current,
+      };
+    });
+  };
+  
+  const clearFilters = () => {
+    setActiveFilters({
+      countries: [],
+      categories: [],
+      stages: [],
+    });
+  };
+  
+  const filteredDeals = mockDeals
+    .filter(deal => {
+      if (activeFilters.categories.length > 0 && !deal.categories.some(cat => activeFilters.categories.includes(cat))) {
+        return false;
+      }
+      
+      // Mock country filter (assuming deals don't have country data yet)
+      if (activeFilters.countries.length > 0 && activeFilters.countries[0] !== "United States") {
+        return false;
+      }
+      
+      // Mock stage filter (assuming deals don't have explicit stage data)
+      if (activeFilters.stages.length > 0 && !activeFilters.stages.includes(deal.stage)) {
+        return false;
+      }
+      
+      return true;
+    })
+    .sort((a, b) => {
+      switch (sortOption) {
+        case "popularity":
+          return b.backers - a.backers;
+        case "newest":
+          return b.number - a.number;
+        case "comments":
+          return b.comments - a.comments;
+        default:
+          return 0;
+      }
+    });
+  
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -50,6 +145,156 @@ const Landing = () => {
           </p>
         </div>
         
+        {/* Filter Section */}
+        <div className="mb-8 bg-gray-50 p-4 rounded-lg border border-gray-100">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
+            <div className="flex items-center gap-4 mb-4 md:mb-0">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="flex items-center gap-2"
+                onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+              >
+                <Filter size={14} />
+                Filters
+                {isFiltersOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+              </Button>
+              
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">Sort by:</span>
+                <Select value={sortOption} onValueChange={setSortOption}>
+                  <SelectTrigger className="w-[160px] h-9">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="popularity">Most Popular</SelectItem>
+                    <SelectItem value="newest">Newest</SelectItem>
+                    <SelectItem value="comments">Most Discussed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            
+            {hasActiveFilters() && (
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={clearFilters}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
+                Clear all filters
+              </Button>
+            )}
+          </div>
+          
+          <Collapsible open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
+            <CollapsibleContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-100">
+                <div>
+                  <h3 className="font-medium mb-2">Categories</h3>
+                  <div className="space-y-2">
+                    {allCategories.slice(0, 5).map((category) => (
+                      <div key={category} className="flex items-center space-x-2">
+                        <Checkbox 
+                          id={`category-${category}`} 
+                          checked={activeFilters.categories.includes(category)}
+                          onCheckedChange={() => toggleFilter('categories', category)}
+                        />
+                        <label
+                          htmlFor={`category-${category}`}
+                          className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          {category}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="font-medium mb-2">Country</h3>
+                  <div className="space-y-2">
+                    {allCountries.slice(0, 5).map((country) => (
+                      <div key={country} className="flex items-center space-x-2">
+                        <Checkbox 
+                          id={`country-${country}`} 
+                          checked={activeFilters.countries.includes(country)}
+                          onCheckedChange={() => toggleFilter('countries', country)}
+                        />
+                        <label
+                          htmlFor={`country-${country}`}
+                          className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          {country}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="font-medium mb-2">Stage</h3>
+                  <div className="space-y-2">
+                    {allStages.map((stage) => (
+                      <div key={stage} className="flex items-center space-x-2">
+                        <Checkbox 
+                          id={`stage-${stage}`} 
+                          checked={activeFilters.stages.includes(stage)}
+                          onCheckedChange={() => toggleFilter('stages', stage)}
+                        />
+                        <label
+                          htmlFor={`stage-${stage}`}
+                          className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          {stage}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              {hasActiveFilters() && (
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <h3 className="font-medium mb-2">Active filters:</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {activeFilters.categories.map(category => (
+                      <Badge 
+                        key={`badge-category-${category}`} 
+                        variant="outline"
+                        className="px-2 py-1 cursor-pointer hover:bg-gray-100"
+                        onClick={() => toggleFilter('categories', category)}
+                      >
+                        {category} ×
+                      </Badge>
+                    ))}
+                    {activeFilters.countries.map(country => (
+                      <Badge 
+                        key={`badge-country-${country}`} 
+                        variant="outline"
+                        className="px-2 py-1 cursor-pointer hover:bg-gray-100" 
+                        onClick={() => toggleFilter('countries', country)}
+                      >
+                        {country} ×
+                      </Badge>
+                    ))}
+                    {activeFilters.stages.map(stage => (
+                      <Badge 
+                        key={`badge-stage-${stage}`} 
+                        variant="outline"
+                        className="px-2 py-1 cursor-pointer hover:bg-gray-100" 
+                        onClick={() => toggleFilter('stages', stage)}
+                      >
+                        {stage} ×
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
+        
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Featured Deals</h2>
           <Link to="/deals">
@@ -58,7 +303,7 @@ const Landing = () => {
         </div>
         
         <div className="space-y-4 mb-10">
-          {mockDeals.map((deal) => (
+          {filteredDeals.map((deal) => (
             <DealCard key={deal.id} deal={deal} />
           ))}
         </div>

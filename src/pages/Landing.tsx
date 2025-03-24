@@ -30,6 +30,11 @@ const Landing = () => {
               >
                 Support
               </Link>
+              <Link to="/apply">
+                <Button variant="kaas" size="sm">
+                  Start your raise
+                </Button>
+              </Link>
             </nav>
           </div>
         </div>

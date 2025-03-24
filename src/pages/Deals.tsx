@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -568,166 +569,211 @@ const Deals = () => {
           </p>
         </div>
         
-        <div className="mb-6 flex flex-wrap items-center gap-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="flex items-center gap-2"
-              >
-                <ArrowUpDown className="h-4 w-4" />
-                Sort
-                <ChevronDown className="h-4 w-4 ml-1" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56 bg-background">
-              <DropdownMenuLabel>Sort By</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup value={sortOption} onValueChange={handleSortChange}>
-                <DropdownMenuRadioItem value="trending">Trending First</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="newest">Newest First</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="funding-goal-high">Funding Goal (High to Low)</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="funding-goal-low">Funding Goal (Low to High)</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="progress-high">Progress (High to Low)</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="progress-low">Progress (Low to High)</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="backers-count">Most Backers</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {/* Enhanced filter and sort section with a more prominent design */}
+        <div className="mb-8 bg-slate-50 p-4 rounded-lg border border-slate-200 shadow-sm">
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <h3 className="font-medium text-base flex items-center mr-2">
+              <Filter className="h-4 w-4 mr-1.5 text-kaas-pink" />
+              Find Startups
+            </h3>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="flex items-center gap-2 bg-white"
+                >
+                  <ArrowUpDown className="h-4 w-4 text-kaas-pink" />
+                  <span>Sort: <span className="font-medium">{sortOption === 'trending' ? 'Trending First' : 
+                           sortOption === 'newest' ? 'Newest First' : 
+                           sortOption === 'funding-goal-high' ? 'Highest Funding Goal' :
+                           sortOption === 'funding-goal-low' ? 'Lowest Funding Goal' :
+                           sortOption === 'progress-high' ? 'Most Funded' :
+                           sortOption === 'progress-low' ? 'Newly Funded' :
+                           sortOption === 'backers-count' ? 'Most Backers' : 'Trending'}</span></span>
+                  <ChevronDown className="h-4 w-4 ml-1" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-56 bg-background">
+                <DropdownMenuLabel>Sort By</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup value={sortOption} onValueChange={handleSortChange}>
+                  <DropdownMenuRadioItem value="trending">Trending First</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="newest">Newest First</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="funding-goal-high">Funding Goal (High to Low)</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="funding-goal-low">Funding Goal (Low to High)</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="progress-high">Progress (High to Low)</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="progress-low">Progress (Low to High)</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="backers-count">Most Backers</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           
-          <Select 
-            value={filters.country} 
-            onValueChange={(value) => handleFilterChange('country', value)}
-          >
-            <SelectTrigger className="w-[160px] h-9">
-              <SelectValue placeholder="Filter by Country" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Countries</SelectItem>
-              {countries.map((country) => (
-                <SelectItem key={country} value={country}>{country}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <Select 
-            value={filters.industry} 
-            onValueChange={(value) => handleFilterChange('industry', value)}
-          >
-            <SelectTrigger className="w-[180px] h-9">
-              <SelectValue placeholder="Filter by Industry" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Industries</SelectItem>
-              {industries.map((industry) => (
-                <SelectItem key={industry} value={industry}>{industry}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className={cn("flex items-center gap-2", activeFilterCount > 0 && "bg-blue-50")}
-              >
-                <Filter className="h-4 w-4" />
-                More Filters
-                {activeFilterCount > 0 && (
-                  <Badge variant="secondary" className="ml-1 bg-blue-100">
-                    {activeFilterCount}
-                  </Badge>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80 p-0" align="start">
-              <div className="p-4 border-b">
-                <h4 className="font-medium mb-2">Founder Experience</h4>
-                <div className="grid grid-cols-2 gap-2">
-                  {founderTags.slice(0, 6).map((tag) => (
-                    <div key={tag.value} className="flex items-center space-x-2 text-sm">
-                      <Checkbox 
-                        id={`tag-${tag.value}`}
-                        checked={filters.founderTag === tag.value}
-                        onCheckedChange={() => handleFilterChange('founderTag', tag.value)}
-                      />
-                      <label 
-                        htmlFor={`tag-${tag.value}`}
-                        className="flex items-center cursor-pointer"
-                      >
-                        <tag.icon className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
-                        <span className="text-xs">{tag.label}</span>
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="p-4 border-b">
-                <h4 className="font-medium mb-2">Founded Year</h4>
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="flex items-center space-x-2 text-sm">
-                    <Checkbox 
-                      id="year-all"
-                      checked={filters.year === 'all'}
-                      onCheckedChange={() => handleFilterChange('year', 'all')}
-                    />
-                    <label htmlFor="year-all" className="text-xs">All Years</label>
+          <div className="flex flex-wrap items-center gap-3">
+            <Select 
+              value={filters.type} 
+              onValueChange={(value) => handleFilterChange('type', value)}
+            >
+              <SelectTrigger className="w-[130px] h-9 bg-white">
+                <SelectValue placeholder="Deal Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                <SelectItem value="B2B">B2B</SelectItem>
+                <SelectItem value="Consumer">Consumer</SelectItem>
+              </SelectContent>
+            </Select>
+            
+            <Select 
+              value={filters.country} 
+              onValueChange={(value) => handleFilterChange('country', value)}
+            >
+              <SelectTrigger className="w-[160px] h-9 bg-white">
+                <SelectValue placeholder="Country" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Countries</SelectItem>
+                {countries.map((country) => (
+                  <SelectItem key={country} value={country}>{country}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Select 
+              value={filters.industry} 
+              onValueChange={(value) => handleFilterChange('industry', value)}
+            >
+              <SelectTrigger className="w-[180px] h-9 bg-white">
+                <SelectValue placeholder="Industry" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Industries</SelectItem>
+                {industries.map((industry) => (
+                  <SelectItem key={industry} value={industry}>{industry}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Select 
+              value={filters.year} 
+              onValueChange={(value) => handleFilterChange('year', value)}
+            >
+              <SelectTrigger className="w-[140px] h-9 bg-white">
+                <SelectValue placeholder="Founded Year" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Years</SelectItem>
+                {foundingYears.map((year) => (
+                  <SelectItem key={year} value={year}>{year}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className={cn("flex items-center gap-2 bg-white", 
+                    filters.founderTag !== 'all' && "border-kaas-pink text-kaas-pink")}
+                >
+                  <Users className="h-4 w-4" />
+                  Founder Experience
+                  {filters.founderTag !== 'all' && (
+                    <Badge variant="secondary" className="ml-1 bg-kaas-pink/10 text-kaas-pink border-none">
+                      1
+                    </Badge>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-0" align="start">
+                <div className="p-4 border-b">
+                  <h4 className="font-medium mb-2">Founder Qualifications</h4>
+                  <div className="grid grid-cols-2 gap-2">
+                    {founderTags.slice(0, 6).map((tag) => (
+                      <div key={tag.value} className="flex items-center space-x-2 text-sm">
+                        <Checkbox 
+                          id={`tag-${tag.value}`}
+                          checked={filters.founderTag === tag.value}
+                          onCheckedChange={() => handleFilterChange('founderTag', tag.value)}
+                        />
+                        <label 
+                          htmlFor={`tag-${tag.value}`}
+                          className="flex items-center cursor-pointer"
+                        >
+                          <tag.icon className="h-3.5 w-3.5 mr-1.5 text-slate-500" />
+                          <span className="text-xs">{tag.label}</span>
+                        </label>
+                      </div>
+                    ))}
                   </div>
-                  {foundingYears.map((year) => (
-                    <div key={year} className="flex items-center space-x-2 text-sm">
-                      <Checkbox 
-                        id={`year-${year}`}
-                        checked={filters.year === year}
-                        onCheckedChange={() => handleFilterChange('year', year)}
-                      />
-                      <label htmlFor={`year-${year}`} className="text-xs">{year}</label>
-                    </div>
-                  ))}
                 </div>
-              </div>
-              
-              <div className="p-4">
-                <h4 className="font-medium mb-2">Deal Type</h4>
-                <div className="flex items-center space-x-2 text-sm">
-                  <Checkbox 
-                    id="type-all"
-                    checked={filters.type === 'all'}
-                    onCheckedChange={() => handleFilterChange('type', 'all')}
-                  />
-                  <label htmlFor="type-all" className="text-xs">All Types</label>
-                </div>
-                <div className="flex items-center space-x-2 text-sm mt-2">
-                  <Checkbox 
-                    id="type-b2b"
-                    checked={filters.type === 'B2B'}
-                    onCheckedChange={() => handleFilterChange('type', 'B2B')}
-                  />
-                  <label htmlFor="type-b2b" className="text-xs">B2B</label>
-                </div>
-                <div className="flex items-center space-x-2 text-sm mt-2">
-                  <Checkbox 
-                    id="type-consumer"
-                    checked={filters.type === 'Consumer'}
-                    onCheckedChange={() => handleFilterChange('type', 'Consumer')}
-                  />
-                  <label htmlFor="type-consumer" className="text-xs">Consumer</label>
-                </div>
-              </div>
-            </PopoverContent>
-          </Popover>
+              </PopoverContent>
+            </Popover>
+            
+            {activeFilterCount > 0 && (
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="text-xs text-kaas-pink"
+                onClick={() => setFilters({type: 'all', country: 'all', year: 'all', founderTag: 'all', industry: 'all'})}
+              >
+                Clear all filters
+              </Button>
+            )}
+          </div>
           
           {activeFilterCount > 0 && (
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="text-xs text-muted-foreground"
-              onClick={() => setFilters({type: 'all', country: 'all', year: 'all', founderTag: 'all', industry: 'all'})}
-            >
-              Clear all filters
-            </Button>
+            <div className="mt-3 pt-3 border-t border-slate-200 flex flex-wrap gap-2">
+              <p className="text-xs text-slate-500 mr-2 pt-1">Active filters:</p>
+              {filters.type !== 'all' && (
+                <Badge variant="outline" className="bg-kaas-pink/5 text-kaas-pink border-kaas-pink/20 flex items-center gap-1">
+                  <Building className="h-3 w-3" />
+                  {filters.type}
+                  <button onClick={() => handleFilterChange('type', 'all')} className="ml-1 hover:bg-kaas-pink/10 rounded-full p-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  </button>
+                </Badge>
+              )}
+              {filters.country !== 'all' && (
+                <Badge variant="outline" className="bg-kaas-pink/5 text-kaas-pink border-kaas-pink/20 flex items-center gap-1">
+                  <MapPin className="h-3 w-3" />
+                  {filters.country}
+                  <button onClick={() => handleFilterChange('country', 'all')} className="ml-1 hover:bg-kaas-pink/10 rounded-full p-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  </button>
+                </Badge>
+              )}
+              {filters.industry !== 'all' && (
+                <Badge variant="outline" className="bg-kaas-pink/5 text-kaas-pink border-kaas-pink/20 flex items-center gap-1">
+                  <Zap className="h-3 w-3" />
+                  {filters.industry}
+                  <button onClick={() => handleFilterChange('industry', 'all')} className="ml-1 hover:bg-kaas-pink/10 rounded-full p-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  </button>
+                </Badge>
+              )}
+              {filters.year !== 'all' && (
+                <Badge variant="outline" className="bg-kaas-pink/5 text-kaas-pink border-kaas-pink/20 flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  Founded {filters.year}
+                  <button onClick={() => handleFilterChange('year', 'all')} className="ml-1 hover:bg-kaas-pink/10 rounded-full p-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  </button>
+                </Badge>
+              )}
+              {filters.founderTag !== 'all' && (
+                <Badge variant="outline" className="bg-kaas-pink/5 text-kaas-pink border-kaas-pink/20 flex items-center gap-1">
+                  <Users className="h-3 w-3" />
+                  {founderTags.find(tag => tag.value === filters.founderTag)?.label || 'Founder Experience'}
+                  <button onClick={() => handleFilterChange('founderTag', 'all')} className="ml-1 hover:bg-kaas-pink/10 rounded-full p-0.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  </button>
+                </Badge>
+              )}
+            </div>
           )}
         </div>
         
@@ -970,4 +1016,3 @@ const Deals = () => {
 };
 
 export default Deals;
-

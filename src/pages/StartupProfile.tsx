@@ -615,7 +615,7 @@ const StartupProfile = () => {
             <div className="sticky top-24">
               <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-6">
                 <div className="p-5 border-b border-slate-200 flex justify-between items-center">
-                  <h2 className="text-lg font-semibold">Discussion</h2>
+                  <h2 className="text-lg font-semibold">Discussions</h2>
                   <Badge variant="outline" className="text-xs">{comments.length}</Badge>
                 </div>
                 <div className="p-5">
@@ -751,4 +751,3 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
-

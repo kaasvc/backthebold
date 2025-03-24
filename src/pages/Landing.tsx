@@ -19,7 +19,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronDown, ChevronUp, Filter, Plus } from "lucide-react";
+import { ChevronDown, ChevronUp, Filter } from "lucide-react";
 
 const Landing = () => {
   const [activeFilters, setActiveFilters] = useState<{
@@ -140,14 +140,9 @@ const Landing = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
             Helping founders raise from the people who already believe in them.
           </p>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-10">
             Start your community fundraise, and let us handle the rest.
           </p>
-          <Link to="/apply">
-            <Button variant="kaas" className="gap-2">
-              <Plus size={20} /> Start Your Raise
-            </Button>
-          </Link>
         </div>
         
         {/* Filter Section */}

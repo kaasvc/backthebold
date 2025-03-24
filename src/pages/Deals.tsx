@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 const Deals = () => {
   const navigate = useNavigate();
@@ -588,201 +587,161 @@ const Deals = () => {
               const cardStyle = getDealCardStyle(deal, index);
               
               return (
-                <HoverCard key={deal.id}>
-                  <HoverCardTrigger asChild>
-                    <div className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                      <Card 
-                        className={cn(
-                          "overflow-hidden h-full cursor-pointer border transition-all duration-200",
-                          cardStyle,
-                          "hover:border-kaas-pink hover:border-2"
-                        )}
-                      >
-                        <CardContent className="p-4 flex flex-col h-full">
-                          <div className="mb-5">
-                            <h4 className="text-sm font-medium mb-2 text-slate-600 flex items-center">
-                              <Users className="h-3.5 w-3.5 mr-1.5 text-kaas-pink" />
-                              The Team
-                            </h4>
-                            
-                            <div className="flex flex-wrap -mx-1">
-                              {deal.founders.slice(0, 3).map((founder, idx) => (
-                                <div key={idx} className="px-1 w-full mb-2">
-                                  <div 
-                                    className="flex items-center p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-white"
-                                    onClick={() => handleFounderClick(founder)}
-                                  >
-                                    <Avatar className="w-10 h-10 border-2 border-white shadow-sm">
-                                      <AvatarImage src={founder.image} alt={founder.name} />
-                                      <AvatarFallback className="bg-kaas-pink text-white">
-                                        {founder.name.substring(0, 2)}
-                                      </AvatarFallback>
-                                    </Avatar>
-                                    <div className="ml-3">
-                                      <p className="text-sm font-medium flex items-center">
-                                        {founder.fullName}
-                                        {founder.exits > 0 && (
-                                          <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
-                                            {founder.exits}x Exit
-                                          </span>
-                                        )}
-                                      </p>
-                                      <div className="flex items-center gap-2">
-                                        <p className="text-[11px] text-slate-600">{founder.title}</p>
-                                        <span className="text-[11px] text-slate-500 flex items-center">
-                                          <Briefcase className="h-2.5 w-2.5 mr-0.5" />
-                                          {founder.experience}
-                                        </span>
-                                      </div>
-                                    </div>
+                <div 
+                  key={deal.id} 
+                  className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                >
+                  <Card 
+                    className={cn(
+                      "overflow-hidden h-full cursor-pointer border transition-all duration-200",
+                      cardStyle,
+                      "hover:border-kaas-pink hover:border-2"
+                    )}
+                  >
+                    <CardContent className="p-4 flex flex-col h-full">
+                      <div className="mb-5">
+                        <h4 className="text-sm font-medium mb-2 text-slate-600 flex items-center">
+                          <Users className="h-3.5 w-3.5 mr-1.5 text-kaas-pink" />
+                          The Team
+                        </h4>
+                        
+                        <div className="flex flex-wrap -mx-1">
+                          {deal.founders.slice(0, 3).map((founder, idx) => (
+                            <div key={idx} className="px-1 w-full mb-2">
+                              <div 
+                                className="flex items-center p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-white"
+                                onClick={() => handleFounderClick(founder)}
+                              >
+                                <Avatar className="w-10 h-10 border-2 border-white shadow-sm">
+                                  <AvatarImage src={founder.image} alt={founder.name} />
+                                  <AvatarFallback className="bg-kaas-pink text-white">
+                                    {founder.name.substring(0, 2)}
+                                  </AvatarFallback>
+                                </Avatar>
+                                <div className="ml-3">
+                                  <p className="text-sm font-medium flex items-center">
+                                    {founder.fullName}
+                                    {founder.exits > 0 && (
+                                      <span className="ml-1.5 inline-flex items-center justify-center px-1.5 py-0.5 rounded-sm bg-green-100 text-green-800 text-[10px]">
+                                        {founder.exits}x Exit
+                                      </span>
+                                    )}
+                                  </p>
+                                  <div className="flex items-center gap-2">
+                                    <p className="text-[11px] text-slate-600">{founder.title}</p>
+                                    <span className="text-[11px] text-slate-500 flex items-center">
+                                      <Briefcase className="h-2.5 w-2.5 mr-0.5" />
+                                      {founder.experience}
+                                    </span>
                                   </div>
                                 </div>
-                              ))}
-                            </div>
-                            
-                            <div className="flex flex-wrap gap-2 mt-1">
-                              {trustIndicators.map((indicator, idx) => (
-                                <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
-                                  <indicator.icon className="h-3 w-3 mr-1" />
-                                  {indicator.label}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                          
-                          <div className="mb-5">
-                            <div className="mb-3 flex items-center justify-between">
-                              <h3 className="font-semibold text-base flex items-center gap-1">
-                                {deal.status === "trending" && (
-                                  <TrendingUpIcon className="h-4 w-4 text-kaas-pink" />
-                                )}
-                                {deal.name}
-                              </h3>
-                              <Badge variant="outline" className={cn("bg-slate-50 border-slate-200 text-slate-700")}>
-                                <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                                {deal.location}
-                              </Badge>
-                            </div>
-                            
-                            <p className="text-sm text-slate-700 mb-2">{deal.description || deal.tagline}</p>
-                            
-                            <div className="flex flex-wrap gap-1.5 mb-2">
-                              <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
-                                <Building className="h-3 w-3 mr-1" />
-                                {deal.industry}
-                              </Badge>
-                              <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
-                                <Calendar className="h-3 w-3 mr-1" />
-                                Founded {deal.foundedYear}
-                              </Badge>
-                            </div>
-                            
-                            <div className="flex flex-wrap gap-2">
-                              {marketIndicators.map((indicator, idx) => (
-                                <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
-                                  <indicator.icon className="h-3 w-3 mr-1" />
-                                  {indicator.label}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                          
-                          <div className="mt-auto bg-slate-50 p-3 rounded-lg border border-slate-200">
-                            <div className="flex items-center justify-between mb-2">
-                              <div className="flex items-center">
-                                <CircleDollarSign className="h-4 w-4 text-kaas-pink mr-1.5" />
-                                <span className="text-sm font-medium">Funding Status</span>
                               </div>
-                              <span className="text-xs font-medium bg-kaas-pink/10 text-kaas-pink px-2 py-0.5 rounded-full">
-                                Raising {deal.stage}
-                              </span>
                             </div>
-                            
-                            <div className="flex items-center justify-between text-xs mb-1.5">
-                              <span className="font-medium">
-                                Funding to date: {calculateFundingToDate(150, deal.progress)}
-                              </span>
-                              <span className="font-medium">
-                                {deal.progress}% complete
-                              </span>
-                            </div>
-                            
-                            <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden mb-1">
-                              <div 
-                                className="h-full bg-kaas-pink rounded-full" 
-                                style={{ width: `${deal.progress}%` }}
-                              ></div>
-                            </div>
-                            
-                            <div className="flex items-center justify-between text-xs text-slate-500">
-                              <span>€0</span>
-                              <span>€150K</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mt-4 flex items-center justify-between gap-2">
-                            <Button 
-                              variant="outline" 
-                              size="sm" 
-                              className="w-full"
-                              onClick={() => handleViewDetails(deal.name)}
-                            >
-                              View Details
-                            </Button>
-                            
-                            <Button 
-                              variant="kaas" 
-                              size="sm" 
-                              className="w-full"
-                              onClick={() => handleCommit(deal.name)}
-                            >
-                              Invest
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </HoverCardTrigger>
-                  <HoverCardContent className="w-80 bg-white border shadow-lg p-0">
-                    <div className="p-4 border-b">
-                      <div className="flex items-center gap-2 mb-2">
-                        {deal.status === "trending" && (
-                          <Badge className="bg-kaas-pink text-white">Trending</Badge>
-                        )}
-                        <h3 className="font-bold">{deal.name}</h3>
-                      </div>
-                      <p className="text-sm text-slate-600">{deal.tagline || deal.description}</p>
-                    </div>
-                    <div className="p-4">
-                      <h4 className="font-medium text-sm mb-2">Quick Facts</h4>
-                      <div className="space-y-2">
-                        <div className="flex items-center text-xs">
-                          <CircleDollarSign className="h-3.5 w-3.5 mr-2 text-kaas-pink" />
-                          <span>Stage: {deal.stage}</span>
+                          ))}
                         </div>
-                        <div className="flex items-center text-xs">
-                          <TrendingUp className="h-3.5 w-3.5 mr-2 text-kaas-pink" />
-                          <span>Funding: {deal.progress}% complete</span>
-                        </div>
-                        <div className="flex items-center text-xs">
-                          <Calendar className="h-3.5 w-3.5 mr-2 text-kaas-pink" />
-                          <span>Founded: {deal.foundedYear}</span>
-                        </div>
-                        <div className="flex items-center text-xs">
-                          <Building className="h-3.5 w-3.5 mr-2 text-kaas-pink" />
-                          <span>Industry: {deal.industry}</span>
-                        </div>
-                        <div className="flex items-center text-xs">
-                          <Target className="h-3.5 w-3.5 mr-2 text-kaas-pink" />
-                          <span>Market Size: {deal.market?.size || "N/A"}</span>
+                        
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          {trustIndicators.map((indicator, idx) => (
+                            <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
+                              <indicator.icon className="h-3 w-3 mr-1" />
+                              {indicator.label}
+                            </Badge>
+                          ))}
                         </div>
                       </div>
-                    </div>
-                    <div className="p-3 bg-slate-50 text-center">
-                      <span className="text-xs text-slate-500">Hover off to close • Click card to view</span>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
+                      
+                      <div className="mb-5">
+                        <div className="mb-3 flex items-center justify-between">
+                          <h3 className="font-semibold text-base flex items-center gap-1">
+                            {deal.status === "trending" && (
+                              <TrendingUpIcon className="h-4 w-4 text-kaas-pink" />
+                            )}
+                            {deal.name}
+                          </h3>
+                          <Badge variant="outline" className={cn("bg-slate-50 border-slate-200 text-slate-700")}>
+                            <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                            {deal.location}
+                          </Badge>
+                        </div>
+                        
+                        <p className="text-sm text-slate-700 mb-2">{deal.description || deal.tagline}</p>
+                        
+                        <div className="flex flex-wrap gap-1.5 mb-2">
+                          <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
+                            <Building className="h-3 w-3 mr-1" />
+                            {deal.industry}
+                          </Badge>
+                          <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
+                            <Calendar className="h-3 w-3 mr-1" />
+                            Founded {deal.foundedYear}
+                          </Badge>
+                        </div>
+                        
+                        <div className="flex flex-wrap gap-2">
+                          {marketIndicators.map((indicator, idx) => (
+                            <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
+                              <indicator.icon className="h-3 w-3 mr-1" />
+                              {indicator.label}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="mt-auto bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center">
+                            <CircleDollarSign className="h-4 w-4 text-kaas-pink mr-1.5" />
+                            <span className="text-sm font-medium">Funding Status</span>
+                          </div>
+                          <span className="text-xs font-medium bg-kaas-pink/10 text-kaas-pink px-2 py-0.5 rounded-full">
+                            Raising {deal.stage}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between text-xs mb-1.5">
+                          <span className="font-medium">
+                            Funding to date: {calculateFundingToDate(150, deal.progress)}
+                          </span>
+                          <span className="font-medium">
+                            {deal.progress}% complete
+                          </span>
+                        </div>
+                        
+                        <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden mb-1">
+                          <div 
+                            className="h-full bg-kaas-pink rounded-full" 
+                            style={{ width: `${deal.progress}%` }}
+                          ></div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between text-xs text-slate-500">
+                          <span>€0</span>
+                          <span>€150K</span>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 flex items-center justify-between gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="w-full"
+                          onClick={() => handleViewDetails(deal.name)}
+                        >
+                          View Details
+                        </Button>
+                        
+                        <Button 
+                          variant="kaas" 
+                          size="sm" 
+                          className="w-full"
+                          onClick={() => handleCommit(deal.name)}
+                        >
+                          Invest
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               );
             })}
           </div>

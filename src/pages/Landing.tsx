@@ -35,9 +35,9 @@ const Landing = () => {
       
       <main className="container py-16">
         <div className="mb-12 text-center">
-          <h1 className="text-5xl font-bold tracking-tight mb-4">Backing the Bold</h1>
+          <h1 className="text-5xl font-bold tracking-tight mb-4">Connect Capital with Innovation</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
-            Turn supporters into your first investors - fast, simple, and legally sound.
+            The platform that transforms believers into backers and ideas into funded ventures.
           </p>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Welcome to the go-to platform to raise the perfect first round.
@@ -52,7 +52,7 @@ const Landing = () => {
             </div>
             <h2 className="text-2xl font-bold mb-2">For Founders</h2>
             <p className="text-muted-foreground text-center mb-6">
-              Raise the perfect first round from people who believe in you - fast, easy &amp; secure.
+              Raise the perfect first round from people who believe in you - fast, easy & secure.
             </p>
             <Link to="/apply" className="mt-auto">
               <Button variant="kaas" size="lg">

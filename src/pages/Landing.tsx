@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,7 @@ const Landing = () => {
             Helping founders raise from the people who already believe in them.
           </p>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Get early access to founders raising their next round, backed by their communities.
+            Start your community fundraise, and let us handle the rest.
           </p>
         </div>
         

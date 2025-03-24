@@ -2,7 +2,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { MessageCircle, Users } from "lucide-react";
@@ -34,11 +33,11 @@ interface DealCardProps {
 const DealCard: React.FC<DealCardProps> = ({ deal, className }) => {
   return (
     <Link to={`/startup/${deal.id}`}>
-      <Card className={cn("p-6 hover:shadow-md transition-shadow", className)}>
+      <Card className={cn("p-4 hover:shadow-md transition-shadow", className)}>
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0">
             {deal.logo ? (
-              <div className="w-12 h-12 rounded-full overflow-hidden">
+              <div className="w-10 h-10 rounded-full overflow-hidden">
                 <img 
                   src={deal.logo} 
                   alt={`${deal.companyName} logo`} 
@@ -46,7 +45,7 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className }) => {
                 />
               </div>
             ) : (
-              <div className="w-12 h-12 rounded-full bg-soft-blue flex items-center justify-center text-foreground font-bold">
+              <div className="w-10 h-10 rounded-full bg-soft-blue flex items-center justify-center text-foreground font-bold">
                 {deal.companyName.charAt(0)}
               </div>
             )}
@@ -55,44 +54,44 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className }) => {
           <div className="flex-grow">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="font-bold text-lg flex items-center">
+                <h3 className="font-bold text-base flex items-center">
                   <span className="text-muted-foreground mr-2">{deal.number}.</span>
                   {deal.companyName}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-3">{deal.description}</p>
+                <p className="text-sm text-muted-foreground mb-2 line-clamp-1">{deal.description}</p>
                 
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {deal.categories.map((category) => (
-                    <Badge key={category} variant="outline" className="bg-soft-blue text-foreground">
-                      {category}
-                    </Badge>
+                <div className="flex items-center text-xs text-muted-foreground gap-1 mt-1">
+                  {deal.categories.map((category, index) => (
+                    <React.Fragment key={category}>
+                      {index > 0 && <span className="mx-1 text-muted-foreground">•</span>}
+                      <span>{category}</span>
+                    </React.Fragment>
                   ))}
-                  <Badge variant="outline" className="bg-soft-green text-foreground">
-                    {deal.stage}
-                  </Badge>
+                  <span className="mx-1 text-muted-foreground">•</span>
+                  <span>{deal.stage}</span>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-4">
-                <div className="flex flex-col items-center">
-                  <div className="bg-background border border-border rounded-md px-3 py-1.5 flex items-center justify-center">
-                    <Users className="h-4 w-4 mr-1.5 text-gray-500" />
-                    <span className="text-sm font-medium">{deal.backers}</span>
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center">
+                  <div className="border border-border rounded-md px-2 py-1 flex items-center justify-center">
+                    <Users className="h-3 w-3 mr-1 text-gray-500" />
+                    <span className="text-xs font-medium">{deal.backers}</span>
                   </div>
                 </div>
                 
-                <div className="flex flex-col items-center">
-                  <div className="bg-background border border-border rounded-md px-3 py-1.5 flex items-center justify-center">
-                    <MessageCircle className="h-4 w-4 mr-1.5 text-gray-500" />
-                    <span className="text-sm font-medium">{deal.comments}</span>
+                <div className="flex items-center">
+                  <div className="border border-border rounded-md px-2 py-1 flex items-center justify-center">
+                    <MessageCircle className="h-3 w-3 mr-1 text-gray-500" />
+                    <span className="text-xs font-medium">{deal.comments}</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="flex -space-x-2 mt-3">
+            <div className="flex -space-x-2 mt-2">
               {deal.founders.map((founder) => (
-                <Avatar key={founder.id} className="border-2 border-background w-8 h-8">
+                <Avatar key={founder.id} className="border-2 border-background w-6 h-6">
                   {founder.avatar ? (
                     <AvatarImage src={founder.avatar} alt={founder.name} />
                   ) : (

@@ -602,22 +602,6 @@ const StartupProfile = () => {
           <div className="lg:w-4/12">
             <div className="sticky top-24">
               <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-6">
-                <div className="p-5 border-b border-slate-200">
-                  <h2 className="text-lg font-semibold">Ready to Invest in ProprHome.com?</h2>
-                  <p className="text-sm text-muted-foreground mt-1">Minimum investment: €20,000</p>
-                </div>
-                <div className="p-5">
-                  <Button className="w-full font-semibold" size="lg" onClick={handleCommit}>
-                    Make a Commitment
-                  </Button>
-                  
-                  <p className="text-sm text-center text-muted-foreground mt-4">
-                    You'll receive full details and documents after expressing interest
-                  </p>
-                </div>
-              </div>
-              
-              <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-6">
                 <div className="p-5 border-b border-slate-200 flex justify-between items-center">
                   <h2 className="text-lg font-semibold">Discussion</h2>
                   <Badge variant="outline" className="text-xs">{comments.length}</Badge>
@@ -736,3 +720,4 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
+

@@ -112,9 +112,13 @@ const Landing = () => {
         <div className="container flex h-16 items-center">
           <div className="mr-4 flex items-center space-x-2">
             <div className="flex items-center">
-              <div className="flex items-center scale-[0.7] origin-left">
-                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">KAAS</span>
-                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">X</span>
+              <div className="flex items-center">
+                <span className="text-xs text-muted-foreground mr-1.5">powered by</span>
+                <img 
+                  src="/lovable-uploads/03a92ee2-f5d8-46b3-855e-d9431308b9c8.png" 
+                  alt="Kaas logo" 
+                  className="h-6" 
+                />
               </div>
             </div>
           </div>

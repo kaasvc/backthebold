@@ -15,7 +15,7 @@ import {
   Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, 
   UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, 
   Twitter, Bookmark, Mail, Heart, MessageCircle, Share2, BookmarkCheck, SendHorizontal,
-  MapPin, FileText
+  MapPin, FileText, Clock
 } from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 
@@ -122,6 +122,15 @@ const StartupProfile = () => {
         comment.id === commentId ? {...comment, likes: comment.likes + 1} : comment
       ));
     }
+  };
+  
+  const handleReportComment = (commentId) => {
+    toast.success("Comment reported. We'll review it shortly.");
+  };
+  
+  const handleShareComment = (commentId) => {
+    navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#comment-${commentId}`);
+    toast.success("Comment link copied to clipboard");
   };
   
   const founders = [
@@ -630,7 +639,7 @@ const StartupProfile = () => {
                   
                   <div className="space-y-4 max-h-[600px] overflow-y-auto">
                     {comments.map((comment) => (
-                      <div key={comment.id} className="flex gap-3">
+                      <div key={comment.id} className="flex gap-3" id={`comment-${comment.id}`}>
                         <Avatar className="w-8 h-8 flex-shrink-0">
                           <AvatarImage src={comment.avatar} alt={comment.author} />
                           <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
@@ -638,7 +647,12 @@ const StartupProfile = () => {
                         <div className="flex-1">
                           <div className="flex items-center justify-between mb-1">
                             <span className="font-medium text-sm">{comment.author}</span>
-                            <span className="text-xs text-slate-500">{comment.date}</span>
+                            <div className="flex items-center gap-2 text-slate-500">
+                              <span className="text-xs flex items-center">
+                                <Clock className="h-3 w-3 mr-1" />
+                                {comment.date}
+                              </span>
+                            </div>
                           </div>
                           <p className="text-sm text-muted-foreground mb-2">{comment.content}</p>
                           <div className="flex items-center gap-4">
@@ -652,6 +666,20 @@ const StartupProfile = () => {
                             <button className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700">
                               <MessageCircle className="h-3.5 w-3.5" />
                               Reply
+                            </button>
+                            <button 
+                              className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
+                              onClick={() => handleShareComment(comment.id)}
+                            >
+                              <Share2 className="h-3.5 w-3.5" />
+                              Share
+                            </button>
+                            <button 
+                              className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
+                              onClick={() => handleReportComment(comment.id)}
+                            >
+                              <Flag className="h-3.5 w-3.5" />
+                              Report
                             </button>
                           </div>
                         </div>
@@ -720,4 +748,3 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
-

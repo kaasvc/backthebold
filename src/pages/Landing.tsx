@@ -40,7 +40,7 @@ const Landing = () => {
             Helping founders raise from the people who already believe in them.
           </p>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Start your fundraise, and let us handle the rest.
+            Start your community fundraise, and let us handle the rest.
           </p>
         </div>
         

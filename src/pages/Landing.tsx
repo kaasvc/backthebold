@@ -34,26 +34,11 @@ const Landing = () => {
       </header>
       
       <main className="container py-16">
-        <div className="mb-16 text-center relative">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110%] h-40 bg-gradient-to-r from-soft-purple via-soft-blue to-soft-pink opacity-40 rounded-full blur-3xl -z-10"></div>
-          
-          <div className="relative z-10 animate-fade-in">
-            <div className="inline-block mb-6">
-              <span className="bg-soft-yellow px-3 py-1 rounded-full text-sm font-medium text-gray-700 border border-amber-200">Europe's startups love us</span>
-            </div>
-            
-            <h1 className="text-5xl font-bold tracking-tight mb-4 relative inline-block">
-              <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink bg-clip-text text-transparent">Raise your 1st round 🚀</span>
-              <svg className="absolute -bottom-2 left-0 w-full" xmlns="http://www.w3.org/2000/svg" width="239" height="8" viewBox="0 0 239 8" fill="none">
-                <path d="M2 5.5C47.5 1.99999 193 1.50001 237 6" stroke="#D946EF" strokeWidth="4" strokeLinecap="round"/>
-              </svg>
-            </h1>
-            
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mt-6 leading-relaxed">
-              Helping Europe's most loved startups raise the perfect first round. 
-              <span className="block mt-2">Build a strategic investor community to hit it out of the park from day one.</span>
-            </p>
-          </div>
+        <div className="mb-12 text-center">
+          <h1 className="text-5xl font-bold tracking-tight mb-4">Raise your 1st round 🚀</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Helping Europe's most loved startups raise the perfect first round. Build a strategic investor community to hit it out of the park from day one.
+          </p>
         </div>
         
         <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">

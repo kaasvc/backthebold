@@ -36,8 +36,11 @@ const Landing = () => {
       <main className="container py-16">
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-4">Back the Bold</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Turn your supporters into your first investors - fast, simple, and legally sound. Welcome to the go-to platform to raise your perfect first round.
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
+            Turn your supporters into your first investors - fast, simple, and legally sound.
+          </p>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-medium">
+            Welcome to the go-to platform to raise your perfect first round.
           </p>
         </div>
         

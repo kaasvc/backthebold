@@ -53,7 +53,7 @@ const Landing = () => {
             </p>
             <Link to="/apply" className="mt-auto">
               <Button variant="kaas" size="lg">
-                Apply for Funding
+                Get Backed
               </Button>
             </Link>
           </div>

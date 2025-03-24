@@ -57,7 +57,7 @@ const Apply = () => {
       
       <main className="container py-10">
         <div className="mb-10 text-center">
-          <h1 className="text-4xl font-bold tracking-tight mb-3">Apply for Funding</h1>
+          <h1 className="text-4xl font-bold tracking-tight mb-3">Get Backed</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Thank you for your interest in KaasX. Please complete the application below to be considered 
             for our funding program. The entire process takes approximately 15-20 minutes to complete. All fields marked with an asterisk (*) are required.

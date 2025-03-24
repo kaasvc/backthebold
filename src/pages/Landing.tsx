@@ -115,7 +115,7 @@ const Landing = () => {
               <div className="flex items-center">
                 <span className="text-xs text-muted-foreground mr-1.5">powered by</span>
                 <img 
-                  src="/lovable-uploads/525ca069-4dad-49c4-b19b-781a831680d4.png" 
+                  src="/lovable-uploads/3aae86c2-a61b-44da-99fd-3071f77961e3.png" 
                   alt="Kaas logo" 
                   className="h-8 object-contain" 
                 />

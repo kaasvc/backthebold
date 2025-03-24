@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -592,32 +593,14 @@ const Deals = () => {
                         )}
                       >
                         <CardContent className="p-4 flex flex-col h-full">
-                          <div className="mb-4 flex items-center justify-between">
-                            <h3 className="font-semibold text-base flex items-center gap-1">
-                              {deal.status === "trending" && (
-                                <TrendingUpIcon className="h-4 w-4 text-kaas-pink" />
-                              )}
-                              {deal.name}
-                            </h3>
-                            <Badge variant="outline" className={cn("bg-slate-50 border-slate-200 text-slate-700")}>
-                              <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                              {deal.location}
-                            </Badge>
-                          </div>
-                          
-                          <div className="mb-3 flex flex-wrap gap-2">
-                            {trustIndicators.map((indicator, idx) => (
-                              <Badge key={idx} variant="outline" className={cn("flex items-center", indicator.color)}>
-                                <indicator.icon className="h-3 w-3 mr-1" />
-                                {indicator.label}
-                              </Badge>
-                            ))}
-                          </div>
-                          
-                          <div className="mb-4">
-                            <p className="text-sm text-slate-700 mb-3">{deal.description || deal.tagline}</p>
+                          {/* Section 1: Who's Building (Founders first) */}
+                          <div className="mb-5">
+                            <h4 className="text-sm font-medium mb-2 text-slate-600 flex items-center">
+                              <Users className="h-3.5 w-3.5 mr-1.5 text-kaas-pink" />
+                              The Team
+                            </h4>
                             
-                            <div className="flex flex-wrap -mx-1 mt-2">
+                            <div className="flex flex-wrap -mx-1">
                               {deal.founders.slice(0, 3).map((founder, idx) => (
                                 <div key={idx} className="px-1 w-full mb-2">
                                   <div 
@@ -651,9 +634,48 @@ const Deals = () => {
                                 </div>
                               ))}
                             </div>
+                            
+                            <div className="flex flex-wrap gap-2 mt-1">
+                              {trustIndicators.map((indicator, idx) => (
+                                <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
+                                  <indicator.icon className="h-3 w-3 mr-1" />
+                                  {indicator.label}
+                                </Badge>
+                              ))}
+                            </div>
                           </div>
                           
-                          <div className="mb-4 mt-2 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                          {/* Section 2: What They're Building (Company Info) */}
+                          <div className="mb-5">
+                            <div className="mb-3 flex items-center justify-between">
+                              <h3 className="font-semibold text-base flex items-center gap-1">
+                                {deal.status === "trending" && (
+                                  <TrendingUpIcon className="h-4 w-4 text-kaas-pink" />
+                                )}
+                                {deal.name}
+                              </h3>
+                              <Badge variant="outline" className={cn("bg-slate-50 border-slate-200 text-slate-700")}>
+                                <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                                {deal.location}
+                              </Badge>
+                            </div>
+                            
+                            <p className="text-sm text-slate-700 mb-2">{deal.description || deal.tagline}</p>
+                            
+                            <div className="flex flex-wrap gap-1.5">
+                              <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
+                                <Building className="h-3 w-3 mr-1" />
+                                {deal.industry}
+                              </Badge>
+                              <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
+                                <Calendar className="h-3 w-3 mr-1" />
+                                Founded {deal.foundedYear}
+                              </Badge>
+                            </div>
+                          </div>
+                          
+                          {/* Section 3: Fundraising Status */}
+                          <div className="mt-auto bg-slate-50 p-3 rounded-lg border border-slate-200">
                             <div className="flex items-center justify-between mb-2">
                               <div className="flex items-center">
                                 <CircleDollarSign className="h-4 w-4 text-kaas-pink mr-1.5" />
@@ -686,7 +708,7 @@ const Deals = () => {
                             </div>
                           </div>
                           
-                          <div className="mt-auto pt-3 flex items-center justify-between gap-2">
+                          <div className="mt-4 flex items-center justify-between gap-2">
                             <Button 
                               variant="outline" 
                               size="sm" 

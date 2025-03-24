@@ -128,7 +128,7 @@ const StartupProfile = () => {
     {
       name: "Sarah Chen",
       title: "CEO & Co-Founder",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
       bio: "Former product lead at Zillow, 10+ years in PropTech",
       experience: "15 years",
       previousStartups: 2,
@@ -301,7 +301,7 @@ const StartupProfile = () => {
               <div>
                 <p className="text-sm text-slate-500 mb-1">Stage</p>
                 <div className="flex items-center">
-                  <Badge className="bg-kaas-pink hover:bg-kaas-pink">Pre-Seed</Badge>
+                  <Badge variant="outline" className="bg-white">Pre-Seed</Badge>
                 </div>
               </div>
               <div>

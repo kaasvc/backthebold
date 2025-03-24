@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -58,7 +59,7 @@ const Apply = () => {
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-bold tracking-tight mb-3">Start Your Raise</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Take 10-minutes to create a trusted shareable fundraising page.
+            Take 10-minutes to create your trusted shareable fundraising page.
           </p>
         </div>
         

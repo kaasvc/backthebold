@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -36,16 +35,12 @@ const Landing = () => {
       <main className="container py-16">
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-4">Backing the Bold</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
-            Helping founders raise from the people who already believe in them. Start your fundraise, and let us handle the rest.
-          </p>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Welcome to the go-to platform to raise the perfect first round.
+            Helping founders raise from the people who already believe in them. Start your fundraise, and let us handle the rest.
           </p>
         </div>
         
         <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-          {/* Founder Card */}
           <div className="bg-background border border-border rounded-lg p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
             <div className="h-20 w-20 bg-gradient-to-r from-purple-600 to-kaas-pink rounded-full flex items-center justify-center mb-6">
               <Hammer className="h-10 w-10 text-white" />
@@ -61,7 +56,6 @@ const Landing = () => {
             </Link>
           </div>
           
-          {/* Investor Card */}
           <div className="bg-background border border-border rounded-lg p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
             <div className="h-20 w-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">

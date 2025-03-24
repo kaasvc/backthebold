@@ -117,7 +117,7 @@ const Landing = () => {
                 <img 
                   src="/lovable-uploads/03a92ee2-f5d8-46b3-855e-d9431308b9c8.png" 
                   alt="Kaas logo" 
-                  className="h-6" 
+                  className="h-6 object-contain" 
                 />
               </div>
             </div>

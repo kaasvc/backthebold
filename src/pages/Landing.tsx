@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -24,7 +25,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, ChevronUp, Filter, User, Mail } from "lucide-react";
+import { ChevronDown, ChevronUp, Filter, User, Mail, Plus } from "lucide-react";
 
 const Landing = () => {
   const [activeFilters, setActiveFilters] = useState<{
@@ -144,7 +145,8 @@ const Landing = () => {
               </DropdownMenu>
               
               <Link to="/apply">
-                <Button variant="kaas" size="sm">
+                <Button variant="kaas" size="sm" className="flex items-center gap-1.5">
+                  <Plus className="h-4 w-4" />
                   Start your raise
                 </Button>
               </Link>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -200,12 +199,6 @@ const Deals = () => {
         color: "bg-purple-100 text-purple-800"
       });
     }
-    
-    indicators.push({
-      label: "KaasX Verified",
-      icon: ShieldCheck,
-      color: "bg-emerald-100 text-emerald-800"
-    });
     
     return indicators;
   };

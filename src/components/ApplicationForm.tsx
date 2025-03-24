@@ -143,9 +143,13 @@ const ApplicationForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
+      // Fix: Convert boolean to string for enableNotifications
+      const formValues = form.getValues();
       const allData = {
         ...formData,
-        ...form.getValues(),
+        ...formValues,
+        // Convert boolean to string to match expected type
+        enableNotifications: formValues.enableNotifications ? "true" : "false",
         logoFilename: logoFile?.name || null,
       };
       

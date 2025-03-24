@@ -107,5 +107,27 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
   }
+  
+  /* LayerPath-inspired smooth animations */
+  .hover-scale {
+    @apply transition-transform duration-300;
+  }
+  .hover-scale:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink;
+  }
+}
+
+/* Layered background pattern */
+.bg-pattern {
+  background-image: 
+    radial-gradient(circle at 100% 100%, rgba(255, 255, 255, 0.1) 10%, transparent 10.5%),
+    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.1) 5%, transparent 5.5%);
+  background-size: 50px 50px, 60px 60px;
 }

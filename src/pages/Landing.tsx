@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -77,12 +76,10 @@ const Landing = () => {
         return false;
       }
       
-      // Mock country filter (assuming deals don't have country data yet)
       if (activeFilters.countries.length > 0 && activeFilters.countries[0] !== "United States") {
         return false;
       }
       
-      // Mock stage filter (assuming deals don't have explicit stage data)
       if (activeFilters.stages.length > 0 && !activeFilters.stages.includes(deal.stage)) {
         return false;
       }
@@ -145,7 +142,6 @@ const Landing = () => {
           </p>
         </div>
         
-        {/* Filter Section */}
         <div className="mb-8 bg-gray-50 p-4 rounded-lg border border-gray-100">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
             <div className="flex items-center gap-4 mb-4 md:mb-0">

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -15,18 +16,15 @@ import {
   Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, 
   UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, 
   Twitter, Bookmark, Mail, Heart, MessageCircle, Share2, BookmarkCheck, SendHorizontal,
-  MapPin, FileText, Clock
+  MapPin, FileText, Clock, MessageSquare, StarHalf, ThumbsUp
 } from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const StartupProfile = () => {
   const navigate = useNavigate();
@@ -63,6 +61,43 @@ const StartupProfile = () => {
     }
   ]);
   const [likedComments, setLikedComments] = useState({});
+  const [activeTab, setActiveTab] = useState("discussions");
+  const [reviews, setReviews] = useState([
+    {
+      id: 1,
+      author: "Marcus Johnson",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      rating: 5,
+      title: "Game changing property management solution",
+      content: "After trying several solutions for my 12 rental properties, ProprHome stands out with its intuitive interface and predictive maintenance alerts. Already saved me thousands in potential repairs.",
+      date: "3 days ago",
+      helpful: 18
+    },
+    {
+      id: 2,
+      author: "Rebecca Chen",
+      avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      rating: 4,
+      title: "Excellent platform with a few growing pains",
+      content: "The tenant screening feature is fantastic and has helped me find reliable renters. The maintenance tracking could use some improvements, but overall it's miles ahead of other solutions I've tried.",
+      date: "1 week ago",
+      helpful: 12
+    },
+    {
+      id: 3,
+      author: "Daniel Martinez",
+      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      rating: 5,
+      title: "Worth every penny for small landlords",
+      content: "As someone with just 3 properties, ProprHome gives me enterprise-level tools without the enterprise price tag. The AI-powered insights have been surprisingly accurate.",
+      date: "2 weeks ago",
+      helpful: 9
+    }
+  ]);
+  const [helpfulReviews, setHelpfulReviews] = useState({});
+  const [reviewText, setReviewText] = useState("");
+  const [reviewTitle, setReviewTitle] = useState("");
+  const [reviewRating, setReviewRating] = useState(5);
   
   useEffect(() => {
     const investorProfile = localStorage.getItem("kaasInvestorProfile");
@@ -140,6 +175,58 @@ const StartupProfile = () => {
   const handleShareComment = (commentId) => {
     navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#comment-${commentId}`);
     toast.success("Comment link copied to clipboard");
+  };
+  
+  const handleSubmitReview = () => {
+    if (!reviewText.trim() || !reviewTitle.trim()) {
+      toast.error("Please enter a review title and content");
+      return;
+    }
+    
+    const newReview = {
+      id: reviews.length + 1,
+      author: "You",
+      avatar: "https://images.unsplash.com/photo-1570295999919-5658abf4ff4e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
+      rating: reviewRating,
+      title: reviewTitle,
+      content: reviewText,
+      date: "Just now",
+      helpful: 0
+    };
+    
+    setReviews([newReview, ...reviews]);
+    setReviewText("");
+    setReviewTitle("");
+    setReviewRating(5);
+    toast.success("Review posted successfully");
+  };
+  
+  const handleMarkHelpful = (reviewId) => {
+    if (helpfulReviews[reviewId]) {
+      setHelpfulReviews({...helpfulReviews, [reviewId]: false});
+      setReviews(reviews.map(review => 
+        review.id === reviewId ? {...review, helpful: review.helpful - 1} : review
+      ));
+    } else {
+      setHelpfulReviews({...helpfulReviews, [reviewId]: true});
+      setReviews(reviews.map(review => 
+        review.id === reviewId ? {...review, helpful: review.helpful + 1} : review
+      ));
+    }
+  };
+  
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<Star key={i} className="h-4 w-4 text-yellow-500 fill-yellow-500" />);
+      } else if (i - 0.5 === rating) {
+        stars.push(<StarHalf key={i} className="h-4 w-4 text-yellow-500 fill-yellow-500" />);
+      } else {
+        stars.push(<Star key={i} className="h-4 w-4 text-gray-300" />);
+      }
+    }
+    return stars;
   };
   
   const founders = [
@@ -227,33 +314,29 @@ const StartupProfile = () => {
           </Link>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-4">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger>Options</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid w-[200px] gap-3 p-4">
-                        <li>
-                          <Link 
-                            to="/deals"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            All Deals
-                          </Link>
-                        </li>
-                        <li>
-                          <Link 
-                            to="/support"
-                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                          >
-                            Support
-                          </Link>
-                        </li>
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+                    <User className="h-4 w-4" />
+                    Account
+                    <ChevronDown className="h-3 w-3 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-[200px]">
+                  <DropdownMenuItem asChild>
+                    <Link to="/login" className="flex items-center gap-2 cursor-pointer">
+                      <User className="h-4 w-4" />
+                      Login
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/support" className="flex items-center gap-2 cursor-pointer">
+                      <Mail className="h-4 w-4" />
+                      Contact Support
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </nav>
           </div>
         </div>
@@ -641,81 +724,198 @@ const StartupProfile = () => {
           <div className="lg:w-4/12">
             <div className="sticky top-24">
               <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-6">
-                <div className="p-5 border-b border-slate-200 flex justify-between items-center">
-                  <h2 className="text-lg font-semibold">Discussions</h2>
-                  <Badge variant="outline" className="text-xs">{comments.length}</Badge>
+                <div className="p-0 border-b border-slate-200">
+                  <Tabs defaultValue="discussions" onValueChange={setActiveTab}>
+                    <TabsList className="w-full grid grid-cols-2 rounded-none h-12">
+                      <TabsTrigger 
+                        value="discussions"
+                        className={`${activeTab === 'discussions' ? 'font-semibold' : ''} data-[state=active]:bg-white data-[state=active]:shadow-none flex items-center gap-2`}
+                      >
+                        <MessageSquare className="h-4 w-4" />
+                        Discussions
+                      </TabsTrigger>
+                      <TabsTrigger 
+                        value="reviews"
+                        className={`${activeTab === 'reviews' ? 'font-semibold' : ''} data-[state=active]:bg-white data-[state=active]:shadow-none flex items-center gap-2`}
+                      >
+                        <Star className="h-4 w-4" />
+                        Reviews
+                      </TabsTrigger>
+                    </TabsList>
+                  </Tabs>
                 </div>
                 <div className="p-5">
-                  <div className="mb-4">
-                    <Textarea 
-                      placeholder="Add your comment or question..." 
-                      className="w-full resize-none"
-                      rows={3}
-                      value={commentText}
-                      onChange={(e) => setCommentText(e.target.value)}
-                    />
-                    <div className="flex justify-end mt-2">
-                      <Button 
-                        size="sm" 
-                        onClick={handleSubmitComment}
-                        disabled={!commentText.trim()}
-                        className="flex items-center gap-1.5"
-                      >
-                        <SendHorizontal className="h-3.5 w-3.5" />
-                        Post Comment
-                      </Button>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4 max-h-[600px] overflow-y-auto">
-                    {comments.map((comment) => (
-                      <div key={comment.id} className="flex gap-3" id={`comment-${comment.id}`}>
-                        <Avatar className="w-8 h-8 flex-shrink-0">
-                          <AvatarImage src={comment.avatar} alt={comment.author} />
-                          <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="font-medium text-sm">{comment.author}</span>
-                            <div className="flex items-center gap-2 text-slate-500">
-                              <span className="text-xs flex items-center">
-                                <Clock className="h-3 w-3 mr-1" />
-                                {comment.date}
-                              </span>
+                  {activeTab === 'discussions' ? (
+                    <>
+                      <div className="mb-4">
+                        <Textarea 
+                          placeholder="Add your comment or question..." 
+                          className="w-full resize-none"
+                          rows={3}
+                          value={commentText}
+                          onChange={(e) => setCommentText(e.target.value)}
+                        />
+                        <div className="flex justify-end mt-2">
+                          <Button 
+                            size="sm" 
+                            onClick={handleSubmitComment}
+                            disabled={!commentText.trim()}
+                            className="flex items-center gap-1.5"
+                          >
+                            <SendHorizontal className="h-3.5 w-3.5" />
+                            Post Comment
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4 max-h-[600px] overflow-y-auto">
+                        {comments.map((comment) => (
+                          <div key={comment.id} className="flex gap-3" id={`comment-${comment.id}`}>
+                            <Avatar className="w-8 h-8 flex-shrink-0">
+                              <AvatarImage src={comment.avatar} alt={comment.author} />
+                              <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="font-medium text-sm">{comment.author}</span>
+                                <div className="flex items-center gap-2 text-slate-500">
+                                  <span className="text-xs flex items-center">
+                                    <Clock className="h-3 w-3 mr-1" />
+                                    {comment.date}
+                                  </span>
+                                </div>
+                              </div>
+                              <p className="text-sm text-muted-foreground mb-2">{comment.content}</p>
+                              <div className="flex items-center gap-4">
+                                <button 
+                                  className={`text-xs flex items-center gap-1.5 ${likedComments[comment.id] ? 'text-kaas-pink' : 'text-slate-500 hover:text-slate-700'}`}
+                                  onClick={() => handleLikeComment(comment.id)}
+                                >
+                                  <Heart className="h-3.5 w-3.5" />
+                                  {comment.likes} {comment.likes === 1 ? 'like' : 'likes'}
+                                </button>
+                                <button className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700">
+                                  <MessageCircle className="h-3.5 w-3.5" />
+                                  Reply
+                                </button>
+                                <button 
+                                  className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
+                                  onClick={() => handleShareComment(comment.id)}
+                                >
+                                  <Share2 className="h-3.5 w-3.5" />
+                                  Share
+                                </button>
+                                <button 
+                                  className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
+                                  onClick={() => handleReportComment(comment.id)}
+                                >
+                                  <Flag className="h-3.5 w-3.5" />
+                                  Report
+                                </button>
+                              </div>
                             </div>
                           </div>
-                          <p className="text-sm text-muted-foreground mb-2">{comment.content}</p>
-                          <div className="flex items-center gap-4">
-                            <button 
-                              className={`text-xs flex items-center gap-1.5 ${likedComments[comment.id] ? 'text-kaas-pink' : 'text-slate-500 hover:text-slate-700'}`}
-                              onClick={() => handleLikeComment(comment.id)}
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="mb-4">
+                        <div className="space-y-3">
+                          <div>
+                            <label className="text-sm font-medium mb-1 block">Rating</label>
+                            <div className="flex items-center gap-1">
+                              {[1,2,3,4,5].map((star) => (
+                                <button 
+                                  key={star} 
+                                  type="button"
+                                  onClick={() => setReviewRating(star)}
+                                  className="focus:outline-none"
+                                >
+                                  <Star 
+                                    className={`h-6 w-6 ${star <= reviewRating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`} 
+                                  />
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                          <div>
+                            <Input
+                              placeholder="Review title"
+                              value={reviewTitle}
+                              onChange={(e) => setReviewTitle(e.target.value)}
+                              className="mb-2"
+                            />
+                            <Textarea 
+                              placeholder="Write your review..." 
+                              className="w-full resize-none"
+                              rows={3}
+                              value={reviewText}
+                              onChange={(e) => setReviewText(e.target.value)}
+                            />
+                          </div>
+                          <div className="flex justify-end">
+                            <Button 
+                              size="sm" 
+                              onClick={handleSubmitReview}
+                              disabled={!reviewText.trim() || !reviewTitle.trim()}
+                              className="flex items-center gap-1.5"
                             >
-                              <Heart className="h-3.5 w-3.5" />
-                              {comment.likes} {comment.likes === 1 ? 'like' : 'likes'}
-                            </button>
-                            <button className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700">
-                              <MessageCircle className="h-3.5 w-3.5" />
-                              Reply
-                            </button>
-                            <button 
-                              className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
-                              onClick={() => handleShareComment(comment.id)}
-                            >
-                              <Share2 className="h-3.5 w-3.5" />
-                              Share
-                            </button>
-                            <button 
-                              className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
-                              onClick={() => handleReportComment(comment.id)}
-                            >
-                              <Flag className="h-3.5 w-3.5" />
-                              Report
-                            </button>
+                              <SendHorizontal className="h-3.5 w-3.5" />
+                              Post Review
+                            </Button>
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                      
+                      <div className="space-y-5 max-h-[600px] overflow-y-auto">
+                        {reviews.map((review) => (
+                          <div key={review.id} className="pb-4 border-b border-slate-100 last:border-0">
+                            <div className="flex justify-between mb-1">
+                              <div className="flex items-center gap-2">
+                                <Avatar className="w-6 h-6">
+                                  <AvatarImage src={review.avatar} alt={review.author} />
+                                  <AvatarFallback>{review.author.substring(0, 2)}</AvatarFallback>
+                                </Avatar>
+                                <span className="font-medium text-sm">{review.author}</span>
+                              </div>
+                              <span className="text-xs text-slate-500 flex items-center">
+                                <Clock className="h-3 w-3 mr-1" />
+                                {review.date}
+                              </span>
+                            </div>
+                            
+                            <div className="flex items-center mb-1.5">
+                              <div className="flex mr-2">
+                                {renderStars(review.rating)}
+                              </div>
+                              <span className="text-sm font-medium">{review.title}</span>
+                            </div>
+                            
+                            <p className="text-sm text-muted-foreground mb-2">{review.content}</p>
+                            
+                            <div className="flex items-center justify-between">
+                              <button 
+                                className={`text-xs flex items-center gap-1.5 ${helpfulReviews[review.id] ? 'text-kaas-pink' : 'text-slate-500 hover:text-slate-700'}`}
+                                onClick={() => handleMarkHelpful(review.id)}
+                              >
+                                <ThumbsUp className="h-3.5 w-3.5" />
+                                {review.helpful} {review.helpful === 1 ? 'person' : 'people'} found this helpful
+                              </button>
+                              
+                              <button 
+                                className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
+                                onClick={() => handleShareComment(review.id)}
+                              >
+                                <Share2 className="h-3.5 w-3.5" />
+                                Share
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -778,3 +978,4 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
+

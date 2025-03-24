@@ -37,7 +37,7 @@ const Landing = () => {
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-4">Back the Bold</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Helping Europe's most loved startups raise the perfect first round. Build a strategic investor community to hit it out of the park from day one.
+            Turn your supporters into your first investors - fast, simple, and legally sound. Welcome to the go-to platform to raise your first round powered by belief and community.
           </p>
         </div>
         

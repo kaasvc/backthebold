@@ -52,7 +52,7 @@ const Landing = () => {
             </div>
             <h2 className="text-2xl font-bold mb-2">For Founders</h2>
             <p className="text-muted-foreground text-center mb-6">
-              Raise your first round from the people who already back you - friends, family fans, and followers. We handle the rest.
+              Raise your first round from your community. We handle the rest.
             </p>
             <Link to="/apply" className="mt-auto">
               <Button variant="kaas" size="lg">

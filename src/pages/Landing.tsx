@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Hammer } from "lucide-react";
+import DealCard from "@/components/DealCard";
+import { mockDeals } from "@/data/mockDeals";
 
 const Landing = () => {
   return (
@@ -33,18 +35,31 @@ const Landing = () => {
         </div>
       </header>
       
-      <main className="container py-16">
+      <main className="container py-12">
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-4">Backing the Bold</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
             Helping founders raise from the people who already believe in them.
           </p>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-10">
             Start your community fundraise, and let us handle the rest.
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Featured Deals</h2>
+          <Link to="/deals">
+            <Button variant="outline">View All Deals</Button>
+          </Link>
+        </div>
+        
+        <div className="space-y-4 mb-10">
+          {mockDeals.map((deal) => (
+            <DealCard key={deal.id} deal={deal} />
+          ))}
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto mt-16">
           <div className="bg-background border border-border rounded-lg p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
             <div className="h-20 w-20 bg-gradient-to-r from-purple-600 to-kaas-pink rounded-full flex items-center justify-center mb-6">
               <Hammer className="h-10 w-10 text-white" />

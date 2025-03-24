@@ -109,3 +109,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+.deal-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.deal-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+.category-badge {
+  border-radius: 12px;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  color: #4B5563;
+  background-color: #F3F4F6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

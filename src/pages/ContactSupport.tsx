@@ -3,11 +3,17 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { HelpCircle, MessageCircle, Mail } from "lucide-react";
+import { HelpCircle, MessageCircle, Mail, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import FAQ from "@/components/support/FAQ";
 import Chatbot from "@/components/support/Chatbot";
 import ContactForm from "@/components/support/ContactForm";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const ContactSupport = () => {
   return (
@@ -24,14 +30,31 @@ const ContactSupport = () => {
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-4">
-              <Link
-                to="/"
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary"
-                )}
-              >
-                Back to Home
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-1 px-2 text-sm font-medium">
+                    Options <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link to="/deals">All Deals</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/support">Support</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <Link to="/">
+                <Button variant="outline" size="sm" className="text-sm font-medium transition-colors hover:text-primary">
+                  Back to Home
+                </Button>
               </Link>
+              
+              <Button variant="kaas" size="sm">
+                Back This Team
+              </Button>
             </nav>
           </div>
         </div>

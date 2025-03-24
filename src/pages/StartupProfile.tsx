@@ -305,8 +305,8 @@ const StartupProfile = () => {
                 <p className="text-xl font-bold">€150,000</p>
               </div>
               <div>
-                <p className="text-sm text-slate-500 mb-1">Valuation cap</p>
-                <p className="text-xl font-bold">€8.5M</p>
+                <p className="text-sm text-slate-500 mb-1">Backers</p>
+                <p className="text-xl font-bold">14</p>
               </div>
               <div>
                 <p className="text-sm text-slate-500 mb-1">Progress</p>
@@ -328,7 +328,7 @@ const StartupProfile = () => {
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="team">Team</TabsTrigger>
                 <TabsTrigger value="market">Market & Traction</TabsTrigger>
-                <TabsTrigger value="financials">Financials</TabsTrigger>
+                <TabsTrigger value="dealterms">Deal Terms</TabsTrigger>
               </TabsList>
               
               <TabsContent value="overview" className="space-y-6">
@@ -556,100 +556,69 @@ const StartupProfile = () => {
                 </div>
               </TabsContent>
               
-              <TabsContent value="financials" className="space-y-6">
+              <TabsContent value="dealterms" className="space-y-6">
                 <div>
-                  <h2 className="text-xl font-semibold mb-3">Business Model</h2>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-medium mb-2">Revenue Streams</h3>
-                      <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-                        <li>
-                          <span className="font-medium">Subscription Plans:</span><br />
-                          Basic: $25/month (up to 5 units)<br />
-                          Standard: $49/month (up to 10 units)<br />
-                          Premium: $99/month (up to 20 units)
-                        </li>
-                        <li>
-                          <span className="font-medium">Transaction Fees:</span><br />
-                          2% fee on rent payments (shared with payment processor)
-                        </li>
-                        <li>
-                          <span className="font-medium">Add-on Services:</span><br />
-                          Enhanced tenant screening: $30 per application<br />
-                          Maintenance vendor marketplace: 5% commission
-                        </li>
-                      </ul>
+                  <h2 className="text-xl font-semibold mb-3">Deal Terms</h2>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-kaas-pink flex items-center justify-center text-white mt-0.5">
+                        <DollarSign className="w-3 h-3" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium">Investment Terms</h3>
+                        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                          <li><span className="font-medium">Round Size:</span> $1.5M</li>
+                          <li><span className="font-medium">Valuation Cap:</span> $8.5M</li>
+                          <li><span className="font-medium">Minimum Investment:</span> €20,000</li>
+                          <li><span className="font-medium">Investment Instrument:</span> SAFE, SEIS eligible</li>
+                        </ul>
+                      </div>
                     </div>
                     
-                    <div>
-                      <h3 className="font-medium mb-2">Unit Economics</h3>
-                      <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-                        <li>
-                          <span className="font-medium">Average Revenue Per User (ARPU):</span><br />
-                          $62/month (including all revenue streams)
-                        </li>
-                        <li>
-                          <span className="font-medium">Customer Acquisition Cost (CAC):</span><br />
-                          $230 per customer
-                        </li>
-                        <li>
-                          <span className="font-medium">Gross Margin:</span><br />
-                          84% (excluding payment processing)
-                        </li>
-                        <li>
-                          <span className="font-medium">CAC Payback Period:</span><br />
-                          6 months
-                        </li>
-                      </ul>
+                    <div className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-kaas-pink flex items-center justify-center text-white mt-0.5">
+                        <LineChart className="w-3 h-3" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium">Use of Funds</h3>
+                        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                          <li><span className="font-medium">Engineering (45%):</span> Expand development team and accelerate product roadmap</li>
+                          <li><span className="font-medium">Marketing (30%):</span> Increase customer acquisition through targeted campaigns</li>
+                          <li><span className="font-medium">Operations (15%):</span> Improve customer support and onboarding processes</li>
+                          <li><span className="font-medium">Reserve (10%):</span> Working capital for unexpected opportunities</li>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Financial Projections</h2>
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead>
-                        <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metric</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">2023 (Actual)</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">2024 (Projected)</th>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">2025 (Projected)</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-gray-200">
-                        <tr>
-                          <td className="px-4 py-3 text-sm font-medium">Total Users</td>
-                          <td className="px-4 py-3 text-sm">2,300</td>
-                          <td className="px-4 py-3 text-sm">12,500</td>
-                          <td className="px-4 py-3 text-sm">42,000</td>
-                        </tr>
-                        <tr>
-                          <td className="px-4 py-3 text-sm font-medium">Annual Revenue</td>
-                          <td className="px-4 py-3 text-sm">$180K</td>
-                          <td className="px-4 py-3 text-sm">$3.2M</td>
-                          <td className="px-4 py-3 text-sm">$11.5M</td>
-                        </tr>
-                        <tr>
-                          <td className="px-4 py-3 text-sm font-medium">Gross Margin</td>
-                          <td className="px-4 py-3 text-sm">81%</td>
-                          <td className="px-4 py-3 text-sm">84%</td>
-                          <td className="px-4 py-3 text-sm">85%</td>
-                        </tr>
-                        <tr>
-                          <td className="px-4 py-3 text-sm font-medium">Burn Rate (Monthly)</td>
-                          <td className="px-4 py-3 text-sm">$85K</td>
-                          <td className="px-4 py-3 text-sm">$150K</td>
-                          <td className="px-4 py-3 text-sm">$240K</td>
-                        </tr>
-                        <tr>
-                          <td className="px-4 py-3 text-sm font-medium">EBITDA</td>
-                          <td className="px-4 py-3 text-sm">-$850K</td>
-                          <td className="px-4 py-3 text-sm">-$480K</td>
-                          <td className="px-4 py-3 text-sm">$2.8M</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-kaas-pink flex items-center justify-center text-white mt-0.5">
+                        <Award className="w-3 h-3" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium">Notable Investors</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+                          {notableInvestors.map((investor, idx) => (
+                            <li key={idx}>
+                              <span className="font-medium">{investor.name}:</span> {investor.description} ({investor.amount})
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-kaas-pink flex items-center justify-center text-white mt-0.5">
+                        <Flag className="w-3 h-3" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium">Timeline</h3>
+                        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                          <li><span className="font-medium">Closing Date:</span> April 30, 2024 (estimated)</li>
+                          <li><span className="font-medium">Due Diligence Access:</span> Available upon request</li>
+                          <li><span className="font-medium">Investor Meetings:</span> Schedule directly with the founding team</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
@@ -659,252 +628,4 @@ const StartupProfile = () => {
                     <li className="flex items-start gap-2">
                       <Badge className="mt-0.5">Pre-Seed</Badge>
                       <div>
-                        <p className="text-sm font-medium">$350K | May 2023</p>
-                        <p className="text-xs text-muted-foreground">
-                          Friends & Family, Angel Investors
-                        </p>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Badge className="mt-0.5" variant="outline">Current</Badge>
-                      <div>
-                        <p className="text-sm font-medium">$1.5M | Q1 2024</p>
-                        <p className="text-xs text-muted-foreground">
-                          Seeking investment from strategic investors with PropTech experience
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </TabsContent>
-            </Tabs>
-            
-            <div className="mt-10">
-              <h2 className="text-xl font-semibold mb-6 flex items-center">
-                <MessageCircle className="h-5 w-5 text-kaas-pink mr-2" />
-                <span>Discussions ({comments.length})</span>
-              </h2>
-              
-              <div className="border rounded-lg mb-8">
-                <div className="p-4">
-                  <div className="flex items-start gap-4">
-                    <Avatar className="w-10 h-10">
-                      <AvatarImage src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" />
-                      <AvatarFallback>You</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <Textarea 
-                        placeholder="What do you think? Share your thoughts about this startup..."
-                        className="resize-none mb-3"
-                        value={commentText}
-                        onChange={(e) => setCommentText(e.target.value)}
-                      />
-                      <div className="flex justify-end">
-                        <Button 
-                          className="flex items-center gap-2"
-                          onClick={handleSubmitComment}
-                        >
-                          <SendHorizontal className="h-4 w-4" />
-                          Post Comment
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="border-t">
-                  {comments.map((comment, index) => (
-                    <div key={comment.id} className={cn("p-4", index < comments.length - 1 && "border-b")}>
-                      <div className="flex items-start gap-4">
-                        <Avatar className="w-10 h-10">
-                          <AvatarImage src={comment.avatar} />
-                          <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <p className="font-medium">{comment.author}</p>
-                            <span className="text-xs text-slate-500">{comment.date}</span>
-                          </div>
-                          <p className="text-sm text-slate-700 mb-3">{comment.content}</p>
-                          <div className="flex items-center gap-4">
-                            <button 
-                              className={cn(
-                                "flex items-center gap-1 text-xs", 
-                                likedComments[comment.id] ? "text-kaas-pink" : "text-slate-500 hover:text-kaas-pink"
-                              )}
-                              onClick={() => handleLikeComment(comment.id)}
-                            >
-                              <Heart className="h-3.5 w-3.5" fill={likedComments[comment.id] ? "currentColor" : "none"} />
-                              {comment.likes} {comment.likes === 1 ? 'like' : 'likes'}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="lg:w-4/12 space-y-6">
-            <div className="sticky top-20">
-              <Card className="border-kaas-pink shadow-sm mb-6">
-                <CardContent className="pt-6">
-                  <h2 className="text-xl font-semibold mb-4">Deal Terms</h2>
-                  <div className="space-y-4">
-                    <div>
-                      <p className="font-medium flex items-center">
-                        <DollarSign className="h-4 w-4 mr-2 text-kaas-pink" />
-                        Round Size
-                      </p>
-                      <p className="text-sm ml-6">$1.5M</p>
-                    </div>
-                    <div>
-                      <p className="font-medium flex items-center">
-                        <LineChart className="h-4 w-4 mr-2 text-kaas-pink" />
-                        Valuation Cap
-                      </p>
-                      <p className="text-sm ml-6">$8.5M</p>
-                    </div>
-                    <div>
-                      <p className="font-medium flex items-center">
-                        <Building className="h-4 w-4 mr-2 text-kaas-pink" />
-                        Investment Instrument
-                      </p>
-                      <p className="text-sm ml-6">SAFE, SEIS eligible</p>
-                    </div>
-                    <div>
-                      <p className="font-medium flex items-center">
-                        <Users className="h-4 w-4 mr-2 text-kaas-pink" />
-                        Minimum Investment
-                      </p>
-                      <p className="text-sm ml-6">€20,000</p>
-                    </div>
-                    <div>
-                      <p className="font-medium flex items-center">
-                        <Award className="h-4 w-4 mr-2 text-kaas-pink" />
-                        Lead Investor
-                      </p>
-                      <p className="text-sm ml-6">TechFront Ventures (€150K committed)</p>
-                    </div>
-                    <div>
-                      <p className="font-medium flex items-center">
-                        <Flag className="h-4 w-4 mr-2 text-kaas-pink" />
-                        Closing Date
-                      </p>
-                      <p className="text-sm ml-6">April 30, 2024 (estimated)</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="mb-6">
-                <CardContent className="pt-6 space-y-4">
-                  <h2 className="text-xl font-semibold">Notable Investors</h2>
-                  {notableInvestors.map((investor, index) => (
-                    <div key={index} className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-full bg-soft-purple flex items-center justify-center flex-shrink-0">
-                        <User className="w-4 h-4 text-kaas-pink" />
-                      </div>
-                      <div>
-                        <p className="font-medium">{investor.name}</p>
-                        <p className="text-sm text-muted-foreground">{investor.description}</p>
-                        <p className="text-sm text-kaas-pink font-medium mt-1">{investor.amount}</p>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-              
-              <Card className="mb-6">
-                <CardContent className="pt-6">
-                  <h2 className="text-xl font-semibold mb-4">Use of Funds</h2>
-                  <ul className="list-disc pl-5 space-y-2 text-sm">
-                    <li>
-                      <span className="font-medium">Engineering (45%):</span> Expand development team and accelerate product roadmap
-                    </li>
-                    <li>
-                      <span className="font-medium">Marketing (30%):</span> Increase customer acquisition through targeted campaigns
-                    </li>
-                    <li>
-                      <span className="font-medium">Operations (15%):</span> Improve customer support and onboarding processes
-                    </li>
-                    <li>
-                      <span className="font-medium">Reserve (10%):</span> Working capital for unexpected opportunities
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-              
-              <div className="flex flex-col gap-4">
-                <Button 
-                  className="py-6 text-base bg-kaas-pink hover:bg-kaas-pink-600"
-                  onClick={handleCommit}
-                >
-                  Back Now
-                </Button>
-                
-                <Button 
-                  variant="outline" 
-                  className="py-6 text-base flex items-center gap-2"
-                  asChild
-                >
-                  <a href="https://proprhome.com" target="_blank" rel="noopener noreferrer">
-                    Visit Website
-                    <ExternalLink className="h-4 w-4 ml-1" />
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-      
-      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Commit to Invest</DialogTitle>
-            <DialogDescription>
-              Enter your commitment details below. You'll receive a confirmation email with further instructions.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Investment Amount (€)</p>
-              <Input
-                type="text"
-                placeholder="Min. €20,000"
-                value={commitAmount}
-                onChange={(e) => setCommitAmount(e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm font-medium">Email</p>
-              <Input
-                type="email"
-                placeholder="Your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button onClick={handleSubmitCommitment}>Submit</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      
-      <InvestorSignupModal
-        isOpen={showInvestorSignup} 
-        onClose={handleCloseInvestorModal}
-        onComplete={handleInvestorProfileComplete}
-        dealName="ProprHome.com"
-      />
-    </div>
-  );
-};
-
-export default StartupProfile;
+                        <p className="text-sm font-medium">$350K | May 2023</p

@@ -8,8 +8,8 @@ export const mockDeals: Deal[] = [
     companyName: "BASE44 2.0",
     description: "The all-in-one app building platform. No integrations needed",
     founders: [
-      { id: "founder1", name: "Alex Johnson" },
-      { id: "founder2", name: "Maya Patel" }
+      { id: "founder1", name: "Alex Johnson", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces" },
+      { id: "founder2", name: "Maya Patel", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces" }
     ],
     categories: ["Design Tools", "Artificial Intelligence"],
     stage: "Seed",
@@ -23,8 +23,8 @@ export const mockDeals: Deal[] = [
     companyName: "Lamatic 2.0",
     description: "IDE to build & deploy AI agents on serverless",
     founders: [
-      { id: "founder3", name: "Sam Wilson" },
-      { id: "founder4", name: "Emma Chen" }
+      { id: "founder3", name: "Sam Wilson", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces" },
+      { id: "founder4", name: "Emma Chen", avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&h=150&fit=crop&crop=faces" }
     ],
     categories: ["SaaS", "Developer Tools", "Artificial Intelligence"],
     stage: "Pre-Seed",
@@ -37,7 +37,7 @@ export const mockDeals: Deal[] = [
     companyName: "LiftmyCV",
     description: "AI agent that finds jobs and auto-applies on your behalf",
     founders: [
-      { id: "founder5", name: "David Kim" }
+      { id: "founder5", name: "David Kim", avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop&crop=faces" }
     ],
     categories: ["Chrome Extensions", "Artificial Intelligence", "Bots"],
     stage: "Angel",
@@ -50,8 +50,8 @@ export const mockDeals: Deal[] = [
     companyName: "AI Canvas",
     description: "Generate production-ready frontend code from simple sketches",
     founders: [
-      { id: "founder6", name: "Laura Martinez" },
-      { id: "founder7", name: "Ryan Taylor" }
+      { id: "founder6", name: "Laura Martinez", avatar: "https://images.unsplash.com/photo-1619895862022-09114b41f16f?w=150&h=150&fit=crop&crop=faces" },
+      { id: "founder7", name: "Ryan Taylor", avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=faces" }
     ],
     categories: ["Developer Tools", "Design Tools", "Artificial Intelligence"],
     stage: "Series A",
@@ -64,8 +64,8 @@ export const mockDeals: Deal[] = [
     companyName: "CryptoZen",
     description: "Simplified crypto portfolio management for everyday investors",
     founders: [
-      { id: "founder8", name: "Sophia Ahmed" },
-      { id: "founder9", name: "Michael Chen" }
+      { id: "founder8", name: "Sophia Ahmed", avatar: "https://images.unsplash.com/photo-1601412436009-d964bd02edbc?w=150&h=150&fit=crop&crop=faces" },
+      { id: "founder9", name: "Michael Chen", avatar: "https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=150&h=150&fit=crop&crop=faces" }
     ],
     categories: ["Finance", "Crypto", "SaaS"],
     stage: "Seed",

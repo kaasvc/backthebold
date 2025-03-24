@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -42,19 +43,22 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className }) => {
         <div className="absolute inset-0 bg-kaas-pink opacity-0 group-hover:opacity-5 rounded-lg transition-opacity duration-200"></div>
         <div className="flex items-start gap-4 relative z-10">
           <div className="flex-shrink-0">
-            {deal.logo ? (
-              <div className="w-10 h-10 rounded-full overflow-hidden">
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+              {deal.logo ? (
                 <img 
                   src={deal.logo} 
                   alt={`${deal.companyName} logo`} 
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback to first letter if image fails to load
+                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.parentElement!.innerHTML = deal.companyName.charAt(0);
+                  }}
                 />
-              </div>
-            ) : (
-              <div className="w-10 h-10 rounded-full bg-soft-blue flex items-center justify-center text-foreground font-bold">
-                {deal.companyName.charAt(0)}
-              </div>
-            )}
+              ) : (
+                <span className="font-bold text-foreground">{deal.companyName.charAt(0)}</span>
+              )}
+            </div>
           </div>
           
           <div className="flex-grow">

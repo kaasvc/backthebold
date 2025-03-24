@@ -29,7 +29,8 @@ export const mockDeals: Deal[] = [
     categories: ["SaaS", "Developer Tools", "Artificial Intelligence"],
     stage: "Pre-Seed",
     backers: 16,
-    comments: 246
+    comments: 246,
+    logo: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=150&h=150&fit=crop&crop=faces"
   },
   {
     id: "liftmycv",
@@ -42,7 +43,8 @@ export const mockDeals: Deal[] = [
     categories: ["Chrome Extensions", "Artificial Intelligence", "Bots"],
     stage: "Angel",
     backers: 27,
-    comments: 225
+    comments: 225,
+    logo: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=faces"
   },
   {
     id: "aicanvas",
@@ -56,7 +58,8 @@ export const mockDeals: Deal[] = [
     categories: ["Developer Tools", "Design Tools", "Artificial Intelligence"],
     stage: "Series A",
     backers: 52,
-    comments: 189
+    comments: 189,
+    logo: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=150&h=150&fit=crop&crop=faces"
   },
   {
     id: "cryptozen",
@@ -70,6 +73,7 @@ export const mockDeals: Deal[] = [
     categories: ["Finance", "Crypto", "SaaS"],
     stage: "Seed",
     backers: 42,
-    comments: 156
+    comments: 156,
+    logo: "https://images.unsplash.com/photo-1621630854858-35e8037312a1?w=150&h=150&fit=crop&crop=faces"
   }
 ];

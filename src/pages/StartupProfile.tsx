@@ -15,7 +15,7 @@ import {
   Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, 
   UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, 
   Twitter, Bookmark, Mail, Heart, MessageCircle, Share2, BookmarkCheck, SendHorizontal,
-  MapPin
+  MapPin, FileText
 } from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 
@@ -269,6 +269,10 @@ const StartupProfile = () => {
               </span>
               
               <div className="ml-auto flex items-center gap-3">
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  Deck
+                </Button>
                 <Button variant="outline" size="sm" className="flex items-center gap-2">
                   <Share2 className="h-4 w-4" />
                   Share

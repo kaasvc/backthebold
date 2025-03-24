@@ -328,6 +328,19 @@ const StartupProfile = () => {
                     Our platform integrates with existing property management workflows and leverages AI to provide predictive maintenance recommendations, optimized pricing strategies, and tenant relationship management, all within an easy-to-use dashboard.
                   </p>
                 </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Previous Rounds</h2>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-2">
+                      <Badge className="mt-0.5">Pre-Seed</Badge>
+                      <div>
+                        <p className="text-sm font-medium">$350K | May 2023</p>
+                        <p className="text-xs text-muted-foreground">Angel investors & friends and family</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </TabsContent>
               
               <TabsContent value="team" className="space-y-6">
@@ -577,19 +590,6 @@ const StartupProfile = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Funding History</h2>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-2">
-                      <Badge className="mt-0.5">Pre-Seed</Badge>
-                      <div>
-                        <p className="text-sm font-medium">$350K | May 2023</p>
-                        <p className="text-xs text-muted-foreground">Angel investors & friends and family</p>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
               </TabsContent>
             </Tabs>

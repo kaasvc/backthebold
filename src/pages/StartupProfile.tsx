@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -26,6 +25,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+interface Reply {
+  id: number;
+  author: string;
+  avatar: string;
+  content: string;
+  date: string;
+  likes: number;
+}
+
+interface Comment {
+  id: number;
+  author: string;
+  avatar: string;
+  content: string;
+  date: string;
+  likes: number;
+  replies?: Reply[];
+}
+
 const StartupProfile = () => {
   const navigate = useNavigate();
   const [showCommitDialog, setShowCommitDialog] = useState(false);
@@ -34,14 +52,15 @@ const StartupProfile = () => {
   const [showInvestorSignup, setShowInvestorSignup] = useState(false);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState([
+  const [comments, setComments] = useState<Comment[]>([
     {
       id: 1,
       author: "Jennifer Garcia",
       avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       content: "I've been following Sarah since her days at Zillow. Her deep understanding of the property management space is unparalleled. Definitely backing this one!",
       date: "2 days ago",
-      likes: 12
+      likes: 12,
+      replies: []
     },
     {
       id: 2,
@@ -49,7 +68,8 @@ const StartupProfile = () => {
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       content: "The AI-powered maintenance prediction feature could be a game-changer for property owners who constantly deal with unexpected repair costs. Curious about the accuracy rates on this.",
       date: "1 day ago",
-      likes: 8
+      likes: 8,
+      replies: []
     },
     {
       id: 3,
@@ -57,7 +77,8 @@ const StartupProfile = () => {
       avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       content: "As someone who manages 7 properties, the current solutions are either too expensive or too basic. Looking forward to seeing how ProprHome bridges this gap.",
       date: "12 hours ago",
-      likes: 5
+      likes: 5,
+      replies: []
     }
   ]);
   const [likedComments, setLikedComments] = useState({});
@@ -98,6 +119,8 @@ const StartupProfile = () => {
   const [reviewText, setReviewText] = useState("");
   const [reviewTitle, setReviewTitle] = useState("");
   const [reviewRating, setReviewRating] = useState(5);
+  const [replyingTo, setReplyingTo] = useState<number | null>(null);
+  const [replyText, setReplyText] = useState("");
   
   useEffect(() => {
     const investorProfile = localStorage.getItem("kaasInvestorProfile");
@@ -213,6 +236,47 @@ const StartupProfile = () => {
         review.id === reviewId ? {...review, helpful: review.helpful + 1} : review
       ));
     }
+  };
+  
+  const handleReply = (commentId: number) => {
+    setReplyingTo(commentId);
+    setReplyText("");
+  };
+  
+  const handleCancelReply = () => {
+    setReplyingTo(null);
+    setReplyText("");
+  };
+  
+  const handleSubmitReply = (commentId: number) => {
+    if (!replyText.trim()) {
+      toast.error("Please enter a reply");
+      return;
+    }
+    
+    const newReply: Reply = {
+      id: Date.now(),
+      author: "You",
+      avatar: "https://images.unsplash.com/photo-1570295999919-5658abf4ff4e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
+      content: replyText,
+      date: "Just now",
+      likes: 0
+    };
+    
+    const updatedComments = comments.map(comment => {
+      if (comment.id === commentId) {
+        return {
+          ...comment,
+          replies: [...(comment.replies || []), newReply]
+        };
+      }
+      return comment;
+    });
+    
+    setComments(updatedComments);
+    setReplyingTo(null);
+    setReplyText("");
+    toast.success("Reply posted successfully");
   };
   
   const renderStars = (rating) => {
@@ -576,406 +640,3 @@ const StartupProfile = () => {
                       <CardContent className="pt-6">
                         <h3 className="font-semibold">Jordan Williams</h3>
                         <p className="text-sm text-muted-foreground mb-2">
-                          Former CEO of PropertyManagement.com (acquired for $85M)
-                        </p>
-                        <Badge variant="outline" className="mb-2">Real Estate Tech Expert</Badge>
-                        <a href="#" className="text-xs text-primary hover:underline mt-2 inline-block flex items-center">
-                          <Linkedin className="h-3 w-3 mr-1" />
-                          LinkedIn
-                        </a>
-                      </CardContent>
-                    </Card>
-                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
-                      <CardContent className="pt-6">
-                        <h3 className="font-semibold">Dr. Emily Zhao</h3>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          AI Research Director at Stanford Real Estate Technology Initiative
-                        </p>
-                        <Badge variant="outline" className="mb-2">AI & PropTech Specialist</Badge>
-                        <a href="#" className="text-xs text-primary hover:underline mt-2 inline-block flex items-center">
-                          <Linkedin className="h-3 w-3 mr-1" />
-                          LinkedIn
-                        </a>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="market" className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Market Opportunity</h2>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <h3 className="font-medium mb-2">Target Market</h3>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        Our primary focus is on the 10.5 million independent landlords and property managers with portfolios of 1-20 units in the US. This segment manages over 45% of all rental properties but is severely underserved by existing solutions.
-                      </p>
-                      <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                        <li>10.5M independent landlords in the US</li>
-                        <li>48.2M rental units in the US</li>
-                        <li>$500B in annual rent collection</li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-medium mb-2">Competitive Landscape</h3>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        The property management software market is fragmented with solutions either too complex and expensive for small landlords or too simplistic to provide real value.
-                      </p>
-                      <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                        <li><span className="font-medium">Enterprise solutions:</span> Yardi, AppFolio (too expensive)</li>
-                        <li><span className="font-medium">DIY tools:</span> Cozy, TurboTenant (limited capabilities)</li>
-                        <li><span className="font-medium">Our approach:</span> Right-sized solution with AI advantage</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Traction & Milestones</h2>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-kaas-pink flex items-center justify-center text-white mt-0.5">
-                        <Rocket className="w-3 h-3" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">Launch & Early Traction</h3>
-                        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                          <li>Launched beta in Q3 2023</li>
-                          <li>2,300+ active landlords managing 8,500+ units</li>
-                          <li>$15K MRR, growing 18% month-over-month</li>
-                          <li>97% customer retention rate after 90 days</li>
-                        </ul>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-kaas-pink flex items-center justify-center text-white mt-0.5">
-                        <ChartBar className="w-3 h-3" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">Key Metrics</h3>
-                        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                          <li>CAC: $230 with 6-month payback period</li>
-                          <li>LTV: $3,200 (estimated)</li>
-                          <li>Average onboarding time: 12 minutes</li>
-                          <li>Net Promoter Score: 72</li>
-                        </ul>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-kaas-pink flex items-center justify-center text-white mt-0.5">
-                        <Users className="w-3 h-3" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">Strategic Partnerships</h3>
-                        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                          <li>Integration with 3 major tenant screening services</li>
-                          <li>Partnership with National Association of Independent Landlords</li>
-                          <li>API integration with 5 major banks for direct rent deposits</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="dealterms" className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Deal Terms</h2>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-kaas-pink flex items-center justify-center text-white mt-0.5">
-                        <DollarSign className="w-3 h-3" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">Investment Terms</h3>
-                        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                          <li><span className="font-medium">Round Size:</span> $1.5M</li>
-                          <li><span className="font-medium">Valuation Cap:</span> $8.5M</li>
-                          <li><span className="font-medium">Minimum Investment:</span> €20,000</li>
-                          <li><span className="font-medium">Investment Instrument:</span> SAFE, SEIS eligible</li>
-                        </ul>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-kaas-pink flex items-center justify-center text-white mt-0.5">
-                        <LineChart className="w-3 h-3" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium">Use of Funds</h3>
-                        <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
-                          <li><span className="font-medium">Engineering (45%):</span> Expand development team and accelerate product roadmap</li>
-                          <li><span className="font-medium">Marketing (30%):</span> Increase customer acquisition through targeted campaigns</li>
-                          <li><span className="font-medium">Operations (15%):</span> Improve customer support and onboarding processes</li>
-                          <li><span className="font-medium">Reserve (10%):</span> Working capital for unexpected opportunities</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-          
-          <div className="lg:w-4/12">
-            <div className="sticky top-24">
-              <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-6">
-                <div className="p-0 border-b border-slate-200">
-                  <Tabs defaultValue="discussions" onValueChange={setActiveTab}>
-                    <TabsList className="w-full grid grid-cols-2 rounded-none h-12">
-                      <TabsTrigger 
-                        value="discussions"
-                        className={`${activeTab === 'discussions' ? 'font-semibold' : ''} data-[state=active]:bg-white data-[state=active]:shadow-none flex items-center gap-2`}
-                      >
-                        <MessageSquare className="h-4 w-4" />
-                        Discussions
-                      </TabsTrigger>
-                      <TabsTrigger 
-                        value="reviews"
-                        className={`${activeTab === 'reviews' ? 'font-semibold' : ''} data-[state=active]:bg-white data-[state=active]:shadow-none flex items-center gap-2`}
-                      >
-                        <Star className="h-4 w-4" />
-                        Reviews
-                      </TabsTrigger>
-                    </TabsList>
-                  </Tabs>
-                </div>
-                <div className="p-5">
-                  {activeTab === 'discussions' ? (
-                    <>
-                      <div className="mb-4">
-                        <Textarea 
-                          placeholder="Add your comment or question..." 
-                          className="w-full resize-none"
-                          rows={3}
-                          value={commentText}
-                          onChange={(e) => setCommentText(e.target.value)}
-                        />
-                        <div className="flex justify-end mt-2">
-                          <Button 
-                            size="sm" 
-                            onClick={handleSubmitComment}
-                            disabled={!commentText.trim()}
-                            className="flex items-center gap-1.5"
-                          >
-                            <SendHorizontal className="h-3.5 w-3.5" />
-                            Post Comment
-                          </Button>
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-4 max-h-[600px] overflow-y-auto">
-                        {comments.map((comment) => (
-                          <div key={comment.id} className="flex gap-3" id={`comment-${comment.id}`}>
-                            <Avatar className="w-8 h-8 flex-shrink-0">
-                              <AvatarImage src={comment.avatar} alt={comment.author} />
-                              <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
-                            </Avatar>
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between mb-1">
-                                <span className="font-medium text-sm">{comment.author}</span>
-                                <div className="flex items-center gap-2 text-slate-500">
-                                  <span className="text-xs flex items-center">
-                                    <Clock className="h-3 w-3 mr-1" />
-                                    {comment.date}
-                                  </span>
-                                </div>
-                              </div>
-                              <p className="text-sm text-muted-foreground mb-2">{comment.content}</p>
-                              <div className="flex items-center gap-4">
-                                <button 
-                                  className={`text-xs flex items-center gap-1.5 ${likedComments[comment.id] ? 'text-kaas-pink' : 'text-slate-500 hover:text-slate-700'}`}
-                                  onClick={() => handleLikeComment(comment.id)}
-                                >
-                                  <Heart className="h-3.5 w-3.5" />
-                                  {comment.likes} {comment.likes === 1 ? 'like' : 'likes'}
-                                </button>
-                                <button className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700">
-                                  <MessageCircle className="h-3.5 w-3.5" />
-                                  Reply
-                                </button>
-                                <button 
-                                  className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
-                                  onClick={() => handleShareComment(comment.id)}
-                                >
-                                  <Share2 className="h-3.5 w-3.5" />
-                                  Share
-                                </button>
-                                <button 
-                                  className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
-                                  onClick={() => handleReportComment(comment.id)}
-                                >
-                                  <Flag className="h-3.5 w-3.5" />
-                                  Report
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="mb-4">
-                        <div className="space-y-3">
-                          <div>
-                            <label className="text-sm font-medium mb-1 block">Rating</label>
-                            <div className="flex items-center gap-1">
-                              {[1,2,3,4,5].map((star) => (
-                                <button 
-                                  key={star} 
-                                  type="button"
-                                  onClick={() => setReviewRating(star)}
-                                  className="focus:outline-none"
-                                >
-                                  <Star 
-                                    className={`h-6 w-6 ${star <= reviewRating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`} 
-                                  />
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                          <div>
-                            <Input
-                              placeholder="Review title"
-                              value={reviewTitle}
-                              onChange={(e) => setReviewTitle(e.target.value)}
-                              className="mb-2"
-                            />
-                            <Textarea 
-                              placeholder="Write your review..." 
-                              className="w-full resize-none"
-                              rows={3}
-                              value={reviewText}
-                              onChange={(e) => setReviewText(e.target.value)}
-                            />
-                          </div>
-                          <div className="flex justify-end">
-                            <Button 
-                              size="sm" 
-                              onClick={handleSubmitReview}
-                              disabled={!reviewText.trim() || !reviewTitle.trim()}
-                              className="flex items-center gap-1.5"
-                            >
-                              <SendHorizontal className="h-3.5 w-3.5" />
-                              Post Review
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-5 max-h-[600px] overflow-y-auto">
-                        {reviews.map((review) => (
-                          <div key={review.id} className="pb-4 border-b border-slate-100 last:border-0">
-                            <div className="flex justify-between mb-1">
-                              <div className="flex items-center gap-2">
-                                <Avatar className="w-6 h-6">
-                                  <AvatarImage src={review.avatar} alt={review.author} />
-                                  <AvatarFallback>{review.author.substring(0, 2)}</AvatarFallback>
-                                </Avatar>
-                                <span className="font-medium text-sm">{review.author}</span>
-                              </div>
-                              <span className="text-xs text-slate-500 flex items-center">
-                                <Clock className="h-3 w-3 mr-1" />
-                                {review.date}
-                              </span>
-                            </div>
-                            
-                            <div className="flex items-center mb-1.5">
-                              <div className="flex mr-2">
-                                {renderStars(review.rating)}
-                              </div>
-                              <span className="text-sm font-medium">{review.title}</span>
-                            </div>
-                            
-                            <p className="text-sm text-muted-foreground mb-2">{review.content}</p>
-                            
-                            <div className="flex items-center justify-between">
-                              <button 
-                                className={`text-xs flex items-center gap-1.5 ${helpfulReviews[review.id] ? 'text-kaas-pink' : 'text-slate-500 hover:text-slate-700'}`}
-                                onClick={() => handleMarkHelpful(review.id)}
-                              >
-                                <ThumbsUp className="h-3.5 w-3.5" />
-                                {review.helpful} {review.helpful === 1 ? 'person' : 'people'} found this helpful
-                              </button>
-                              
-                              <button 
-                                className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700"
-                                onClick={() => handleShareComment(review.id)}
-                              >
-                                <Share2 className="h-3.5 w-3.5" />
-                                Share
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-      
-      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Invest in ProprHome.com</DialogTitle>
-            <DialogDescription>
-              Please enter your commitment details
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-2">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Investment Amount (€)</label>
-              <Input 
-                type="number" 
-                min="20000"
-                placeholder="Minimum €20,000"
-                value={commitAmount}
-                onChange={(e) => setCommitAmount(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                Minimum investment amount: €20,000
-              </p>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Email Address</label>
-              <Input 
-                type="email" 
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground">
-                You'll receive investment details at this email
-              </p>
-            </div>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button onClick={handleSubmitCommitment}>Submit</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      
-      <InvestorSignupModal 
-        isOpen={showInvestorSignup} 
-        onClose={handleCloseInvestorModal}
-        onComplete={handleInvestorProfileComplete}
-        dealName="ProprHome.com"
-      />
-    </div>
-  );
-};
-
-export default StartupProfile;
-

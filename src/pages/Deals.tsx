@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -192,6 +191,12 @@ const Deals = () => {
         color: "bg-blue-100 text-blue-800"
       });
     }
+    
+    return indicators;
+  };
+  
+  const getMarketIndicators = (deal) => {
+    const indicators = [];
     
     if (deal.market?.size && deal.market.size.includes("Trillion")) {
       indicators.push({
@@ -579,6 +584,7 @@ const Deals = () => {
             {filteredDeals.map((deal, index) => {
               const founderQualityTag = getFounderQualityTag(deal.founders);
               const trustIndicators = getTrustIndicators(deal);
+              const marketIndicators = getMarketIndicators(deal);
               const cardStyle = getDealCardStyle(deal, index);
               
               return (
@@ -593,7 +599,6 @@ const Deals = () => {
                         )}
                       >
                         <CardContent className="p-4 flex flex-col h-full">
-                          {/* Section 1: Who's Building (Founders first) */}
                           <div className="mb-5">
                             <h4 className="text-sm font-medium mb-2 text-slate-600 flex items-center">
                               <Users className="h-3.5 w-3.5 mr-1.5 text-kaas-pink" />
@@ -645,7 +650,6 @@ const Deals = () => {
                             </div>
                           </div>
                           
-                          {/* Section 2: What They're Building (Company Info) */}
                           <div className="mb-5">
                             <div className="mb-3 flex items-center justify-between">
                               <h3 className="font-semibold text-base flex items-center gap-1">
@@ -662,7 +666,7 @@ const Deals = () => {
                             
                             <p className="text-sm text-slate-700 mb-2">{deal.description || deal.tagline}</p>
                             
-                            <div className="flex flex-wrap gap-1.5">
+                            <div className="flex flex-wrap gap-1.5 mb-2">
                               <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
                                 <Building className="h-3 w-3 mr-1" />
                                 {deal.industry}
@@ -672,9 +676,17 @@ const Deals = () => {
                                 Founded {deal.foundedYear}
                               </Badge>
                             </div>
+                            
+                            <div className="flex flex-wrap gap-2">
+                              {marketIndicators.map((indicator, idx) => (
+                                <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
+                                  <indicator.icon className="h-3 w-3 mr-1" />
+                                  {indicator.label}
+                                </Badge>
+                              ))}
+                            </div>
                           </div>
                           
-                          {/* Section 3: Fundraising Status */}
                           <div className="mt-auto bg-slate-50 p-3 rounded-lg border border-slate-200">
                             <div className="flex items-center justify-between mb-2">
                               <div className="flex items-center">

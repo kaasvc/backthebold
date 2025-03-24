@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, 
   ChevronDown, ChevronUp, Star, Trophy, Rocket, GraduationCap, Lightbulb, Plus, Mail, Settings, 
-  ShieldCheck, TrendingUpIcon, Zap, Target, ThumbsUp, BarChart, Heart } from "lucide-react";
+  ShieldCheck, TrendingUpIcon, Zap, Target, ThumbsUp, BarChart, Heart, ArrowUpDown, SlidersHorizontal } from "lucide-react";
 import { Card, CardContent, CardHighlight, CardSection } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -20,10 +20,21 @@ import {
   DropdownMenu, 
   DropdownMenuContent, 
   DropdownMenuItem, 
-  DropdownMenuTrigger 
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem
 } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Deals = () => {
   const navigate = useNavigate();
@@ -38,8 +49,11 @@ const Deals = () => {
     type: "all",
     country: "all",
     year: "all",
-    founderTag: "all"
+    founderTag: "all",
+    industry: "all"
   });
+  
+  const [sortOption, setSortOption] = useState("trending");
   
   const handleViewDetails = (dealName) => {
     if (dealName === "ProprHome.com") {
@@ -96,6 +110,10 @@ const Deals = () => {
       ...prev,
       [filterType]: value
     }));
+  };
+  
+  const handleSortChange = (value) => {
+    setSortOption(value);
   };
   
   const getFounderQualityTag = (founders) => {
@@ -383,7 +401,6 @@ const Deals = () => {
     { label: "Rising Stars", value: "rising", icon: Rocket }
   ];
 
-  
   const filterByFounderTag = (deal, tagValue) => {
     if (tagValue === "all") return true;
     
@@ -441,16 +458,55 @@ const Deals = () => {
 
   const countries = [...new Set(deals.map(deal => deal.location))];
   const foundingYears = [...new Set(deals.map(deal => deal.foundedYear))];
+  const industries = [...new Set(deals.map(deal => deal.industry))];
   
+  const sortDeals = (dealsToSort) => {
+    switch (sortOption) {
+      case "trending":
+        return [...dealsToSort].sort((a, b) => {
+          if (a.status === "trending" && b.status !== "trending") return -1;
+          if (a.status !== "trending" && b.status === "trending") return 1;
+          return b.progress - a.progress;
+        });
+      case "newest":
+        return [...dealsToSort].sort((a, b) => {
+          return parseInt(b.foundedYear) - parseInt(a.foundedYear);
+        });
+      case "funding-goal-high":
+        return [...dealsToSort].sort((a, b) => {
+          const aAmount = parseInt(a.stage.replace(/[^0-9]/g, '')) || 0;
+          const bAmount = parseInt(b.stage.replace(/[^0-9]/g, '')) || 0;
+          return bAmount - aAmount;
+        });
+      case "funding-goal-low":
+        return [...dealsToSort].sort((a, b) => {
+          const aAmount = parseInt(a.stage.replace(/[^0-9]/g, '')) || 0;
+          const bAmount = parseInt(b.stage.replace(/[^0-9]/g, '')) || 0;
+          return aAmount - bAmount;
+        });
+      case "progress-high":
+        return [...dealsToSort].sort((a, b) => b.progress - a.progress);
+      case "progress-low":
+        return [...dealsToSort].sort((a, b) => a.progress - b.progress);
+      case "backers-count":
+        return [...dealsToSort].sort((a, b) => b.backers.count - a.backers.count);
+      default:
+        return dealsToSort;
+    }
+  };
+
   const filteredDeals = deals.filter(deal => {
     return (
       (filters.type === 'all' || deal.type === filters.type) &&
       (filters.country === 'all' || deal.location === filters.country) &&
       (filters.year === 'all' || deal.foundedYear === filters.year) &&
+      (filters.industry === 'all' || deal.industry.includes(filters.industry)) &&
       filterByFounderTag(deal, filters.founderTag)
     );
   });
 
+  const sortedAndFilteredDeals = sortDeals(filteredDeals);
+  
   const logoCreationHelper = () => {
     return "Logos created in public/logos/ directory";
   };
@@ -512,7 +568,64 @@ const Deals = () => {
           </p>
         </div>
         
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex items-center gap-2"
+              >
+                <ArrowUpDown className="h-4 w-4" />
+                Sort
+                <ChevronDown className="h-4 w-4 ml-1" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-56 bg-background">
+              <DropdownMenuLabel>Sort By</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup value={sortOption} onValueChange={handleSortChange}>
+                <DropdownMenuRadioItem value="trending">Trending First</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="newest">Newest First</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="funding-goal-high">Funding Goal (High to Low)</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="funding-goal-low">Funding Goal (Low to High)</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="progress-high">Progress (High to Low)</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="progress-low">Progress (Low to High)</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="backers-count">Most Backers</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
+          <Select 
+            value={filters.country} 
+            onValueChange={(value) => handleFilterChange('country', value)}
+          >
+            <SelectTrigger className="w-[160px] h-9">
+              <SelectValue placeholder="Filter by Country" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Countries</SelectItem>
+              {countries.map((country) => (
+                <SelectItem key={country} value={country}>{country}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
+          <Select 
+            value={filters.industry} 
+            onValueChange={(value) => handleFilterChange('industry', value)}
+          >
+            <SelectTrigger className="w-[180px] h-9">
+              <SelectValue placeholder="Filter by Industry" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Industries</SelectItem>
+              {industries.map((industry) => (
+                <SelectItem key={industry} value={industry}>{industry}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
           <Popover>
             <PopoverTrigger asChild>
               <Button 
@@ -521,7 +634,7 @@ const Deals = () => {
                 className={cn("flex items-center gap-2", activeFilterCount > 0 && "bg-blue-50")}
               >
                 <Filter className="h-4 w-4" />
-                Filter Deals
+                More Filters
                 {activeFilterCount > 0 && (
                   <Badge variant="secondary" className="ml-1 bg-blue-100">
                     {activeFilterCount}
@@ -551,6 +664,58 @@ const Deals = () => {
                   ))}
                 </div>
               </div>
+              
+              <div className="p-4 border-b">
+                <h4 className="font-medium mb-2">Founded Year</h4>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="flex items-center space-x-2 text-sm">
+                    <Checkbox 
+                      id="year-all"
+                      checked={filters.year === 'all'}
+                      onCheckedChange={() => handleFilterChange('year', 'all')}
+                    />
+                    <label htmlFor="year-all" className="text-xs">All Years</label>
+                  </div>
+                  {foundingYears.map((year) => (
+                    <div key={year} className="flex items-center space-x-2 text-sm">
+                      <Checkbox 
+                        id={`year-${year}`}
+                        checked={filters.year === year}
+                        onCheckedChange={() => handleFilterChange('year', year)}
+                      />
+                      <label htmlFor={`year-${year}`} className="text-xs">{year}</label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="p-4">
+                <h4 className="font-medium mb-2">Deal Type</h4>
+                <div className="flex items-center space-x-2 text-sm">
+                  <Checkbox 
+                    id="type-all"
+                    checked={filters.type === 'all'}
+                    onCheckedChange={() => handleFilterChange('type', 'all')}
+                  />
+                  <label htmlFor="type-all" className="text-xs">All Types</label>
+                </div>
+                <div className="flex items-center space-x-2 text-sm mt-2">
+                  <Checkbox 
+                    id="type-b2b"
+                    checked={filters.type === 'B2B'}
+                    onCheckedChange={() => handleFilterChange('type', 'B2B')}
+                  />
+                  <label htmlFor="type-b2b" className="text-xs">B2B</label>
+                </div>
+                <div className="flex items-center space-x-2 text-sm mt-2">
+                  <Checkbox 
+                    id="type-consumer"
+                    checked={filters.type === 'Consumer'}
+                    onCheckedChange={() => handleFilterChange('type', 'Consumer')}
+                  />
+                  <label htmlFor="type-consumer" className="text-xs">Consumer</label>
+                </div>
+              </div>
             </PopoverContent>
           </Popover>
           
@@ -559,28 +724,28 @@ const Deals = () => {
               variant="ghost" 
               size="sm"
               className="text-xs text-muted-foreground"
-              onClick={() => setFilters({type: 'all', country: 'all', year: 'all', founderTag: 'all'})}
+              onClick={() => setFilters({type: 'all', country: 'all', year: 'all', founderTag: 'all', industry: 'all'})}
             >
               Clear all filters
             </Button>
           )}
         </div>
         
-        {filteredDeals.length === 0 ? (
+        {sortedAndFilteredDeals.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 bg-slate-50 rounded-lg border p-8 text-center">
             <TrendingUp className="h-12 w-12 text-slate-300 mb-4" />
             <h3 className="text-xl font-semibold mb-2">No matching deals found</h3>
             <p className="text-muted-foreground mb-4">Try adjusting your filter criteria to see more deals.</p>
             <Button 
               variant="outline" 
-              onClick={() => setFilters({type: 'all', country: 'all', year: 'all', founderTag: 'all'})}
+              onClick={() => setFilters({type: 'all', country: 'all', year: 'all', founderTag: 'all', industry: 'all'})}
             >
               Reset All Filters
             </Button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredDeals.map((deal, index) => {
+            {sortedAndFilteredDeals.map((deal, index) => {
               const founderQualityTag = getFounderQualityTag(deal.founders);
               const trustIndicators = getTrustIndicators(deal);
               const marketIndicators = getMarketIndicators(deal);
@@ -805,3 +970,4 @@ const Deals = () => {
 };
 
 export default Deals;
+

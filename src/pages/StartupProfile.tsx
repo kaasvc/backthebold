@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -247,10 +248,13 @@ const StartupProfile = () => {
               <div className="flex-1">
                 <div className="flex flex-wrap items-center gap-3 mb-2">
                   <h1 className="text-2xl font-bold tracking-tight">ProprHome.com</h1>
-                  <Badge variant="outline" className="ml-auto">
-                    <MapPin className="h-3 w-3 mr-1" />
+                  <Badge variant="outline" className="flex items-center gap-1">
+                    <MapPin className="h-3 w-3" />
                     Portugal
                   </Badge>
+                  <Button variant="outline" className="ml-auto bg-black text-white hover:bg-gray-800">
+                    Back this Team
+                  </Button>
                 </div>
                 <p className="text-base text-muted-foreground mb-3 max-w-3xl">
                   AI-powered platform revolutionizing property management for independent landlords and small property managers.

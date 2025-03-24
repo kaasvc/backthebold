@@ -104,4 +104,27 @@ const CardHighlight = React.forwardRef<
 })
 CardHighlight.displayName = "CardHighlight"
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, CardHighlight }
+const CardSection = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & { title?: string, icon?: React.ReactNode }
+>(({ className, title, icon, children, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "mb-4 pb-3 border-b border-slate-100 last:border-0 last:mb-0 last:pb-0",
+      className
+    )}
+    {...props}
+  >
+    {(title || icon) && (
+      <div className="flex items-center gap-1.5 mb-2.5 text-sm font-medium text-slate-600">
+        {icon}
+        {title}
+      </div>
+    )}
+    {children}
+  </div>
+))
+CardSection.displayName = "CardSection"
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, CardHighlight, CardSection }

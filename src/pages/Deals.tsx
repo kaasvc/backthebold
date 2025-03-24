@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Building, Users, Briefcase, TrendingUp, Award, CircleDollarSign, Check, MapPin, User, Calendar, Filter, 
   ChevronDown, ChevronUp, Star, Trophy, Rocket, GraduationCap, Lightbulb, Plus, Mail, Settings, 
   ShieldCheck, TrendingUpIcon, Zap, Target, ThumbsUp, BarChart, Heart } from "lucide-react";
-import { Card, CardContent, CardHighlight } from "@/components/ui/card";
+import { Card, CardContent, CardHighlight, CardSection } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -598,20 +598,12 @@ const Deals = () => {
                       "hover:border-kaas-pink hover:border-2"
                     )}
                   >
-                    <CardContent className="p-4 flex flex-col h-full">
-                      <div className="mb-5">
-                        <h4 className="text-sm font-medium mb-2 text-slate-600 flex items-center">
-                          <Users className="h-3.5 w-3.5 mr-1.5 text-kaas-pink" />
-                          The Team
-                        </h4>
-                        
-                        <div className="flex flex-wrap -mx-1">
+                    <CardContent className="p-0 flex flex-col h-full">
+                      <CardSection className="p-4" title="The Team" icon={<Users className="h-3.5 w-3.5 text-kaas-pink" />}>
+                        <div className="grid gap-2.5">
                           {deal.founders.slice(0, 3).map((founder, idx) => (
-                            <div key={idx} className="px-1 w-full mb-2">
-                              <div 
-                                className="flex items-center p-2 rounded-md border border-blue-100 hover:border-blue-300 cursor-pointer transition-colors bg-white"
-                                onClick={() => handleFounderClick(founder)}
-                              >
+                            <div key={idx} className="w-full">
+                              <div className="flex items-center p-2 rounded-md border border-blue-100 bg-white">
                                 <Avatar className="w-10 h-10 border-2 border-white shadow-sm">
                                   <AvatarImage src={founder.image} alt={founder.name} />
                                   <AvatarFallback className="bg-kaas-pink text-white">
@@ -627,7 +619,7 @@ const Deals = () => {
                                       </span>
                                     )}
                                   </p>
-                                  <div className="flex items-center gap-2">
+                                  <div className="flex items-center gap-1.5">
                                     <p className="text-[11px] text-slate-600">{founder.title}</p>
                                     <span className="text-[11px] text-slate-500 flex items-center">
                                       <Briefcase className="h-2.5 w-2.5 mr-0.5" />
@@ -640,87 +632,95 @@ const Deals = () => {
                           ))}
                         </div>
                         
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {trustIndicators.map((indicator, idx) => (
-                            <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
-                              <indicator.icon className="h-3 w-3 mr-1" />
-                              {indicator.label}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="mb-5">
-                        <div className="mb-3 flex items-center justify-between">
-                          <h3 className="font-semibold text-base flex items-center gap-1">
-                            {deal.status === "trending" && (
-                              <TrendingUpIcon className="h-4 w-4 text-kaas-pink" />
-                            )}
-                            {deal.name}
-                          </h3>
-                          <Badge variant="outline" className={cn("bg-slate-50 border-slate-200 text-slate-700")}>
-                            <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
-                            {deal.location}
-                          </Badge>
-                        </div>
-                        
-                        <p className="text-sm text-slate-700 mb-2">{deal.description || deal.tagline}</p>
-                        
-                        <div className="flex flex-wrap gap-1.5 mb-2">
-                          <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
-                            <Building className="h-3 w-3 mr-1" />
-                            {deal.industry}
-                          </Badge>
-                          <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
-                            <Calendar className="h-3 w-3 mr-1" />
-                            Founded {deal.foundedYear}
-                          </Badge>
-                        </div>
-                        
-                        <div className="flex flex-wrap gap-2">
-                          {marketIndicators.map((indicator, idx) => (
-                            <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
-                              <indicator.icon className="h-3 w-3 mr-1" />
-                              {indicator.label}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="mt-auto bg-slate-50 p-3 rounded-lg border border-slate-200">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center">
-                            <CircleDollarSign className="h-4 w-4 text-kaas-pink mr-1.5" />
-                            <span className="text-sm font-medium">Funding Status</span>
+                        {trustIndicators.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mt-2.5">
+                            {trustIndicators.map((indicator, idx) => (
+                              <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
+                                <indicator.icon className="h-3 w-3 mr-1" />
+                                {indicator.label}
+                              </Badge>
+                            ))}
                           </div>
-                          <span className="text-xs font-medium bg-kaas-pink/10 text-kaas-pink px-2 py-0.5 rounded-full">
-                            Raising {deal.stage}
-                          </span>
-                        </div>
-                        
-                        <div className="flex items-center justify-between text-xs mb-1.5">
-                          <span className="font-medium">
-                            Funding to date: {calculateFundingToDate(150, deal.progress)}
-                          </span>
-                          <span className="font-medium">
-                            {deal.progress}% complete
-                          </span>
-                        </div>
-                        
-                        <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden mb-1">
-                          <div 
-                            className="h-full bg-kaas-pink rounded-full" 
-                            style={{ width: `${deal.progress}%` }}
-                          ></div>
-                        </div>
-                        
-                        <div className="flex items-center justify-between text-xs text-slate-500">
-                          <span>€0</span>
-                          <span>€150K</span>
-                        </div>
-                      </div>
+                        )}
+                      </CardSection>
                       
-                      <div className="mt-4 flex items-center justify-between gap-2">
+                      <CardSection className="px-4" title="The Company" icon={<Building className="h-3.5 w-3.5 text-kaas-pink" />}>
+                        <div className="mb-2">
+                          <div className="mb-1.5 flex items-center justify-between">
+                            <h3 className="font-semibold text-base flex items-center gap-1">
+                              {deal.status === "trending" && (
+                                <TrendingUpIcon className="h-4 w-4 text-kaas-pink" />
+                              )}
+                              {deal.name}
+                            </h3>
+                            <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700">
+                              <MapPin className="h-3 w-3 mr-1 text-kaas-pink" />
+                              {deal.location}
+                            </Badge>
+                          </div>
+                          
+                          <p className="text-sm text-slate-700 mb-2">{deal.description || deal.tagline}</p>
+                          
+                          <div className="flex flex-wrap gap-1.5">
+                            <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
+                              <Building className="h-3 w-3 mr-1" />
+                              {deal.industry}
+                            </Badge>
+                            <Badge variant="outline" className="bg-slate-50 border-slate-200 text-slate-700 text-xs">
+                              <Calendar className="h-3 w-3 mr-1" />
+                              Founded {deal.foundedYear}
+                            </Badge>
+                          </div>
+                        </div>
+                        
+                        {marketIndicators.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mt-2">
+                            {marketIndicators.map((indicator, idx) => (
+                              <Badge key={idx} variant="outline" className={cn("flex items-center text-xs", indicator.color)}>
+                                <indicator.icon className="h-3 w-3 mr-1" />
+                                {indicator.label}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
+                      </CardSection>
+                      
+                      <CardSection className="px-4">
+                        <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center">
+                              <CircleDollarSign className="h-4 w-4 text-kaas-pink mr-1.5" />
+                              <span className="text-sm font-medium">Funding Status</span>
+                            </div>
+                            <span className="text-xs font-medium bg-kaas-pink/10 text-kaas-pink px-2 py-0.5 rounded-full">
+                              Raising {deal.stage}
+                            </span>
+                          </div>
+                          
+                          <div className="flex items-center justify-between text-xs mb-1.5">
+                            <span className="font-medium">
+                              Funding to date: {calculateFundingToDate(150, deal.progress)}
+                            </span>
+                            <span className="font-medium">
+                              {deal.progress}% complete
+                            </span>
+                          </div>
+                          
+                          <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden mb-1">
+                            <div 
+                              className="h-full bg-kaas-pink rounded-full" 
+                              style={{ width: `${deal.progress}%` }}
+                            ></div>
+                          </div>
+                          
+                          <div className="flex items-center justify-between text-xs text-slate-500">
+                            <span>€0</span>
+                            <span>€150K</span>
+                          </div>
+                        </div>
+                      </CardSection>
+                      
+                      <div className="mt-auto p-4 pt-0 flex items-center justify-between gap-2">
                         <Button 
                           variant="outline" 
                           size="sm" 

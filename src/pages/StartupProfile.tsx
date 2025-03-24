@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -628,4 +629,151 @@ const StartupProfile = () => {
                     <li className="flex items-start gap-2">
                       <Badge className="mt-0.5">Pre-Seed</Badge>
                       <div>
-                        <p className="text-sm font-medium">$350K | May 2023</p
+                        <p className="text-sm font-medium">$350K | May 2023</p>
+                        <p className="text-xs text-muted-foreground">Angel investors & friends and family</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+          
+          <div className="lg:w-4/12">
+            <div className="sticky top-24">
+              <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-6">
+                <div className="p-5 border-b border-slate-200">
+                  <h2 className="text-lg font-semibold">Ready to Invest in ProprHome.com?</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Minimum investment: €20,000</p>
+                </div>
+                <div className="p-5">
+                  <Button className="w-full font-semibold" size="lg" onClick={handleCommit}>
+                    Make a Commitment
+                  </Button>
+                  
+                  <p className="text-sm text-center text-muted-foreground mt-4">
+                    You'll receive full details and documents after expressing interest
+                  </p>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+                <div className="p-5 border-b border-slate-200 flex justify-between items-center">
+                  <h2 className="font-semibold">Discussion ({comments.length})</h2>
+                </div>
+                <div className="px-5 pt-4">
+                  <div className="flex gap-3 mb-4">
+                    <Avatar className="w-8 h-8">
+                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <Textarea
+                        placeholder="Ask a question or share your thoughts..."
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        className="resize-none"
+                      />
+                      <div className="flex justify-end mt-2">
+                        <Button size="sm" onClick={handleSubmitComment}>
+                          <SendHorizontal className="h-4 w-4 mr-2" />
+                          Post
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4 pb-4">
+                    {comments.map((comment) => (
+                      <div key={comment.id} className="flex gap-3">
+                        <Avatar className="w-8 h-8">
+                          <AvatarImage src={comment.avatar} />
+                          <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-medium text-sm">{comment.author}</p>
+                              <p className="text-xs text-muted-foreground">{comment.date}</p>
+                            </div>
+                          </div>
+                          <p className="text-sm mt-1">{comment.content}</p>
+                          <div className="flex gap-3 mt-2">
+                            <button 
+                              className={`text-xs flex items-center gap-1 ${likedComments[comment.id] ? 'text-kaas-pink' : 'text-muted-foreground'}`}
+                              onClick={() => handleLikeComment(comment.id)}
+                            >
+                              <Heart className="h-3.5 w-3.5" />
+                              <span>{comment.likes}</span>
+                            </button>
+                            <button className="text-xs flex items-center gap-1 text-muted-foreground">
+                              <MessageCircle className="h-3.5 w-3.5" />
+                              <span>Reply</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Invest in ProprHome.com</DialogTitle>
+            <DialogDescription>
+              Enter your commitment details below. You'll receive an email with further instructions.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label htmlFor="amount" className="text-sm font-medium">
+                Investment Amount (€)
+              </label>
+              <Input
+                id="amount"
+                placeholder="Min. €20,000"
+                value={commitAmount}
+                onChange={(e) => setCommitAmount(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium">
+                Email Address
+              </label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                We'll send you a confirmation email with next steps
+              </p>
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button onClick={handleSubmitCommitment}>Submit</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      <InvestorSignupModal 
+        isOpen={showInvestorSignup}
+        onClose={handleCloseInvestorModal}
+        onComplete={handleInvestorProfileComplete}
+      />
+    </div>
+  );
+};
+
+export default StartupProfile;

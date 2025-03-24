@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -51,7 +52,7 @@ const Landing = () => {
             </div>
             <h2 className="text-2xl font-bold mb-2">For Founders</h2>
             <p className="text-muted-foreground text-center mb-6">
-              Raise your first round from your community. We handle the rest.
+              Raise the perfect first round from people who believe in you.
             </p>
             <Link to="/apply" className="mt-auto">
               <Button variant="kaas" size="lg">

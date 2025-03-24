@@ -26,7 +26,13 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { ChevronDown, ChevronUp, Filter } from "lucide-react";
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown, ChevronUp, Filter, User, Mail } from "lucide-react";
 
 const Landing = () => {
   const [activeFilters, setActiveFilters] = useState<{
@@ -148,6 +154,32 @@ const Landing = () => {
                   </NavigationMenuItem>
                 </NavigationMenuList>
               </NavigationMenu>
+              
+              {/* Account Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+                    <User className="h-4 w-4" />
+                    Account
+                    <ChevronDown className="h-3 w-3 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-[200px]">
+                  <DropdownMenuItem asChild>
+                    <Link to="/login" className="flex items-center gap-2 cursor-pointer">
+                      <User className="h-4 w-4" />
+                      Login
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/support" className="flex items-center gap-2 cursor-pointer">
+                      <Mail className="h-4 w-4" />
+                      Contact Support
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
               <Link to="/apply">
                 <Button variant="kaas" size="sm">
                   Start your raise

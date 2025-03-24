@@ -52,7 +52,7 @@ const Landing = () => {
             </div>
             <h2 className="text-2xl font-bold mb-2">For Founders</h2>
             <p className="text-muted-foreground text-center mb-6">
-              Raise the perfect first round from people who believe in you - fast &amp; easy.
+              Raise the perfect first round from people who believe in you - fast, easy &amp; secure.
             </p>
             <Link to="/apply" className="mt-auto">
               <Button variant="kaas" size="lg">

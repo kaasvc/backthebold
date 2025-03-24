@@ -3,9 +3,16 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { LogIn } from "lucide-react";
+import { LogIn, ChevronDown } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import ApplicationForm from "@/components/ApplicationForm";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 const Apply = () => {
   const { user } = useAuth();
@@ -25,14 +32,33 @@ const Apply = () => {
           </Link>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-4">
-              <a
-                href="mailto:hello@kaas.vc"
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary"
-                )}
-              >
-                Support
-              </a>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>Options</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[200px] gap-3 p-4">
+                        <li>
+                          <Link 
+                            to="/deals"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            All Deals
+                          </Link>
+                        </li>
+                        <li>
+                          <Link 
+                            to="/support"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            Support
+                          </Link>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
               
               {user ? (
                 <Button 

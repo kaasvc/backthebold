@@ -1,3 +1,4 @@
+
 import { toast } from "sonner";
 
 export interface FormField {
@@ -59,6 +60,13 @@ export const formSections: FormSection[] = [
         required: true,
       },
       {
+        id: "teamSize",
+        label: "How many people currently work at your company (including founders)?",
+        type: "number",
+        placeholder: "Enter team size",
+        required: true,
+      },
+      {
         id: "needHelp",
         label: "What do you need the most help with right now?",
         type: "select",
@@ -94,11 +102,32 @@ export const formSections: FormSection[] = [
         required: true,
       },
       {
+        id: "tagline",
+        label: "Catchy tagline for your company",
+        type: "text",
+        placeholder: "Your company's tagline",
+        required: true,
+      },
+      {
         id: "companyUrl",
         label: "Company URL, if any",
         type: "url",
         placeholder: "https://",
         required: false,
+      },
+      {
+        id: "companyLogo",
+        label: "Company Logo (square format recommended)",
+        type: "file",
+        required: true,
+        helperText: "This will be shown on your profile page",
+      },
+      {
+        id: "coverImage",
+        label: "Cover image for your profile page",
+        type: "file",
+        required: false,
+        helperText: "Banner image for your raise profile",
       },
       {
         id: "demoFile",
@@ -170,6 +199,13 @@ export const formSections: FormSection[] = [
         required: false,
       },
       {
+        id: "userGrowthRate",
+        label: "What is your user growth rate?",
+        type: "text",
+        placeholder: "e.g., 10% week-over-week",
+        required: false,
+      },
+      {
         id: "revenueStatus",
         label: "Do you have revenue?",
         type: "radio",
@@ -182,6 +218,20 @@ export const formSections: FormSection[] = [
         type: "textarea",
         placeholder: "Describe your revenue figures...",
         required: false,
+      },
+      {
+        id: "revenueGrowth",
+        label: "What is your monthly revenue growth rate?",
+        type: "text",
+        placeholder: "e.g., 15% month-over-month",
+        required: false,
+      },
+      {
+        id: "keyMetrics",
+        label: "What are your key metrics?",
+        type: "textarea",
+        placeholder: "List your most important metrics and current values",
+        required: true,
       },
       {
         id: "aiUsage",
@@ -240,6 +290,13 @@ export const formSections: FormSection[] = [
         required: true,
       },
       {
+        id: "marketSize",
+        label: "How big is your target market?",
+        type: "textarea",
+        placeholder: "Provide TAM, SAM, and SOM if possible",
+        required: true,
+      },
+      {
         id: "longTermTrend",
         label: "What long-term trend is your company playing into?",
         type: "select",
@@ -291,10 +348,38 @@ export const formSections: FormSection[] = [
         required: true,
       },
       {
+        id: "targetAmount",
+        label: "What is your target raise amount?",
+        type: "text",
+        placeholder: "e.g., $100,000",
+        required: true,
+      },
+      {
         id: "useOfFunds",
         label: "If your campaign is successfully funded, how will you use the money?",
         type: "textarea",
         placeholder: "Describe your planned allocation of funds...",
+        required: true,
+      },
+      {
+        id: "raiseDuration",
+        label: "How long do you want your raise to be open?",
+        type: "select",
+        options: ["30 days", "45 days", "60 days", "90 days"],
+        required: true,
+      },
+      {
+        id: "equityOffered",
+        label: "What percentage of equity are you offering?",
+        type: "text",
+        placeholder: "e.g., 5%",
+        required: true,
+      },
+      {
+        id: "minimumInvestment",
+        label: "What is the minimum investment amount?",
+        type: "text",
+        placeholder: "e.g., $100",
         required: true,
       },
       {
@@ -310,6 +395,14 @@ export const formSections: FormSection[] = [
         type: "textarea",
         placeholder: "Explain your marketing and community-building approach...",
         required: true,
+      },
+      {
+        id: "socialMediaLinks",
+        label: "Links to your social media profiles",
+        type: "textarea",
+        placeholder: "Twitter, LinkedIn, Instagram, etc.",
+        required: false,
+        helperText: "These will be displayed on your profile page",
       },
       {
         id: "idealBackers",
@@ -340,6 +433,13 @@ export const formSections: FormSection[] = [
         required: false,
       },
       {
+        id: "incorporationDate",
+        label: "When was your company incorporated?",
+        type: "text",
+        placeholder: "MM/YYYY",
+        required: false,
+      },
+      {
         id: "investmentStatus",
         label: "Have you taken any investment?",
         type: "radio",
@@ -354,6 +454,20 @@ export const formSections: FormSection[] = [
         required: false,
       },
       {
+        id: "currentValuation",
+        label: "What is your company's current valuation?",
+        type: "text",
+        placeholder: "e.g., $1,000,000",
+        required: true,
+      },
+      {
+        id: "valuationBasis",
+        label: "What is the basis for this valuation?",
+        type: "textarea",
+        placeholder: "Explain how you arrived at this valuation...",
+        required: true,
+      },
+      {
         id: "revenueModel",
         label: "How do or will you make money?",
         type: "textarea",
@@ -366,6 +480,20 @@ export const formSections: FormSection[] = [
         type: "textarea",
         placeholder: "Provide revenue projections...",
         required: true,
+      },
+      {
+        id: "burnRate",
+        label: "What is your current monthly burn rate?",
+        type: "text",
+        placeholder: "e.g., $10,000/month",
+        required: false,
+      },
+      {
+        id: "runway",
+        label: "How much runway do you have?",
+        type: "text",
+        placeholder: "e.g., 8 months",
+        required: false,
       },
       {
         id: "fundingStrategy",
@@ -396,6 +524,13 @@ export const formSections: FormSection[] = [
         required: true,
       },
       {
+        id: "milestoneTimeline",
+        label: "Timeline for your key milestones",
+        type: "textarea",
+        placeholder: "When do you expect to hit each milestone?",
+        required: true,
+      },
+      {
         id: "vcPlans",
         label: "Do you plan to raise follow-up funding from VCs?",
         type: "radio",
@@ -408,6 +543,13 @@ export const formSections: FormSection[] = [
         type: "textarea",
         placeholder: "When do you plan to approach VCs?",
         required: false,
+      },
+      {
+        id: "exitStrategy",
+        label: "What is your exit strategy?",
+        type: "textarea",
+        placeholder: "Acquisition, IPO, or long-term private company?",
+        required: true,
       },
       {
         id: "kaasxHelp",
@@ -444,6 +586,28 @@ export const formSections: FormSection[] = [
         placeholder: "Describe your current audience and engagement...",
         required: true,
       },
+      {
+        id: "backerCommunication",
+        label: "How do you plan to communicate with your backers during and after the raise?",
+        type: "textarea",
+        placeholder: "Regular updates, exclusive content, events?",
+        required: true,
+      },
+      {
+        id: "backerBenefits",
+        label: "Are you offering any perks or benefits to early backers?",
+        type: "textarea",
+        placeholder: "Early access, discounts, exclusive features?",
+        required: false,
+      },
+      {
+        id: "founderVideo",
+        label: "Founder introduction video URL (highly recommended)",
+        type: "url",
+        placeholder: "YouTube or Vimeo link",
+        required: false,
+        helperText: "A personal video greatly increases conversion rates",
+      },
     ],
   },
   {
@@ -472,6 +636,14 @@ export const formSections: FormSection[] = [
         placeholder: "Describe any regulatory challenges...",
         required: true,
       },
+      {
+        id: "keyRisks",
+        label: "What are the biggest risks to your business?",
+        type: "textarea",
+        placeholder: "Market, technical, team, financial risks?",
+        required: true,
+        helperText: "Transparency builds trust with investors",
+      },
     ],
   },
   {
@@ -484,6 +656,20 @@ export const formSections: FormSection[] = [
         label: "If you had any other ideas you considered applying with, please list them.",
         type: "textarea",
         placeholder: "Share alternative ideas you've explored...",
+        required: false,
+      },
+      {
+        id: "pitchDeck",
+        label: "Upload your pitch deck (if available)",
+        type: "file",
+        required: false,
+        helperText: "PDF format preferred",
+      },
+      {
+        id: "additionalLinks",
+        label: "Any additional links you want to share (press coverage, awards, etc.)",
+        type: "textarea",
+        placeholder: "One link per line",
         required: false,
       },
       {

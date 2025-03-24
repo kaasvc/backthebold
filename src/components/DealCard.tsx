@@ -33,8 +33,12 @@ interface DealCardProps {
 const DealCard: React.FC<DealCardProps> = ({ deal, className }) => {
   return (
     <Link to={`/startup/${deal.id}`}>
-      <Card className={cn("p-4 hover:shadow-md transition-shadow", className)}>
-        <div className="flex items-start gap-4">
+      <Card className={cn(
+        "p-4 hover:shadow-md transition-all duration-200 relative group", 
+        className
+      )}>
+        <div className="absolute inset-0 bg-kaas-pink opacity-0 group-hover:opacity-5 rounded-lg transition-opacity duration-200"></div>
+        <div className="flex items-start gap-4 relative z-10">
           <div className="flex-shrink-0">
             {deal.logo ? (
               <div className="w-10 h-10 rounded-full overflow-hidden">

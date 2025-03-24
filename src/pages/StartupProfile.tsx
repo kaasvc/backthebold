@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -304,6 +303,10 @@ const StartupProfile = () => {
                 <div className="flex items-center">
                   <Badge className="bg-kaas-pink hover:bg-kaas-pink">Pre-Seed</Badge>
                 </div>
+              </div>
+              <div>
+                <p className="text-sm text-slate-500 mb-1">Expected Closing</p>
+                <p className="text-xl font-bold">23 days</p>
               </div>
             </div>
             
@@ -729,3 +732,4 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
+

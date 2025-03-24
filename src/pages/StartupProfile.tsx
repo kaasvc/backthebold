@@ -239,7 +239,6 @@ const StartupProfile = () => {
               <div className="flex-1">
                 <div className="flex flex-wrap items-center gap-3 mb-2">
                   <h1 className="text-2xl font-bold tracking-tight">ProprHome.com</h1>
-                  <Badge className="bg-kaas-pink hover:bg-kaas-pink">Pre-Seed</Badge>
                   <Badge variant="outline" className="ml-auto">
                     <MapPin className="h-3 w-3 mr-1" />
                     Portugal
@@ -301,8 +300,10 @@ const StartupProfile = () => {
                 </div>
               </div>
               <div>
-                <p className="text-sm text-slate-500 mb-1">Closing in</p>
-                <p className="text-xl font-bold">23 days</p>
+                <p className="text-sm text-slate-500 mb-1">Stage</p>
+                <div className="flex items-center">
+                  <Badge className="bg-kaas-pink hover:bg-kaas-pink">Pre-Seed</Badge>
+                </div>
               </div>
             </div>
             

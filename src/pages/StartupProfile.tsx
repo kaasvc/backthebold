@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -169,7 +170,8 @@ const StartupProfile = () => {
       avatar: "https://images.unsplash.com/photo-1570295999919-5658abf4ff4e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHByb2ZpbGUlMjBwaG90b3xlbnwwfHwwfHx8MA%3D%3D",
       content: commentText,
       date: "Just now",
-      likes: 0
+      likes: 0,
+      replies: []
     };
     
     setComments([newComment, ...comments]);
@@ -640,3 +642,566 @@ const StartupProfile = () => {
                       <CardContent className="pt-6">
                         <h3 className="font-semibold">Jordan Williams</h3>
                         <p className="text-sm text-muted-foreground mb-2">
+                          Former VP of Operations at Airbnb, 20+ years in real estate
+                        </p>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                      <CardContent className="pt-6">
+                        <h3 className="font-semibold">Maria Sanchez</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          Partner at PropTech Ventures, Board Member at RealtyAI
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="market" className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Market Overview</h2>
+                  <p className="text-muted-foreground mb-4">
+                    The global property management market is valued at $19.9 billion in 2023 and is projected to reach $37.2 billion by 2030, growing at a CAGR of 9.3% during the forecast period.
+                  </p>
+                  <p className="text-muted-foreground mb-4">
+                    Independent landlords and small property managers (managing 1-50 units) represent over 70% of the rental market in Europe but are severely underserved by current solutions that are either too basic or priced for enterprise clients.
+                  </p>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Traction</h2>
+                  <div className="space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-soft-blue/10 rounded-lg border border-soft-blue/20">
+                      <div className="bg-soft-blue/20 p-2 rounded-full">
+                        <Users className="h-6 w-6 text-soft-blue" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold">120+</h4>
+                        <p className="text-sm text-muted-foreground">Active landlords in beta</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-green-50 rounded-lg border border-green-100">
+                      <div className="bg-green-100 p-2 rounded-full">
+                        <Building className="h-6 w-6 text-green-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold">450+</h4>
+                        <p className="text-sm text-muted-foreground">Units under management</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-purple-50 rounded-lg border border-purple-100">
+                      <div className="bg-purple-100 p-2 rounded-full">
+                        <ChartBar className="h-6 w-6 text-purple-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold">18% MoM</h4>
+                        <p className="text-sm text-muted-foreground">Growth in last 6 months</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="dealterms" className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Investment Terms</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <DollarSign className="h-5 w-5 text-slate-700" />
+                        <h3 className="font-semibold">Valuation</h3>
+                      </div>
+                      <p className="text-lg font-medium">€1.5M</p>
+                      <p className="text-sm text-muted-foreground">Pre-money valuation</p>
+                    </div>
+                    
+                    <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Rocket className="h-5 w-5 text-slate-700" />
+                        <h3 className="font-semibold">Target Raise</h3>
+                      </div>
+                      <p className="text-lg font-medium">€150,000</p>
+                      <p className="text-sm text-muted-foreground">To fund 18 months of operations</p>
+                    </div>
+                    
+                    <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <LineChart className="h-5 w-5 text-slate-700" />
+                        <h3 className="font-semibold">Equity Offered</h3>
+                      </div>
+                      <p className="text-lg font-medium">10%</p>
+                      <p className="text-sm text-muted-foreground">Of the company's equity</p>
+                    </div>
+                    
+                    <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Flag className="h-5 w-5 text-slate-700" />
+                        <h3 className="font-semibold">Minimum Investment</h3>
+                      </div>
+                      <p className="text-lg font-medium">€1,000</p>
+                      <p className="text-sm text-muted-foreground">For individual investors</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Use of Funds</h2>
+                  <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                    <ul className="space-y-3">
+                      <li className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">60%</div>
+                        <div>
+                          <p className="font-medium">Product Development</p>
+                          <p className="text-sm text-muted-foreground">Hiring 2 additional developers and improving AI algorithms</p>
+                        </div>
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">25%</div>
+                        <div>
+                          <p className="font-medium">Sales & Marketing</p>
+                          <p className="text-sm text-muted-foreground">Customer acquisition and expanding market reach</p>
+                        </div>
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0">15%</div>
+                        <div>
+                          <p className="font-medium">Operations</p>
+                          <p className="text-sm text-muted-foreground">Infrastructure scaling and office expenses</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="flex justify-center">
+                  <Button onClick={handleCommit} variant="kaas" size="lg" className="px-8">
+                    Back this Team
+                  </Button>
+                </div>
+              </TabsContent>
+            </Tabs>
+
+            <div className="mt-8">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="discussions">
+                    <div className="flex items-center gap-2">
+                      <MessageCircle className="h-4 w-4" />
+                      <span>Discussions</span>
+                    </div>
+                  </TabsTrigger>
+                  <TabsTrigger value="reviews">
+                    <div className="flex items-center gap-2">
+                      <Star className="h-4 w-4" />
+                      <span>Reviews</span>
+                    </div>
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="discussions" className="mt-4">
+                  <div className="space-y-8">
+                    <div className="p-5 border rounded-lg bg-background">
+                      <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <MessageCircle className="h-5 w-5 text-kaas-pink" />
+                        Join the Discussion
+                      </h2>
+                      <Textarea 
+                        placeholder="Share your thoughts or ask a question..." 
+                        className="min-h-[100px] mb-3"
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                      />
+                      <div className="flex justify-end">
+                        <Button 
+                          onClick={handleSubmitComment}
+                          className="bg-kaas-pink text-white hover:bg-kaas-darkpink"
+                        >
+                          Post Comment
+                        </Button>
+                      </div>
+                    </div>
+
+                    {comments.map(comment => (
+                      <div key={comment.id} id={`comment-${comment.id}`} className="p-5 border rounded-lg bg-background shadow-sm">
+                        <div className="flex items-start gap-4">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage src={comment.avatar} alt={comment.author} />
+                            <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1">
+                            <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                              <div>
+                                <span className="font-medium">{comment.author}</span>
+                                <span className="text-sm text-muted-foreground ml-2">{comment.date}</span>
+                              </div>
+                              <div className="flex gap-1">
+                                <button 
+                                  onClick={() => handleShareComment(comment.id)} 
+                                  className="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100"
+                                >
+                                  <Share2 className="h-4 w-4" />
+                                </button>
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <button className="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100">
+                                      <ChevronDown className="h-4 w-4" />
+                                    </button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent align="end">
+                                    <DropdownMenuItem 
+                                      className="cursor-pointer"
+                                      onClick={() => handleReportComment(comment.id)}
+                                    >
+                                      Report comment
+                                    </DropdownMenuItem>
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              </div>
+                            </div>
+                            <p className="text-base mb-3">{comment.content}</p>
+                            <div className="flex items-center gap-4 mb-2">
+                              <button 
+                                onClick={() => handleLikeComment(comment.id)}
+                                className={`flex items-center gap-1 text-sm ${likedComments[comment.id] ? 'text-kaas-pink' : 'text-slate-500 hover:text-slate-700'}`}
+                              >
+                                <Heart className={`h-4 w-4 ${likedComments[comment.id] ? 'fill-kaas-pink text-kaas-pink' : ''}`} />
+                                {comment.likes > 0 && <span>{comment.likes}</span>}
+                              </button>
+                              <button
+                                onClick={() => handleReply(comment.id)}
+                                className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+                              >
+                                <MessageCircle className="h-4 w-4" />
+                                <span>Reply</span>
+                              </button>
+                            </div>
+
+                            {/* Reply Form */}
+                            {replyingTo === comment.id && (
+                              <div className="pl-4 border-l-2 border-slate-200 mt-3 mb-4">
+                                <Textarea 
+                                  placeholder="Write your reply..." 
+                                  className="min-h-[80px] mb-2"
+                                  value={replyText}
+                                  onChange={(e) => setReplyText(e.target.value)}
+                                />
+                                <div className="flex justify-end gap-2">
+                                  <Button 
+                                    variant="outline" 
+                                    size="sm"
+                                    onClick={handleCancelReply}
+                                  >
+                                    Cancel
+                                  </Button>
+                                  <Button 
+                                    size="sm"
+                                    onClick={() => handleSubmitReply(comment.id)}
+                                    className="bg-kaas-pink text-white hover:bg-kaas-darkpink"
+                                  >
+                                    Submit Reply
+                                  </Button>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Replies */}
+                            {comment.replies && comment.replies.length > 0 && (
+                              <div className="pl-4 border-l-2 border-slate-200 mt-4 space-y-4">
+                                {comment.replies.map(reply => (
+                                  <div key={reply.id} className="flex items-start gap-3">
+                                    <Avatar className="h-8 w-8">
+                                      <AvatarImage src={reply.avatar} alt={reply.author} />
+                                      <AvatarFallback>{reply.author.substring(0, 2)}</AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex-1">
+                                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                                        <span className="font-medium">{reply.author}</span>
+                                        <span className="text-xs text-muted-foreground">{reply.date}</span>
+                                      </div>
+                                      <p className="text-sm">{reply.content}</p>
+                                      <div className="flex items-center gap-3 mt-1">
+                                        <button 
+                                          className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700"
+                                        >
+                                          <Heart className="h-3 w-3" />
+                                          {reply.likes > 0 && <span>{reply.likes}</span>}
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="reviews" className="mt-4">
+                  <div className="space-y-8">
+                    <div className="p-5 border rounded-lg bg-background">
+                      <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <Star className="h-5 w-5 text-kaas-pink" />
+                        Share Your Experience
+                      </h2>
+                      
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium mb-1">
+                          Rating
+                        </label>
+                        <div className="flex gap-1 mb-2">
+                          {[1, 2, 3, 4, 5].map((rating) => (
+                            <button
+                              key={rating}
+                              type="button"
+                              onClick={() => setReviewRating(rating)}
+                              className="focus:outline-none"
+                            >
+                              <Star 
+                                className={`h-6 w-6 ${rating <= reviewRating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`} 
+                              />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4 mb-3">
+                        <div>
+                          <label className="block text-sm font-medium mb-1">
+                            Title
+                          </label>
+                          <Input 
+                            placeholder="Summarize your experience" 
+                            value={reviewTitle}
+                            onChange={(e) => setReviewTitle(e.target.value)}
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium mb-1">
+                            Review
+                          </label>
+                          <Textarea 
+                            placeholder="Share details about your experience with ProprHome" 
+                            className="min-h-[100px]"
+                            value={reviewText}
+                            onChange={(e) => setReviewText(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-end">
+                        <Button 
+                          onClick={handleSubmitReview}
+                          className="bg-kaas-pink text-white hover:bg-kaas-darkpink"
+                        >
+                          Post Review
+                        </Button>
+                      </div>
+                    </div>
+
+                    {reviews.map(review => (
+                      <div key={review.id} className="p-5 border rounded-lg bg-background shadow-sm">
+                        <div className="flex items-start gap-4">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage src={review.avatar} alt={review.author} />
+                            <AvatarFallback>{review.author.substring(0, 2)}</AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1">
+                            <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                              <div>
+                                <span className="font-medium">{review.author}</span>
+                                <span className="text-sm text-muted-foreground ml-2">{review.date}</span>
+                              </div>
+                            </div>
+                            
+                            <div className="flex mb-2">
+                              {renderStars(review.rating)}
+                            </div>
+                            
+                            <h3 className="font-semibold text-base mb-2">{review.title}</h3>
+                            <p className="text-base mb-3">{review.content}</p>
+                            
+                            <div className="flex items-center justify-between border-t pt-3 mt-3">
+                              <div className="flex items-center gap-1">
+                                <Clock className="h-4 w-4 text-slate-400" />
+                                <span className="text-sm text-slate-500">{review.date}</span>
+                              </div>
+                              
+                              <button 
+                                onClick={() => handleMarkHelpful(review.id)}
+                                className={`flex items-center gap-1 text-sm ${helpfulReviews[review.id] ? 'text-green-600' : 'text-slate-500 hover:text-slate-700'}`}
+                              >
+                                <ThumbsUp className={`h-4 w-4 ${helpfulReviews[review.id] ? 'text-green-600' : ''}`} />
+                                <span>{review.helpful} {review.helpful === 1 ? 'person' : 'people'} found this helpful</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
+          
+          <div className="lg:w-4/12">
+            <div className="sticky top-24">
+              <div className="p-5 border rounded-lg mb-6 shadow-sm">
+                <h2 className="text-lg font-semibold mb-4">Reserve Your Spot</h2>
+                <p className="text-muted-foreground mb-4">
+                  Join 14 others in backing this team and reserve your spot in ProprHome's investment round.
+                </p>
+                <Button 
+                  onClick={handleCommit} 
+                  className="w-full bg-kaas-pink text-white hover:bg-kaas-darkpink"
+                >
+                  Back this Team
+                </Button>
+              </div>
+              
+              <div className="p-5 border rounded-lg mb-6">
+                <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+                  <ExternalLink className="h-4 w-4 text-kaas-pink" />
+                  <span>Key Links</span>
+                </h2>
+                <ul className="space-y-3">
+                  <li>
+                    <a 
+                      href="https://proprhome.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <Globe className="h-4 w-4" />
+                      <span className="text-sm">proprhome.com</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      href="https://linkedin.com/company/proprhome" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <Linkedin className="h-4 w-4" />
+                      <span className="text-sm">LinkedIn</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      href="https://twitter.com/proprhome" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <Twitter className="h-4 w-4" />
+                      <span className="text-sm">Twitter</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="p-5 border rounded-lg">
+                <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+                  <Flag className="h-4 w-4 text-kaas-pink" />
+                  <span>Upcoming Milestones</span>
+                </h2>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">1</div>
+                    <div>
+                      <p className="text-sm font-medium">Launch mobile app (Q2 2023)</p>
+                      <p className="text-xs text-muted-foreground">iOS and Android native applications</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">2</div>
+                    <div>
+                      <p className="text-sm font-medium">Expand to 5 new markets (Q3 2023)</p>
+                      <p className="text-xs text-muted-foreground">Spain, France, Germany, Italy, UK</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">3</div>
+                    <div>
+                      <p className="text-sm font-medium">Reach 5,000 active properties (Q4 2023)</p>
+                      <p className="text-xs text-muted-foreground">Through direct sales and partnerships</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Back this Team</DialogTitle>
+            <DialogDescription>
+              Enter your commitment details to reserve your spot in ProprHome's investment round.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="commitAmount" className="text-right">
+                Amount (€)
+              </label>
+              <Input
+                id="commitAmount"
+                type="number"
+                min="1000"
+                step="100"
+                placeholder="E.g., 1000"
+                value={commitAmount}
+                onChange={(e) => setCommitAmount(e.target.value)}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="email" className="text-right">
+                Email
+              </label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="col-span-3"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button type="button" onClick={handleSubmitCommitment}>
+              Commit
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      <InvestorSignupModal 
+        isOpen={showInvestorSignup}
+        onClose={handleCloseInvestorModal}
+        dealName="ProprHome.com"
+        onComplete={handleInvestorProfileComplete}
+      />
+    </div>
+  );
+};
+
+export default StartupProfile;

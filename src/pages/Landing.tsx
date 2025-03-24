@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -35,12 +34,9 @@ const Landing = () => {
       
       <main className="container py-16">
         <div className="mb-12 text-center">
-          <h1 className="text-5xl font-bold tracking-tight mb-4">Backing the Bold</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
-            Helping founders raise from the people who already believe in them.
-          </p>
+          <h1 className="text-5xl font-bold tracking-tight mb-4">Raise funding from your earliest believers</h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Start your fundraise, and let us handle the rest.
+            Welcome to the go-to platform for community fundraising.
           </p>
         </div>
         

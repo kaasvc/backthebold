@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHighlight } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, Twitter, Bookmark, Mail } from "lucide-react";
+import { 
+  Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, 
+  UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, 
+  Twitter, Bookmark, Mail, Heart, MessageCircle, Share2, BookmarkCheck, SendHorizontal
+} from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 
 const StartupProfile = () => {
@@ -19,8 +26,36 @@ const StartupProfile = () => {
   const [email, setEmail] = useState("");
   const [showInvestorSignup, setShowInvestorSignup] = useState(false);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
+  const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState([
+    {
+      id: 1,
+      author: "Jennifer Garcia",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      content: "I've been following Sarah since her days at Zillow. Her deep understanding of the property management space is unparalleled. Definitely backing this one!",
+      date: "2 days ago",
+      likes: 12
+    },
+    {
+      id: 2,
+      author: "Alex Thompson",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      content: "The AI-powered maintenance prediction feature could be a game-changer for property owners who constantly deal with unexpected repair costs. Curious about the accuracy rates on this.",
+      date: "1 day ago",
+      likes: 8
+    },
+    {
+      id: 3,
+      author: "Michelle Lee",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      content: "As someone who manages 7 properties, the current solutions are either too expensive or too basic. Looking forward to seeing how ProprHome bridges this gap.",
+      date: "12 hours ago",
+      likes: 5
+    }
+  ]);
+  const [likedComments, setLikedComments] = useState({});
   
-  React.useEffect(() => {
+  useEffect(() => {
     const investorProfile = localStorage.getItem("kaasInvestorProfile");
     const investorBypass = localStorage.getItem("kaasInvestorBypass");
     setIsInvestorRegistered(!!investorProfile || !!investorBypass);
@@ -46,13 +81,47 @@ const StartupProfile = () => {
     setEmail("");
   };
   
-  const handleInvestorProfileComplete = (dealName: string) => {
+  const handleInvestorProfileComplete = (dealName) => {
     setShowInvestorSignup(false);
     setIsInvestorRegistered(true);
   };
   
   const handleCloseInvestorModal = () => {
     setShowInvestorSignup(false);
+  };
+  
+  const handleSubmitComment = () => {
+    if (!commentText.trim()) {
+      toast.error("Please enter a comment");
+      return;
+    }
+    
+    const newComment = {
+      id: comments.length + 1,
+      author: "You",
+      avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      content: commentText,
+      date: "Just now",
+      likes: 0
+    };
+    
+    setComments([newComment, ...comments]);
+    setCommentText("");
+    toast.success("Comment posted successfully");
+  };
+  
+  const handleLikeComment = (commentId) => {
+    if (likedComments[commentId]) {
+      setLikedComments({...likedComments, [commentId]: false});
+      setComments(comments.map(comment => 
+        comment.id === commentId ? {...comment, likes: comment.likes - 1} : comment
+      ));
+    } else {
+      setLikedComments({...likedComments, [commentId]: true});
+      setComments(comments.map(comment => 
+        comment.id === commentId ? {...comment, likes: comment.likes + 1} : comment
+      ));
+    }
   };
   
   const founders = [
@@ -173,9 +242,10 @@ const StartupProfile = () => {
       </header>
       
       <main className="container py-10">
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="md:col-span-2 space-y-8">
-            <div className="flex flex-col md:flex-row gap-6 items-start">
+        <div className="flex flex-col lg:flex-row gap-8 mb-10">
+          {/* Left section - Company info */}
+          <div className="lg:w-8/12">
+            <div className="flex items-start gap-6 mb-6">
               <div className="w-20 h-20 bg-white rounded-lg shadow-sm overflow-hidden flex-shrink-0">
                 <img 
                   src="https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVhbCUyMGVzdGF0ZXxlbnwwfHwwfHx8MA%3D%3D" 
@@ -184,15 +254,19 @@ const StartupProfile = () => {
                 />
               </div>
               
-              <div>
+              <div className="flex-1">
                 <div className="flex flex-wrap items-center gap-3 mb-2">
-                  <h1 className="text-3xl font-bold tracking-tight">ProprHome.com</h1>
+                  <h1 className="text-2xl font-bold tracking-tight">ProprHome.com</h1>
                   <Badge className="bg-kaas-pink hover:bg-kaas-pink">Pre-Seed</Badge>
+                  <Badge variant="outline" className="ml-auto">
+                    <MapPin className="h-3 w-3 mr-1" />
+                    Portugal
+                  </Badge>
                 </div>
-                <p className="text-lg text-muted-foreground mb-4 max-w-2xl">
+                <p className="text-base text-muted-foreground mb-3 max-w-3xl">
                   AI-powered platform revolutionizing property management for independent landlords and small property managers.
                 </p>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-2">
                   <Badge variant="outline">PropTech</Badge>
                   <Badge variant="outline">AI</Badge>
                   <Badge variant="outline">SaaS</Badge>
@@ -201,13 +275,127 @@ const StartupProfile = () => {
               </div>
             </div>
             
-            <Tabs defaultValue="team" className="w-full">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex -space-x-2">
+                {founders.slice(0, 3).map((founder, idx) => (
+                  <Avatar key={idx} className="w-8 h-8 border-2 border-white">
+                    <AvatarImage src={founder.image} alt={founder.name} />
+                    <AvatarFallback>{founder.name.substring(0, 2)}</AvatarFallback>
+                  </Avatar>
+                ))}
+              </div>
+              <span className="text-sm text-muted-foreground">
+                Founded by {founders[0].name} and {founders.length - 1} others
+              </span>
+              
+              <div className="ml-auto flex items-center gap-3">
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Share2 className="h-4 w-4" />
+                  Share
+                </Button>
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <BookmarkCheck className="h-4 w-4" />
+                  Follow
+                </Button>
+              </div>
+            </div>
+            
+            <div className="flex items-center justify-between mb-8 p-4 bg-slate-50 rounded-lg border border-slate-200">
+              <div>
+                <p className="text-sm text-slate-500 mb-1">Target raise</p>
+                <p className="text-xl font-bold">€150,000</p>
+              </div>
+              <div>
+                <p className="text-sm text-slate-500 mb-1">Valuation cap</p>
+                <p className="text-xl font-bold">€8.5M</p>
+              </div>
+              <div>
+                <p className="text-sm text-slate-500 mb-1">Progress</p>
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-24 bg-slate-200 rounded-full overflow-hidden">
+                    <div className="h-full bg-kaas-pink rounded-full" style={{ width: '65%' }}></div>
+                  </div>
+                  <span className="text-sm font-medium">65%</span>
+                </div>
+              </div>
+              <div>
+                <p className="text-sm text-slate-500 mb-1">Closing in</p>
+                <p className="text-xl font-bold">23 days</p>
+              </div>
+            </div>
+            
+            <Tabs defaultValue="overview" className="w-full">
               <TabsList className="mb-4">
-                <TabsTrigger value="team">Team</TabsTrigger>
                 <TabsTrigger value="overview">Overview</TabsTrigger>
+                <TabsTrigger value="team">Team</TabsTrigger>
                 <TabsTrigger value="market">Market & Traction</TabsTrigger>
                 <TabsTrigger value="financials">Financials</TabsTrigger>
               </TabsList>
+              
+              <TabsContent value="overview" className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Company Overview</h2>
+                  <p className="text-muted-foreground mb-4">
+                    ProprHome.com is building an AI-powered platform that simplifies property management for independent landlords and small property managers. Our solution automates tenant screening, maintenance requests, rent collection, and financial reporting, enabling property owners to save time and increase profitability.
+                  </p>
+                  <p className="text-muted-foreground mb-4">
+                    Our platform integrates with existing property management workflows and leverages AI to provide predictive maintenance recommendations, optimized pricing strategies, and tenant relationship management, all within an easy-to-use dashboard.
+                  </p>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Problem & Solution</h2>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <Card>
+                      <CardContent className="pt-6">
+                        <h3 className="font-medium mb-2">Problem</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+                          <li>Independent landlords lack affordable, comprehensive property management tools</li>
+                          <li>Manual processes for tenant screening, maintenance, and rent collection are time-consuming</li>
+                          <li>Small property managers struggle with scalability and operational efficiency</li>
+                          <li>Limited data insights for making informed property management decisions</li>
+                        </ul>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card>
+                      <CardContent className="pt-6">
+                        <h3 className="font-medium mb-2">Solution</h3>
+                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+                          <li>All-in-one platform specifically designed for small-scale property managers</li>
+                          <li>AI-powered automation for tenant communications, maintenance dispatch, and rent collection</li>
+                          <li>Predictive analytics for maintenance needs and optimal pricing</li>
+                          <li>Mobile-first approach with intuitive, simple user interface</li>
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Competitive Advantage</h2>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="bg-soft-purple p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">AI Integration</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Our proprietary AI algorithms provide predictive insights unavailable in competing solutions
+                      </p>
+                    </div>
+                    <div className="bg-soft-blue p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">Price Point</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Affordable subscription model designed specifically for small portfolios (1-20 units)
+                      </p>
+                    </div>
+                    <div className="bg-soft-green p-4 rounded-lg">
+                      <h3 className="font-medium mb-2">User Experience</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Simplified interface with industry-leading mobile experience for on-the-go management
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
               
               <TabsContent value="team" className="space-y-6">
                 <div>
@@ -338,71 +526,6 @@ const StartupProfile = () => {
                         </a>
                       </CardContent>
                     </Card>
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="overview" className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Company Overview</h2>
-                  <p className="text-muted-foreground mb-4">
-                    ProprHome.com is building an AI-powered platform that simplifies property management for independent landlords and small property managers. Our solution automates tenant screening, maintenance requests, rent collection, and financial reporting, enabling property owners to save time and increase profitability.
-                  </p>
-                  <p className="text-muted-foreground mb-4">
-                    Our platform integrates with existing property management workflows and leverages AI to provide predictive maintenance recommendations, optimized pricing strategies, and tenant relationship management, all within an easy-to-use dashboard.
-                  </p>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Problem & Solution</h2>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <Card>
-                      <CardContent className="pt-6">
-                        <h3 className="font-medium mb-2">Problem</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-                          <li>Independent landlords lack affordable, comprehensive property management tools</li>
-                          <li>Manual processes for tenant screening, maintenance, and rent collection are time-consuming</li>
-                          <li>Small property managers struggle with scalability and operational efficiency</li>
-                          <li>Limited data insights for making informed property management decisions</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card>
-                      <CardContent className="pt-6">
-                        <h3 className="font-medium mb-2">Solution</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-                          <li>All-in-one platform specifically designed for small-scale property managers</li>
-                          <li>AI-powered automation for tenant communications, maintenance dispatch, and rent collection</li>
-                          <li>Predictive analytics for maintenance needs and optimal pricing</li>
-                          <li>Mobile-first approach with intuitive, simple user interface</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Competitive Advantage</h2>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-soft-purple p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">AI Integration</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Our proprietary AI algorithms provide predictive insights unavailable in competing solutions
-                      </p>
-                    </div>
-                    <div className="bg-soft-blue p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Price Point</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Affordable subscription model designed specifically for small portfolios (1-20 units)
-                      </p>
-                    </div>
-                    <div className="bg-soft-green p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">User Experience</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Simplified interface with industry-leading mobile experience for on-the-go management
-                      </p>
-                    </div>
                   </div>
                 </div>
               </TabsContent>
@@ -609,115 +732,185 @@ const StartupProfile = () => {
                 </div>
               </TabsContent>
             </Tabs>
-          </div>
-          
-          <div className="space-y-6">
-            <Card className="border-kaas-pink shadow-sm">
-              <CardContent className="pt-6">
-                <h2 className="text-xl font-semibold mb-4">Deal Terms</h2>
-                <div className="space-y-4">
-                  <div>
-                    <p className="font-medium flex items-center">
-                      <DollarSign className="h-4 w-4 mr-2 text-kaas-pink" />
-                      Round Size
-                    </p>
-                    <p className="text-sm ml-6">$1.5M</p>
-                  </div>
-                  <div>
-                    <p className="font-medium flex items-center">
-                      <LineChart className="h-4 w-4 mr-2 text-kaas-pink" />
-                      Valuation Cap
-                    </p>
-                    <p className="text-sm ml-6">$8.5M</p>
-                  </div>
-                  <div>
-                    <p className="font-medium flex items-center">
-                      <Building className="h-4 w-4 mr-2 text-kaas-pink" />
-                      Investment Instrument
-                    </p>
-                    <p className="text-sm ml-6">SAFE, SEIS eligible</p>
-                  </div>
-                  <div>
-                    <p className="font-medium flex items-center">
-                      <Users className="h-4 w-4 mr-2 text-kaas-pink" />
-                      Minimum Investment
-                    </p>
-                    <p className="text-sm ml-6">€20,000</p>
-                  </div>
-                  <div>
-                    <p className="font-medium flex items-center">
-                      <Award className="h-4 w-4 mr-2 text-kaas-pink" />
-                      Lead Investor
-                    </p>
-                    <p className="text-sm ml-6">TechFront Ventures (€150K committed)</p>
-                  </div>
-                  <div>
-                    <p className="font-medium flex items-center">
-                      <Flag className="h-4 w-4 mr-2 text-kaas-pink" />
-                      Closing Date
-                    </p>
-                    <p className="text-sm ml-6">April 30, 2024 (estimated)</p>
+            
+            {/* Comments Section */}
+            <div className="mt-10">
+              <h2 className="text-xl font-semibold mb-6 flex items-center">
+                <MessageCircle className="h-5 w-5 text-kaas-pink mr-2" />
+                <span>Discussions ({comments.length})</span>
+              </h2>
+              
+              <div className="border rounded-lg mb-8">
+                <div className="p-4">
+                  <div className="flex items-start gap-4">
+                    <Avatar className="w-10 h-10">
+                      <AvatarImage src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" />
+                      <AvatarFallback>You</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <Textarea 
+                        placeholder="What do you think? Share your thoughts about this startup..."
+                        className="resize-none mb-3"
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                      />
+                      <div className="flex justify-end">
+                        <Button 
+                          className="flex items-center gap-2"
+                          onClick={handleSubmitComment}
+                        >
+                          <SendHorizontal className="h-4 w-4" />
+                          Post Comment
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="pt-6 space-y-4">
-                <h2 className="text-xl font-semibold">Notable Investors</h2>
-                {notableInvestors.map((investor, index) => (
-                  <div key={index} className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-soft-purple flex items-center justify-center flex-shrink-0">
-                      <User className="w-4 h-4 text-kaas-pink" />
+                <div className="border-t">
+                  {comments.map((comment, index) => (
+                    <div key={comment.id} className={cn("p-4", index < comments.length - 1 && "border-b")}>
+                      <div className="flex items-start gap-4">
+                        <Avatar className="w-10 h-10">
+                          <AvatarImage src={comment.avatar} />
+                          <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <p className="font-medium">{comment.author}</p>
+                            <span className="text-xs text-slate-500">{comment.date}</span>
+                          </div>
+                          <p className="text-sm text-slate-700 mb-3">{comment.content}</p>
+                          <div className="flex items-center gap-4">
+                            <button 
+                              className={cn(
+                                "flex items-center gap-1 text-xs", 
+                                likedComments[comment.id] ? "text-kaas-pink" : "text-slate-500 hover:text-kaas-pink"
+                              )}
+                              onClick={() => handleLikeComment(comment.id)}
+                            >
+                              <Heart className="h-3.5 w-3.5" fill={likedComments[comment.id] ? "currentColor" : "none"} />
+                              {comment.likes} {comment.likes === 1 ? 'like' : 'likes'}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Right sidebar - Deal details */}
+          <div className="lg:w-4/12 space-y-6">
+            <div className="sticky top-20">
+              <Card className="border-kaas-pink shadow-sm mb-6">
+                <CardContent className="pt-6">
+                  <h2 className="text-xl font-semibold mb-4">Deal Terms</h2>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-medium flex items-center">
+                        <DollarSign className="h-4 w-4 mr-2 text-kaas-pink" />
+                        Round Size
+                      </p>
+                      <p className="text-sm ml-6">$1.5M</p>
                     </div>
                     <div>
-                      <p className="font-medium">{investor.name}</p>
-                      <p className="text-sm text-muted-foreground">{investor.description}</p>
-                      <p className="text-sm text-kaas-pink font-medium mt-1">{investor.amount}</p>
+                      <p className="font-medium flex items-center">
+                        <LineChart className="h-4 w-4 mr-2 text-kaas-pink" />
+                        Valuation Cap
+                      </p>
+                      <p className="text-sm ml-6">$8.5M</p>
+                    </div>
+                    <div>
+                      <p className="font-medium flex items-center">
+                        <Building className="h-4 w-4 mr-2 text-kaas-pink" />
+                        Investment Instrument
+                      </p>
+                      <p className="text-sm ml-6">SAFE, SEIS eligible</p>
+                    </div>
+                    <div>
+                      <p className="font-medium flex items-center">
+                        <Users className="h-4 w-4 mr-2 text-kaas-pink" />
+                        Minimum Investment
+                      </p>
+                      <p className="text-sm ml-6">€20,000</p>
+                    </div>
+                    <div>
+                      <p className="font-medium flex items-center">
+                        <Award className="h-4 w-4 mr-2 text-kaas-pink" />
+                        Lead Investor
+                      </p>
+                      <p className="text-sm ml-6">TechFront Ventures (€150K committed)</p>
+                    </div>
+                    <div>
+                      <p className="font-medium flex items-center">
+                        <Flag className="h-4 w-4 mr-2 text-kaas-pink" />
+                        Closing Date
+                      </p>
+                      <p className="text-sm ml-6">April 30, 2024 (estimated)</p>
                     </div>
                   </div>
-                ))}
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="pt-6">
-                <h2 className="text-xl font-semibold mb-4">Use of Funds</h2>
-                <ul className="list-disc pl-5 space-y-2 text-sm">
-                  <li>
-                    <span className="font-medium">Engineering (45%):</span> Expand development team and accelerate product roadmap
-                  </li>
-                  <li>
-                    <span className="font-medium">Marketing (30%):</span> Increase customer acquisition through targeted campaigns
-                  </li>
-                  <li>
-                    <span className="font-medium">Operations (15%):</span> Improve customer support and onboarding processes
-                  </li>
-                  <li>
-                    <span className="font-medium">Reserve (10%):</span> Working capital for unexpected opportunities
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            
-            <div className="flex flex-col gap-4">
-              <Button 
-                className="py-6 text-base bg-kaas-pink hover:bg-kaas-pink-600"
-                onClick={handleCommit}
-              >
-                Commit to Invest
-              </Button>
+                </CardContent>
+              </Card>
               
-              <Button 
-                variant="outline" 
-                className="py-6 text-base flex items-center gap-2"
-                asChild
-              >
-                <a href="https://proprhome.com" target="_blank" rel="noopener noreferrer">
-                  Visit Website
-                  <ExternalLink className="h-4 w-4 ml-1" />
-                </a>
-              </Button>
+              <Card className="mb-6">
+                <CardContent className="pt-6 space-y-4">
+                  <h2 className="text-xl font-semibold">Notable Investors</h2>
+                  {notableInvestors.map((investor, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-soft-purple flex items-center justify-center flex-shrink-0">
+                        <User className="w-4 h-4 text-kaas-pink" />
+                      </div>
+                      <div>
+                        <p className="font-medium">{investor.name}</p>
+                        <p className="text-sm text-muted-foreground">{investor.description}</p>
+                        <p className="text-sm text-kaas-pink font-medium mt-1">{investor.amount}</p>
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+              
+              <Card className="mb-6">
+                <CardContent className="pt-6">
+                  <h2 className="text-xl font-semibold mb-4">Use of Funds</h2>
+                  <ul className="list-disc pl-5 space-y-2 text-sm">
+                    <li>
+                      <span className="font-medium">Engineering (45%):</span> Expand development team and accelerate product roadmap
+                    </li>
+                    <li>
+                      <span className="font-medium">Marketing (30%):</span> Increase customer acquisition through targeted campaigns
+                    </li>
+                    <li>
+                      <span className="font-medium">Operations (15%):</span> Improve customer support and onboarding processes
+                    </li>
+                    <li>
+                      <span className="font-medium">Reserve (10%):</span> Working capital for unexpected opportunities
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+              
+              <div className="flex flex-col gap-4">
+                <Button 
+                  className="py-6 text-base bg-kaas-pink hover:bg-kaas-pink-600"
+                  onClick={handleCommit}
+                >
+                  Back Now
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="py-6 text-base flex items-center gap-2"
+                  asChild
+                >
+                  <a href="https://proprhome.com" target="_blank" rel="noopener noreferrer">
+                    Visit Website
+                    <ExternalLink className="h-4 w-4 ml-1" />
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
         </div>

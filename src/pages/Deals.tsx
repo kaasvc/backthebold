@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -509,7 +510,7 @@ const Deals = () => {
         <div className="mb-8">
           <h1 className="text-4xl font-bold tracking-tight mb-3">Who's Raising?</h1>
           <p className="text-muted-foreground max-w-3xl">
-            Explore KaasX-verified startups currently raising investment through our platform. Each opportunity has been thoroughly vetted by our team to ensure quality and transparency for investors.
+            Explore KaasX-verified founders raising their next round. Each opportunity has been vetted by our team to ensure quality and transparency for investors.
           </p>
         </div>
         

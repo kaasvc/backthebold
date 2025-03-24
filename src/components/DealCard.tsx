@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -86,18 +85,7 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className }) => {
             </div>
             
             <div className="flex items-center justify-between mt-2">
-              <div className="flex items-center text-xs text-muted-foreground gap-1">
-                {displayCategories.map((category, index) => (
-                  <React.Fragment key={category}>
-                    {index > 0 && <span className="mx-1 text-muted-foreground">•</span>}
-                    <span>{category}</span>
-                  </React.Fragment>
-                ))}
-                <span className="mx-1 text-muted-foreground">•</span>
-                <span>{deal.stage}</span>
-              </div>
-              
-              <div className="flex -space-x-2">
+              <div className="flex -space-x-2 mr-4">
                 {deal.founders.map((founder) => (
                   <Avatar key={founder.id} className="border-2 border-background w-6 h-6">
                     {founder.avatar ? (
@@ -109,6 +97,17 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className }) => {
                     )}
                   </Avatar>
                 ))}
+              </div>
+              
+              <div className="flex items-center text-xs text-muted-foreground gap-1 flex-grow">
+                {displayCategories.map((category, index) => (
+                  <React.Fragment key={category}>
+                    {index > 0 && <span className="mx-1 text-muted-foreground">•</span>}
+                    <span>{category}</span>
+                  </React.Fragment>
+                ))}
+                <span className="mx-1 text-muted-foreground">•</span>
+                <span>{deal.stage}</span>
               </div>
             </div>
           </div>

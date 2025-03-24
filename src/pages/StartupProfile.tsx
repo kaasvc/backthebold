@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -252,7 +251,7 @@ const StartupProfile = () => {
                     <MapPin className="h-3 w-3" />
                     Portugal
                   </Badge>
-                  <Button variant="outline" className="ml-auto bg-black text-white hover:bg-gray-800">
+                  <Button variant="kaas" className="ml-auto">
                     Back this Team
                   </Button>
                 </div>
@@ -752,3 +751,4 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
+

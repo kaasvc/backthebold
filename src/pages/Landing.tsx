@@ -3,8 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Hammer, MoveRight, Shield, Users, Zap } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Hammer } from "lucide-react";
 
 const Landing = () => {
   return (
@@ -29,148 +28,75 @@ const Landing = () => {
               >
                 Support
               </Link>
-              <Link to="/login">
-                <Button variant="outline" size="sm" className="flex items-center">
-                  Login
-                </Button>
-              </Link>
             </nav>
           </div>
         </div>
       </header>
       
-      <main>
-        {/* Hero Section */}
-        <section className="container py-24 md:py-32">
-          <div className="flex flex-col items-center text-center">
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 max-w-4xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink">
-              Backing the Bold
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-10">
-              Helping founders raise from the people who already believe in them.
+      <main className="container py-16">
+        <div className="mb-12 text-center">
+          <h1 className="text-5xl font-bold tracking-tight mb-4">Backing the Bold</h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
+            Helping founders raise from the people who already believe in them.
+          </p>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Start your community fundraise, and let us handle the rest.
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+          <div className="bg-background border border-border rounded-lg p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+            <div className="h-20 w-20 bg-gradient-to-r from-purple-600 to-kaas-pink rounded-full flex items-center justify-center mb-6">
+              <Hammer className="h-10 w-10 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold mb-2">For Founders</h2>
+            <p className="text-muted-foreground text-center mb-6">
+              Raise funding from the people who believe in you - fast, easy & secure.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/apply">
-                <Button variant="kaas" size="lg" className="px-8 text-base font-medium">
-                  Start Your Raise <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/deals">
-                <Button variant="outline" size="lg" className="px-8 text-base font-medium border-blue-500 text-blue-500 hover:bg-blue-50">
-                  View Deals <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-            </div>
+            <Link to="/apply" className="mt-auto">
+              <Button variant="kaas" size="lg">
+                Start Your Raise
+              </Button>
+            </Link>
           </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="py-20 bg-slate-50">
-          <div className="container">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">How KaasX Works</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                We simplify fundraising for founders and investors alike
-              </p>
+          
+          <div className="bg-background border border-border rounded-lg p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+            <div className="h-20 w-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mb-6">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
             </div>
-            
-            <div className="grid md:grid-cols-3 gap-8">
-              <Card className="bg-white border-none shadow-sm hover:shadow-md transition-all">
-                <CardContent className="pt-6">
-                  <div className="h-12 w-12 bg-gradient-to-r from-purple-600 to-kaas-pink rounded-full flex items-center justify-center mb-4">
-                    <Hammer className="h-6 w-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">For Founders</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Raise funding from people who believe in you - fast, easy & secure.
-                  </p>
-                  <Link to="/apply" className="inline-flex items-center text-kaas-pink font-medium">
-                    Start Your Raise <MoveRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-white border-none shadow-sm hover:shadow-md transition-all">
-                <CardContent className="pt-6">
-                  <div className="h-12 w-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mb-4">
-                    <Users className="h-6 w-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">For Investors</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Get early access to founders raising their next round, backed by their communities.
-                  </p>
-                  <Link to="/deals" className="inline-flex items-center text-blue-600 font-medium">
-                    View Deals <MoveRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </CardContent>
-              </Card>
-              
-              <Card className="bg-white border-none shadow-sm hover:shadow-md transition-all">
-                <CardContent className="pt-6">
-                  <div className="h-12 w-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mb-4">
-                    <Shield className="h-6 w-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">Trusted Platform</h3>
-                  <p className="text-muted-foreground mb-4">
-                    We vet all deals to ensure quality and transparency for both founders and investors.
-                  </p>
-                  <Link to="/support" className="inline-flex items-center text-emerald-600 font-medium">
-                    Learn More <MoveRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white">
-          <div className="container text-center">
-            <h2 className="text-3xl font-bold mb-4">Ready to Start?</h2>
-            <p className="max-w-2xl mx-auto mb-8 opacity-90">
-              Join the community of founders and investors building the future together.
+            <h2 className="text-2xl font-bold mb-2">For Investors</h2>
+            <p className="text-muted-foreground text-center mb-6">
+              Get early access to founders raising their next round, backed by their communities.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link to="/apply">
-                <Button variant="default" size="lg" className="bg-white text-kaas-pink hover:bg-gray-100">
-                  Start Your Raise
-                </Button>
-              </Link>
-              <Link to="/deals">
-                <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-                  View Deals
-                </Button>
-              </Link>
-            </div>
+            <Link to="/deals" className="mt-auto">
+              <Button variant="outline" size="lg" className="border-blue-500 text-blue-500 hover:bg-blue-50">
+                View Deals
+              </Button>
+            </Link>
           </div>
-        </section>
+        </div>
       </main>
       
-      <footer className="border-t border-border/40 bg-background py-8">
-        <div className="container">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center">
-              <div className="flex items-center scale-[0.7] origin-left">
-                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">KAAS</span>
-                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">X</span>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="hover:text-foreground transition-colors">
-                Terms of Service
-              </a>
-              <a href="/support" className="hover:text-foreground transition-colors">
-                Support
-              </a>
-            </div>
-            
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} KaasX. All rights reserved.
-            </p>
+      <footer className="border-t border-border/40 bg-background py-6">
+        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} KaasX. All rights reserved.
+          </p>
+          <div className="flex items-center gap-4">
+            <a 
+              href="#" 
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Privacy Policy
+            </a>
+            <a 
+              href="#" 
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Terms of Service
+            </a>
           </div>
         </div>
       </footer>

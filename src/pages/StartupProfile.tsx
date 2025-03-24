@@ -320,7 +320,7 @@ const StartupProfile = () => {
               
               <TabsContent value="overview" className="space-y-6">
                 <div>
-                  <h2 className="text-xl font-semibold mb-3">Company Overview</h2>
+                  <h2 className="text-xl font-semibold mb-3">What's the Story?</h2>
                   <p className="text-muted-foreground mb-4">
                     ProprHome.com is building an AI-powered platform that simplifies property management for independent landlords and small property managers. Our solution automates tenant screening, maintenance requests, rent collection, and financial reporting, enabling property owners to save time and increase profitability.
                   </p>
@@ -732,4 +732,3 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
-

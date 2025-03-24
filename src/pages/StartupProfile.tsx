@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -244,7 +243,6 @@ const StartupProfile = () => {
       
       <main className="container py-10">
         <div className="flex flex-col lg:flex-row gap-8 mb-10">
-          {/* Left section - Company info */}
           <div className="lg:w-8/12">
             <div className="flex items-start gap-6 mb-6">
               <div className="w-20 h-20 bg-white rounded-lg shadow-sm overflow-hidden flex-shrink-0">
@@ -342,59 +340,6 @@ const StartupProfile = () => {
                   <p className="text-muted-foreground mb-4">
                     Our platform integrates with existing property management workflows and leverages AI to provide predictive maintenance recommendations, optimized pricing strategies, and tenant relationship management, all within an easy-to-use dashboard.
                   </p>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Problem & Solution</h2>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <Card>
-                      <CardContent className="pt-6">
-                        <h3 className="font-medium mb-2">Problem</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-                          <li>Independent landlords lack affordable, comprehensive property management tools</li>
-                          <li>Manual processes for tenant screening, maintenance, and rent collection are time-consuming</li>
-                          <li>Small property managers struggle with scalability and operational efficiency</li>
-                          <li>Limited data insights for making informed property management decisions</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                    
-                    <Card>
-                      <CardContent className="pt-6">
-                        <h3 className="font-medium mb-2">Solution</h3>
-                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
-                          <li>All-in-one platform specifically designed for small-scale property managers</li>
-                          <li>AI-powered automation for tenant communications, maintenance dispatch, and rent collection</li>
-                          <li>Predictive analytics for maintenance needs and optimal pricing</li>
-                          <li>Mobile-first approach with intuitive, simple user interface</li>
-                        </ul>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Competitive Advantage</h2>
-                  <div className="grid md:grid-cols-3 gap-4">
-                    <div className="bg-soft-purple p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">AI Integration</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Our proprietary AI algorithms provide predictive insights unavailable in competing solutions
-                      </p>
-                    </div>
-                    <div className="bg-soft-blue p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">Price Point</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Affordable subscription model designed specifically for small portfolios (1-20 units)
-                      </p>
-                    </div>
-                    <div className="bg-soft-green p-4 rounded-lg">
-                      <h3 className="font-medium mb-2">User Experience</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Simplified interface with industry-leading mobile experience for on-the-go management
-                      </p>
-                    </div>
-                  </div>
                 </div>
               </TabsContent>
               
@@ -734,7 +679,6 @@ const StartupProfile = () => {
               </TabsContent>
             </Tabs>
             
-            {/* Comments Section */}
             <div className="mt-10">
               <h2 className="text-xl font-semibold mb-6 flex items-center">
                 <MessageCircle className="h-5 w-5 text-kaas-pink mr-2" />
@@ -802,7 +746,6 @@ const StartupProfile = () => {
             </div>
           </div>
           
-          {/* Right sidebar - Deal details */}
           <div className="lg:w-4/12 space-y-6">
             <div className="sticky top-20">
               <Card className="border-kaas-pink shadow-sm mb-6">

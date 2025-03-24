@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -192,24 +193,6 @@ const StartupProfile = () => {
         "Reduced CAC by 45% at PropertyHub through strategic channel optimization",
         "Advisor to 3 YCombinator startups in PropTech space"
       ]
-    }
-  ];
-  
-  const notableInvestors = [
-    {
-      name: "TechFront Ventures",
-      description: "Led by Marc Johnson, invested in 3 unicorns",
-      amount: "€150,000"
-    },
-    {
-      name: "PropTech Angels",
-      description: "Real estate focused angel syndicate",
-      amount: "€120,000"
-    },
-    {
-      name: "Susan Miller",
-      description: "Ex-CTO of RealtyTech (IPO 2022)",
-      amount: "€75,000"
     }
   ];
   
@@ -626,6 +609,122 @@ const StartupProfile = () => {
                 </div>
               </div>
               
-              <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+              <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden mb-6">
                 <div className="p-5 border-b border-slate-200 flex justify-between items-center">
-                  <h2 className="
+                  <h2 className="text-lg font-semibold">Discussion</h2>
+                  <Badge variant="outline" className="text-xs">{comments.length}</Badge>
+                </div>
+                <div className="p-5">
+                  <div className="mb-4">
+                    <Textarea 
+                      placeholder="Add your comment or question..." 
+                      className="w-full resize-none"
+                      rows={3}
+                      value={commentText}
+                      onChange={(e) => setCommentText(e.target.value)}
+                    />
+                    <div className="flex justify-end mt-2">
+                      <Button 
+                        size="sm" 
+                        onClick={handleSubmitComment}
+                        disabled={!commentText.trim()}
+                        className="flex items-center gap-1.5"
+                      >
+                        <SendHorizontal className="h-3.5 w-3.5" />
+                        Post Comment
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4 max-h-[600px] overflow-y-auto">
+                    {comments.map((comment) => (
+                      <div key={comment.id} className="flex gap-3">
+                        <Avatar className="w-8 h-8 flex-shrink-0">
+                          <AvatarImage src={comment.avatar} alt={comment.author} />
+                          <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="font-medium text-sm">{comment.author}</span>
+                            <span className="text-xs text-slate-500">{comment.date}</span>
+                          </div>
+                          <p className="text-sm text-muted-foreground mb-2">{comment.content}</p>
+                          <div className="flex items-center gap-4">
+                            <button 
+                              className={`text-xs flex items-center gap-1.5 ${likedComments[comment.id] ? 'text-kaas-pink' : 'text-slate-500 hover:text-slate-700'}`}
+                              onClick={() => handleLikeComment(comment.id)}
+                            >
+                              <Heart className="h-3.5 w-3.5" />
+                              {comment.likes} {comment.likes === 1 ? 'like' : 'likes'}
+                            </button>
+                            <button className="text-xs flex items-center gap-1.5 text-slate-500 hover:text-slate-700">
+                              <MessageCircle className="h-3.5 w-3.5" />
+                              Reply
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Invest in ProprHome.com</DialogTitle>
+            <DialogDescription>
+              Please enter your commitment details
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Investment Amount (€)</label>
+              <Input 
+                type="number" 
+                min="20000"
+                placeholder="Minimum €20,000"
+                value={commitAmount}
+                onChange={(e) => setCommitAmount(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                Minimum investment amount: €20,000
+              </p>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Email Address</label>
+              <Input 
+                type="email" 
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                You'll receive investment details at this email
+              </p>
+            </div>
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button onClick={handleSubmitCommitment}>Submit</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      <InvestorSignupModal 
+        isOpen={showInvestorSignup} 
+        onClose={handleCloseInvestorModal}
+        onComplete={handleInvestorProfileComplete}
+        dealName="ProprHome.com"
+      />
+    </div>
+  );
+};
+
+export default StartupProfile;

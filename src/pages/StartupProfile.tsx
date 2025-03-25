@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -497,30 +498,30 @@ const StartupProfile = () => {
             </div>
             
             <div className="flex items-center justify-between mb-8 p-4 bg-slate-50 rounded-lg border border-slate-200">
-              <div>
+              <div className="flex flex-col items-center">
                 <p className="text-sm text-slate-500 mb-1">Target raise</p>
                 <p className="text-xl font-bold">€150,000</p>
               </div>
-              <div>
+              <div className="flex flex-col items-center">
                 <p className="text-sm text-slate-500 mb-1">Backers</p>
                 <p className="text-xl font-bold">14</p>
               </div>
-              <div>
+              <div className="flex flex-col items-center">
                 <p className="text-sm text-slate-500 mb-1">Progress</p>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col items-center">
                   <div className="h-2 w-24 bg-slate-200 rounded-full overflow-hidden">
                     <div className="h-full bg-kaas-pink rounded-full" style={{ width: '65%' }}></div>
                   </div>
-                  <span className="text-sm font-medium">65%</span>
+                  <span className="text-sm font-medium mt-1">65%</span>
                 </div>
               </div>
-              <div>
+              <div className="flex flex-col items-center">
                 <p className="text-sm text-slate-500 mb-1">Stage</p>
                 <div className="flex items-center">
                   <Badge variant="outline" className="bg-white">Pre-Seed</Badge>
                 </div>
               </div>
-              <div>
+              <div className="flex flex-col items-center">
                 <p className="text-sm text-slate-500 mb-1">Expected Closing</p>
                 <p className="text-xl font-bold">23 days</p>
               </div>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -402,7 +403,7 @@ const StartupProfile = () => {
   ];
   
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center">
           <Link to="/" className="mr-4 flex items-center space-x-2">
@@ -449,7 +450,7 @@ const StartupProfile = () => {
         </div>
       </header>
       
-      <main className="container py-10">
+      <main className="container py-10 flex-1">
         <div className="flex flex-col lg:flex-row gap-8 mb-10">
           <div className="lg:w-8/12">
             <div className="flex items-start gap-6 mb-6">
@@ -466,7 +467,7 @@ const StartupProfile = () => {
                   <h1 className="text-2xl font-bold tracking-tight">ProprHome.com</h1>
                   <Badge variant="outline" className="flex items-center gap-1">
                     <MapPin className="h-3 w-3" />
-                    Portugal
+                    Portugal 🇵🇹
                   </Badge>
                 </div>
                 <p className="text-base text-muted-foreground mb-3 max-w-3xl">
@@ -1078,133 +1079,155 @@ const StartupProfile = () => {
           </div>
           
           <div className="lg:w-4/12">
-            <div className="sticky top-24">
-              <div className="p-5 border rounded-lg mb-6 shadow-sm">
-                <h2 className="text-lg font-semibold mb-4 relative">
-                  Reserve Your{" "}
-                  <span className="relative z-10">Spot</span>
-                  <span className="absolute right-0 top-0 flex -space-x-2">
-                    {backers.map((backer, idx) => (
-                      <Avatar key={idx} className="w-8 h-8 border-2 border-white">
-                        <AvatarImage src={backer.avatar} alt={backer.name} />
-                        <AvatarFallback>{backer.name.substring(0, 2)}</AvatarFallback>
-                      </Avatar>
-                    ))}
-                  </span>
-                </h2>
-                <p className="text-muted-foreground mb-4">
-                  Join <span className="font-bold text-black">14</span> others in backing this team and reserve your spot in ProprHome's community fundraise.
-                </p>
-                
-                <div className="mb-4">
-                  <label className="block text-sm font-medium mb-2">
-                    Select investment amount:
-                  </label>
+            <div className="sticky top-24 space-y-6">
+              <Card className="border rounded-lg shadow-sm overflow-hidden">
+                <CardContent className="p-5">
+                  <h2 className="text-lg font-semibold mb-4 relative">
+                    Reserve Your{" "}
+                    <span className="relative z-10">Spot</span>
+                    <span className="absolute right-0 top-0 flex -space-x-2">
+                      {backers.map((backer, idx) => (
+                        <Avatar key={idx} className="w-8 h-8 border-2 border-white">
+                          <AvatarImage src={backer.avatar} alt={backer.name} />
+                          <AvatarFallback>{backer.name.substring(0, 2)}</AvatarFallback>
+                        </Avatar>
+                      ))}
+                    </span>
+                  </h2>
+                  <p className="text-muted-foreground mb-4">
+                    Join <span className="font-bold text-black">14</span> others in backing this team and reserve your spot in ProprHome's community fundraise.
+                  </p>
+                  
                   <div className="mb-4">
-                    <Input
-                      type="text"
-                      value={investmentAmount ? `€${investmentAmount}` : ''}
-                      onChange={handleInvestmentAmountChange}
-                      placeholder="Enter amount, min. €100"
-                      className="text-center"
-                      onFocus={(e) => {
-                        // Remove the euro symbol when focusing
-                        const value = e.target.value.replace(/[^0-9]/g, '');
-                        e.target.value = value;
-                      }}
-                      onBlur={(e) => {
-                        // Add euro symbol when blurring
-                        if (e.target.value) {
-                          e.target.value = `€${e.target.value}`;
-                        }
-                      }}
-                    />
+                    <label className="block text-sm font-medium mb-2">
+                      Select investment amount:
+                    </label>
+                    <div className="mb-4">
+                      <Input
+                        type="text"
+                        value={investmentAmount ? `€${investmentAmount}` : ''}
+                        onChange={handleInvestmentAmountChange}
+                        placeholder="Enter amount, min. €100"
+                        className="text-center"
+                        onFocus={(e) => {
+                          // Remove the euro symbol when focusing
+                          const value = e.target.value.replace(/[^0-9]/g, '');
+                          e.target.value = value;
+                        }}
+                        onBlur={(e) => {
+                          // Add euro symbol when blurring
+                          if (e.target.value) {
+                            e.target.value = `€${e.target.value}`;
+                          }
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
-                
-                <Button 
-                  onClick={handleCommit} 
-                  className="w-full bg-kaas-pink text-white hover:bg-kaas-darkpink"
-                >
-                  Back this Team
-                </Button>
-              </div>
+                  
+                  <Button 
+                    onClick={handleCommit} 
+                    className="w-full bg-kaas-pink text-white hover:bg-kaas-darkpink"
+                  >
+                    Back this Team
+                  </Button>
+                </CardContent>
+              </Card>
               
-              <div className="p-5 border rounded-lg">
-                <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
-                  <ExternalLink className="h-4 w-4 text-kaas-pink" />
-                  <span>Key Links</span>
-                </h2>
-                <ul className="space-y-3">
-                  <li>
-                    <a 
-                      href="https://proprhome.com" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                      <Globe className="h-4 w-4" />
-                      <span className="text-sm">proprhome.com</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a 
-                      href="https://linkedin.com/company/proprhome" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                      <Linkedin className="h-4 w-4" />
-                      <span className="text-sm">LinkedIn</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a 
-                      href="https://twitter.com/proprhome" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                      <Twitter className="h-4 w-4" />
-                      <span className="text-sm">Twitter</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              <Card className="border rounded-lg shadow-sm">
+                <CardContent className="p-5">
+                  <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+                    <ExternalLink className="h-4 w-4 text-kaas-pink" />
+                    <span>Key Links</span>
+                  </h2>
+                  <ul className="space-y-3">
+                    <li>
+                      <a 
+                        href="https://proprhome.com" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Globe className="h-4 w-4" />
+                        <span className="text-sm">proprhome.com</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a 
+                        href="https://linkedin.com/company/proprhome" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Linkedin className="h-4 w-4" />
+                        <span className="text-sm">LinkedIn</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a 
+                        href="https://twitter.com/proprhome" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Twitter className="h-4 w-4" />
+                        <span className="text-sm">Twitter</span>
+                      </a>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
               
-              <div className="p-5 border rounded-lg">
-                <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
-                  <Flag className="h-4 w-4 text-kaas-pink" />
-                  <span>Upcoming Milestones</span>
-                </h2>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-2">
-                    <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">1</div>
-                    <div>
-                      <p className="text-sm font-medium">Launch mobile app (Q2 2023)</p>
-                      <p className="text-xs text-muted-foreground">iOS and Android native applications</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">2</div>
-                    <div>
-                      <p className="text-sm font-medium">Expand to 5 new markets (Q3 2023)</p>
-                      <p className="text-xs text-muted-foreground">Spain, France, Germany, Italy, UK</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">3</div>
-                    <div>
-                      <p className="text-sm font-medium">Reach 5,000 active properties (Q4 2023)</p>
-                      <p className="text-xs text-muted-foreground">Through direct sales and partnerships</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+              <Card className="border rounded-lg shadow-sm">
+                <CardContent className="p-5">
+                  <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+                    <Flag className="h-4 w-4 text-kaas-pink" />
+                    <span>Upcoming Milestones</span>
+                  </h2>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-2">
+                      <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">1</div>
+                      <div>
+                        <p className="text-sm font-medium">Launch mobile app (Q2 2023)</p>
+                        <p className="text-xs text-muted-foreground">iOS and Android native applications</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">2</div>
+                      <div>
+                        <p className="text-sm font-medium">Expand to 5 new markets (Q3 2023)</p>
+                        <p className="text-xs text-muted-foreground">Spain, France, Germany, Italy, UK</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">3</div>
+                      <div>
+                        <p className="text-sm font-medium">Reach 5,000 active properties (Q4 2023)</p>
+                        <p className="text-xs text-muted-foreground">Through direct sales and partnerships</p>
+                      </div>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
       </main>
+      
+      <footer className="border-t border-border/40 py-6">
+        <div className="container">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            <Link to="/about" className="hover:text-foreground transition-colors">About</Link>
+            <Link to="/faq" className="hover:text-foreground transition-colors">FAQ</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors">Terms</Link>
+            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+            <Link to="/blog" className="hover:text-foreground transition-colors">Blog</Link>
+            <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
+          </div>
+          <div className="mt-3 text-center text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Back the Bold. All rights reserved.
+          </div>
+        </div>
+      </footer>
       
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent className="sm:max-w-md">

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -426,9 +425,6 @@ const StartupProfile = () => {
                     <MapPin className="h-3 w-3" />
                     Portugal
                   </Badge>
-                  <Button variant="kaas" className="ml-auto">
-                    Back this Team
-                  </Button>
                 </div>
                 <p className="text-base text-muted-foreground mb-3 max-w-3xl">
                   AI-powered platform revolutionizing property management for independent landlords and small property managers.

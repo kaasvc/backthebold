@@ -500,38 +500,13 @@ const StartupProfile = () => {
               </div>
             </div>
             
-            <Tabs defaultValue="overview" className="w-full">
+            <Tabs defaultValue="team" className="w-full">
               <TabsList className="mb-4">
-                <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="team">Team</TabsTrigger>
+                <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="market">Market & Traction</TabsTrigger>
                 <TabsTrigger value="dealterms">Deal Terms</TabsTrigger>
               </TabsList>
-              
-              <TabsContent value="overview" className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">What's the Story?</h2>
-                  <p className="text-muted-foreground mb-4">
-                    ProprHome.com is building an AI-powered platform that simplifies property management for independent landlords and small property managers. Our solution automates tenant screening, maintenance requests, rent collection, and financial reporting, enabling property owners to save time and increase profitability.
-                  </p>
-                  <p className="text-muted-foreground mb-4">
-                    Our platform integrates with existing property management workflows and leverages AI to provide predictive maintenance recommendations, optimized pricing strategies, and tenant relationship management, all within an easy-to-use dashboard.
-                  </p>
-                </div>
-                
-                <div>
-                  <h2 className="text-xl font-semibold mb-3">Previous Rounds</h2>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-2">
-                      <Badge className="mt-0.5">Pre-Seed</Badge>
-                      <div>
-                        <p className="text-sm font-medium">$350K | May 2023</p>
-                        <p className="text-xs text-muted-foreground">Angel investors & friends and family</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </TabsContent>
               
               <TabsContent value="team" className="space-y-6">
                 <div>
@@ -654,6 +629,31 @@ const StartupProfile = () => {
                       </CardContent>
                     </Card>
                   </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="overview" className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">What's the Story?</h2>
+                  <p className="text-muted-foreground mb-4">
+                    ProprHome.com is building an AI-powered platform that simplifies property management for independent landlords and small property managers. Our solution automates tenant screening, maintenance requests, rent collection, and financial reporting, enabling property owners to save time and increase profitability.
+                  </p>
+                  <p className="text-muted-foreground mb-4">
+                    Our platform integrates with existing property management workflows and leverages AI to provide predictive maintenance recommendations, optimized pricing strategies, and tenant relationship management, all within an easy-to-use dashboard.
+                  </p>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Previous Rounds</h2>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-2">
+                      <Badge className="mt-0.5">Pre-Seed</Badge>
+                      <div>
+                        <p className="text-sm font-medium">$350K | May 2023</p>
+                        <p className="text-xs text-muted-foreground">Angel investors & friends and family</p>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </TabsContent>
               

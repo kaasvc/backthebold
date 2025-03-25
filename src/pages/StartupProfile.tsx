@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -15,7 +16,7 @@ import {
   Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, 
   UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, 
   Twitter, Bookmark, Mail, Heart, MessageCircle, Share2, BookmarkCheck, SendHorizontal,
-  MapPin, FileText, Clock, MessageSquare, StarHalf, ThumbsUp, ChevronDown, Globe
+  MapPin, FileText, Clock, MessageSquare, StarHalf, ThumbsUp, ChevronDown, Globe, Play, Video, CheckCircle
 } from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 import {
@@ -439,7 +440,7 @@ const StartupProfile = () => {
               </div>
               
               <div className="flex-1">
-                <div className="flex flex-wrap items-center gap-3 mb-2">
+                <div className="flex items-center gap-3 mb-2">
                   <h1 className="text-2xl font-bold tracking-tight">ProprHome.com</h1>
                   <Badge variant="outline" className="flex items-center gap-1">
                     <MapPin className="h-3 w-3" />
@@ -458,11 +459,15 @@ const StartupProfile = () => {
               </div>
             </div>
             
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-4">
               <div className="ml-auto flex items-center gap-3">
                 <Button variant="outline" size="sm" className="flex items-center gap-2">
                   <FileText className="h-4 w-4" />
                   Deck
+                </Button>
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Video className="h-4 w-4" />
+                  Video
                 </Button>
                 <Button variant="outline" size="sm" className="flex items-center gap-2">
                   <Share2 className="h-4 w-4" />
@@ -473,6 +478,16 @@ const StartupProfile = () => {
                   Follow
                 </Button>
               </div>
+            </div>
+            
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <h3 className="text-sm font-semibold text-green-800 flex items-center mb-2">
+                <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
+                What's Already Working & Impressive
+              </h3>
+              <p className="text-sm text-green-700">
+                Their AI-powered maintenance prediction algorithm has shown 85% accuracy in early testing, helping landlords prevent costly repairs before they happen. The platform has already saved beta users an average of €2,200 per property in annual maintenance costs.
+              </p>
             </div>
             
             <div className="flex items-center justify-between mb-8 p-4 bg-slate-50 rounded-lg border border-slate-200">

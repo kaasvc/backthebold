@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -166,13 +167,13 @@ const Landing = () => {
       <main className="container py-12">
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-4">
-            Back the Bold<sup className="text-sm relative -top-6 left-1">TM</sup>
+            All Deals<sup className="text-sm relative -top-6 left-1">TM</sup>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
             Helping founders raise from the people who believe in them.
           </p>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-10">
-            Start your community fundraise, and let us handle the rest.
+            Discover and back the most promising startups in our marketplace.
           </p>
         </div>
         
@@ -326,7 +327,7 @@ const Landing = () => {
         </div>
         
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Live Deals</h2>
+          <h2 className="text-2xl font-bold">All Active Deals</h2>
         </div>
         
         <div className="space-y-4 mb-10">

@@ -8,7 +8,6 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import Index from "./pages/Index";
 import Landing from "./pages/Landing";
 import Apply from "./pages/Apply";
-import Deals from "./pages/Deals";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -66,7 +65,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/landing" element={<Landing />} />
             <Route path="/apply" element={<Apply />} />
-            <Route path="/deals" element={<Deals />} />
+            <Route path="/deals" element={<Navigate to="/landing" replace />} />
             <Route path="/startup/:id" element={<StartupProfile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/support" element={<ContactSupport />} />

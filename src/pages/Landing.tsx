@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -167,7 +166,7 @@ const Landing = () => {
       <main className="container py-12">
         <div className="mb-12 text-center">
           <h1 className="text-5xl font-bold tracking-tight mb-4">
-            All Deals<sup className="text-sm relative -top-6 left-1">TM</sup>
+            Back the Bold<sup className="text-sm relative -top-6 left-1">TM</sup>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
             Helping founders raise from the people who believe in them.

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -49,11 +48,12 @@ interface Comment {
 const StartupProfile = () => {
   const navigate = useNavigate();
   const [showCommitDialog, setShowCommitDialog] = useState(false);
-  const [commitAmount, setCommitAmount] = useState("");
+  const [commitAmount, setCommitAmount] = useState("1000");
   const [email, setEmail] = useState("");
   const [showInvestorSignup, setShowInvestorSignup] = useState(false);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
   const [commentText, setCommentText] = useState("");
+  const [selectedInvestmentAmount, setSelectedInvestmentAmount] = useState("1000");
   const [comments, setComments] = useState<Comment[]>([
     {
       id: 1,
@@ -135,6 +135,7 @@ const StartupProfile = () => {
       setShowInvestorSignup(true);
       return;
     }
+    setCommitAmount(selectedInvestmentAmount);
     setShowCommitDialog(true);
   };
   
@@ -148,6 +149,10 @@ const StartupProfile = () => {
     setShowCommitDialog(false);
     setCommitAmount("");
     setEmail("");
+  };
+  
+  const handleInvestmentAmountSelect = (amount) => {
+    setSelectedInvestmentAmount(amount);
   };
   
   const handleInvestorProfileComplete = (dealName) => {
@@ -384,6 +389,15 @@ const StartupProfile = () => {
       name: "Robert Chen",
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
     }
+  ];
+  
+  const investmentOptions = [
+    { value: "100", label: "€100" },
+    { value: "500", label: "€500" },
+    { value: "1000", label: "€1,000" },
+    { value: "2500", label: "€2,500" },
+    { value: "5000", label: "€5,000" },
+    { value: "10000", label: "€10,000" }
   ];
   
   return (
@@ -734,7 +748,7 @@ const StartupProfile = () => {
               <TabsContent value="dealterms" className="space-y-6">
                 <div>
                   <h2 className="text-xl font-semibold mb-3">Investment Terms</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
                       <div className="flex items-center gap-2 mb-2">
                         <DollarSign className="h-5 w-5 text-slate-700" />
@@ -760,15 +774,6 @@ const StartupProfile = () => {
                       </div>
                       <p className="text-lg font-medium">10%</p>
                       <p className="text-sm text-muted-foreground">Of the company's equity</p>
-                    </div>
-                    
-                    <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Flag className="h-5 w-5 text-slate-700" />
-                        <h3 className="font-semibold">Minimum Investment</h3>
-                      </div>
-                      <p className="text-lg font-medium">€1,000</p>
-                      <p className="text-sm text-muted-foreground">For individual investors</p>
                     </div>
                   </div>
                 </div>
@@ -1089,11 +1094,34 @@ const StartupProfile = () => {
                 <p className="text-muted-foreground mb-4">
                   Join <span className="font-bold text-black">14</span> others in backing this team and reserve your spot in ProprHome's community-investment round.
                 </p>
+                
+                <div className="mb-4">
+                  <label className="block text-sm font-medium mb-2">
+                    Select investment amount:
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {investmentOptions.map((option) => (
+                      <Button
+                        key={option.value}
+                        type="button"
+                        variant={selectedInvestmentAmount === option.value ? "default" : "outline"}
+                        className={cn(
+                          "flex items-center justify-center whitespace-nowrap",
+                          selectedInvestmentAmount === option.value && "bg-kaas-pink hover:bg-kaas-darkpink text-white"
+                        )}
+                        onClick={() => handleInvestmentAmountSelect(option.value)}
+                      >
+                        {option.label}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+                
                 <Button 
                   onClick={handleCommit} 
                   className="w-full bg-kaas-pink text-white hover:bg-kaas-darkpink"
                 >
-                  Back this Team
+                  Back with {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Number(selectedInvestmentAmount))}
                 </Button>
               </div>
               
@@ -1178,7 +1206,7 @@ const StartupProfile = () => {
           <DialogHeader>
             <DialogTitle>Back this Team</DialogTitle>
             <DialogDescription>
-              Enter your commitment details to reserve your spot in ProprHome's investment round.
+              Enter your details to reserve your spot in ProprHome's investment round with {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Number(commitAmount))}.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -1188,13 +1216,10 @@ const StartupProfile = () => {
               </label>
               <Input
                 id="commitAmount"
-                type="number"
-                min="1000"
-                step="100"
-                placeholder="E.g., 1000"
-                value={commitAmount}
-                onChange={(e) => setCommitAmount(e.target.value)}
-                className="col-span-3"
+                type="text"
+                value={new Intl.NumberFormat('de-DE').format(Number(commitAmount))}
+                disabled
+                className="col-span-3 bg-slate-50"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">

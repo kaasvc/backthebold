@@ -365,6 +365,26 @@ const StartupProfile = () => {
       ]
     }
   ];
+
+  // Mock backers data with avatar images
+  const backers = [
+    {
+      name: "Emily Thompson",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+    },
+    {
+      name: "James Wilson",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+    },
+    {
+      name: "Sophia Garcia",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+    },
+    {
+      name: "Robert Chen",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+    }
+  ];
   
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -439,19 +459,7 @@ const StartupProfile = () => {
               </div>
             </div>
             
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex -space-x-2">
-                {founders.slice(0, 3).map((founder, idx) => (
-                  <Avatar key={idx} className="w-8 h-8 border-2 border-white">
-                    <AvatarImage src={founder.image} alt={founder.name} />
-                    <AvatarFallback>{founder.name.substring(0, 2)}</AvatarFallback>
-                  </Avatar>
-                ))}
-              </div>
-              <span className="text-sm text-muted-foreground">
-                Founded by {founders[0].name} and {founders.length - 1} others
-              </span>
-              
+            <div className="flex items-center justify-between mb-8">
               <div className="ml-auto flex items-center gap-3">
                 <Button variant="outline" size="sm" className="flex items-center gap-2">
                   <FileText className="h-4 w-4" />
@@ -1052,8 +1060,16 @@ const StartupProfile = () => {
             <div className="sticky top-24">
               <div className="p-5 border rounded-lg mb-6 shadow-sm">
                 <h2 className="text-lg font-semibold mb-4">Reserve Your Spot</h2>
+                <div className="flex -space-x-2 mb-3">
+                  {backers.map((backer, idx) => (
+                    <Avatar key={idx} className="w-8 h-8 border-2 border-white">
+                      <AvatarImage src={backer.avatar} alt={backer.name} />
+                      <AvatarFallback>{backer.name.substring(0, 2)}</AvatarFallback>
+                    </Avatar>
+                  ))}
+                </div>
                 <p className="text-muted-foreground mb-4">
-                  Join 14 others in backing this team and reserve your spot in ProprHome's investment round.
+                  Join <span className="font-bold">14</span> others in backing this team and reserve your spot in ProprHome's community-investment round.
                 </p>
                 <Button 
                   onClick={handleCommit} 

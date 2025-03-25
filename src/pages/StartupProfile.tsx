@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -26,6 +25,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { InfoTooltip } from "@/components/ui/tooltip";
 
 interface Reply {
   id: number;
@@ -469,7 +469,20 @@ const StartupProfile = () => {
                     <MapPin className="h-3 w-3" />
                     Portugal 🇵🇹
                   </Badge>
+                  
+                  {/* Company resources - moved here from below */}
+                  <div className="ml-auto flex items-center gap-2">
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <FileText className="h-4 w-4" />
+                      Deck
+                    </Button>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <Video className="h-4 w-4" />
+                      Video
+                    </Button>
+                  </div>
                 </div>
+                
                 <p className="text-base text-muted-foreground mb-3 max-w-3xl">
                   AI-powered platform revolutionizing property management for independent landlords and small property managers.
                 </p>
@@ -482,16 +495,9 @@ const StartupProfile = () => {
               </div>
             </div>
             
-            <div className="flex items-center justify-between mb-4">
-              <div className="ml-auto flex items-center gap-3">
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
-                  Deck
-                </Button>
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <Video className="h-4 w-4" />
-                  Video
-                </Button>
+            {/* Deal page actions - separated from company resources */}
+            <div className="flex items-center justify-end mb-4">
+              <div className="flex items-center gap-3">
                 <Button variant="outline" size="sm" className="flex items-center gap-2">
                   <Share2 className="h-4 w-4" />
                   Share
@@ -1098,6 +1104,32 @@ const StartupProfile = () => {
                     Join <span className="font-bold text-black">14</span> others in backing this team and reserve your spot in ProprHome's community fundraise.
                   </p>
                   
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                        Direct Equity
+                      </Badge>
+                      <InfoTooltip content="In a Direct Equity round, you purchase shares directly in the company at the specified valuation." />
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <div className="flex items-center gap-1.5 mb-1.5">
+                          <span className="text-sm font-medium">Valuation</span>
+                          <InfoTooltip content="The pre-money valuation is the value of the company before the investment." />
+                        </div>
+                        <p className="text-base font-semibold">€1.5M</p>
+                      </div>
+                      <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <div className="flex items-center gap-1.5 mb-1.5">
+                          <span className="text-sm font-medium">Equity</span>
+                          <InfoTooltip content="The percentage of the company being offered in exchange for the investment." />
+                        </div>
+                        <p className="text-base font-semibold">10%</p>
+                      </div>
+                    </div>
+                  </div>
+                  
                   <div className="mb-4">
                     <label className="block text-sm font-medium mb-2">
                       Select investment amount:
@@ -1109,6 +1141,7 @@ const StartupProfile = () => {
                         onChange={handleInvestmentAmountChange}
                         placeholder="Enter amount, min. €100"
                         className="text-center"
+                        tooltip="The minimum investment amount is €100 and the maximum is €10,000."
                         onFocus={(e) => {
                           // Remove the euro symbol when focusing
                           const value = e.target.value.replace(/[^0-9]/g, '');

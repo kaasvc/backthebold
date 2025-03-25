@@ -1093,7 +1093,7 @@ const StartupProfile = () => {
                   </span>
                 </h2>
                 <p className="text-muted-foreground mb-4">
-                  Join <span className="font-bold text-black">14</span> others in backing this team and reserve your spot in ProprHome's community-investment round.
+                  Join <span className="font-bold text-black">14</span> others in backing this team and reserve your spot in ProprHome's community fundraise.
                 </p>
                 
                 <div className="mb-4">

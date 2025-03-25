@@ -53,7 +53,7 @@ const StartupProfile = () => {
   const [showInvestorSignup, setShowInvestorSignup] = useState(false);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [selectedInvestmentAmount, setSelectedInvestmentAmount] = useState("1000");
+  const [investmentAmount, setInvestmentAmount] = useState("1000");
   const [comments, setComments] = useState<Comment[]>([
     {
       id: 1,
@@ -135,7 +135,15 @@ const StartupProfile = () => {
       setShowInvestorSignup(true);
       return;
     }
-    setCommitAmount(selectedInvestmentAmount);
+    
+    // Validate the investment amount
+    const amount = Number(investmentAmount);
+    if (isNaN(amount) || amount < 100 || amount > 10000) {
+      toast.error("Please enter a valid amount between €100 and €10,000");
+      return;
+    }
+    
+    setCommitAmount(investmentAmount);
     setShowCommitDialog(true);
   };
   
@@ -151,8 +159,10 @@ const StartupProfile = () => {
     setEmail("");
   };
   
-  const handleInvestmentAmountSelect = (amount) => {
-    setSelectedInvestmentAmount(amount);
+  const handleInvestmentAmountChange = (e) => {
+    // Remove any non-numeric characters
+    const value = e.target.value.replace(/[^0-9]/g, '');
+    setInvestmentAmount(value);
   };
   
   const handleInvestorProfileComplete = (dealName) => {
@@ -389,15 +399,6 @@ const StartupProfile = () => {
       name: "Robert Chen",
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
     }
-  ];
-  
-  const investmentOptions = [
-    { value: "100", label: "€100" },
-    { value: "500", label: "€500" },
-    { value: "1000", label: "€1,000" },
-    { value: "2500", label: "€2,500" },
-    { value: "5000", label: "€5,000" },
-    { value: "10000", label: "€10,000" }
   ];
   
   return (
@@ -1099,21 +1100,29 @@ const StartupProfile = () => {
                   <label className="block text-sm font-medium mb-2">
                     Select investment amount:
                   </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {investmentOptions.map((option) => (
-                      <Button
-                        key={option.value}
-                        type="button"
-                        variant={selectedInvestmentAmount === option.value ? "default" : "outline"}
-                        className={cn(
-                          "flex items-center justify-center whitespace-nowrap",
-                          selectedInvestmentAmount === option.value && "bg-kaas-pink hover:bg-kaas-darkpink text-white"
-                        )}
-                        onClick={() => handleInvestmentAmountSelect(option.value)}
-                      >
-                        {option.label}
-                      </Button>
-                    ))}
+                  <div className="mb-2">
+                    <Input
+                      type="text"
+                      value={investmentAmount ? `€${investmentAmount}` : ''}
+                      onChange={handleInvestmentAmountChange}
+                      placeholder="Enter amount (min €100, max €10,000)"
+                      className="text-center"
+                      onFocus={(e) => {
+                        // Remove the euro symbol when focusing
+                        const value = e.target.value.replace(/[^0-9]/g, '');
+                        e.target.value = value;
+                      }}
+                      onBlur={(e) => {
+                        // Add euro symbol when blurring
+                        if (e.target.value) {
+                          e.target.value = `€${e.target.value}`;
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>Min: €100</span>
+                    <span>Max: €10,000</span>
                   </div>
                 </div>
                 
@@ -1121,7 +1130,7 @@ const StartupProfile = () => {
                   onClick={handleCommit} 
                   className="w-full bg-kaas-pink text-white hover:bg-kaas-darkpink"
                 >
-                  Back with {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Number(selectedInvestmentAmount))}
+                  Back with {Number(investmentAmount) ? new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Number(investmentAmount)) : "€0"}
                 </Button>
               </div>
               

@@ -53,7 +53,7 @@ const StartupProfile = () => {
   const [showInvestorSignup, setShowInvestorSignup] = useState(false);
   const [isInvestorRegistered, setIsInvestorRegistered] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const [investmentAmount, setInvestmentAmount] = useState("1000");
+  const [investmentAmount, setInvestmentAmount] = useState("");
   const [comments, setComments] = useState<Comment[]>([
     {
       id: 1,
@@ -138,7 +138,7 @@ const StartupProfile = () => {
     
     // Validate the investment amount
     const amount = Number(investmentAmount);
-    if (isNaN(amount) || amount < 100 || amount > 10000) {
+    if (!investmentAmount || isNaN(amount) || amount < 100 || amount > 10000) {
       toast.error("Please enter a valid amount between €100 and €10,000");
       return;
     }
@@ -1100,12 +1100,12 @@ const StartupProfile = () => {
                   <label className="block text-sm font-medium mb-2">
                     Select investment amount:
                   </label>
-                  <div className="mb-2">
+                  <div className="mb-4">
                     <Input
                       type="text"
                       value={investmentAmount ? `€${investmentAmount}` : ''}
                       onChange={handleInvestmentAmountChange}
-                      placeholder="Enter amount (min €100, max €10,000)"
+                      placeholder="Enter amount, min. €100"
                       className="text-center"
                       onFocus={(e) => {
                         // Remove the euro symbol when focusing
@@ -1120,21 +1120,17 @@ const StartupProfile = () => {
                       }}
                     />
                   </div>
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Min: €100</span>
-                    <span>Max: €10,000</span>
-                  </div>
                 </div>
                 
                 <Button 
                   onClick={handleCommit} 
                   className="w-full bg-kaas-pink text-white hover:bg-kaas-darkpink"
                 >
-                  Back with {Number(investmentAmount) ? new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Number(investmentAmount)) : "€0"}
+                  Back this Team
                 </Button>
               </div>
               
-              <div className="p-5 border rounded-lg mb-6">
+              <div className="p-5 border rounded-lg">
                 <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
                   <ExternalLink className="h-4 w-4 text-kaas-pink" />
                   <span>Key Links</span>
@@ -1215,7 +1211,7 @@ const StartupProfile = () => {
           <DialogHeader>
             <DialogTitle>Back this Team</DialogTitle>
             <DialogDescription>
-              Enter your details to reserve your spot in ProprHome's investment round with {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Number(commitAmount))}.
+              Enter your email to reserve your spot in ProprHome's investment round with {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Number(commitAmount))}.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -1245,6 +1241,20 @@ const StartupProfile = () => {
               />
             </div>
           </div>
+          
+          <div className="text-sm text-muted-foreground mb-4">
+            <p className="mb-2">
+              After submitting, we'll send you an email with two options:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Secure your commitment right away</li>
+              <li>Make a non-binding soft commitment that you can confirm later</li>
+            </ul>
+            <p className="mt-2">
+              Either way, you'll be among the first to know when the funding round officially opens.
+            </p>
+          </div>
+          
           <DialogFooter>
             <DialogClose asChild>
               <Button type="button" variant="outline">
@@ -1252,7 +1262,7 @@ const StartupProfile = () => {
               </Button>
             </DialogClose>
             <Button type="button" onClick={handleSubmitCommitment}>
-              Commit
+              Reserve My Spot
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -371,8 +372,8 @@ const StartupProfile = () => {
         <div className="container flex h-16 items-center">
           <Link to="/" className="mr-4 flex items-center space-x-2">
             <div className="flex items-center">
-              <h2 className="text-lg font-bold tracking-tight">
-                Back the Bold<sup className="text-xs relative -top-2.5 left-0.5">TM</sup>
+              <h2 className="text-sm font-bold tracking-tight">
+                Back the Bold<sup className="text-xs relative -top-2 left-0.5">TM</sup>
               </h2>
             </div>
           </Link>

@@ -1059,17 +1059,20 @@ const StartupProfile = () => {
           <div className="lg:w-4/12">
             <div className="sticky top-24">
               <div className="p-5 border rounded-lg mb-6 shadow-sm">
-                <h2 className="text-lg font-semibold mb-4">Reserve Your Spot</h2>
-                <div className="flex -space-x-2 mb-3">
-                  {backers.map((backer, idx) => (
-                    <Avatar key={idx} className="w-8 h-8 border-2 border-white">
-                      <AvatarImage src={backer.avatar} alt={backer.name} />
-                      <AvatarFallback>{backer.name.substring(0, 2)}</AvatarFallback>
-                    </Avatar>
-                  ))}
-                </div>
+                <h2 className="text-lg font-semibold mb-4 relative">
+                  Reserve Your 
+                  <span className="relative z-10">Spot</span>
+                  <span className="absolute right-0 top-0 flex -space-x-2">
+                    {backers.map((backer, idx) => (
+                      <Avatar key={idx} className="w-8 h-8 border-2 border-white">
+                        <AvatarImage src={backer.avatar} alt={backer.name} />
+                        <AvatarFallback>{backer.name.substring(0, 2)}</AvatarFallback>
+                      </Avatar>
+                    ))}
+                  </span>
+                </h2>
                 <p className="text-muted-foreground mb-4">
-                  Join <span className="font-bold">14</span> others in backing this team and reserve your spot in ProprHome's community-investment round.
+                  Join <span className="font-bold text-black">14</span> others in backing this team and reserve your spot in ProprHome's community-investment round.
                 </p>
                 <Button 
                   onClick={handleCommit} 

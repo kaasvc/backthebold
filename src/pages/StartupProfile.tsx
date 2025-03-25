@@ -777,21 +777,21 @@ const StartupProfile = () => {
                   <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
                     <ul className="space-y-3">
                       <li className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">60%</div>
+                        <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium text-sm flex-shrink-0">60%</div>
                         <div>
                           <p className="font-medium">Product Development</p>
                           <p className="text-sm text-muted-foreground">Hiring 2 additional developers and improving AI algorithms</p>
                         </div>
                       </li>
                       <li className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">25%</div>
+                        <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-medium text-sm flex-shrink-0">25%</div>
                         <div>
                           <p className="font-medium">Sales & Marketing</p>
                           <p className="text-sm text-muted-foreground">Customer acquisition and expanding market reach</p>
                         </div>
                       </li>
                       <li className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0">15%</div>
+                        <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-medium text-sm flex-shrink-0">15%</div>
                         <div>
                           <p className="font-medium">Operations</p>
                           <p className="text-sm text-muted-foreground">Infrastructure scaling and office expenses</p>
@@ -799,12 +799,6 @@ const StartupProfile = () => {
                       </li>
                     </ul>
                   </div>
-                </div>
-                
-                <div className="flex justify-center">
-                  <Button onClick={handleCommit} variant="kaas" size="lg" className="px-8">
-                    Back this Team
-                  </Button>
                 </div>
               </TabsContent>
             </Tabs>
@@ -1240,4 +1234,3 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
-

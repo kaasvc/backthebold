@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -326,7 +327,7 @@ const Landing = () => {
         </div>
         
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Featured Deals</h2>
+          <h2 className="text-2xl font-bold">Live Deals</h2>
         </div>
         
         <div className="space-y-4 mb-10">

@@ -111,9 +111,14 @@ const Landing = () => {
         <div className="container flex h-16 items-center">
           <div className="mr-4 flex items-center space-x-2">
             <div className="flex items-center">
-              <Link to="/" className="font-bold tracking-tight text-lg">
-                Back the Bold<sup className="text-xs relative -top-2">TM</sup>
-              </Link>
+              <div className="flex items-center">
+                <span className="text-xs text-muted-foreground mr-1.5">powered by</span>
+                <img 
+                  src="/lovable-uploads/3aae86c2-a61b-44da-99fd-3071f77961e3.png" 
+                  alt="Kaas logo" 
+                  className="h-8 object-contain" 
+                />
+              </div>
             </div>
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">

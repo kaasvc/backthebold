@@ -1,7 +1,9 @@
+
 import * as React from "react"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
 import { cn } from "@/lib/utils"
+import { Info } from "lucide-react"
 
 const TooltipProvider = TooltipPrimitive.Provider
 
@@ -25,4 +27,27 @@ const TooltipContent = React.forwardRef<
 ))
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+const InfoTooltip = ({ 
+  content, 
+  children,
+  className
+}: { 
+  content: React.ReactNode
+  children?: React.ReactNode
+  className?: string
+}) => {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button className={cn("inline-flex items-center text-slate-500 hover:text-slate-700", className)}>
+          {children || <Info className="h-4 w-4" />}
+        </button>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-xs">
+        <div>{content}</div>
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider, InfoTooltip }

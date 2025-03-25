@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,8 @@ import {
   Building, Users, Briefcase, ChartBar, Rocket, DollarSign, LineChart, Award, 
   UsersRound, Flag, ExternalLink, TrendingUp, Star, History, User, Linkedin, 
   Twitter, Bookmark, Mail, Heart, MessageCircle, Share2, BookmarkCheck, SendHorizontal,
-  MapPin, FileText, Clock, MessageSquare, StarHalf, ThumbsUp, ChevronDown, Globe, Play, Video, CheckCircle
+  MapPin, FileText, Clock, MessageSquare, StarHalf, ThumbsUp, ChevronDown, Globe, Play, Video, CheckCircle,
+  ArrowLeft
 } from "lucide-react";
 import InvestorSignupModal from "@/components/InvestorSignupModal";
 import {
@@ -366,7 +366,6 @@ const StartupProfile = () => {
     }
   ];
 
-  // Mock backers data with avatar images
   const backers = [
     {
       name: "Emily Thompson",
@@ -399,6 +398,13 @@ const StartupProfile = () => {
           </Link>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-4">
+              <Link 
+                to="/deals" 
+                className="flex items-center space-x-2 text-sm font-medium hover:text-kaas-pink transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span>Back to All Deals</span>
+              </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="flex items-center gap-1.5">
@@ -1234,3 +1240,4 @@ const StartupProfile = () => {
 };
 
 export default StartupProfile;
+

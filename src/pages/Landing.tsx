@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -328,9 +327,6 @@ const Landing = () => {
         
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Featured Deals</h2>
-          <Link to="/deals">
-            <Button variant="outline">View All Deals</Button>
-          </Link>
         </div>
         
         <div className="space-y-4 mb-10">

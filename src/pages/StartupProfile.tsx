@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -1060,7 +1059,7 @@ const StartupProfile = () => {
             <div className="sticky top-24">
               <div className="p-5 border rounded-lg mb-6 shadow-sm">
                 <h2 className="text-lg font-semibold mb-4 relative">
-                  Reserve Your 
+                  Reserve Your{" "}
                   <span className="relative z-10">Spot</span>
                   <span className="absolute right-0 top-0 flex -space-x-2">
                     {backers.map((backer, idx) => (

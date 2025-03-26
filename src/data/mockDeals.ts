@@ -15,7 +15,8 @@ export const mockDeals: Deal[] = [
     stage: "Seed",
     backers: 33,
     comments: 275,
-    logo: "/lovable-uploads/f8212a74-012c-413c-afab-311a75d50fe2.png"
+    logo: "/lovable-uploads/f8212a74-012c-413c-afab-311a75d50fe2.png",
+    valuation: 8500000
   },
   {
     id: "lamatic",
@@ -30,7 +31,8 @@ export const mockDeals: Deal[] = [
     stage: "Pre-Seed",
     backers: 16,
     comments: 246,
-    logo: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=150&h=150&fit=crop&crop=faces"
+    logo: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=150&h=150&fit=crop&crop=faces",
+    valuation: 3200000
   },
   {
     id: "liftmycv",
@@ -44,7 +46,8 @@ export const mockDeals: Deal[] = [
     stage: "Angel",
     backers: 27,
     comments: 225,
-    logo: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=faces"
+    logo: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?w=150&h=150&fit=crop&crop=faces",
+    valuation: 1800000
   },
   {
     id: "aicanvas",
@@ -59,7 +62,8 @@ export const mockDeals: Deal[] = [
     stage: "Series A",
     backers: 52,
     comments: 189,
-    logo: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=150&h=150&fit=crop&crop=faces"
+    logo: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=150&h=150&fit=crop&crop=faces",
+    valuation: 12500000
   },
   {
     id: "cryptozen",
@@ -74,6 +78,7 @@ export const mockDeals: Deal[] = [
     stage: "Seed",
     backers: 42,
     comments: 156,
-    logo: "https://images.unsplash.com/photo-1621630854858-35e8037312a1?w=150&h=150&fit=crop&crop=faces"
+    logo: "https://images.unsplash.com/photo-1621630854858-35e8037312a1?w=150&h=150&fit=crop&crop=faces",
+    valuation: 5700000
   }
 ];

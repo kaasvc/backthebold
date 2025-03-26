@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -470,7 +471,7 @@ const StartupProfile = () => {
                     Portugal 🇵🇹
                   </Badge>
                   
-                  {/* Company resources - moved here from below */}
+                  {/* Company resources */}
                   <div className="ml-auto flex items-center gap-2">
                     <Button variant="outline" size="sm" className="flex items-center gap-2">
                       <FileText className="h-4 w-4" />
@@ -486,26 +487,35 @@ const StartupProfile = () => {
                 <p className="text-base text-muted-foreground mb-3 max-w-3xl">
                   AI-powered platform revolutionizing property management for independent landlords and small property managers.
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline">PropTech</Badge>
-                  <Badge variant="outline">AI</Badge>
-                  <Badge variant="outline">SaaS</Badge>
-                  <Badge variant="outline">Real Estate</Badge>
+                
+                {/* Share and Follow buttons - Redesigned and moved into the main company info area */}
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="outline">PropTech</Badge>
+                    <Badge variant="outline">AI</Badge>
+                    <Badge variant="outline">SaaS</Badge>
+                    <Badge variant="outline">Real Estate</Badge>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Button 
+                      variant="secondary" 
+                      size="sm" 
+                      className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 transition-colors text-slate-800 font-medium"
+                    >
+                      <Share2 className="h-4 w-4" />
+                      Share
+                    </Button>
+                    <Button 
+                      variant="default" 
+                      size="sm" 
+                      className="flex items-center gap-2 bg-kaas-pink hover:bg-kaas-darkpink transition-colors text-white font-medium"
+                    >
+                      <BookmarkCheck className="h-4 w-4" />
+                      Follow
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </div>
-            
-            {/* Deal page actions - separated from company resources */}
-            <div className="flex items-center justify-end mb-4">
-              <div className="flex items-center gap-3">
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <Share2 className="h-4 w-4" />
-                  Share
-                </Button>
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
-                  <BookmarkCheck className="h-4 w-4" />
-                  Follow
-                </Button>
               </div>
             </div>
             

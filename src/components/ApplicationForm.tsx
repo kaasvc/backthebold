@@ -10,14 +10,14 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { ArrowLeft, ArrowRight, Upload, Check, Clock, Zap, BrainCircuit, LineChart, CreditCard, Rocket } from "lucide-react";
+import { ArrowLeft, ArrowRight, Upload, Check, Clock, Zap, BrainCircuit, LineChart, CreditCard, Rocket, Sparkles } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const steps = [
   {
     id: "founder-basics",
     title: "Founder Basics",
-    description: "",
+    description: "Tell us about yourself",
     icon: <Check className="h-5 w-5" />,
   },
   {
@@ -60,6 +60,7 @@ const ApplicationForm: React.FC = () => {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [aiSuggestionLoading, setAiSuggestionLoading] = useState(false);
 
   const schema = z.object({
     // Step 1: Founder Basics
@@ -88,7 +89,7 @@ const ApplicationForm: React.FC = () => {
     
     // Step 4: Traction & Vision (optional)
     hasProduct: z.enum(["Yes", "No"]).optional(),
-    productLink: z.string().url("Please enter a valid URL").optional(),
+    productLink: z.string().url("Please enter a valid URL").optional().or(z.string().length(0)),
     traction: z.string().optional(),
     longTermVision: z.string().optional(),
     
@@ -105,7 +106,6 @@ const ApplicationForm: React.FC = () => {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
-      // We'll only use defaultValues for fields in the current step
       fullName: "",
       email: "",
       linkedin: "",
@@ -143,7 +143,7 @@ const ApplicationForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Fix: Convert boolean to string for enableNotifications
+      // Convert boolean to string for enableNotifications
       const formValues = form.getValues();
       const allData = {
         ...formData,
@@ -184,6 +184,47 @@ const ApplicationForm: React.FC = () => {
         setLogoPreview(event.target?.result as string);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const getAiSuggestion = async (field: string) => {
+    setAiSuggestionLoading(true);
+    const companyName = form.getValues("companyName");
+    const buildingWhat = form.getValues("buildingWhat");
+    
+    try {
+      // In a real app, this would call an AI endpoint
+      // For this demo, we'll simulate an AI response with a timeout
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      let suggestion = "";
+      
+      switch (field) {
+        case "elevatorPitch":
+          suggestion = `${companyName} is revolutionizing the way people experience ${buildingWhat ? buildingWhat.toLowerCase().split(" ").slice(0, 5).join(" ") : "your industry"} through our innovative platform that combines cutting-edge technology with seamless user experience.`;
+          break;
+        case "targetUsers":
+          suggestion = "Our target users are forward-thinking professionals aged 25-45 who are tech-savvy and value efficiency and innovation in their daily lives.";
+          break;
+        case "fundUsage":
+          suggestion = "The funds will be used to accelerate product development (40%), expand our marketing efforts (30%), hire key team members (20%), and establish operational infrastructure (10%).";
+          break;
+        case "unfairAdvantage":
+          suggestion = "Our team brings 10+ years of industry experience and deep technical expertise. We've already established key partnerships that give us privileged access to our target market.";
+          break;
+        case "longTermVision":
+          suggestion = "Within 5 years, we aim to become the industry standard, serving over 1 million users globally and expanding into adjacent markets to create a comprehensive ecosystem.";
+          break;
+        default:
+          suggestion = "";
+      }
+      
+      form.setValue(field as any, suggestion);
+      toast.success("AI suggestion added!");
+    } catch (error) {
+      toast.error("Failed to get AI suggestion");
+    } finally {
+      setAiSuggestionLoading(false);
     }
   };
 
@@ -588,7 +629,24 @@ const ApplicationForm: React.FC = () => {
         name="elevatorPitch"
         render={({ field }) => (
           <FormItem className="mb-4">
-            <FormLabel>What's the big idea? (1-2 sentence elevator pitch)</FormLabel>
+            <div className="flex items-center justify-between">
+              <FormLabel>What's the big idea? (1-2 sentence elevator pitch)</FormLabel>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm"
+                onClick={() => getAiSuggestion("elevatorPitch")}
+                disabled={aiSuggestionLoading}
+                className="flex items-center gap-1.5"
+              >
+                {aiSuggestionLoading ? (
+                  <Clock className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className="h-3.5 w-3.5" />
+                )}
+                AI Assist
+              </Button>
+            </div>
             <FormControl>
               <Textarea 
                 placeholder="A simple description of your startup in 1-2 sentences" 
@@ -627,7 +685,24 @@ const ApplicationForm: React.FC = () => {
         name="targetUsers"
         render={({ field }) => (
           <FormItem className="mb-4">
-            <FormLabel>Who is it for? (Target users/customers)</FormLabel>
+            <div className="flex items-center justify-between">
+              <FormLabel>Who is it for? (Target users/customers)</FormLabel>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm"
+                onClick={() => getAiSuggestion("targetUsers")}
+                disabled={aiSuggestionLoading}
+                className="flex items-center gap-1.5"
+              >
+                {aiSuggestionLoading ? (
+                  <Clock className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className="h-3.5 w-3.5" />
+                )}
+                AI Assist
+              </Button>
+            </div>
             <FormControl>
               <Textarea 
                 placeholder="Describe your target audience" 
@@ -645,7 +720,24 @@ const ApplicationForm: React.FC = () => {
         name="unfairAdvantage"
         render={({ field }) => (
           <FormItem className="mb-4">
-            <FormLabel>What's your unfair advantage or story?</FormLabel>
+            <div className="flex items-center justify-between">
+              <FormLabel>What's your unfair advantage or story?</FormLabel>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm"
+                onClick={() => getAiSuggestion("unfairAdvantage")}
+                disabled={aiSuggestionLoading}
+                className="flex items-center gap-1.5"
+              >
+                {aiSuggestionLoading ? (
+                  <Clock className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className="h-3.5 w-3.5" />
+                )}
+                AI Assist
+              </Button>
+            </div>
             <FormControl>
               <Textarea 
                 placeholder="What makes YOU the right person to build this?" 
@@ -663,7 +755,24 @@ const ApplicationForm: React.FC = () => {
         name="fundUsage"
         render={({ field }) => (
           <FormItem className="mb-4">
-            <FormLabel>How will you use the funds?</FormLabel>
+            <div className="flex items-center justify-between">
+              <FormLabel>How will you use the funds?</FormLabel>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm"
+                onClick={() => getAiSuggestion("fundUsage")}
+                disabled={aiSuggestionLoading}
+                className="flex items-center gap-1.5"
+              >
+                {aiSuggestionLoading ? (
+                  <Clock className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className="h-3.5 w-3.5" />
+                )}
+                AI Assist
+              </Button>
+            </div>
             <FormControl>
               <Textarea 
                 placeholder="E.g., team, product, launch, marketing" 
@@ -802,7 +911,24 @@ const ApplicationForm: React.FC = () => {
         name="longTermVision"
         render={({ field }) => (
           <FormItem className="mb-4">
-            <FormLabel>What's your long-term vision?</FormLabel>
+            <div className="flex items-center justify-between">
+              <FormLabel>What's your long-term vision?</FormLabel>
+              <Button 
+                type="button" 
+                variant="outline" 
+                size="sm"
+                onClick={() => getAiSuggestion("longTermVision")}
+                disabled={aiSuggestionLoading}
+                className="flex items-center gap-1.5"
+              >
+                {aiSuggestionLoading ? (
+                  <Clock className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className="h-3.5 w-3.5" />
+                )}
+                AI Assist
+              </Button>
+            </div>
             <FormControl>
               <Textarea 
                 placeholder="Where are you going in 5 years?" 

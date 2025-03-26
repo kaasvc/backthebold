@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -28,6 +29,7 @@ export interface Deal {
   comments: number;
   logo: string;
   valuation?: number;
+  investmentType?: "Direct Equity" | "Convertible Loan Agreement" | "SAFE";
 }
 
 interface DealCardProps {

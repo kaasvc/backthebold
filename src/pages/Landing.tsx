@@ -166,7 +166,7 @@ const Landing = () => {
               <Link to="/apply">
                 <Button variant="kaas" size="sm" className="flex items-center gap-1.5">
                   <Plus className="h-4 w-4" />
-                  Raise with a R
+                  Start your Raise
                 </Button>
               </Link>
             </nav>

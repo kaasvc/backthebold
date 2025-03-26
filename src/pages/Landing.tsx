@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -81,23 +80,18 @@ const Landing = () => {
   
   const filteredDeals = mockDeals
     .filter(deal => {
-      // Filter by categories
       if (activeFilters.categories.length > 0 && 
           !deal.categories.some(cat => activeFilters.categories.includes(cat))) {
         return false;
       }
       
-      // Filter by countries - fixed to work with any country, not just US
       if (activeFilters.countries.length > 0) {
-        // For this demo, we'll pretend all deals are in the selected country
-        // In a real app, this would check against the deal's actual country
         const selectedCountry = activeFilters.countries[0];
         if (selectedCountry && selectedCountry !== "United States") {
           return false;
         }
       }
       
-      // Filter by stages
       if (activeFilters.stages.length > 0 && 
           !activeFilters.stages.includes(deal.stage)) {
         return false;
@@ -106,7 +100,6 @@ const Landing = () => {
       return true;
     })
     .sort((a, b) => {
-      // Sort by the selected sort option
       switch (sortOption) {
         case "popularity":
           return b.backers - a.backers;
@@ -115,7 +108,6 @@ const Landing = () => {
         case "comments":
           return b.comments - a.comments;
         case "lowestValuation":
-          // Handle undefined valuations
           const aVal = a.valuation ?? Infinity;
           const bVal = b.valuation ?? Infinity;
           return aVal - bVal;
@@ -174,7 +166,7 @@ const Landing = () => {
               <Link to="/apply">
                 <Button variant="kaas" size="sm" className="flex items-center gap-1.5">
                   <Plus className="h-4 w-4" />
-                  Start your raise
+                  Raise with a R
                 </Button>
               </Link>
             </nav>

@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown, ChevronUp, Filter, User, Mail, Plus } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Landing = () => {
   const [activeFilters, setActiveFilters] = useState<{
@@ -40,6 +41,7 @@ const Landing = () => {
   
   const [sortOption, setSortOption] = useState("popularity");
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const isMobile = useIsMobile();
   
   const allCategories = [...new Set(mockDeals.flatMap(deal => deal.categories))].sort();
   const allCountries = ["United States", "Canada", "United Kingdom", "Germany", "France", "Singapore"];
@@ -113,7 +115,7 @@ const Landing = () => {
       <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center">
           <div className="mr-4 flex items-center space-x-2">
-            <div className="flex items-center">
+            <div className={cn("flex items-center", isMobile && "hidden")}>
               <div className="flex items-center">
                 <span className="text-xs text-muted-foreground mr-1.5">powered by</span>
                 <img 
@@ -171,17 +173,17 @@ const Landing = () => {
           <h1 className="text-5xl font-bold tracking-tight mb-4">
             Back the Bold<sup className="text-sm relative -top-6 left-1">TM</sup>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-2 px-4 md:px-0">
             Helping founders raise from the people who believe in them.
           </p>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-10">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-10 px-4 md:px-0">
             Start your community fundraise, and let us handle the rest.
           </p>
         </div>
         
         <div className="mb-8 bg-gray-50 p-4 rounded-lg border border-gray-100">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
-            <div className="flex items-center gap-4 mb-4 md:mb-0">
+            <div className="flex flex-wrap items-center gap-4 mb-4 md:mb-0 w-full md:w-auto">
               <Button 
                 variant="outline" 
                 size="sm"

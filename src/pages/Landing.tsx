@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -100,6 +101,8 @@ const Landing = () => {
           return b.number - a.number;
         case "comments":
           return b.comments - a.comments;
+        case "lowestValuation":
+          return a.valuation - b.valuation;
         default:
           return 0;
       }
@@ -200,6 +203,7 @@ const Landing = () => {
                     <SelectItem value="popularity">Most Popular</SelectItem>
                     <SelectItem value="newest">Newest</SelectItem>
                     <SelectItem value="comments">Most Discussed</SelectItem>
+                    <SelectItem value="lowestValuation">Lowest Valuation</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

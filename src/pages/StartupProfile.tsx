@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -471,7 +470,7 @@ const StartupProfile = () => {
                     Portugal 🇵🇹
                   </Badge>
                   
-                  {/* Company resources */}
+                  {/* Company resources - moved here from below */}
                   <div className="ml-auto flex items-center gap-2">
                     <Button variant="outline" size="sm" className="flex items-center gap-2">
                       <FileText className="h-4 w-4" />
@@ -487,35 +486,26 @@ const StartupProfile = () => {
                 <p className="text-base text-muted-foreground mb-3 max-w-3xl">
                   AI-powered platform revolutionizing property management for independent landlords and small property managers.
                 </p>
-                
-                {/* Share and Follow buttons - Redesigned and moved into the main company info area */}
-                <div className="flex items-center justify-between">
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline">PropTech</Badge>
-                    <Badge variant="outline">AI</Badge>
-                    <Badge variant="outline">SaaS</Badge>
-                    <Badge variant="outline">Real Estate</Badge>
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <Button 
-                      variant="secondary" 
-                      size="sm" 
-                      className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 transition-colors text-slate-800 font-medium"
-                    >
-                      <Share2 className="h-4 w-4" />
-                      Share
-                    </Button>
-                    <Button 
-                      variant="secondary" 
-                      size="sm" 
-                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 transition-colors text-white font-medium"
-                    >
-                      <BookmarkCheck className="h-4 w-4" />
-                      Follow
-                    </Button>
-                  </div>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline">PropTech</Badge>
+                  <Badge variant="outline">AI</Badge>
+                  <Badge variant="outline">SaaS</Badge>
+                  <Badge variant="outline">Real Estate</Badge>
                 </div>
+              </div>
+            </div>
+            
+            {/* Deal page actions - separated from company resources */}
+            <div className="flex items-center justify-end mb-4">
+              <div className="flex items-center gap-3">
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Share2 className="h-4 w-4" />
+                  Share
+                </Button>
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <BookmarkCheck className="h-4 w-4" />
+                  Follow
+                </Button>
               </div>
             </div>
             
@@ -623,28 +613,34 @@ const StartupProfile = () => {
                                   <Briefcase className="h-3 w-3" />
                                   {founder.experience} experience
                                 </Badge>
-                                <Badge variant="outline" className="flex items-center gap-1">
-                                  <Rocket className="h-3 w-3" />
-                                  {founder.previousStartups} previous startups
-                                </Badge>
-                                <Badge variant="outline" className="flex items-center gap-1">
-                                  <DollarSign className="h-3 w-3" />
-                                  {founder.previousExits} exits
-                                </Badge>
+                                {founder.previousStartups > 0 && (
+                                  <Badge variant="outline" className="flex items-center gap-1">
+                                    <Star className="h-3 w-3" />
+                                    {founder.previousStartups}x Founder
+                                  </Badge>
+                                )}
+                                {founder.previousExits > 0 && (
+                                  <Badge className="bg-green-500 text-white flex items-center gap-1">
+                                    <TrendingUp className="h-3 w-3" />
+                                    {founder.previousExits} Successful {founder.previousExits === 1 ? 'Exit' : 'Exits'}
+                                  </Badge>
+                                )}
                               </div>
                               
-                              <p className="text-muted-foreground mb-5">{founder.bio}</p>
+                              <p className="text-muted-foreground mb-4">{founder.bio}</p>
                               
-                              <div>
-                                <h4 className="text-sm font-semibold mb-2 flex items-center">
-                                  <Award className="h-4 w-4 text-kaas-pink mr-1" />
-                                  Highlights
+                              <div className="mb-4">
+                                <h4 className="font-medium mb-2 text-sm flex items-center">
+                                  <Award className="h-4 w-4 mr-1.5 text-kaas-pink" />
+                                  Key Achievements
                                 </h4>
-                                <ul className="space-y-1">
+                                <ul className="space-y-2">
                                   {founder.highlights.map((highlight, idx) => (
-                                    <li key={idx} className="text-sm flex items-start gap-2">
-                                      <ChartBar className="h-4 w-4 text-kaas-pink shrink-0 mt-0.5" />
-                                      <span>{highlight}</span>
+                                    <li key={idx} className="flex items-start">
+                                      <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-soft-blue mr-2 text-xs font-medium mt-0.5 flex-shrink-0">
+                                        {idx + 1}
+                                      </span>
+                                      <span className="text-sm">{highlight}</span>
                                     </li>
                                   ))}
                                 </ul>
@@ -655,957 +651,681 @@ const StartupProfile = () => {
                       </Card>
                     ))}
                   </div>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-4 flex items-center">
+                    <Bookmark className="h-5 w-5 text-kaas-pink mr-2" />
+                    <span>Advisors</span>
+                  </h2>
                   
-                  <div className="mt-8">
-                    <h3 className="text-lg font-semibold mb-4 flex items-center">
-                      <Users className="h-5 w-5 text-kaas-pink mr-2" />
-                      <span>Extended Team</span>
-                    </h3>
+                  <div className="grid grid-cols-2 gap-6">
+                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                      <CardContent className="pt-6">
+                        <h3 className="font-semibold">Jordan Williams</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          Former VP of Operations at Airbnb, 20+ years in real estate
+                        </p>
+                      </CardContent>
+                    </Card>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {founders.slice(2).map((member, index) => (
-                        <Card key={index} className="overflow-hidden">
-                          <CardContent className="p-4">
-                            <div className="flex gap-4">
-                              <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
-                                <img 
-                                  src={member.image} 
-                                  alt={member.name} 
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                              <div>
-                                <h4 className="font-bold">{member.name}</h4>
-                                <p className="text-sm text-kaas-pink">{member.title}</p>
-                                <p className="text-xs text-muted-foreground mt-1">{member.education}</p>
-                                <p className="text-sm mt-2">{member.bio}</p>
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
+                    <Card className="border border-blue-200 hover:border-blue-400 transition-colors cursor-pointer">
+                      <CardContent className="pt-6">
+                        <h3 className="font-semibold">Maria Sanchez</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          Partner at PropTech Ventures, Board Member at RealtyAI
+                        </p>
+                      </CardContent>
+                    </Card>
                   </div>
                 </div>
               </TabsContent>
               
-              <TabsContent value="overview">
-                <div className="space-y-6">
-                  <div className="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                    <h2 className="text-xl font-semibold mb-4 flex items-center">
-                      <LineChart className="h-5 w-5 text-kaas-pink mr-2" />
-                      <span>ProprHome Overview</span>
-                    </h2>
-                    
-                    <p className="mb-4">
-                      ProprHome is a comprehensive property management platform designed specifically for independent landlords and small property managers who own or manage 1-50 units. Our AI-powered solution simplifies every aspect of property management while providing enterprise-level tools at an affordable price point.
-                    </p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                      <div className="bg-white p-4 rounded-lg border border-slate-200">
-                        <h3 className="font-semibold flex items-center mb-2">
-                          <Award className="h-4 w-4 text-kaas-pink mr-2" />
-                          Key Problem
-                        </h3>
-                        <p className="text-sm">
-                          Small landlords are underserved by current property management solutions, which are either too expensive or too basic, leading to inefficient operations and missed revenue opportunities.
-                        </p>
+              <TabsContent value="overview" className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">What's the Story?</h2>
+                  <p className="text-muted-foreground mb-4">
+                    ProprHome.com is building an AI-powered platform that simplifies property management for independent landlords and small property managers. Our solution automates tenant screening, maintenance requests, rent collection, and financial reporting, enabling property owners to save time and increase profitability.
+                  </p>
+                  <p className="text-muted-foreground mb-4">
+                    Our platform integrates with existing property management workflows and leverages AI to provide predictive maintenance recommendations, optimized pricing strategies, and tenant relationship management, all within an easy-to-use dashboard.
+                  </p>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Previous Rounds</h2>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-2">
+                      <Badge className="mt-0.5">Pre-Seed</Badge>
+                      <div>
+                        <p className="text-sm font-medium">$350K | May 2023</p>
+                        <p className="text-xs text-muted-foreground">Angel investors & friends and family</p>
                       </div>
-                      
-                      <div className="bg-white p-4 rounded-lg border border-slate-200">
-                        <h3 className="font-semibold flex items-center mb-2">
-                          <Rocket className="h-4 w-4 text-kaas-pink mr-2" />
-                          Solution
-                        </h3>
-                        <p className="text-sm">
-                          ProprHome provides an all-in-one platform with AI-powered maintenance prediction, tenant screening, rent collection, and financial tools tailored for the needs of independent landlords.
-                        </p>
-                      </div>
-                      
-                      <div className="bg-white p-4 rounded-lg border border-slate-200">
-                        <h3 className="font-semibold flex items-center mb-2">
-                          <TrendingUp className="h-4 w-4 text-kaas-pink mr-2" />
-                          Traction
-                        </h3>
-                        <p className="text-sm">
-                          85% accuracy in maintenance prediction, €2,200 average annual savings per property for beta users, and 92% customer satisfaction rating.
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="mb-6">
-                      <h3 className="font-semibold mb-3 flex items-center">
-                        <Star className="h-4 w-4 text-kaas-pink mr-2" />
-                        Key Features
-                      </h3>
-                      
-                      <ul className="space-y-2">
-                        <li className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <CheckCircle className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">AI-Powered Maintenance Prediction</span>
-                            <p className="text-sm text-muted-foreground">Predicts maintenance issues before they become expensive problems, saving landlords thousands in repair costs.</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <CheckCircle className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">Comprehensive Tenant Screening</span>
-                            <p className="text-sm text-muted-foreground">Credit, background, eviction, and income verification in one seamless process, reducing vacancy risks.</p>
-                          </div>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <CheckCircle className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">Automated Financial Tools</span>
-                            <p className="text-sm text-muted-foreground">Rent collection, expense tracking, and tax preparation specifically designed for rental property accounting.</p>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div className="mt-5 pt-5 border-t border-slate-200">
-                      <h3 className="font-semibold mb-3">Business Model</h3>
-                      <p className="mb-3">
-                        ProprHome operates on a subscription model with tiered pricing based on the number of units managed:
-                      </p>
-                      <ul className="space-y-1 text-sm">
-                        <li className="flex justify-between">
-                          <span>Basic (1-5 units)</span>
-                          <span className="font-semibold">€15/month</span>
-                        </li>
-                        <li className="flex justify-between">
-                          <span>Pro (6-20 units)</span>
-                          <span className="font-semibold">€12/unit/month</span>
-                        </li>
-                        <li className="flex justify-between">
-                          <span>Enterprise (21-50 units)</span>
-                          <span className="font-semibold">€10/unit/month</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
+                    </li>
+                  </ul>
                 </div>
               </TabsContent>
               
-              <TabsContent value="market">
-                <div className="space-y-6">
-                  <div className="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                    <h2 className="text-xl font-semibold mb-4 flex items-center">
-                      <LineChart className="h-5 w-5 text-kaas-pink mr-2" />
-                      <span>Market Opportunity</span>
-                    </h2>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                      <div>
-                        <h3 className="font-semibold mb-3">Market Size</h3>
-                        <p className="mb-3 text-sm">
-                          The European property management software market is valued at €2.4 billion and projected to grow at a CAGR of 7.2% through 2027. Small and independent landlords represent 65% of this market but are underserved by current solutions.
-                        </p>
-                        
-                        <h4 className="font-medium text-sm mb-2">Target Market Breakdown:</h4>
-                        <ul className="space-y-1 text-sm">
-                          <li className="flex items-center gap-2">
-                            <UsersRound className="h-4 w-4 text-kaas-pink" />
-                            8.2 million independent landlords in Europe
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <Building className="h-4 w-4 text-kaas-pink" />
-                            42 million rental units managed by small property owners
-                          </li>
-                          <li className="flex items-center gap-2">
-                            <Users className="h-4 w-4 text-kaas-pink" />
-                            76% express dissatisfaction with current management tools
-                          </li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <h3 className="font-semibold mb-3">Competitive Landscape</h3>
-                        <p className="mb-3 text-sm">
-                          The property management software market is fragmented, with most solutions falling into two categories:
-                        </p>
-                        
-                        <div className="space-y-3 text-sm">
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <h4 className="font-medium">Enterprise Solutions (AppFolio, Yardi)</h4>
-                            <p className="text-xs text-muted-foreground">Comprehensive but expensive and complex, pricing out small landlords.</p>
-                          </div>
-                          
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <h4 className="font-medium">Basic Tools (Landlord Studio, TurboTenant)</h4>
-                            <p className="text-xs text-muted-foreground">Affordable but limited functionality, missing advanced features.</p>
-                          </div>
-                          
-                          <div className="bg-green-50 p-3 rounded border border-green-200">
-                            <h4 className="font-medium text-green-800">ProprHome Advantage</h4>
-                            <p className="text-xs text-green-700">Enterprise-level features with pricing and usability tailored for independent landlords.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="mb-6">
-                      <h3 className="font-semibold mb-3">Current Traction</h3>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="bg-white p-4 rounded-lg border border-slate-200 text-center">
-                          <div className="text-2xl font-bold text-kaas-pink">450+</div>
-                          <p className="text-sm text-muted-foreground">Beta Users</p>
-                        </div>
-                        
-                        <div className="bg-white p-4 rounded-lg border border-slate-200 text-center">
-                          <div className="text-2xl font-bold text-kaas-pink">€28,000</div>
-                          <p className="text-sm text-muted-foreground">MRR from Early Adopters</p>
-                        </div>
-                        
-                        <div className="bg-white p-4 rounded-lg border border-slate-200 text-center">
-                          <div className="text-2xl font-bold text-kaas-pink">92%</div>
-                          <p className="text-sm text-muted-foreground">User Satisfaction Rate</p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-semibold mb-3">Go-to-Market Strategy</h3>
-                      
-                      <div className="space-y-2">
-                        <div className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <Flag className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">Phase 1: Portugal & Spain (Current)</span>
-                            <p className="text-sm text-muted-foreground">Direct outreach to property management associations and targeted digital marketing.</p>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <Flag className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">Phase 2: Western Europe (Q3 2023)</span>
-                            <p className="text-sm text-muted-foreground">Expansion to France, Germany, and Italy through partnerships with real estate associations.</p>
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <Flag className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">Phase 3: Full European Rollout (Q2 2024)</span>
-                            <p className="text-sm text-muted-foreground">Comprehensive market coverage with localized features and support.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <TabsContent value="market" className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Market Overview</h2>
+                  <p className="text-muted-foreground mb-4">
+                    The global property management market is valued at $19.9 billion in 2023 and is projected to reach $37.2 billion by 2030, growing at a CAGR of 9.3% during the forecast period.
+                  </p>
+                  <p className="text-muted-foreground mb-4">
+                    Independent landlords and small property managers (managing 1-50 units) represent over 70% of the rental market in Europe but are severely underserved by current solutions that are either too basic or priced for enterprise clients.
+                  </p>
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="dealterms">
-                <div className="space-y-6">
-                  <div className="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                    <h2 className="text-xl font-semibold mb-4 flex items-center">
-                      <LineChart className="h-5 w-5 text-kaas-pink mr-2" />
-                      <span>Investment Terms</span>
-                    </h2>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                      <div>
-                        <h3 className="font-semibold mb-3">Financing Details</h3>
-                        
-                        <div className="space-y-3">
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Investment Type</span>
-                              <span className="font-medium">Convertible Note</span>
-                            </div>
-                          </div>
-                          
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Funding Target</span>
-                              <span className="font-medium">€150,000</span>
-                            </div>
-                          </div>
-                          
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Pre-Money Valuation</span>
-                              <span className="font-medium">€3.5 Million</span>
-                            </div>
-                          </div>
-                          
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Minimum Investment</span>
-                              <span className="font-medium">€1,000</span>
-                            </div>
-                          </div>
-                        </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Traction</h2>
+                  <div className="space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-soft-blue/10 rounded-lg border border-soft-blue/20">
+                      <div className="bg-soft-blue/20 p-2 rounded-full">
+                        <Users className="h-6 w-6 text-soft-blue" />
                       </div>
-                      
-                      <div>
-                        <h3 className="font-semibold mb-3">Terms</h3>
-                        
-                        <div className="space-y-3">
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Discount Rate</span>
-                              <span className="font-medium">20%</span>
-                            </div>
-                          </div>
-                          
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Conversion Cap</span>
-                              <span className="font-medium">€4.5 Million</span>
-                            </div>
-                          </div>
-                          
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Interest Rate</span>
-                              <span className="font-medium">5% non-compounding</span>
-                            </div>
-                          </div>
-                          
-                          <div className="bg-white p-3 rounded border border-slate-200">
-                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Maturity</span>
-                              <span className="font-medium">24 months</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="mb-6">
-                      <h3 className="font-semibold mb-3">Use of Funds</h3>
-                      
-                      <ul className="space-y-2">
-                        <li className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <CheckCircle className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">Product Development (40%)</span>
-                            <p className="text-sm text-muted-foreground">Enhancing AI maintenance prediction capabilities and extending platform features.</p>
-                          </div>
-                        </li>
-                        
-                        <li className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <CheckCircle className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">Marketing & Customer Acquisition (35%)</span>
-                            <p className="text-sm text-muted-foreground">Expanding user base in Portugal and Spain, preparing for western European launch.</p>
-                          </div>
-                        </li>
-                        
-                        <li className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <CheckCircle className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">Team Expansion (20%)</span>
-                            <p className="text-sm text-muted-foreground">Hiring key engineering and sales personnel to support growth objectives.</p>
-                          </div>
-                        </li>
-                        
-                        <li className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-kaas-pink/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <CheckCircle className="h-3 w-3 text-kaas-pink" />
-                          </div>
-                          <div>
-                            <span className="font-medium">Operations & Legal (5%)</span>
-                            <p className="text-sm text-muted-foreground">Infrastructure scaling and regulatory compliance for European expansion.</p>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-semibold mb-3">Current Backers</h3>
-                      
-                      <div className="flex -space-x-2 mb-3">
-                        {backers.map((backer, index) => (
-                          <div key={index} className="relative group">
-                            <Avatar className="border-2 border-white h-10 w-10">
-                              <AvatarImage src={backer.avatar} alt={backer.name} />
-                              <AvatarFallback>{backer.name.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-1 bg-slate-800 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                              {backer.name}
-                            </div>
-                          </div>
-                        ))}
-                        <div className="border-2 border-white h-10 w-10 rounded-full bg-kaas-pink/10 flex items-center justify-center text-xs font-medium text-kaas-pink">
-                          +10
-                        </div>
-                      </div>
-                      
-                      <div className="bg-blue-50 p-4 rounded-md border border-blue-100">
-                        <div className="flex items-start gap-2">
-                          <ExternalLink className="h-5 w-5 text-blue-600 shrink-0 mt-0.5" />
-                          <div>
-                            <h4 className="font-medium text-blue-800">Angel Investor Update</h4>
-                            <p className="text-sm text-blue-700">
-                              Our seed round is now 65% funded with commitments from 14 angel investors, including early backers from successful PropTech startups like Spotahome and Badi.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-6 pt-5 border-t border-slate-200">
-                      <div className="bg-green-50 p-4 rounded-md border border-green-200">
-                        <h3 className="font-semibold text-green-800 mb-2 flex items-center">
-                          <History className="h-4 w-4 mr-2 text-green-700" />
-                          Exit Strategy
-                        </h3>
-                        <p className="text-sm text-green-700 mb-2">
-                          ProprHome is built with a clear exit strategy focused on strategic acquisition by larger property management platforms or real estate services firms within 4-6 years.
-                        </p>
-                        <p className="text-sm text-green-700">
-                          Comparable exits in the European PropTech space have achieved 6-8x revenue multiples, with several acquisitions exceeding €25M in the last 24 months.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white border border-blue-200 rounded-lg p-6">
-                    <div className="flex flex-col md:flex-row gap-4 items-center">
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold mb-2">Ready to invest in ProprHome?</h3>
-                        <p className="text-muted-foreground mb-4">Join our community of investors backing the future of property management.</p>
-                        
-                        <div className="flex flex-col space-y-3 md:flex-row md:space-y-0 md:space-x-3">
-                          <div className="flex-1">
-                            <Input 
-                              type="text" 
-                              placeholder="Investment amount (€)" 
-                              value={investmentAmount}
-                              onChange={handleInvestmentAmountChange}
-                              className="w-full"
-                            />
-                          </div>
-                          <Button
-                            variant="kaas"
-                            className="bg-kaas-pink hover:bg-kaas-darkpink text-white"
-                            onClick={handleCommit}
-                          >
-                            Back this team
-                          </Button>
-                        </div>
-                      </div>
-                      <div className="hidden md:block border-l border-slate-200 h-24"></div>
-                      <div className="text-center md:text-left">
-                        <p className="text-sm text-muted-foreground mb-1">Need more info?</p>
-                        <Button variant="outline" className="flex items-center gap-2">
-                          <SendHorizontal className="h-4 w-4" />
-                          Contact the founders
-                        </Button>
+                        <h4 className="font-semibold">120+</h4>
+                        <p className="text-sm text-muted-foreground">Active landlords in beta</p>
                       </div>
                     </div>
+                    
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-green-50 rounded-lg border border-green-100">
+                      <div className="bg-green-100 p-2 rounded-full">
+                        <Building className="h-6 w-6 text-green-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold">450+</h4>
+                        <p className="text-sm text-muted-foreground">Units under management</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-purple-50 rounded-lg border border-purple-100">
+                      <div className="bg-purple-100 p-2 rounded-full">
+                        <ChartBar className="h-6 w-6 text-purple-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold">18% MoM</h4>
+                        <p className="text-sm text-muted-foreground">Growth in last 6 months</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="dealterms" className="space-y-6">
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Investment Terms</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <DollarSign className="h-5 w-5 text-slate-700" />
+                        <h3 className="font-semibold">Valuation</h3>
+                      </div>
+                      <p className="text-lg font-medium">€1.5M</p>
+                      <p className="text-sm text-muted-foreground">Pre-money valuation</p>
+                    </div>
+                    
+                    <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Rocket className="h-5 w-5 text-slate-700" />
+                        <h3 className="font-semibold">Target Raise</h3>
+                      </div>
+                      <p className="text-lg font-medium">€150,000</p>
+                      <p className="text-sm text-muted-foreground">To fund 18 months of operations</p>
+                    </div>
+                    
+                    <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <LineChart className="h-5 w-5 text-slate-700" />
+                        <h3 className="font-semibold">Equity Offered</h3>
+                      </div>
+                      <p className="text-lg font-medium">10%</p>
+                      <p className="text-sm text-muted-foreground">Of the company's equity</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h2 className="text-xl font-semibold mb-3">Use of Funds</h2>
+                  <div className="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                    <ul className="space-y-3">
+                      <li className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium text-sm flex-shrink-0">60%</div>
+                        <div>
+                          <p className="font-medium">Product Development</p>
+                          <p className="text-sm text-muted-foreground">Hiring 2 additional developers and improving AI algorithms</p>
+                        </div>
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-medium text-sm flex-shrink-0">25%</div>
+                        <div>
+                          <p className="font-medium">Sales & Marketing</p>
+                          <p className="text-sm text-muted-foreground">Customer acquisition and expanding market reach</p>
+                        </div>
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-medium text-sm flex-shrink-0">15%</div>
+                        <div>
+                          <p className="font-medium">Operations</p>
+                          <p className="text-sm text-muted-foreground">Infrastructure scaling and office expenses</p>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </TabsContent>
             </Tabs>
+
+            <div className="mt-8">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="discussions">
+                    <div className="flex items-center gap-2">
+                      <MessageCircle className="h-4 w-4" />
+                      <span>Discussions</span>
+                    </div>
+                  </TabsTrigger>
+                  <TabsTrigger value="reviews">
+                    <div className="flex items-center gap-2">
+                      <Star className="h-4 w-4" />
+                      <span>Reviews</span>
+                    </div>
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="discussions" className="mt-4">
+                  <div className="space-y-8">
+                    <div className="p-5 border rounded-lg bg-background">
+                      <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <MessageCircle className="h-5 w-5 text-kaas-pink" />
+                        Join the Discussion
+                      </h2>
+                      <Textarea 
+                        placeholder="Share your thoughts or ask a question..." 
+                        className="min-h-[100px] mb-3"
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                      />
+                      <div className="flex justify-end">
+                        <Button 
+                          onClick={handleSubmitComment}
+                          className="bg-kaas-pink text-white hover:bg-kaas-darkpink"
+                        >
+                          Post Comment
+                        </Button>
+                      </div>
+                    </div>
+
+                    {comments.map(comment => (
+                      <div key={comment.id} id={`comment-${comment.id}`} className="p-5 border rounded-lg bg-background shadow-sm">
+                        <div className="flex items-start gap-4">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage src={comment.avatar} alt={comment.author} />
+                            <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1">
+                            <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                              <div>
+                                <span className="font-medium">{comment.author}</span>
+                                <span className="text-sm text-muted-foreground ml-2">{comment.date}</span>
+                              </div>
+                              <div className="flex gap-1">
+                                <button 
+                                  onClick={() => handleShareComment(comment.id)} 
+                                  className="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100"
+                                >
+                                  <Share2 className="h-4 w-4" />
+                                </button>
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <button className="text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100">
+                                      <ChevronDown className="h-4 w-4" />
+                                    </button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent align="end">
+                                    <DropdownMenuItem 
+                                      className="cursor-pointer"
+                                      onClick={() => handleReportComment(comment.id)}
+                                    >
+                                      Report comment
+                                    </DropdownMenuItem>
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              </div>
+                            </div>
+                            <p className="text-base mb-3">{comment.content}</p>
+                            <div className="flex items-center gap-4 mb-2">
+                              <button 
+                                onClick={() => handleLikeComment(comment.id)}
+                                className={`flex items-center gap-1 text-sm ${likedComments[comment.id] ? 'text-kaas-pink' : 'text-slate-500 hover:text-slate-700'}`}
+                              >
+                                <Heart className={`h-4 w-4 ${likedComments[comment.id] ? 'fill-kaas-pink text-kaas-pink' : ''}`} />
+                                {comment.likes > 0 && <span>{comment.likes}</span>}
+                              </button>
+                              <button
+                                onClick={() => handleReply(comment.id)}
+                                className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+                              >
+                                <MessageCircle className="h-4 w-4" />
+                                <span>Reply</span>
+                              </button>
+                            </div>
+
+                            {/* Reply Form */}
+                            {replyingTo === comment.id && (
+                              <div className="pl-4 border-l-2 border-slate-200 mt-3 mb-4">
+                                <Textarea 
+                                  placeholder="Write your reply..." 
+                                  className="min-h-[80px] mb-2"
+                                  value={replyText}
+                                  onChange={(e) => setReplyText(e.target.value)}
+                                />
+                                <div className="flex justify-end gap-2">
+                                  <Button 
+                                    variant="outline" 
+                                    size="sm"
+                                    onClick={handleCancelReply}
+                                  >
+                                    Cancel
+                                  </Button>
+                                  <Button 
+                                    size="sm"
+                                    onClick={() => handleSubmitReply(comment.id)}
+                                    className="bg-kaas-pink text-white hover:bg-kaas-darkpink"
+                                  >
+                                    Submit Reply
+                                  </Button>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Replies */}
+                            {comment.replies && comment.replies.length > 0 && (
+                              <div className="pl-4 border-l-2 border-slate-200 mt-4 space-y-4">
+                                {comment.replies.map(reply => (
+                                  <div key={reply.id} className="flex items-start gap-3">
+                                    <Avatar className="h-8 w-8">
+                                      <AvatarImage src={reply.avatar} alt={reply.author} />
+                                      <AvatarFallback>{reply.author.substring(0, 2)}</AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex-1">
+                                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                                        <span className="font-medium">{reply.author}</span>
+                                        <span className="text-xs text-muted-foreground">{reply.date}</span>
+                                      </div>
+                                      <p className="text-sm">{reply.content}</p>
+                                      <div className="flex items-center gap-3 mt-1">
+                                        <button 
+                                          className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-700"
+                                        >
+                                          <Heart className="h-3 w-3" />
+                                          {reply.likes > 0 && <span>{reply.likes}</span>}
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="reviews" className="mt-4">
+                  <div className="space-y-8">
+                    <div className="p-5 border rounded-lg bg-background">
+                      <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <Star className="h-5 w-5 text-kaas-pink" />
+                        Share Your Experience
+                      </h2>
+                      
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium mb-1">
+                          Rating
+                        </label>
+                        <div className="flex gap-1 mb-2">
+                          {[1, 2, 3, 4, 5].map((rating) => (
+                            <button
+                              key={rating}
+                              type="button"
+                              onClick={() => setReviewRating(rating)}
+                              className="focus:outline-none"
+                            >
+                              <Star 
+                                className={`h-6 w-6 ${rating <= reviewRating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`} 
+                              />
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-4 mb-3">
+                        <div>
+                          <label className="block text-sm font-medium mb-1">
+                            Title
+                          </label>
+                          <Input 
+                            placeholder="Summarize your experience" 
+                            value={reviewTitle}
+                            onChange={(e) => setReviewTitle(e.target.value)}
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium mb-1">
+                            Review
+                          </label>
+                          <Textarea 
+                            placeholder="Share details about your experience with ProprHome" 
+                            className="min-h-[100px]"
+                            value={reviewText}
+                            onChange={(e) => setReviewText(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="flex justify-end">
+                        <Button 
+                          onClick={handleSubmitReview}
+                          className="bg-kaas-pink text-white hover:bg-kaas-darkpink"
+                        >
+                          Post Review
+                        </Button>
+                      </div>
+                    </div>
+
+                    {reviews.map(review => (
+                      <div key={review.id} className="p-5 border rounded-lg bg-background shadow-sm">
+                        <div className="flex items-start gap-4">
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage src={review.avatar} alt={review.author} />
+                            <AvatarFallback>{review.author.substring(0, 2)}</AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1">
+                            <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                              <div>
+                                <span className="font-medium">{review.author}</span>
+                                <span className="text-sm text-muted-foreground ml-2">{review.date}</span>
+                              </div>
+                            </div>
+                            
+                            <div className="flex mb-2">
+                              {renderStars(review.rating)}
+                            </div>
+                            
+                            <h3 className="font-semibold text-base mb-2">{review.title}</h3>
+                            <p className="text-base mb-3">{review.content}</p>
+                            
+                            <div className="flex items-center justify-between border-t pt-3 mt-3">
+                              <div className="flex items-center gap-1">
+                                <Clock className="h-4 w-4 text-slate-400" />
+                                <span className="text-sm text-slate-500">{review.date}</span>
+                              </div>
+                              
+                              <button 
+                                onClick={() => handleMarkHelpful(review.id)}
+                                className={`flex items-center gap-1 text-sm ${helpfulReviews[review.id] ? 'text-green-600' : 'text-slate-500 hover:text-slate-700'}`}
+                              >
+                                <ThumbsUp className={`h-4 w-4 ${helpfulReviews[review.id] ? 'text-green-600' : ''}`} />
+                                <span>{review.helpful} {review.helpful === 1 ? 'person' : 'people'} found this helpful</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
           
           <div className="lg:w-4/12">
-            <div className="bg-white border border-slate-200 rounded-lg p-5 sticky top-24">
-              <h2 className="text-xl font-bold mb-4">Back this startup</h2>
-              
-              <div className="mb-5">
-                <p className="text-sm text-muted-foreground mb-2">Enter investment amount</p>
-                <div className="flex gap-2">
-                  <div className="relative flex-1">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">€</span>
-                    <Input 
-                      type="text" 
-                      placeholder="1,000" 
-                      className="pl-8"
-                      value={investmentAmount}
-                      onChange={handleInvestmentAmountChange}
-                    />
-                  </div>
-                  <Button
-                    variant="kaas"
-                    className="bg-kaas-pink hover:bg-kaas-darkpink text-white whitespace-nowrap"
-                    onClick={handleCommit}
-                  >
-                    Back this team
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground mt-2">Minimum investment: €1,000</p>
-              </div>
-              
-              <Separator className="my-5" />
-              
-              <div className="space-y-5">
-                <div>
-                  <h3 className="font-semibold mb-2">Deal Terms</h3>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Type</span>
-                      <span>Convertible Note</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Valuation</span>
-                      <span>€3.5M</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Discount</span>
-                      <span>20%</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Cap</span>
-                      <span>€4.5M</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <Separator />
-                
-                <div>
-                  <h3 className="font-semibold mb-2">Discussions</h3>
+            <div className="sticky top-24 space-y-6">
+              <Card className="border rounded-lg shadow-sm overflow-hidden">
+                <CardContent className="p-5">
+                  <h2 className="text-lg font-semibold mb-4 relative">
+                    Reserve Your{" "}
+                    <span className="relative z-10">Spot</span>
+                    <span className="absolute right-0 top-0 flex -space-x-2">
+                      {backers.map((backer, idx) => (
+                        <Avatar key={idx} className="w-8 h-8 border-2 border-white">
+                          <AvatarImage src={backer.avatar} alt={backer.name} />
+                          <AvatarFallback>{backer.name.substring(0, 2)}</AvatarFallback>
+                        </Avatar>
+                      ))}
+                    </span>
+                  </h2>
+                  <p className="text-muted-foreground mb-4">
+                    Join <span className="font-bold text-black">14</span> others in backing this team and reserve your spot in ProprHome's community fundraise.
+                  </p>
                   
-                  <div className="space-y-3">
-                    {comments.slice(0, 2).map((comment) => (
-                      <div key={comment.id} className="text-sm">
-                        <div className="flex items-center gap-2 mb-1">
-                          <Avatar className="h-6 w-6">
-                            <AvatarImage src={comment.avatar} alt={comment.author} />
-                            <AvatarFallback>{comment.author[0]}</AvatarFallback>
-                          </Avatar>
-                          <span className="font-medium">{comment.author}</span>
-                          <span className="text-xs text-muted-foreground">{comment.date}</span>
-                        </div>
-                        <p className="text-muted-foreground line-clamp-2">{comment.content}</p>
-                      </div>
-                    ))}
+                  <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                        Direct Equity
+                      </Badge>
+                      <InfoTooltip content="In a Direct Equity round, you purchase shares directly in the company at the specified valuation." />
+                    </div>
                     
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full"
-                      onClick={() => setActiveTab("discussions")}
-                    >
-                      <MessageCircle className="h-4 w-4 mr-2" />
-                      View all discussions
-                    </Button>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <div className="flex items-center gap-1.5 mb-1.5">
+                          <span className="text-sm font-medium">Valuation</span>
+                          <InfoTooltip content="The pre-money valuation is the value of the company before the investment." />
+                        </div>
+                        <p className="text-base font-semibold">€1.5M</p>
+                      </div>
+                      <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                        <div className="flex items-center gap-1.5 mb-1.5">
+                          <span className="text-sm font-medium">Equity</span>
+                          <InfoTooltip content="The percentage of the company being offered in exchange for the investment." />
+                        </div>
+                        <p className="text-base font-semibold">10%</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                
-                <Separator />
-                
-                <div>
-                  <h3 className="font-semibold mb-2">Company Info</h3>
                   
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-start gap-2">
-                      <MapPin className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-muted-foreground">Location</span>
-                        <p>Lisbon, Portugal</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <Clock className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-muted-foreground">Founded</span>
-                        <p>2021</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <Users className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-muted-foreground">Team Size</span>
-                        <p>8 full-time employees</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <Globe className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
-                      <div>
-                        <span className="text-muted-foreground">Website</span>
-                        <p>
-                          <a 
-                            href="https://proprhome.com" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:underline flex items-center"
-                          >
-                            proprhome.com
-                            <ExternalLink className="h-3 w-3 ml-1" />
-                          </a>
-                        </p>
-                      </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium mb-2">
+                      Select investment amount:
+                    </label>
+                    <div className="mb-4">
+                      <Input
+                        type="text"
+                        value={investmentAmount ? `€${investmentAmount}` : ''}
+                        onChange={handleInvestmentAmountChange}
+                        placeholder="Enter amount, min. €100"
+                        className="text-center"
+                        tooltip="The minimum investment amount is €100 and the maximum is €10,000."
+                        onFocus={(e) => {
+                          // Remove the euro symbol when focusing
+                          const value = e.target.value.replace(/[^0-9]/g, '');
+                          e.target.value = value;
+                        }}
+                        onBlur={(e) => {
+                          // Add euro symbol when blurring
+                          if (e.target.value) {
+                            e.target.value = `€${e.target.value}`;
+                          }
+                        }}
+                      />
                     </div>
                   </div>
-                </div>
-              </div>
+                  
+                  <Button 
+                    onClick={handleCommit} 
+                    className="w-full bg-kaas-pink text-white hover:bg-kaas-darkpink"
+                  >
+                    Back this Team
+                  </Button>
+                </CardContent>
+              </Card>
+              
+              <Card className="border rounded-lg shadow-sm">
+                <CardContent className="p-5">
+                  <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+                    <ExternalLink className="h-4 w-4 text-kaas-pink" />
+                    <span>Key Links</span>
+                  </h2>
+                  <ul className="space-y-3">
+                    <li>
+                      <a 
+                        href="https://proprhome.com" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Globe className="h-4 w-4" />
+                        <span className="text-sm">proprhome.com</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a 
+                        href="https://linkedin.com/company/proprhome" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Linkedin className="h-4 w-4" />
+                        <span className="text-sm">LinkedIn</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a 
+                        href="https://twitter.com/proprhome" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Twitter className="h-4 w-4" />
+                        <span className="text-sm">Twitter</span>
+                      </a>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+              
+              <Card className="border rounded-lg shadow-sm">
+                <CardContent className="p-5">
+                  <h2 className="text-base font-semibold mb-3 flex items-center gap-2">
+                    <Flag className="h-4 w-4 text-kaas-pink" />
+                    <span>Upcoming Milestones</span>
+                  </h2>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-2">
+                      <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">1</div>
+                      <div>
+                        <p className="text-sm font-medium">Launch mobile app (Q2 2023)</p>
+                        <p className="text-xs text-muted-foreground">iOS and Android native applications</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">2</div>
+                      <div>
+                        <p className="text-sm font-medium">Expand to 5 new markets (Q3 2023)</p>
+                        <p className="text-xs text-muted-foreground">Spain, France, Germany, Italy, UK</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="w-5 h-5 rounded-full bg-soft-blue flex items-center justify-center text-white text-xs flex-shrink-0 mt-0.5">3</div>
+                      <div>
+                        <p className="text-sm font-medium">Reach 5,000 active properties (Q4 2023)</p>
+                        <p className="text-xs text-muted-foreground">Through direct sales and partnerships</p>
+                      </div>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
-        
-        <div className="mb-10">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="mb-4">
-              <TabsTrigger value="discussions">
-                <MessageCircle className="h-4 w-4 mr-2" />
-                Discussions
-              </TabsTrigger>
-              <TabsTrigger value="reviews">
-                <Star className="h-4 w-4 mr-2" />
-                Reviews
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="discussions" className="space-y-6">
-              <div className="bg-white border border-slate-200 rounded-lg p-5">
-                <h3 className="text-lg font-semibold mb-4">Join the discussion</h3>
-                
-                <div className="space-y-4">
-                  <Textarea 
-                    placeholder="Ask questions or share your thoughts about ProprHome..."
-                    className="min-h-[100px]"
-                    value={commentText}
-                    onChange={(e) => setCommentText(e.target.value)}
-                  />
-                  
-                  <div className="flex justify-end">
-                    <Button 
-                      variant="default"
-                      onClick={handleSubmitComment}
-                    >
-                      Post Comment
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-5">
-                {comments.map((comment) => (
-                  <div key={comment.id} className="bg-white border border-slate-200 rounded-lg p-5">
-                    <div className="flex items-start gap-3">
-                      <Avatar>
-                        <AvatarImage src={comment.avatar} alt={comment.author} />
-                        <AvatarFallback>{comment.author[0]}</AvatarFallback>
-                      </Avatar>
-                      
-                      <div className="flex-1">
-                        <div className="flex justify-between items-center mb-1">
-                          <div>
-                            <span className="font-semibold">{comment.author}</span>
-                            <span className="text-xs text-muted-foreground ml-2">{comment.date}</span>
-                          </div>
-                          
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                <ChevronDown className="h-4 w-4" />
-                                <span className="sr-only">More</span>
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem onClick={() => handleShareComment(comment.id)}>
-                                <Share2 className="h-4 w-4 mr-2" />
-                                <span>Share</span>
-                              </DropdownMenuItem>
-                              <DropdownMenuItem onClick={() => handleReportComment(comment.id)}>
-                                <Flag className="h-4 w-4 mr-2" />
-                                <span>Report</span>
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-                        
-                        <p className="text-muted-foreground mb-3">{comment.content}</p>
-                        
-                        <div className="flex items-center gap-3 mb-3">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className={cn(
-                              "flex items-center gap-1 text-muted-foreground hover:text-foreground",
-                              likedComments[comment.id] && "text-kaas-pink hover:text-kaas-pink"
-                            )}
-                            onClick={() => handleLikeComment(comment.id)}
-                          >
-                            <Heart className={cn(
-                              "h-4 w-4",
-                              likedComments[comment.id] && "fill-current"
-                            )} />
-                            <span>{comment.likes}</span>
-                          </Button>
-                          
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="flex items-center gap-1 text-muted-foreground hover:text-foreground"
-                            onClick={() => handleReply(comment.id)}
-                          >
-                            <MessageSquare className="h-4 w-4" />
-                            <span>Reply</span>
-                          </Button>
-                        </div>
-                        
-                        {/* Reply form */}
-                        {replyingTo === comment.id && (
-                          <div className="bg-slate-50 p-3 rounded-md space-y-3 mb-3">
-                            <Textarea 
-                              placeholder="Write your reply..."
-                              className="min-h-[80px]"
-                              value={replyText}
-                              onChange={(e) => setReplyText(e.target.value)}
-                            />
-                            
-                            <div className="flex justify-end gap-2">
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                onClick={handleCancelReply}
-                              >
-                                Cancel
-                              </Button>
-                              <Button 
-                                variant="default" 
-                                size="sm"
-                                onClick={() => handleSubmitReply(comment.id)}
-                              >
-                                Post Reply
-                              </Button>
-                            </div>
-                          </div>
-                        )}
-                        
-                        {/* Replies */}
-                        {comment.replies && comment.replies.length > 0 && (
-                          <div className="space-y-3 pl-8 border-l-2 border-slate-200 mt-4">
-                            {comment.replies.map((reply) => (
-                              <div key={reply.id} className="bg-slate-50 p-3 rounded-md">
-                                <div className="flex items-start gap-3">
-                                  <Avatar className="h-6 w-6">
-                                    <AvatarImage src={reply.avatar} alt={reply.author} />
-                                    <AvatarFallback>{reply.author[0]}</AvatarFallback>
-                                  </Avatar>
-                                  
-                                  <div className="flex-1">
-                                    <div className="flex justify-between items-center mb-1">
-                                      <div>
-                                        <span className="font-semibold">{reply.author}</span>
-                                        <span className="text-xs text-muted-foreground ml-2">{reply.date}</span>
-                                      </div>
-                                    </div>
-                                    
-                                    <p className="text-muted-foreground text-sm">{reply.content}</p>
-                                    
-                                    <div className="flex items-center gap-3 mt-2">
-                                      <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className={cn(
-                                          "flex items-center gap-1 text-muted-foreground hover:text-foreground h-7 text-xs",
-                                          likedComments[reply.id] && "text-kaas-pink hover:text-kaas-pink"
-                                        )}
-                                        onClick={() => handleLikeComment(reply.id)}
-                                      >
-                                        <Heart className={cn(
-                                          "h-3 w-3",
-                                          likedComments[reply.id] && "fill-current"
-                                        )} />
-                                        <span>{reply.likes}</span>
-                                      </Button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="reviews" className="space-y-6">
-              <div className="bg-white border border-slate-200 rounded-lg p-5">
-                <h3 className="text-lg font-semibold mb-4">Write a review</h3>
-                
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium mb-1 block">Rating</label>
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          onClick={() => setReviewRating(star)}
-                          className="focus:outline-none"
-                        >
-                          <Star
-                            className={cn(
-                              "h-6 w-6",
-                              star <= reviewRating ? "text-yellow-500 fill-yellow-500" : "text-gray-300"
-                            )}
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium mb-1 block">Title</label>
-                    <Input 
-                      placeholder="Review title"
-                      value={reviewTitle}
-                      onChange={(e) => setReviewTitle(e.target.value)}
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="text-sm font-medium mb-1 block">Content</label>
-                    <Textarea 
-                      placeholder="Share your experience with ProprHome..."
-                      className="min-h-[100px]"
-                      value={reviewText}
-                      onChange={(e) => setReviewText(e.target.value)}
-                    />
-                  </div>
-                  
-                  <div className="flex justify-end">
-                    <Button 
-                      variant="default"
-                      onClick={handleSubmitReview}
-                    >
-                      Post Review
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-5">
-                {reviews.map((review) => (
-                  <div key={review.id} className="bg-white border border-slate-200 rounded-lg p-5">
-                    <div className="flex items-start gap-3">
-                      <Avatar>
-                        <AvatarImage src={review.avatar} alt={review.author} />
-                        <AvatarFallback>{review.author[0]}</AvatarFallback>
-                      </Avatar>
-                      
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start mb-1">
-                          <div>
-                            <h4 className="font-semibold">{review.title}</h4>
-                            <div className="flex items-center">
-                              <div className="flex items-center mr-2">
-                                {renderStars(review.rating)}
-                              </div>
-                              <span className="text-xs text-muted-foreground">by {review.author} • {review.date}</span>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <p className="text-muted-foreground my-3">{review.content}</p>
-                        
-                        <div className="flex items-center gap-3">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className={cn(
-                              "flex items-center gap-1 text-muted-foreground hover:text-foreground",
-                              helpfulReviews[review.id] && "text-kaas-pink hover:text-kaas-pink"
-                            )}
-                            onClick={() => handleMarkHelpful(review.id)}
-                          >
-                            <ThumbsUp className="h-4 w-4" />
-                            <span>Helpful ({review.helpful})</span>
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
       </main>
       
-      {/* Investment Dialog */}
+      <footer className="border-t border-border/40 py-6">
+        <div className="container">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            <Link to="/about" className="hover:text-foreground transition-colors">About</Link>
+            <Link to="/faq" className="hover:text-foreground transition-colors">FAQ</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors">Terms</Link>
+            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+            <Link to="/blog" className="hover:text-foreground transition-colors">Blog</Link>
+            <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
+          </div>
+          <div className="mt-3 text-center text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Back the Bold. All rights reserved.
+          </div>
+        </div>
+      </footer>
+      
       <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Confirm Your Investment</DialogTitle>
+            <DialogTitle>Back this Team</DialogTitle>
             <DialogDescription>
-              You're about to invest in ProprHome.com. Please confirm the details below.
+              Enter your email to reserve your spot in ProprHome's investment round with {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(Number(commitAmount))}.
             </DialogDescription>
           </DialogHeader>
-          
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <div className="bg-slate-50 p-3 rounded-md">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Investment amount</span>
-                  <span className="font-medium">€{commitAmount}</span>
-                </div>
-              </div>
-              <div className="bg-slate-50 p-3 rounded-md">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Investment type</span>
-                  <span className="font-medium">Convertible Note</span>
-                </div>
-              </div>
-              <div className="bg-slate-50 p-3 rounded-md">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Company</span>
-                  <span className="font-medium">ProprHome.com</span>
-                </div>
-              </div>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="commitAmount" className="text-right">
+                Amount (€)
+              </label>
+              <Input
+                id="commitAmount"
+                type="text"
+                value={new Intl.NumberFormat('de-DE').format(Number(commitAmount))}
+                disabled
+                className="col-span-3 bg-slate-50"
+              />
             </div>
-            
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Email for confirmation</label>
-              <Input 
-                type="email" 
-                placeholder="your@email.com" 
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="email" className="text-right">
+                Email
+              </label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="col-span-3"
               />
-              <p className="text-xs text-muted-foreground">
-                You'll receive the investment confirmation and payment instructions at this email.
-              </p>
             </div>
+          </div>
+          
+          <div className="text-sm text-muted-foreground mb-4">
+            <p className="mb-2">
+              After submitting, we'll send you an email with two options:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Secure your commitment right away</li>
+              <li>Make a non-binding soft commitment that you can confirm later</li>
+            </ul>
+            <p className="mt-2">
+              Either way, you'll be among the first to know when the funding round officially opens.
+            </p>
           </div>
           
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
             </DialogClose>
-            <Button variant="kaas" onClick={handleSubmitCommitment}>
-              Confirm Investment
+            <Button type="button" onClick={handleSubmitCommitment}>
+              Reserve My Spot
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
       
-      {/* Investor Signup Modal */}
       <InvestorSignupModal 
-        isOpen={showInvestorSignup} 
+        isOpen={showInvestorSignup}
         onClose={handleCloseInvestorModal}
         dealName="ProprHome.com"
         onComplete={handleInvestorProfileComplete}

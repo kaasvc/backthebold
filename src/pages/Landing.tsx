@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -174,7 +175,7 @@ const Landing = () => {
             Helping founders raise from the people who believe in them.
           </p>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-10">
-            Discover and back the most promising startups in our marketplace.
+            Start your community fundraise, and let us handle the rest.
           </p>
         </div>
         

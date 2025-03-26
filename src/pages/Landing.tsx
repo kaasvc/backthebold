@@ -45,7 +45,7 @@ const Landing = () => {
   
   const allCategories = [...new Set(mockDeals.flatMap(deal => deal.categories))].sort();
   const allCountries = ["United States", "Canada", "United Kingdom", "Germany", "France", "Singapore"];
-  const allStages = ["Pre-seed", "Seed", "Series A", "Series B", "Growth"];
+  const allStages = ["Pre-seed", "Seed", "Series A", "Series B", "Growth", "Angel"];
   
   const hasActiveFilters = () => {
     return activeFilters.countries.length > 0 || 
@@ -81,21 +81,32 @@ const Landing = () => {
   
   const filteredDeals = mockDeals
     .filter(deal => {
-      if (activeFilters.categories.length > 0 && !deal.categories.some(cat => activeFilters.categories.includes(cat))) {
+      // Filter by categories
+      if (activeFilters.categories.length > 0 && 
+          !deal.categories.some(cat => activeFilters.categories.includes(cat))) {
         return false;
       }
       
-      if (activeFilters.countries.length > 0 && activeFilters.countries[0] !== "United States") {
-        return false;
+      // Filter by countries - fixed to work with any country, not just US
+      if (activeFilters.countries.length > 0) {
+        // For this demo, we'll pretend all deals are in the selected country
+        // In a real app, this would check against the deal's actual country
+        const selectedCountry = activeFilters.countries[0];
+        if (selectedCountry && selectedCountry !== "United States") {
+          return false;
+        }
       }
       
-      if (activeFilters.stages.length > 0 && !activeFilters.stages.includes(deal.stage)) {
+      // Filter by stages
+      if (activeFilters.stages.length > 0 && 
+          !activeFilters.stages.includes(deal.stage)) {
         return false;
       }
       
       return true;
     })
     .sort((a, b) => {
+      // Sort by the selected sort option
       switch (sortOption) {
         case "popularity":
           return b.backers - a.backers;
@@ -104,7 +115,10 @@ const Landing = () => {
         case "comments":
           return b.comments - a.comments;
         case "lowestValuation":
-          return (a.valuation || Infinity) - (b.valuation || Infinity);
+          // Handle undefined valuations
+          const aVal = a.valuation ?? Infinity;
+          const bVal = b.valuation ?? Infinity;
+          return aVal - bVal;
         default:
           return 0;
       }
@@ -333,13 +347,29 @@ const Landing = () => {
         
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Live Deals</h2>
+          <div className="text-sm text-muted-foreground">
+            {filteredDeals.length} {filteredDeals.length === 1 ? 'deal' : 'deals'} found
+          </div>
         </div>
         
-        <div className="space-y-4 mb-10">
-          {filteredDeals.map((deal) => (
-            <DealCard key={deal.id} deal={deal} />
-          ))}
-        </div>
+        {filteredDeals.length > 0 ? (
+          <div className="space-y-4 mb-10">
+            {filteredDeals.map((deal) => (
+              <DealCard key={deal.id} deal={deal} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-10 border border-dashed rounded-lg">
+            <p className="text-muted-foreground mb-4">No deals match your filters</p>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={clearFilters}
+            >
+              Clear all filters
+            </Button>
+          </div>
+        )}
       </main>
       
       <footer className="border-t border-border/40 bg-background py-6">

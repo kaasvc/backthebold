@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { MessageCircle, Users, Info } from "lucide-react";
+import { MessageCircle, Users, Info, Flame, TrendingUp } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, InfoTooltip } from "@/components/ui/tooltip";
 
 export interface Founder {
@@ -35,9 +35,10 @@ export interface Deal {
 interface DealCardProps {
   deal: Deal;
   className?: string;
+  isHot?: boolean;
 }
 
-const DealCard: React.FC<DealCardProps> = ({ deal, className }) => {
+const DealCard: React.FC<DealCardProps> = ({ deal, className, isHot = false }) => {
   // Limit categories to max 2 for display (plus stage as the last tag)
   const displayCategories = deal.categories.slice(0, 2);
   
@@ -112,6 +113,21 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className }) => {
                       <span className="text-xs font-medium">{deal.comments}</span>
                     </div>
                   </div>
+
+                  {isHot && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center">
+                          <div className="border border-orange-200 bg-orange-50 rounded-md px-2 py-1 flex items-center justify-center">
+                            <Flame className="h-3 w-3 text-orange-500" />
+                          </div>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-xs">Hot Deal</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
                 </div>
               </div>
               

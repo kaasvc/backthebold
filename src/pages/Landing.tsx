@@ -346,8 +346,12 @@ const Landing = () => {
         
         {filteredDeals.length > 0 ? (
           <div className="space-y-4 mb-10">
-            {filteredDeals.map((deal) => (
-              <DealCard key={deal.id} deal={deal} />
+            {filteredDeals.map((deal, index) => (
+              <DealCard 
+                key={deal.id} 
+                deal={deal} 
+                isHot={sortOption === "popularity" && index === 0}
+              />
             ))}
           </div>
         ) : (

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -621,3 +622,849 @@ const StartupProfile = () => {
                                 <Badge variant="outline" className="flex items-center gap-1">
                                   <Briefcase className="h-3 w-3" />
                                   {founder.experience} experience
+                                </Badge>
+                                <Badge variant="outline" className="flex items-center gap-1">
+                                  <Rocket className="h-3 w-3" />
+                                  {founder.previousStartups} previous startups
+                                </Badge>
+                                <Badge variant="outline" className="flex items-center gap-1">
+                                  <DollarSign className="h-3 w-3" />
+                                  {founder.previousExits} exits
+                                </Badge>
+                              </div>
+                              
+                              <p className="text-sm text-muted-foreground mb-4">{founder.bio}</p>
+                              
+                              <h4 className="text-sm font-semibold mb-2">Highlights</h4>
+                              <ul className="text-sm text-muted-foreground space-y-1">
+                                {founder.highlights.map((highlight, idx) => (
+                                  <li key={idx} className="flex items-start">
+                                    <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                                    <span>{highlight}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                  
+                  <div className="mt-10">
+                    <h3 className="text-lg font-semibold mb-6 flex items-center">
+                      <Users className="h-5 w-5 text-blue-500 mr-2" />
+                      <span>Key Team Members</span>
+                    </h3>
+                    
+                    <div className="grid md:grid-cols-2 gap-6">
+                      {founders.slice(2).map((member, index) => (
+                        <Card key={index} className="overflow-hidden">
+                          <CardContent className="p-0">
+                            <div className="flex items-start">
+                              <div className="p-4">
+                                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-slate-200 mb-2">
+                                  <img 
+                                    src={member.image} 
+                                    alt={member.name} 
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              </div>
+                              <div className="flex-1 p-4">
+                                <h3 className="font-bold">{member.name}</h3>
+                                <p className="text-kaas-pink text-sm">{member.title}</p>
+                                <p className="text-sm text-muted-foreground mb-2">{member.education}</p>
+                                <p className="text-xs text-slate-600">{member.bio}</p>
+                                
+                                <div className="flex items-center gap-2 mt-3">
+                                  <a 
+                                    href={member.linkedin} 
+                                    className="text-slate-500 hover:text-blue-600 transition-colors"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <Linkedin className="h-4 w-4" />
+                                  </a>
+                                  <a 
+                                    href={member.twitter} 
+                                    className="text-slate-500 hover:text-blue-400 transition-colors"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <Twitter className="h-4 w-4" />
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="overview">
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Product Overview</h2>
+                    <p className="text-muted-foreground">
+                      ProprHome is an all-in-one property management platform designed specifically for small landlords and property managers with 1-50 properties. Unlike enterprise solutions that are prohibitively expensive or basic tools that lack advanced features, ProprHome offers enterprise-grade capabilities at an affordable price point.
+                    </p>
+                    
+                    <div className="grid md:grid-cols-3 gap-6 mt-8">
+                      <Card>
+                        <CardContent className="pt-6">
+                          <div className="mb-4 h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                            <TrendingUp className="h-5 w-5 text-blue-600" />
+                          </div>
+                          <h3 className="font-semibold mb-2">AI-Powered Maintenance Prediction</h3>
+                          <p className="text-sm text-muted-foreground">
+                            ProprHome's machine learning algorithms predict potential maintenance issues before they become costly emergencies, helping landlords save on repairs and reduce tenant turnover.
+                          </p>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardContent className="pt-6">
+                          <div className="mb-4 h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
+                            <Users className="h-5 w-5 text-green-600" />
+                          </div>
+                          <h3 className="font-semibold mb-2">Advanced Tenant Screening</h3>
+                          <p className="text-sm text-muted-foreground">
+                            Our comprehensive screening process includes credit, criminal, and rental history checks, with AI-driven risk scoring to help landlords find reliable, long-term tenants.
+                          </p>
+                        </CardContent>
+                      </Card>
+                      
+                      <Card>
+                        <CardContent className="pt-6">
+                          <div className="mb-4 h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center">
+                            <ChartBar className="h-5 w-5 text-purple-600" />
+                          </div>
+                          <h3 className="font-semibold mb-2">Real-Time Financial Dashboard</h3>
+                          <p className="text-sm text-muted-foreground">
+                            Track rental income, expenses, and property performance with detailed analytics and custom reports that simplify tax preparation and financial planning.
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">The Problem We're Solving</h2>
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+                      <h3 className="text-base font-medium text-red-800 mb-3">Pain Points for Independent Landlords</h3>
+                      <ul className="space-y-2">
+                        <li className="flex items-start">
+                          <div className="h-6 w-6 rounded-full bg-red-200 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                            <span className="text-red-700 font-bold">1</span>
+                          </div>
+                          <p className="text-sm text-red-700">
+                            <span className="font-semibold">Unexpected Maintenance Costs:</span> 78% of small landlords report that unexpected repairs are their biggest expense and stress factor.
+                          </p>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="h-6 w-6 rounded-full bg-red-200 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                            <span className="text-red-700 font-bold">2</span>
+                          </div>
+                          <p className="text-sm text-red-700">
+                            <span className="font-semibold">Poor Tenant Screening:</span> Bad tenant selections cost landlords an average of €5,000 per incident in unpaid rent, legal fees, and property damage.
+                          </p>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="h-6 w-6 rounded-full bg-red-200 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                            <span className="text-red-700 font-bold">3</span>
+                          </div>
+                          <p className="text-sm text-red-700">
+                            <span className="font-semibold">Disorganized Financial Records:</span> 65% struggle with keeping accurate financial records, leading to tax complications and missed deductions.
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Our Solution</h2>
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                      <ul className="space-y-4">
+                        <li className="flex items-start">
+                          <CheckCircle className="h-5 w-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="font-semibold text-green-800">Predictive Maintenance</p>
+                            <p className="text-sm text-green-700">
+                              Our AI analyzes property data, weather patterns, appliance age, and maintenance history to predict issues before they occur, reducing emergency repairs by 62%.
+                            </p>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <CheckCircle className="h-5 w-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="font-semibold text-green-800">Advanced Tenant Screening</p>
+                            <p className="text-sm text-green-700">
+                              Comprehensive background checks with predictive analytics that go beyond credit scores to assess tenant reliability, reducing evictions by 91% for our users.
+                            </p>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <CheckCircle className="h-5 w-5 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                          <div>
+                            <p className="font-semibold text-green-800">Financial Optimization</p>
+                            <p className="text-sm text-green-700">
+                              Automated expense tracking, receipt scanning, and tax preparation features that have helped landlords identify an average of €3,400 in additional deductions.
+                            </p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="market">
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Market Opportunity</h2>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 mb-6">
+                      <div className="grid md:grid-cols-3 gap-6">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-blue-600 mb-1">€9.8B</div>
+                          <p className="text-sm text-slate-600">Total Addressable Market</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-blue-600 mb-1">29M</div>
+                          <p className="text-sm text-slate-600">Independent Landlords in Europe</p>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-blue-600 mb-1">14.2%</div>
+                          <p className="text-sm text-slate-600">Annual Market Growth Rate</p>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-6">
+                        <p className="text-sm text-slate-700 mb-4">
+                          The European property management software market is projected to reach €12.3B by 2027, with the small landlord segment growing fastest at 18.5% CAGR. Currently, this segment is underserved, with 76% of small landlords using spreadsheets or paper-based systems to manage their properties.
+                        </p>
+                        <p className="text-sm text-slate-700">
+                          Our initial target market focuses on Portugal, Spain, and France, with a combined 8.7M independent landlords managing 1-50 properties. This represents a €2.1B immediately addressable market that we aim to capture 15% of within 5 years.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Traction & Milestones</h2>
+                    <div className="relative border-l-2 border-blue-200 pl-6 ml-3 space-y-8">
+                      <div>
+                        <div className="absolute -left-3.5 rounded-full border-4 border-white">
+                          <div className="h-5 w-5 rounded-full bg-green-500"></div>
+                        </div>
+                        <h3 className="text-base font-semibold">Q4 2023: Beta Launch</h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Launched beta with 150 landlords managing 780 properties across Portugal. Achieved 92% retention rate and NPS score of 72.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <div className="absolute -left-3.5 rounded-full border-4 border-white">
+                          <div className="h-5 w-5 rounded-full bg-green-500"></div>
+                        </div>
+                        <h3 className="text-base font-semibold">Q1 2024: Revenue Milestone</h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Converted 83% of beta users to paying customers at €29/month. Reached €32K ARR with zero marketing spend.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <div className="absolute -left-3.5 rounded-full border-4 border-white">
+                          <div className="h-5 w-5 rounded-full bg-blue-500"></div>
+                        </div>
+                        <h3 className="text-base font-semibold">Q2 2024: AI Enhancement & Market Expansion</h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Released AI maintenance prediction algorithm (85% accuracy). Expanded to Spain and France. Currently at €68K ARR, growing 28% month-over-month.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <div className="absolute -left-3.5 rounded-full border-4 border-white">
+                          <div className="h-5 w-5 rounded-full bg-slate-300"></div>
+                        </div>
+                        <h3 className="text-base font-semibold">Q3 2024: Integration Partnerships (Planned)</h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Finalizing partnerships with 3 major European property listing platforms and 2 banking institutions for payment processing integration.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <div className="absolute -left-3.5 rounded-full border-4 border-white">
+                          <div className="h-5 w-5 rounded-full bg-slate-300"></div>
+                        </div>
+                        <h3 className="text-base font-semibold">Q4 2024: Full European Launch (Planned)</h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Expansion to Germany, Italy, and UK markets. Projected to reach €450K ARR by end of 2024.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Competitive Landscape</h2>
+                    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+                      <div className="grid grid-cols-5 bg-slate-50 p-4 border-b">
+                        <div className="col-span-2 font-semibold">Company</div>
+                        <div className="font-semibold text-center">Target Market</div>
+                        <div className="font-semibold text-center">Pricing</div>
+                        <div className="font-semibold text-center">AI Features</div>
+                      </div>
+                      
+                      <div className="grid grid-cols-5 p-4 border-b bg-blue-50">
+                        <div className="col-span-2 font-semibold text-blue-700">ProprHome</div>
+                        <div className="text-sm text-center">1-50 properties</div>
+                        <div className="text-sm text-center">€29-99/mo</div>
+                        <div className="text-sm text-center text-green-600 font-semibold">Advanced</div>
+                      </div>
+                      
+                      <div className="grid grid-cols-5 p-4 border-b">
+                        <div className="col-span-2 font-medium">PropertyManager Pro</div>
+                        <div className="text-sm text-center">50+ properties</div>
+                        <div className="text-sm text-center">€199-499/mo</div>
+                        <div className="text-sm text-center text-amber-600">Basic</div>
+                      </div>
+                      
+                      <div className="grid grid-cols-5 p-4 border-b">
+                        <div className="col-span-2 font-medium">RentEasy</div>
+                        <div className="text-sm text-center">1-10 properties</div>
+                        <div className="text-sm text-center">€15-39/mo</div>
+                        <div className="text-sm text-center text-red-600">None</div>
+                      </div>
+                      
+                      <div className="grid grid-cols-5 p-4">
+                        <div className="col-span-2 font-medium">LandlordStation</div>
+                        <div className="text-sm text-center">10-100 properties</div>
+                        <div className="text-sm text-center">€79-199/mo</div>
+                        <div className="text-sm text-center text-amber-600">Basic</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="dealterms">
+                <div className="space-y-8">
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Investment Opportunity</h2>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-6 mb-6">
+                      <div className="grid md:grid-cols-2 gap-8">
+                        <div>
+                          <h3 className="text-base font-semibold mb-3">Raise Details</h3>
+                          <div className="space-y-4">
+                            <div className="flex justify-between border-b border-slate-200 pb-2">
+                              <span className="text-sm text-slate-600">Round Size</span>
+                              <span className="font-medium">€150,000</span>
+                            </div>
+                            <div className="flex justify-between border-b border-slate-200 pb-2">
+                              <span className="text-sm text-slate-600">Instrument</span>
+                              <span className="font-medium">SAFE Note</span>
+                            </div>
+                            <div className="flex justify-between border-b border-slate-200 pb-2">
+                              <span className="text-sm text-slate-600">Valuation Cap</span>
+                              <span className="font-medium">€3.2M</span>
+                            </div>
+                            <div className="flex justify-between border-b border-slate-200 pb-2">
+                              <span className="text-sm text-slate-600">Minimum Investment</span>
+                              <span className="font-medium">€100</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm text-slate-600">Closing Date</span>
+                              <span className="font-medium">August 30, 2024</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h3 className="text-base font-semibold mb-3">Use of Funds</h3>
+                          <div className="space-y-2">
+                            <div>
+                              <div className="flex justify-between items-center mb-1">
+                                <span className="text-sm">Product Development</span>
+                                <span className="text-sm font-medium">40%</span>
+                              </div>
+                              <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                                <div className="h-full bg-blue-500 rounded-full" style={{ width: '40%' }}></div>
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <div className="flex justify-between items-center mb-1">
+                                <span className="text-sm">Sales & Marketing</span>
+                                <span className="text-sm font-medium">35%</span>
+                              </div>
+                              <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                                <div className="h-full bg-green-500 rounded-full" style={{ width: '35%' }}></div>
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <div className="flex justify-between items-center mb-1">
+                                <span className="text-sm">Operations</span>
+                                <span className="text-sm font-medium">15%</span>
+                              </div>
+                              <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                                <div className="h-full bg-purple-500 rounded-full" style={{ width: '15%' }}></div>
+                              </div>
+                            </div>
+                            
+                            <div>
+                              <div className="flex justify-between items-center mb-1">
+                                <span className="text-sm">Legal & Admin</span>
+                                <span className="text-sm font-medium">10%</span>
+                              </div>
+                              <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                                <div className="h-full bg-amber-500 rounded-full" style={{ width: '10%' }}></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Growth Projections</h2>
+                    <div className="bg-white border border-slate-200 rounded-lg p-6">
+                      <div className="grid md:grid-cols-4 gap-6 mb-8">
+                        <div className="text-center">
+                          <p className="text-2xl font-bold text-green-600 mb-1">€450K</p>
+                          <p className="text-sm text-slate-600">ARR End of 2024</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-2xl font-bold text-green-600 mb-1">€1.8M</p>
+                          <p className="text-sm text-slate-600">ARR End of 2025</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-2xl font-bold text-green-600 mb-1">€4.2M</p>
+                          <p className="text-sm text-slate-600">ARR End of 2026</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-2xl font-bold text-green-600 mb-1">5.3X</p>
+                          <p className="text-sm text-slate-600">Customer LTV:CAC Ratio</p>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-slate-50 p-4 rounded-lg">
+                        <h3 className="text-sm font-semibold mb-3">Key Metrics & Milestones</h3>
+                        <ul className="space-y-2 text-sm">
+                          <li className="flex items-start">
+                            <CheckCircle className="h-4 w-4 text-blue-500 mr-2 mt-0.5" />
+                            <span>Targeting 5,000 paying customers by end of 2025</span>
+                          </li>
+                          <li className="flex items-start">
+                            <CheckCircle className="h-4 w-4 text-blue-500 mr-2 mt-0.5" />
+                            <span>Projected to reach profitability in Q2 2025</span>
+                          </li>
+                          <li className="flex items-start">
+                            <CheckCircle className="h-4 w-4 text-blue-500 mr-2 mt-0.5" />
+                            <span>Plan to raise Series A (€3-5M) in Q3 2025 for further European expansion</span>
+                          </li>
+                          <li className="flex items-start">
+                            <CheckCircle className="h-4 w-4 text-blue-500 mr-2 mt-0.5" />
+                            <span>Potential exit opportunities with property management companies or real estate platforms in 5-7 years</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Current Investors</h2>
+                    <div className="bg-slate-50 rounded-lg border border-slate-200 p-6">
+                      <div className="flex flex-wrap gap-3 mb-6">
+                        {backers.map((backer, index) => (
+                          <div key={index} className="flex items-center">
+                            <Avatar className="h-8 w-8 mr-2">
+                              <AvatarImage src={backer.avatar} alt={backer.name} />
+                              <AvatarFallback>{backer.name.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <span className="text-sm font-medium">{backer.name}</span>
+                          </div>
+                        ))}
+                        <div className="flex items-center">
+                          <div className="h-8 w-8 rounded-full bg-slate-200 flex items-center justify-center mr-2">
+                            <span className="text-sm text-slate-600 font-medium">+10</span>
+                          </div>
+                          <span className="text-sm font-medium">more</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex gap-4">
+                        <div className="flex-1 p-4 bg-white rounded-lg border border-slate-200">
+                          <div className="flex items-start mb-3">
+                            <Award className="h-5 w-5 text-amber-500 mr-2 mt-0.5" />
+                            <div>
+                              <h3 className="font-semibold text-sm">LisboaTech Accelerator</h3>
+                              <p className="text-xs text-slate-600">Lead Investor, 2023 Cohort</p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-slate-600">
+                            "ProprHome has the potential to revolutionize how independent landlords manage their properties across Europe. The team's deep domain expertise and AI-first approach give them a significant competitive advantage."
+                          </p>
+                        </div>
+                        
+                        <div className="flex-1 p-4 bg-white rounded-lg border border-slate-200">
+                          <div className="flex items-start mb-3">
+                            <Building className="h-5 w-5 text-blue-500 mr-2 mt-0.5" />
+                            <div>
+                              <h3 className="font-semibold text-sm">PropTech Ventures</h3>
+                              <p className="text-xs text-slate-600">Angel Investor</p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-slate-600">
+                            "We invested in ProprHome because they're addressing a massive underserved market with a solution that delivers immediate, measurable ROI. Their customer retention metrics are among the best we've seen in early-stage PropTech startups."
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+          
+          <div className="lg:w-4/12">
+            <div className="sticky top-6">
+              <div className="bg-white border border-slate-200 rounded-lg shadow-sm p-6 mb-6">
+                <h3 className="text-lg font-semibold mb-4">Back This Team</h3>
+                <p className="text-sm text-slate-600 mb-4">
+                  Join 14 others backing ProprHome's vision to revolutionize property management for independent landlords.
+                </p>
+                
+                <div className="space-y-4 mb-6">
+                  <div>
+                    <label htmlFor="investment-amount" className="block text-sm font-medium mb-1">
+                      Investment Amount (€)
+                    </label>
+                    <Input 
+                      id="investment-amount"
+                      type="text"
+                      placeholder="1,000"
+                      value={investmentAmount}
+                      onChange={handleInvestmentAmountChange}
+                      className="w-full"
+                    />
+                    <p className="text-xs text-slate-500 mt-1">Minimum €100, maximum €10,000</p>
+                  </div>
+                </div>
+                
+                <Button 
+                  className="w-full bg-kaas-pink hover:bg-kaas-darkpink text-white" 
+                  onClick={handleCommit}
+                >
+                  Back This Team
+                </Button>
+                
+                <div className="mt-6 pt-6 border-t border-slate-200">
+                  <h4 className="text-sm font-semibold mb-3">Key Documents</h4>
+                  <div className="space-y-2">
+                    <a 
+                      href="#" 
+                      className="flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      <span>SAFE Agreement</span>
+                    </a>
+                    <a 
+                      href="#" 
+                      className="flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      <span>Financial Projections</span>
+                    </a>
+                    <a 
+                      href="#" 
+                      className="flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      <span>Executive Summary</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white border border-slate-200 rounded-lg shadow-sm p-6 mb-6">
+                <Tabs defaultValue="discussions" className="w-full" onValueChange={setActiveTab}>
+                  <TabsList className="mb-4 w-full">
+                    <TabsTrigger value="discussions" className="flex-1">
+                      Discussions
+                    </TabsTrigger>
+                    <TabsTrigger value="reviews" className="flex-1">
+                      Reviews
+                    </TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="discussions">
+                    <div className="mb-4">
+                      <Textarea 
+                        placeholder="Ask a question or share your thoughts..."
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        className="resize-none"
+                        rows={3}
+                      />
+                      <div className="mt-2 flex justify-end">
+                        <Button 
+                          size="sm" 
+                          onClick={handleSubmitComment}
+                        >
+                          Post Comment
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-6">
+                      {comments.map((comment) => (
+                        <div key={comment.id} className="border-b border-slate-200 pb-6 last:border-0 last:pb-0">
+                          <div className="flex items-start space-x-3">
+                            <Avatar>
+                              <AvatarImage src={comment.avatar} alt={comment.author} />
+                              <AvatarFallback>{comment.author.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="font-semibold text-sm">{comment.author}</span>
+                                <span className="text-xs text-slate-500">{comment.date}</span>
+                              </div>
+                              <p className="text-sm text-slate-700 mb-2">{comment.content}</p>
+                              <div className="flex items-center gap-4">
+                                <button 
+                                  className={`text-xs flex items-center ${likedComments[comment.id] ? 'text-kaas-pink' : 'text-slate-500 hover:text-slate-700'}`} 
+                                  onClick={() => handleLikeComment(comment.id)}
+                                >
+                                  <Heart className={`h-4 w-4 mr-1 ${likedComments[comment.id] ? 'fill-kaas-pink' : ''}`} />
+                                  {comment.likes} likes
+                                </button>
+                                <button 
+                                  className="text-xs flex items-center text-slate-500 hover:text-slate-700"
+                                  onClick={() => handleReply(comment.id)}
+                                >
+                                  <MessageCircle className="h-4 w-4 mr-1" />
+                                  Reply
+                                </button>
+                                <div className="flex items-center ml-auto">
+                                  <button 
+                                    className="text-xs text-slate-500 hover:text-slate-700 mr-3"
+                                    onClick={() => handleShareComment(comment.id)}
+                                  >
+                                    <Share2 className="h-4 w-4" />
+                                  </button>
+                                  <button 
+                                    className="text-xs text-slate-500 hover:text-slate-700"
+                                    onClick={() => handleReportComment(comment.id)}
+                                  >
+                                    <Flag className="h-4 w-4" />
+                                  </button>
+                                </div>
+                              </div>
+                              
+                              {/* Reply area */}
+                              {replyingTo === comment.id && (
+                                <div className="mt-3">
+                                  <Textarea 
+                                    placeholder="Write a reply..."
+                                    value={replyText}
+                                    onChange={(e) => setReplyText(e.target.value)}
+                                    className="resize-none text-sm"
+                                    rows={2}
+                                  />
+                                  <div className="mt-2 flex justify-end space-x-2">
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      onClick={handleCancelReply}
+                                    >
+                                      Cancel
+                                    </Button>
+                                    <Button 
+                                      size="sm" 
+                                      onClick={() => handleSubmitReply(comment.id)}
+                                    >
+                                      Reply
+                                    </Button>
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* Replies */}
+                              {comment.replies && comment.replies.length > 0 && (
+                                <div className="mt-3 space-y-3">
+                                  {comment.replies.map((reply) => (
+                                    <div key={reply.id} className="flex items-start space-x-3 pt-3 border-t border-slate-100">
+                                      <Avatar className="h-7 w-7">
+                                        <AvatarImage src={reply.avatar} alt={reply.author} />
+                                        <AvatarFallback>{reply.author.charAt(0)}</AvatarFallback>
+                                      </Avatar>
+                                      <div className="flex-1">
+                                        <div className="flex items-center justify-between mb-1">
+                                          <span className="font-semibold text-xs">{reply.author}</span>
+                                          <span className="text-xs text-slate-500">{reply.date}</span>
+                                        </div>
+                                        <p className="text-xs text-slate-700">{reply.content}</p>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </TabsContent>
+                  
+                  <TabsContent value="reviews">
+                    <div className="mb-6">
+                      <h3 className="text-base font-semibold mb-2">Write a Review</h3>
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-sm font-medium mb-1">Rating</label>
+                          <div className="flex items-center space-x-1">
+                            {[1, 2, 3, 4, 5].map((rating) => (
+                              <button 
+                                key={rating}
+                                onClick={() => setReviewRating(rating)}
+                                className="focus:outline-none"
+                              >
+                                <Star 
+                                  className={`h-6 w-6 ${rating <= reviewRating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`} 
+                                />
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-1">Title</label>
+                          <Input 
+                            placeholder="Summarize your review"
+                            value={reviewTitle}
+                            onChange={(e) => setReviewTitle(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-1">Review</label>
+                          <Textarea 
+                            placeholder="Share your experience with ProprHome..."
+                            value={reviewText}
+                            onChange={(e) => setReviewText(e.target.value)}
+                            rows={3}
+                          />
+                        </div>
+                        <div className="flex justify-end">
+                          <Button onClick={handleSubmitReview}>
+                            Post Review
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-6">
+                      {reviews.map((review) => (
+                        <div key={review.id} className="border-b border-slate-200 pb-6 last:border-0 last:pb-0">
+                          <div className="flex items-start space-x-3">
+                            <Avatar>
+                              <AvatarImage src={review.avatar} alt={review.author} />
+                              <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-1">
+                                <span className="font-semibold text-sm">{review.author}</span>
+                                <span className="text-xs text-slate-500">{review.date}</span>
+                              </div>
+                              <div className="flex items-center mb-2">
+                                <div className="flex mr-2">
+                                  {renderStars(review.rating)}
+                                </div>
+                                <span className="text-sm font-medium">{review.title}</span>
+                              </div>
+                              <p className="text-sm text-slate-700 mb-3">{review.content}</p>
+                              <button 
+                                className={`text-xs flex items-center ${helpfulReviews[review.id] ? 'text-green-600' : 'text-slate-500 hover:text-slate-700'}`}
+                                onClick={() => handleMarkHelpful(review.id)}
+                              >
+                                <ThumbsUp className={`h-4 w-4 mr-1 ${helpfulReviews[review.id] ? 'fill-green-600' : ''}`} />
+                                {review.helpful} found this helpful
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      
+      {/* Commitment Dialog */}
+      <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Confirm Your Investment</DialogTitle>
+            <DialogDescription>
+              You're about to commit to investing in ProprHome. This is a non-binding commitment that will be finalized later.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div>
+              <label htmlFor="commitment-amount" className="block text-sm font-medium mb-1">
+                Investment Amount (€)
+              </label>
+              <Input 
+                id="commitment-amount"
+                value={commitAmount}
+                onChange={(e) => setCommitAmount(e.target.value)}
+                readOnly
+                className="bg-slate-50"
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-1">
+                Email Address
+              </label>
+              <Input 
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <p className="text-xs text-slate-500 mt-1">
+                We'll send a confirmation link to this email.
+              </p>
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+            <Button onClick={handleSubmitCommitment}>Confirm Commitment</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      
+      {/* Investor Signup Modal */}
+      {showInvestorSignup && (
+        <InvestorSignupModal 
+          onComplete={handleInvestorProfileComplete} 
+          onClose={handleCloseInvestorModal} 
+        />
+      )}
+    </div>
+  );
+};
+
+export default StartupProfile;

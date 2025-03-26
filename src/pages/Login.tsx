@@ -44,8 +44,8 @@ const Login: React.FC = () => {
           <Link to="/" className="mr-4 flex items-center space-x-2">
             <div className="flex items-center">
               <div className="flex items-center scale-[0.7] origin-left">
-                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">KAAS</span>
-                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">X</span>
+                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">BACK THE</span>
+                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">BOLD</span>
               </div>
             </div>
           </Link>
@@ -56,7 +56,7 @@ const Login: React.FC = () => {
         <div className="w-full max-w-md mx-auto">
           <div className="mb-8 text-center">
             <h1 className="text-3xl font-bold mb-2">Welcome Back</h1>
-            <p className="text-muted-foreground">Sign in to your KaasX account</p>
+            <p className="text-muted-foreground">Sign in to your Back the Bold account</p>
           </div>
           
           <form onSubmit={handleSubmit} className="space-y-4">

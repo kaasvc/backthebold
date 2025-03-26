@@ -105,8 +105,8 @@ const FounderDashboard: React.FC = () => {
           <Link to="/" className="flex items-center space-x-2">
             <div className="flex items-center">
               <div className="flex items-center scale-[0.7] origin-left">
-                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">KAAS</span>
-                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">X</span>
+                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">BACK THE</span>
+                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">BOLD</span>
               </div>
               <span className="ml-2 px-2 py-0.5 text-xs font-bold bg-kaas-pink text-white rounded">FOUNDER</span>
             </div>
@@ -126,7 +126,7 @@ const FounderDashboard: React.FC = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Founder Dashboard</h1>
           <p className="text-muted-foreground">
-            Manage your company and deals on KaasX.
+            Manage your company and deals on Back the Bold.
           </p>
         </div>
         

@@ -23,8 +23,8 @@ const ContactSupport = () => {
           <div className="mr-4 flex items-center space-x-2">
             <Link to="/" className="flex items-center">
               <div className="flex items-center scale-[0.7] origin-left">
-                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">KAAS</span>
-                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">X</span>
+                <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-kaas-pink text-white font-bold text-2xl px-1.5 py-0.5 rounded-l-md">BACK THE</span>
+                <span className="bg-black text-white font-bold text-2xl px-1.5 py-0.5 rounded-r-md">BOLD</span>
               </div>
             </Link>
           </div>
@@ -98,7 +98,7 @@ const ContactSupport = () => {
       <footer className="border-t border-border/40 bg-background py-6">
         <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} KaasX. All rights reserved.
+            © {new Date().getFullYear()} Back the Bold. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <a 

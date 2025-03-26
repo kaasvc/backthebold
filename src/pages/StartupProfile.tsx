@@ -137,6 +137,7 @@ const StartupProfile = () => {
       return;
     }
     
+    // Validate the investment amount
     const amount = Number(investmentAmount);
     if (!investmentAmount || isNaN(amount) || amount < 100 || amount > 10000) {
       toast.error("Please enter a valid amount between €100 and €10,000");
@@ -160,6 +161,7 @@ const StartupProfile = () => {
   };
   
   const handleInvestmentAmountChange = (e) => {
+    // Remove any non-numeric characters
     const value = e.target.value.replace(/[^0-9]/g, '');
     setInvestmentAmount(value);
   };
@@ -619,173 +621,3 @@ const StartupProfile = () => {
                                 <Badge variant="outline" className="flex items-center gap-1">
                                   <Briefcase className="h-3 w-3" />
                                   {founder.experience} experience
-                                </Badge>
-                                <Badge variant="outline" className="flex items-center gap-1">
-                                  <Rocket className="h-3 w-3" />
-                                  {founder.previousStartups} previous startups
-                                </Badge>
-                                <Badge variant="outline" className="flex items-center gap-1">
-                                  <Award className="h-3 w-3" />
-                                  {founder.previousExits} exits
-                                </Badge>
-                              </div>
-                              
-                              <p className="text-muted-foreground mb-4">{founder.bio}</p>
-                              
-                              <h4 className="text-sm font-semibold mb-2">Highlights:</h4>
-                              <ul className="space-y-1">
-                                {founder.highlights.map((highlight, idx) => (
-                                  <li key={idx} className="text-sm flex items-start">
-                                    <CheckCircle className="h-3.5 w-3.5 text-green-600 mr-2 mt-0.5" />
-                                    {highlight}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="overview">
-                <div>
-                  <h2 className="text-xl font-semibold mb-4">Overview</h2>
-                  <p>Overview content here</p>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="market">
-                <div>
-                  <h2 className="text-xl font-semibold mb-4">Market & Traction</h2>
-                  <p>Market and traction content here</p>
-                </div>
-              </TabsContent>
-              
-              <TabsContent value="dealterms">
-                <div>
-                  <h2 className="text-xl font-semibold mb-4">Deal Terms</h2>
-                  <p>Deal terms content here</p>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-          
-          {/* Right sidebar with investment options */}
-          <div className="lg:w-4/12">
-            <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-5 sticky top-10">
-              <h2 className="text-lg font-bold mb-5">Back This Team</h2>
-              
-              <div className="mb-6">
-                <label className="block text-sm font-medium mb-2">
-                  How much would you like to invest?
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">€</span>
-                  <input 
-                    type="text" 
-                    value={investmentAmount}
-                    onChange={handleInvestmentAmountChange}
-                    className="pl-7 w-full border rounded-md p-2.5"
-                    placeholder="Enter amount"
-                  />
-                </div>
-                <p className="text-xs text-slate-500 mt-1.5">Min €100 - Max €10,000</p>
-              </div>
-              
-              <Button
-                onClick={handleCommit}
-                className="w-full bg-kaas-pink hover:bg-kaas-darkpink text-white py-3"
-              >
-                Back This Team
-              </Button>
-              
-              <div className="flex items-center justify-center mt-4">
-                <div className="flex -space-x-2 overflow-hidden mr-2">
-                  {backers.slice(0, 4).map((backer, index) => (
-                    <Avatar key={index} className="h-6 w-6 border-2 border-white">
-                      <AvatarImage src={backer.avatar} alt={backer.name} />
-                      <AvatarFallback>{backer.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                  ))}
-                </div>
-                <span className="text-xs text-slate-500">Backed by 14 investors</span>
-              </div>
-              
-              <Separator className="my-6" />
-              
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Investment type</span>
-                  <Badge variant="outline">SAFE Note</Badge>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Valuation Cap</span>
-                  <span className="font-medium">€5.5M</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Discount</span>
-                  <span className="font-medium">20%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Min Commitment</span>
-                  <span className="font-medium">€100</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Investment dialog */}
-        <Dialog open={showCommitDialog} onOpenChange={setShowCommitDialog}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Finalize your investment</DialogTitle>
-              <DialogDescription>
-                You're backing ProprHome.com with €{commitAmount}.
-              </DialogDescription>
-            </DialogHeader>
-            
-            <div className="space-y-4 py-4">
-              <div>
-                <label className="block text-sm font-medium mb-2" htmlFor="email">
-                  Email address
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                />
-                <p className="text-xs text-muted-foreground mt-1">
-                  We'll send you a confirmation with next steps.
-                </p>
-              </div>
-            </div>
-            
-            <DialogFooter className="flex space-x-2 sm:justify-between">
-              <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DialogClose>
-              <Button onClick={handleSubmitCommitment}>Confirm €{commitAmount} investment</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-        
-        {/* Investor signup modal */}
-        {showInvestorSignup && (
-          <InvestorSignupModal 
-            onComplete={handleInvestorProfileComplete} 
-            onClose={handleCloseInvestorModal}
-            defaultEmail={email}
-          />
-        )}
-      </main>
-    </div>
-  );
-};
-
-export default StartupProfile;

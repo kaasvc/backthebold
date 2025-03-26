@@ -83,31 +83,7 @@ const Apply = () => {
     <div className="container max-w-5xl mx-auto py-12 px-4">
       <h1 className="text-3xl font-bold mb-8">Start Your Raise</h1>
       
-      <div className="bg-muted/30 rounded-lg p-6 mb-8">
-        <h2 className="text-xl font-semibold mb-4">Application Overview</h2>
-        <p className="text-muted-foreground mb-6">
-          Our application process is designed to understand your business and help us determine how we can best support your growth. Here's what you'll need to provide:
-        </p>
-        
-        <Accordion type="single" collapsible className="mb-6">
-          {applicationSections.map((section, index) => (
-            <AccordionItem key={index} value={`section-${index}`}>
-              <AccordionTrigger className="text-lg font-medium">
-                {section.title}
-              </AccordionTrigger>
-              <AccordionContent>
-                <ul className="list-disc pl-6 space-y-1">
-                  {section.items.map((item, idx) => (
-                    <li key={idx} className="text-muted-foreground">{item}</li>
-                  ))}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
-      
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-8 mb-8">
         <div className="bg-muted/30 rounded-lg p-6">
           <h3 className="text-lg font-semibold mb-2">Quick Start</h3>
           <p className="text-muted-foreground mb-4">
@@ -137,6 +113,30 @@ const Apply = () => {
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
+      </div>
+      
+      <div className="bg-muted/30 rounded-lg p-6">
+        <h2 className="text-xl font-semibold mb-4">Application Overview</h2>
+        <p className="text-muted-foreground mb-6">
+          Our application process is designed to understand your business and help us determine how we can best support your growth. Here's what you'll need to provide:
+        </p>
+        
+        <Accordion type="single" collapsible className="mb-6">
+          {applicationSections.map((section, index) => (
+            <AccordionItem key={index} value={`section-${index}`}>
+              <AccordionTrigger className="text-lg font-medium">
+                {section.title}
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="list-disc pl-6 space-y-1">
+                  {section.items.map((item, idx) => (
+                    <li key={idx} className="text-muted-foreground">{item}</li>
+                  ))}
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
       </div>
     </div>
   );

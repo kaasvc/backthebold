@@ -615,21 +615,6 @@ const StartupProfile = () => {
                                   <Briefcase className="h-3 w-3" />
                                   {founder.experience} experience
                                 </Badge>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-};
-
-export default StartupProfile;
+                                {founder.previousStartups > 0 && (
+                                  <Badge variant="outline" className="flex items-center gap-1">
+                                    <Star className="h-3 w-3" />

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -619,44 +618,3 @@ const StartupProfile = () => {
                                 {founder.previousStartups > 0 && (
                                   <Badge variant="outline" className="flex items-center gap-1">
                                     <Star className="h-3 w-3" />
-                                    {founder.previousStartups} previous startup{founder.previousStartups > 1 ? 's' : ''}
-                                  </Badge>
-                                )}
-                                {founder.previousExits > 0 && (
-                                  <Badge variant="outline" className="flex items-center gap-1 bg-green-50 text-green-700 border-green-200">
-                                    <Award className="h-3 w-3" />
-                                    {founder.previousExits} exit{founder.previousExits > 1 ? 's' : ''}
-                                  </Badge>
-                                )}
-                              </div>
-                              
-                              <p className="text-muted-foreground mb-4">
-                                {founder.bio}
-                              </p>
-                              
-                              <h4 className="font-medium text-sm mb-2 text-slate-700">Experience Highlights:</h4>
-                              <ul className="space-y-1.5">
-                                {founder.highlights.map((highlight, i) => (
-                                  <li key={i} className="text-sm flex items-start gap-2">
-                                    <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                                    <span>{highlight}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
-};
-
-export default StartupProfile;

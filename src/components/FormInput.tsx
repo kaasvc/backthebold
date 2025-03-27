@@ -1,6 +1,8 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Check, X } from "lucide-react";
 
 interface FormInputProps {
   id: string;
@@ -34,6 +36,12 @@ const FormInput: React.FC<FormInputProps> = ({
   ) => {
     onChange(e.target.value);
   };
+
+  // Check if this is a Yes/No radio question
+  const isYesNoQuestion = type === "radio" && 
+    options.length === 2 && 
+    options.includes("Yes") && 
+    options.includes("No");
 
   return (
     <div className={cn("form-question w-full space-y-2", className)}>
@@ -75,6 +83,52 @@ const FormInput: React.FC<FormInputProps> = ({
             </option>
           ))}
         </select>
+      ) : isYesNoQuestion ? (
+        <ToggleGroup 
+          type="single" 
+          value={value} 
+          onValueChange={(val) => val && onChange(val)}
+          className="flex justify-start"
+        >
+          <ToggleGroupItem 
+            value="Yes" 
+            aria-label="Yes"
+            className={cn(
+              "flex gap-2 border border-input px-4 py-2 rounded-l-md",
+              value === "Yes" ? "bg-primary/10 border-primary/50" : ""
+            )}
+          >
+            <Check className="h-4 w-4" />
+            <span>Yes</span>
+          </ToggleGroupItem>
+          <ToggleGroupItem 
+            value="No" 
+            aria-label="No"
+            className={cn(
+              "flex gap-2 border border-input px-4 py-2 rounded-r-md border-l-0",
+              value === "No" ? "bg-primary/10 border-primary/50" : ""
+            )}
+          >
+            <X className="h-4 w-4" />
+            <span>No</span>
+          </ToggleGroupItem>
+        </ToggleGroup>
+      ) : type === "radio" && options && options.length > 0 ? (
+        <div className="space-y-2">
+          {options.map((option) => (
+            <label key={option} className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="radio"
+                name={id}
+                value={option}
+                checked={value === option}
+                onChange={() => onChange(option)}
+                className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
+              />
+              <span className="text-sm">{option}</span>
+            </label>
+          ))}
+        </div>
       ) : (
         <input
           id={id}

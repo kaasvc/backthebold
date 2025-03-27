@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -24,7 +25,7 @@ export interface Deal {
   companyName: string;
   logo: string;
   shortDescription: string;
-  description?: string;
+  description: string;
   minInvestment: number;
   noteDiscount: number;
   industry: string[];
@@ -34,14 +35,14 @@ export interface Deal {
   createdAt: string;
   founderUserId?: string;
   status: "draft" | "pending" | "approved" | "rejected";
-  stage?: string;
-  categories?: string[];
-  investmentType?: string;
-  backers?: number;
-  comments?: number;
-  valuation?: number;
-  number?: number;
-  successHighlight?: string;
+  stage: string;
+  categories: string[];
+  investmentType: string;
+  backers: number;
+  comments: number;
+  valuation: number;
+  number: number;
+  successHighlight: string;
 }
 
 interface AuthContextType {

@@ -51,7 +51,7 @@ const FormInput: React.FC<FormInputProps> = ({
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="text-kaas-pink ml-1">*</span>}
         </label>
       </div>
 
@@ -62,7 +62,7 @@ const FormInput: React.FC<FormInputProps> = ({
           onChange={handleChange}
           placeholder={placeholder}
           className={cn(
-            "flex min-h-24 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex min-h-24 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-kaas-pink focus:ring-opacity-40 disabled:cursor-not-allowed disabled:opacity-50",
             error ? "border-red-500" : "border-input"
           )}
         />
@@ -72,7 +72,7 @@ const FormInput: React.FC<FormInputProps> = ({
           value={value}
           onChange={handleChange}
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-kaas-pink focus:ring-opacity-40 disabled:cursor-not-allowed disabled:opacity-50",
             error ? "border-red-500" : "border-input"
           )}
         >
@@ -95,10 +95,10 @@ const FormInput: React.FC<FormInputProps> = ({
             aria-label="Yes"
             className={cn(
               "flex gap-2 border border-input px-4 py-2 rounded-l-md",
-              value === "Yes" ? "bg-primary/10 border-primary/50" : ""
+              value === "Yes" ? "bg-kaas-pink/10 border-kaas-pink text-kaas-darkpink" : ""
             )}
           >
-            <Check className="h-4 w-4" />
+            <Check className={cn("h-4 w-4", value === "Yes" ? "text-kaas-pink" : "")} />
             <span>Yes</span>
           </ToggleGroupItem>
           <ToggleGroupItem 
@@ -106,10 +106,10 @@ const FormInput: React.FC<FormInputProps> = ({
             aria-label="No"
             className={cn(
               "flex gap-2 border border-input px-4 py-2 rounded-r-md border-l-0",
-              value === "No" ? "bg-primary/10 border-primary/50" : ""
+              value === "No" ? "bg-kaas-pink/10 border-kaas-pink text-kaas-darkpink" : ""
             )}
           >
-            <X className="h-4 w-4" />
+            <X className={cn("h-4 w-4", value === "No" ? "text-kaas-pink" : "")} />
             <span>No</span>
           </ToggleGroupItem>
         </ToggleGroup>
@@ -123,7 +123,7 @@ const FormInput: React.FC<FormInputProps> = ({
                 value={option}
                 checked={value === option}
                 onChange={() => onChange(option)}
-                className="h-4 w-4 border-gray-300 text-primary focus:ring-primary"
+                className="h-4 w-4 border-gray-300 text-kaas-pink focus:ring-kaas-pink"
               />
               <span className="text-sm">{option}</span>
             </label>
@@ -137,7 +137,7 @@ const FormInput: React.FC<FormInputProps> = ({
           onChange={handleChange}
           placeholder={placeholder}
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-40 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-kaas-pink focus:ring-opacity-40 disabled:cursor-not-allowed disabled:opacity-50",
             error ? "border-red-500" : "border-input"
           )}
         />

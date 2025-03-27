@@ -86,10 +86,10 @@ const Apply = () => {
   if (!user && !showSignup) {
     return (
       <div className="container max-w-5xl mx-auto py-12 px-4">
-        <h1 className="text-3xl font-bold mb-8">Start Your Raise</h1>
+        <h1 className="text-3xl font-bold mb-8 text-gray-800">Start Your Raise</h1>
         
-        <div className="bg-muted/30 rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold mb-4">Begin Your Funding Journey</h2>
+        <div className="bg-gradient-to-br from-white to-kaas-pink/10 rounded-lg p-6 mb-8 border border-kaas-pink/20 shadow-sm">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">Begin Your Funding Journey</h2>
           <p className="text-muted-foreground mb-6">
             Join thousands of founders who have successfully raised funding through our platform. Our application process is designed to understand your business and help us determine how we can best support your growth.
           </p>
@@ -97,7 +97,7 @@ const Apply = () => {
           <Button 
             onClick={() => setShowSignup(true)} 
             variant="kaas" 
-            className="w-full md:w-auto"
+            className="w-full md:w-auto shadow-md hover:shadow-lg transition-all"
           >
             Create an Account to Apply
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -110,7 +110,7 @@ const Apply = () => {
   if (showSignup) {
     return (
       <div className="container max-w-5xl mx-auto py-12 px-4">
-        <h1 className="text-3xl font-bold mb-8">Create Your Account</h1>
+        <h1 className="text-3xl font-bold mb-8 text-gray-800">Create Your Account</h1>
         <SignupForm 
           onComplete={() => navigate("/apply")} 
           onCancel={() => setShowSignup(false)} 
@@ -121,12 +121,12 @@ const Apply = () => {
 
   return (
     <div className="container max-w-5xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-8">Start Your Raise</h1>
+      <h1 className="text-3xl font-bold mb-8 text-gray-800">Start Your Raise</h1>
       
-      <div className="bg-muted/30 p-6 rounded-lg mb-8">
+      <div className="bg-gradient-to-br from-white to-kaas-pink/10 p-6 rounded-lg mb-8 border border-kaas-pink/20 shadow-sm">
         <p className="text-muted-foreground">
           Please complete all sections of the application below. You can save your progress at any time and return later to finish.
-          Fields marked with an asterisk (*) are required.
+          Fields marked with an asterisk (<span className="text-kaas-pink">*</span>) are required.
         </p>
       </div>
       
@@ -147,12 +147,12 @@ const Apply = () => {
           />
         ))}
         
-        <div className="py-6 bg-muted/10 px-6 rounded-lg">
+        <div className="py-6 bg-gradient-to-br from-white to-kaas-pink/5 px-6 rounded-lg border border-kaas-pink/10 shadow-sm">
           <div className="flex justify-end">
             <Button
               type="submit"
               variant="kaas"
-              className="w-full md:w-auto"
+              className="w-full md:w-auto shadow-md hover:shadow-lg transition-all"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Submitting Application..." : "Submit Application"}

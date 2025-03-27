@@ -17,9 +17,9 @@ const ContinuousFormSection: React.FC<ContinuousFormSectionProps> = ({
   errors,
 }) => {
   return (
-    <div className="section bg-muted/10 p-6 rounded-lg">
+    <div className="section bg-gradient-to-br from-white to-kaas-pink/5 p-6 rounded-lg border border-kaas-pink/10 shadow-sm">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">{section.title}</h2>
+        <h2 className="text-xl font-semibold mb-2 text-gray-800">{section.title}</h2>
         {section.description && (
           <p className="text-muted-foreground">{section.description}</p>
         )}

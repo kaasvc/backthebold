@@ -6,13 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import SignupForm from "@/components/SignupForm";
 import ContinuousFormSection from "@/components/ContinuousFormSection";
+import FounderSection from "@/components/FounderSection";
 import { formSections, validateAllSections, submitForm } from "@/utils/formUtils";
 
 const Apply = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [showSignup, setShowSignup] = useState(false);
-  const [formData, setFormData] = useState<Record<string, string>>({});
+  const [formData, setFormData] = useState<Record<string, string>>({
+    founders: JSON.stringify([{ name: "", email: "", linkedin: "" }])
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,6 +30,24 @@ const Apply = () => {
         return newErrors;
       });
     }
+  };
+
+  const handleFoundersChange = (founders: any[]) => {
+    setFormData(prev => ({ 
+      ...prev, 
+      founders: JSON.stringify(founders) 
+    }));
+    
+    // Clear founder errors
+    setErrors(prev => {
+      const newErrors = { ...prev };
+      Object.keys(newErrors).forEach(key => {
+        if (key.startsWith('founder_')) {
+          delete newErrors[key];
+        }
+      });
+      return newErrors;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -91,7 +112,7 @@ const Apply = () => {
       <div className="container max-w-5xl mx-auto py-12 px-4">
         <h1 className="text-3xl font-bold mb-8">Create Your Account</h1>
         <SignupForm 
-          onComplete={() => navigate("/apply/form")} 
+          onComplete={() => navigate("/apply")} 
           onCancel={() => setShowSignup(false)} 
         />
       </div>
@@ -100,7 +121,7 @@ const Apply = () => {
 
   return (
     <div className="container max-w-5xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-8">Startup Application</h1>
+      <h1 className="text-3xl font-bold mb-8">Start Your Raise</h1>
       
       <div className="bg-muted/30 p-6 rounded-lg mb-8">
         <p className="text-muted-foreground">
@@ -110,6 +131,12 @@ const Apply = () => {
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-12">
+        <FounderSection 
+          founders={JSON.parse(formData.founders || '[]')}
+          onChange={handleFoundersChange}
+          errors={errors}
+        />
+        
         {formSections.map((section) => (
           <ContinuousFormSection
             key={section.id}

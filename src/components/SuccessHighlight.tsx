@@ -14,7 +14,7 @@ const SuccessHighlight: React.FC<SuccessHighlightProps> = ({ children }) => {
           <Check className="h-5 w-5 text-green-600" />
         </div>
         <div>
-          <h3 className="text-sm font-medium text-green-800 mb-1">What's Already Working & Impressive</h3>
+          <h3 className="text-sm font-medium text-green-800 mb-1">What's the Most Impressive already Working?</h3>
           <p className="text-green-700">{children}</p>
         </div>
       </div>

@@ -2,12 +2,14 @@
 import React from "react";
 import FormInput from "./FormInput";
 import { FormSection as FormSectionType } from "@/utils/formUtils";
+import SuccessHighlight from "./SuccessHighlight";
 
 interface ContinuousFormSectionProps {
   section: FormSectionType;
   formData: Record<string, string>;
   onChange: (id: string, value: string) => void;
   errors: Record<string, string>;
+  successHighlight?: string;
 }
 
 const ContinuousFormSection: React.FC<ContinuousFormSectionProps> = ({
@@ -15,6 +17,7 @@ const ContinuousFormSection: React.FC<ContinuousFormSectionProps> = ({
   formData,
   onChange,
   errors,
+  successHighlight,
 }) => {
   return (
     <div className="section bg-gradient-to-br from-white to-kaas-pink/5 p-6 rounded-lg border border-kaas-pink/10 shadow-sm">
@@ -24,6 +27,10 @@ const ContinuousFormSection: React.FC<ContinuousFormSectionProps> = ({
           <p className="text-muted-foreground">{section.description}</p>
         )}
       </div>
+
+      {successHighlight && (
+        <SuccessHighlight>{successHighlight}</SuccessHighlight>
+      )}
 
       <div className="space-y-6">
         {section.fields.map((field) => (

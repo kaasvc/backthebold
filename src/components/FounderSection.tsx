@@ -3,7 +3,8 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Check } from "lucide-react";
+import SuccessHighlight from "./SuccessHighlight";
 
 interface Founder {
   name: string;
@@ -15,12 +16,14 @@ interface FounderSectionProps {
   founders: Founder[];
   onChange: (founders: Founder[]) => void;
   errors: Record<string, string>;
+  successHighlight?: string;
 }
 
 const FounderSection: React.FC<FounderSectionProps> = ({ 
   founders, 
   onChange, 
-  errors 
+  errors,
+  successHighlight
 }) => {
   const addFounder = () => {
     onChange([...founders, { name: "", email: "", linkedin: "" }]);
@@ -46,6 +49,10 @@ const FounderSection: React.FC<FounderSectionProps> = ({
           Tell us about the founding team. Add each founder below.
         </p>
       </div>
+
+      {successHighlight && (
+        <SuccessHighlight>{successHighlight}</SuccessHighlight>
+      )}
 
       <div className="space-y-8">
         {founders.map((founder, index) => (

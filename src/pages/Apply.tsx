@@ -137,13 +137,15 @@ const Apply = () => {
           errors={errors}
         />
         
-        {formSections.map((section) => (
+        {formSections.map((section, index) => (
           <ContinuousFormSection
             key={section.id}
             section={section}
             formData={formData}
             onChange={handleChange}
             errors={errors}
+            successHighlight={index === 0 ? 
+              "Their AI-powered maintenance prediction algorithm has shown 85% accuracy in early testing, helping landlords prevent costly repairs before they happen. The platform has already saved beta users an average of €2,200 per property in annual maintenance costs." : undefined}
           />
         ))}
         

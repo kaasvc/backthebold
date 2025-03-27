@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -25,6 +24,7 @@ export interface Deal {
   companyName: string;
   logo: string;
   shortDescription: string;
+  description?: string;
   minInvestment: number;
   noteDiscount: number;
   industry: string[];
@@ -34,6 +34,14 @@ export interface Deal {
   createdAt: string;
   founderUserId?: string;
   status: "draft" | "pending" | "approved" | "rejected";
+  stage?: string;
+  categories?: string[];
+  investmentType?: string;
+  backers?: number;
+  comments?: number;
+  valuation?: number;
+  number?: number;
+  successHighlight?: string;
 }
 
 interface AuthContextType {
@@ -54,7 +62,6 @@ interface AuthContextType {
   getFounderDeals: () => Deal[];
 }
 
-// Mock data for development purposes
 const MOCK_USERS: User[] = [
   {
     id: "admin-1",
@@ -73,13 +80,13 @@ const MOCK_USERS: User[] = [
 
 const MOCK_APPLICATIONS: Application[] = [];
 
-// Mock deal data
 const MOCK_DEALS: Deal[] = [
   {
     id: "deal-1",
     companyName: "PropRai",
     logo: "/placeholder.svg",
     shortDescription: "AI-powered property management and rental platform",
+    description: "Full platform for property managers featuring AI maintenance predictions and tenant management tools.",
     minInvestment: 500,
     noteDiscount: 30,
     industry: ["PropTech", "AI", "SaaS"],
@@ -88,13 +95,22 @@ const MOCK_DEALS: Deal[] = [
     isActive: true,
     createdAt: new Date("2023-10-10").toISOString(),
     status: "approved",
-    founderUserId: "founder-1"
+    founderUserId: "founder-1",
+    stage: "Seed",
+    categories: ["Property Management", "SaaS"],
+    investmentType: "SAFE",
+    backers: 45,
+    comments: 23,
+    valuation: 4500000,
+    number: 1,
+    successHighlight: "Platform has shown 85% accuracy in maintenance prediction, saving users an average of €2,200 per property annually."
   },
   {
     id: "deal-2",
     companyName: "MediSync",
     logo: "/placeholder.svg",
     shortDescription: "Healthcare data synchronization platform",
+    description: "Synchronizes medical records across healthcare providers securely and efficiently.",
     minInvestment: 500,
     noteDiscount: 30,
     industry: ["HealthTech", "Data", "AI"],
@@ -102,7 +118,15 @@ const MOCK_DEALS: Deal[] = [
     target: 500000,
     isActive: true,
     createdAt: new Date("2023-11-15").toISOString(),
-    status: "approved"
+    status: "approved",
+    stage: "Seed",
+    categories: ["Healthcare", "Data Security"],
+    investmentType: "SAFE",
+    backers: 27,
+    comments: 15,
+    valuation: 3000000,
+    number: 2,
+    successHighlight: "Currently processing over 50,000 medical records daily with 99.99% accuracy rate."
   }
 ];
 
@@ -115,7 +139,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for stored user in localStorage on component mount
     const storedUser = localStorage.getItem("kaasUser");
     if (storedUser) {
       try {
@@ -131,17 +154,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string): Promise<boolean> => {
     setLoading(true);
     try {
-      // In a real app, this would be an API call
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Mock authentication
       const mockUser = [...MOCK_USERS].find(u => u.email === email);
       
-      if (mockUser && password === "password") { // Simple password for demo
+      if (mockUser && password === "password") {
         setUser(mockUser);
         localStorage.setItem("kaasUser", JSON.stringify(mockUser));
         
-        // Load applications for this user
         const userApps = MOCK_APPLICATIONS.filter(app => 
           mockUser.role === "admin" || app.userId === mockUser.id
         );
@@ -165,16 +185,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (name: string, email: string, password: string): Promise<boolean> => {
     setLoading(true);
     try {
-      // In a real app, this would be an API call
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Check if user already exists
       if (MOCK_USERS.some(u => u.email === email)) {
         toast.error("Email already registered");
         return false;
       }
       
-      // Create new user
       const newUser: User = {
         id: `user-${Date.now()}`,
         email,
@@ -182,10 +199,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         role: "applicant",
       };
       
-      // Add to mock users
       MOCK_USERS.push(newUser);
       
-      // Log user in
       setUser(newUser);
       localStorage.setItem("kaasUser", JSON.stringify(newUser));
       
@@ -213,10 +228,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     
     try {
-      // In a real app, this would be an API call
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Create new application
       const newApplication: Application = {
         id: `app-${Date.now()}`,
         userId: user.id,
@@ -225,12 +238,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         formData,
       };
       
-      // Add to mock applications
       MOCK_APPLICATIONS.push(newApplication);
       setApplications(prev => [...prev, newApplication]);
-      
-      // Send email notification (simulated)
-      console.log("Sending email to hello@kaas.vc with application details:", newApplication);
       
       toast.success("Application submitted successfully");
       return newApplication.id;
@@ -248,10 +257,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     
     try {
-      // In a real app, this would be an API call
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Find and update application
       const appIndex = MOCK_APPLICATIONS.findIndex(app => app.id === applicationId);
       if (appIndex === -1) {
         toast.error("Application not found");
@@ -270,7 +277,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Deal management functions for admin
   const getDeal = (dealId: string): Deal | undefined => {
     return deals.find(deal => deal.id === dealId);
   };
@@ -282,7 +288,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     
     try {
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const dealIndex = deals.findIndex(deal => deal.id === dealId);
@@ -291,7 +296,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return false;
       }
       
-      // If user is founder, they can only update their own deals
       if (user.role === "founder" && deals[dealIndex].founderUserId !== user.id) {
         toast.error("You can only update your own deals");
         return false;
@@ -317,10 +321,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     
     try {
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // If user is founder, set the founderUserId
       const founderUserId = user.role === "founder" ? user.id : dealData.founderUserId;
       
       const newDeal: Deal = {
@@ -328,8 +330,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         id: `deal-${Date.now()}`,
         createdAt: new Date().toISOString(),
         founderUserId,
-        status: user.role === "admin" ? "approved" : "draft", // Admins create approved deals, founders create drafts
-        isActive: user.role === "admin" ? (dealData.isActive ?? true) : false, // Founder deals are inactive until approved
+        status: user.role === "admin" ? "approved" : "draft",
+        isActive: user.role === "admin" ? (dealData.isActive ?? true) : false,
       };
       
       setDeals([...deals, newDeal]);
@@ -350,7 +352,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     
     try {
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const dealIndex = deals.findIndex(deal => deal.id === dealId);
@@ -375,7 +376,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // New function for founders to submit deals for review
   const submitDealForReview = async (dealId: string): Promise<boolean> => {
     if (!user || user.role !== "founder") {
       toast.error("Only founders can submit deals for review");
@@ -383,7 +383,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     
     try {
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const dealIndex = deals.findIndex(deal => deal.id === dealId);
@@ -392,13 +391,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return false;
       }
       
-      // Can only submit own deals
       if (deals[dealIndex].founderUserId !== user.id) {
         toast.error("You can only submit your own deals for review");
         return false;
       }
       
-      // Can only submit draft deals
       if (deals[dealIndex].status !== "draft") {
         toast.error(`Deal is already in ${deals[dealIndex].status} status`);
         return false;
@@ -412,7 +409,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setDeals(updatedDeals);
       
       toast.success("Deal submitted for review");
-      // Send email notification to admin (simulated)
       console.log("Sending email to admin@kaas.vc about new deal submission:", updatedDeals[dealIndex]);
       
       return true;
@@ -423,7 +419,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Get all deals belonging to the current founder
   const getFounderDeals = (): Deal[] => {
     if (!user || user.role !== "founder") {
       return [];

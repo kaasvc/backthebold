@@ -6,6 +6,10 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Deal, useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { X } from "lucide-react";
+import SuccessHighlight from "./SuccessHighlight";
 
 interface DealEditorProps {
   dealId: string | null;
@@ -20,14 +24,24 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
     companyName: "",
     logo: "/placeholder.svg",
     shortDescription: "",
+    description: "",
     minInvestment: 500,
     noteDiscount: 30,
     industry: [],
     raised: 0,
     target: 0,
-    isActive: true
+    isActive: true,
+    stage: "Seed",
+    categories: [],
+    investmentType: "SAFE",
+    backers: 0,
+    comments: 0,
+    valuation: 0,
+    number: 0
   });
   const [industryInput, setIndustryInput] = useState("");
+  const [categoryInput, setCategoryInput] = useState("");
+  const [successHighlight, setSuccessHighlight] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -38,13 +52,23 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
           companyName: deal.companyName,
           logo: deal.logo,
           shortDescription: deal.shortDescription,
+          description: deal.description || "",
           minInvestment: deal.minInvestment,
           noteDiscount: deal.noteDiscount,
           industry: [...deal.industry],
           raised: deal.raised,
           target: deal.target,
-          isActive: deal.isActive
+          isActive: deal.isActive,
+          stage: deal.stage || "Seed",
+          categories: deal.categories || [],
+          investmentType: deal.investmentType || "SAFE",
+          backers: deal.backers || 0,
+          comments: deal.comments || 0,
+          valuation: deal.valuation || 0,
+          number: deal.number || 0,
+          successHighlight: deal.successHighlight || ""
         });
+        setSuccessHighlight(deal.successHighlight || "");
       }
     } else {
       // Reset form for create mode
@@ -52,18 +76,28 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
         companyName: "",
         logo: "/placeholder.svg",
         shortDescription: "",
+        description: "",
         minInvestment: 500,
         noteDiscount: 30,
         industry: [],
         raised: 0,
         target: 0,
-        isActive: true
+        isActive: true,
+        stage: "Seed",
+        categories: [],
+        investmentType: "SAFE",
+        backers: 0,
+        comments: 0,
+        valuation: 0,
+        number: 0
       });
+      setSuccessHighlight("");
     }
     setIndustryInput("");
+    setCategoryInput("");
   }, [dealId, isCreate, isOpen, getDeal]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     
     if (type === "number") {
@@ -77,6 +111,13 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
         [name]: value
       }));
     }
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleAddIndustry = () => {
@@ -96,6 +137,23 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
     }));
   };
 
+  const handleAddCategory = () => {
+    if (categoryInput.trim() && !formData.categories?.includes(categoryInput.trim())) {
+      setFormData(prev => ({
+        ...prev,
+        categories: [...(prev.categories || []), categoryInput.trim()]
+      }));
+      setCategoryInput("");
+    }
+  };
+
+  const handleRemoveCategory = (category: string) => {
+    setFormData(prev => ({
+      ...prev,
+      categories: prev.categories?.filter(c => c !== category) || []
+    }));
+  };
+
   const handleSubmit = async () => {
     // Basic validation
     if (!formData.companyName || !formData.shortDescription) {
@@ -106,15 +164,21 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
     setLoading(true);
 
     try {
+      // Add success highlight to form data before saving
+      const fullFormData = {
+        ...formData,
+        successHighlight: successHighlight
+      };
+      
       if (isCreate) {
         // Create new deal
-        const newDealId = await createDeal(formData as Omit<Deal, "id" | "createdAt">);
+        const newDealId = await createDeal(fullFormData as Omit<Deal, "id" | "createdAt">);
         if (newDealId) {
           onClose();
         }
       } else if (dealId) {
         // Update existing deal
-        const success = await updateDeal(dealId, formData);
+        const success = await updateDeal(dealId, fullFormData);
         if (success) {
           onClose();
         }
@@ -126,6 +190,12 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
       setLoading(false);
     }
   };
+
+  // Investment types available for selection
+  const investmentTypes = ["Direct Equity", "Convertible Loan Agreement", "SAFE"];
+  
+  // Stages available for selection
+  const stages = ["Pre-seed", "Seed", "Series A", "Series B", "Growth", "Angel"];
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -175,6 +245,71 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
             />
           </div>
           
+          <div className="grid gap-2">
+            <Label htmlFor="description">Full Description</Label>
+            <Textarea 
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Detailed company description"
+              rows={3}
+            />
+          </div>
+          
+          <div className="grid gap-2">
+            <Label htmlFor="successHighlight">Success Highlight</Label>
+            <Textarea 
+              id="successHighlight"
+              value={successHighlight}
+              onChange={(e) => setSuccessHighlight(e.target.value)}
+              placeholder="What's the most impressive thing already working?"
+              rows={3}
+            />
+            {successHighlight && (
+              <div className="mt-2">
+                <Label className="text-xs text-muted-foreground mb-1">Preview:</Label>
+                <SuccessHighlight>{successHighlight}</SuccessHighlight>
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="stage">Stage *</Label>
+              <Select 
+                value={formData.stage || "Seed"} 
+                onValueChange={(value) => handleSelectChange("stage", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select stage" />
+                </SelectTrigger>
+                <SelectContent>
+                  {stages.map(stage => (
+                    <SelectItem key={stage} value={stage}>{stage}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="grid gap-2">
+              <Label htmlFor="investmentType">Investment Type *</Label>
+              <Select 
+                value={formData.investmentType || "SAFE"} 
+                onValueChange={(value) => handleSelectChange("investmentType", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {investmentTypes.map(type => (
+                    <SelectItem key={type} value={type}>{type}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
           <div className="grid grid-cols-2 gap-4">
             <div className="grid gap-2">
               <Label htmlFor="minInvestment">Minimum Investment (€) *</Label>
@@ -207,6 +342,40 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
           </div>
           
           <div className="grid gap-2">
+            <Label htmlFor="categories">Business Categories</Label>
+            <div className="flex gap-2">
+              <Input 
+                id="categories"
+                value={categoryInput}
+                onChange={(e) => setCategoryInput(e.target.value)}
+                placeholder="Add business category"
+                onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleAddCategory())}
+              />
+              <Button type="button" onClick={handleAddCategory} variant="secondary">Add</Button>
+            </div>
+            
+            {formData.categories && formData.categories.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {formData.categories.map((category) => (
+                  <div 
+                    key={category} 
+                    className="bg-slate-100 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+                  >
+                    {category}
+                    <button 
+                      type="button" 
+                      className="text-slate-400 hover:text-slate-600"
+                      onClick={() => handleRemoveCategory(category)}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          
+          <div className="grid gap-2">
             <Label htmlFor="industry">Industry Tags</Label>
             <div className="flex gap-2">
               <Input 
@@ -232,7 +401,7 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
                       className="text-slate-400 hover:text-slate-600"
                       onClick={() => handleRemoveIndustry(tag)}
                     >
-                      ×
+                      <X className="h-3 w-3" />
                     </button>
                   </div>
                 ))}
@@ -266,6 +435,62 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
                 placeholder="100000"
                 min="1"
                 required
+              />
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="backers">Backers Count</Label>
+              <Input 
+                id="backers"
+                name="backers"
+                type="number"
+                value={formData.backers}
+                onChange={handleChange}
+                placeholder="0"
+                min="0"
+              />
+            </div>
+            
+            <div className="grid gap-2">
+              <Label htmlFor="valuation">Valuation (€)</Label>
+              <Input 
+                id="valuation"
+                name="valuation"
+                type="number"
+                value={formData.valuation}
+                onChange={handleChange}
+                placeholder="0"
+                min="0"
+              />
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="comments">Comments Count</Label>
+              <Input 
+                id="comments"
+                name="comments"
+                type="number"
+                value={formData.comments}
+                onChange={handleChange}
+                placeholder="0"
+                min="0"
+              />
+            </div>
+            
+            <div className="grid gap-2">
+              <Label htmlFor="number">Display Order</Label>
+              <Input 
+                id="number"
+                name="number"
+                type="number"
+                value={formData.number}
+                onChange={handleChange}
+                placeholder="0"
+                min="0"
               />
             </div>
           </div>

@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import { toast as sonnerToast } from "sonner"
 
@@ -10,6 +11,7 @@ type ToasterToast = {
   description?: React.ReactNode
   action?: React.ReactNode
   variant?: "default" | "destructive"
+  onOpenChange?: (open: boolean) => void
 }
 
 const actionTypes = {
@@ -91,7 +93,7 @@ const reducer = (state: State, action: Action): State => {
           t.id === toastId || toastId === undefined
             ? {
                 ...t,
-                open: false,
+                onOpenChange: undefined,
               }
             : t
         ),
@@ -124,7 +126,12 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">
 
-function toast({ ...props }: Toast) {
+interface ToastOptions extends Toast {
+  description?: React.ReactNode
+  variant?: "default" | "destructive"
+}
+
+function toast(props: ToastOptions) {
   const id = genId()
 
   const update = (props: ToasterToast) =>
@@ -139,7 +146,6 @@ function toast({ ...props }: Toast) {
     toast: {
       ...props,
       id,
-      open: true,
       onOpenChange: (open: boolean) => {
         if (!open) dismiss()
       },
@@ -151,6 +157,15 @@ function toast({ ...props }: Toast) {
     dismiss,
     update,
   }
+}
+
+// Add helper methods to toast
+toast.success = (message: string) => {
+  return toast({ title: "Success", description: message, variant: "default" })
+}
+
+toast.error = (message: string) => {
+  return toast({ title: "Error", description: message, variant: "destructive" })
 }
 
 function useToast() {

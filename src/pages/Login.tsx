@@ -14,16 +14,17 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Redirect if already logged in
-  if (user) {
-    navigate(
-      user.role === "admin" 
-        ? "/admin" 
-        : user.role === "founder" 
-          ? "/founder" 
-          : "/dashboard"
-    );
-    return null;
-  }
+  React.useEffect(() => {
+    if (user) {
+      navigate(
+        user.role === "admin" 
+          ? "/admin" 
+          : user.role === "founder" 
+            ? "/founder" 
+            : "/dashboard"
+      );
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,8 +34,9 @@ const Login: React.FC = () => {
     
     setIsLoading(false);
     
-    if (success) {
-      // Redirect handled by the if(user) check above on next render
+    if (!success) {
+      // Error handling already in login function
+      console.log("Login failed");
     }
   };
 

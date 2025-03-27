@@ -1,16 +1,18 @@
-
 import * as React from "react"
-import { toast as sonnerToast } from "sonner"
+import { Toast, ToastActionElement, ToastProps } from "@/components/ui/toast"
+import {
+  toast as sonnerToast,
+  Toaster as Sonner,
+} from "sonner"
 
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
 
-type ToasterToast = {
+type ToasterToast = ToastProps & {
   id: string
   title?: React.ReactNode
   description?: React.ReactNode
-  action?: React.ReactNode
-  variant?: "default" | "destructive"
+  action?: ToastActionElement
   onOpenChange?: (open: boolean) => void
 }
 
@@ -24,7 +26,7 @@ const actionTypes = {
 let count = 0
 
 function genId() {
-  count = (count + 1) % Number.MAX_SAFE_INTEGER
+  count = (count + 1) % Number.MAX_VALUE
   return count.toString()
 }
 
@@ -56,13 +58,13 @@ const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case actionTypes.ADD_TOAST:
+    case "ADD_TOAST":
       return {
         ...state,
         toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT),
       }
 
-    case actionTypes.UPDATE_TOAST:
+    case "UPDATE_TOAST":
       return {
         ...state,
         toasts: state.toasts.map((t) =>
@@ -70,7 +72,7 @@ const reducer = (state: State, action: Action): State => {
         ),
       }
 
-    case actionTypes.DISMISS_TOAST: {
+    case "DISMISS_TOAST": {
       const { toastId } = action
 
       // ! Side effects ! - This could be extracted into a dismissToast() action,
@@ -81,7 +83,7 @@ const reducer = (state: State, action: Action): State => {
           toastTimeouts.delete(toastId)
         }
       } else {
-        for (const [id, timeout] of Array.from(toastTimeouts.entries())) {
+        for (const [id, timeout] of toastTimeouts.entries()) {
           clearTimeout(timeout)
           toastTimeouts.delete(id)
         }
@@ -93,13 +95,13 @@ const reducer = (state: State, action: Action): State => {
           t.id === toastId || toastId === undefined
             ? {
                 ...t,
-                onOpenChange: undefined,
+                open: false,
               }
             : t
         ),
       }
     }
-    case actionTypes.REMOVE_TOAST:
+    case "REMOVE_TOAST":
       if (action.toastId === undefined) {
         return {
           ...state,
@@ -124,29 +126,25 @@ function dispatch(action: Action) {
   })
 }
 
-type Toast = Omit<ToasterToast, "id">
+interface Toast extends Omit<ToasterToast, "id"> {}
 
-interface ToastOptions extends Toast {
-  description?: React.ReactNode
-  variant?: "default" | "destructive"
-}
-
-function toast(props: ToastOptions) {
+function toast({ ...props }: Toast) {
   const id = genId()
 
   const update = (props: ToasterToast) =>
     dispatch({
-      type: actionTypes.UPDATE_TOAST,
+      type: "UPDATE_TOAST",
       toast: { ...props, id },
     })
-  const dismiss = () => dispatch({ type: actionTypes.DISMISS_TOAST, toastId: id })
+  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id })
 
   dispatch({
-    type: actionTypes.ADD_TOAST,
+    type: "ADD_TOAST",
     toast: {
       ...props,
       id,
-      onOpenChange: (open: boolean) => {
+      open: true,
+      onOpenChange: (open) => {
         if (!open) dismiss()
       },
     },
@@ -159,14 +157,24 @@ function toast(props: ToastOptions) {
   }
 }
 
-// Add helper methods to toast
+// Add these helper methods for success, error, etc.
 toast.success = (message: string) => {
-  return toast({ title: "Success", description: message, variant: "default" })
-}
+  sonnerToast.success(message);
+  return toast({
+    title: "Success",
+    description: message,
+    variant: "default",
+  });
+};
 
 toast.error = (message: string) => {
-  return toast({ title: "Error", description: message, variant: "destructive" })
-}
+  sonnerToast.error(message);
+  return toast({
+    title: "Error",
+    description: message,
+    variant: "destructive",
+  });
+};
 
 function useToast() {
   const [state, setState] = React.useState<State>(memoryState)
@@ -184,9 +192,8 @@ function useToast() {
   return {
     ...state,
     toast,
-    dismiss: (toastId?: string) => dispatch({ type: actionTypes.DISMISS_TOAST, toastId }),
+    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
   }
 }
 
-// Re-export sonner toast for convenience
 export { useToast, toast, sonnerToast }

@@ -1,7 +1,7 @@
 
 import { User, Application } from "../types/auth";
 import { MOCK_USERS, MOCK_APPLICATIONS } from "../data/mockAuthData";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 
 export const loginUser = async (email: string, password: string): Promise<User | null> => {
   try {

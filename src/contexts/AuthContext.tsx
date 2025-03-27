@@ -1,6 +1,5 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import { User, Application, Deal } from "../types/auth";
 import { AuthContextType } from "./AuthContextType";
 import { MOCK_APPLICATIONS, MOCK_DEALS } from "../data/mockAuthData";

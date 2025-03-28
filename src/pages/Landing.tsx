@@ -25,7 +25,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, ChevronUp, Filter, User, Mail, Plus } from "lucide-react";
+import { ChevronDown, ChevronUp, Filter, User, Mail, Plus, Bell } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Landing = () => {
@@ -347,11 +347,32 @@ const Landing = () => {
         
         {filteredDeals.length > 0 ? (
           <div className="space-y-4 mb-10">
-            {filteredDeals.map((deal, index) => (
+            {filteredDeals.slice(0, 5).map((deal, index) => (
               <DealCard 
                 key={deal.id} 
                 deal={deal} 
                 isHot={sortOption === "popularity" && index === 0}
+              />
+            ))}
+            
+            {/* Promotional Bar */}
+            <div className="bg-gray-50 rounded-lg border border-gray-100 p-6 my-8">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <Bell className="h-5 w-5 text-kaas-pink" />
+                  <h3 className="text-lg font-medium">Know When New Deals Drop, Sign Up Today</h3>
+                </div>
+                <Button variant="kaas" className="whitespace-nowrap">
+                  Sign Up
+                </Button>
+              </div>
+            </div>
+            
+            {filteredDeals.slice(5).map((deal, index) => (
+              <DealCard 
+                key={deal.id} 
+                deal={deal} 
+                isHot={false}
               />
             ))}
           </div>

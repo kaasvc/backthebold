@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -86,27 +85,22 @@ const AdminDashboard: React.FC = () => {
     setShowCreateDealDialog(false);
   };
 
-  const handleApproveDeal = async (dealId: string) => {
+  const handleApproveDeal = async (dealId: string): Promise<boolean> => {
     const success = await updateDeal(dealId, { 
       status: "approved",
       isActive: true
     });
-    if (success) {
-      // No need to refresh since updateDeal updates state
-    }
+    return success;
   };
 
-  const handleRejectDeal = async (dealId: string) => {
+  const handleRejectDeal = async (dealId: string): Promise<boolean> => {
     const success = await updateDeal(dealId, { 
       status: "rejected",
       isActive: false
     });
-    if (success) {
-      // No need to refresh since updateDeal updates state
-    }
+    return success;
   };
 
-  // Count pending deals for notification
   const pendingDealsCount = deals.filter(deal => deal.status === "pending").length;
 
   return (

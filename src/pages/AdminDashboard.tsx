@@ -4,11 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { LogOut, Clock, CheckCircle, XCircle, AlertCircle, Search, Building, Plus, RefreshCw, ToggleLeft, ToggleRight, PencilLine, Filter } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { LogOut, Clock, CheckCircle, XCircle, AlertCircle, Search, Building, Plus, Filter } from "lucide-react";
 import DealEditor from "@/components/DealEditor";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import DealTable from "@/components/admin/DealTable";
 
 const AdminDashboard: React.FC = () => {
   const { user, applications, deals, logout, toggleDealStatus, updateDeal } = useAuth();
@@ -332,125 +332,13 @@ const AdminDashboard: React.FC = () => {
                 <p className="text-muted-foreground">No deals found.</p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="py-3 px-4 text-left font-medium">Company</th>
-                      <th className="py-3 px-4 text-left font-medium">Min. Investment</th>
-                      <th className="py-3 px-4 text-left font-medium">Discount</th>
-                      <th className="py-3 px-4 text-left font-medium">Raised / Target</th>
-                      <th className="py-3 px-4 text-left font-medium">Status</th>
-                      <th className="py-3 px-4 text-right font-medium">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredDeals.map((deal) => (
-                      <tr key={deal.id} className={`border-b hover:bg-muted/50 ${deal.status === "pending" ? "bg-amber-50" : ""}`}>
-                        <td className="py-3 px-4">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-muted rounded overflow-hidden">
-                              <img src={deal.logo} alt={deal.companyName} className="w-full h-full object-cover" />
-                            </div>
-                            <div>
-                              <span className="font-medium">{deal.companyName}</span>
-                              {deal.founderUserId && (
-                                <p className="text-xs text-muted-foreground">Founder submitted</p>
-                              )}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4">€{deal.minInvestment.toLocaleString()}</td>
-                        <td className="py-3 px-4">{deal.noteDiscount}%</td>
-                        <td className="py-3 px-4">
-                          <div className="flex flex-col">
-                            <div className="flex justify-between mb-1 text-sm">
-                              <span>€{deal.raised.toLocaleString()}</span>
-                              <span>€{deal.target.toLocaleString()}</span>
-                            </div>
-                            <div className="w-full bg-slate-200 rounded-full h-2">
-                              <div 
-                                className="bg-blue-600 h-2 rounded-full"
-                                style={{width: `${Math.min(100, (deal.raised / deal.target) * 100)}%`}}
-                              ></div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-3 px-4">
-                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(deal.status)}`}>
-                            {deal.status === "approved" ? 
-                              (deal.isActive ? <CheckCircle className="h-3 w-3 mr-1" /> : <XCircle className="h-3 w-3 mr-1" />) : 
-                              deal.status === "pending" ? <Clock className="h-3 w-3 mr-1" /> :
-                              deal.status === "rejected" ? <XCircle className="h-3 w-3 mr-1" /> :
-                              <PencilLine className="h-3 w-3 mr-1" />
-                            }
-                            <span className="capitalize">{deal.status}</span>
-                            {deal.status === "approved" && !deal.isActive && <span> (Inactive)</span>}
-                          </div>
-                        </td>
-                        <td className="py-3 px-4 text-right">
-                          <div className="flex justify-end gap-2">
-                            {deal.status === "pending" ? (
-                              <>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => handleRejectDeal(deal.id)}
-                                  title="Reject deal"
-                                  className="text-red-500 hover:text-red-700"
-                                >
-                                  <XCircle className="h-4 w-4" />
-                                </Button>
-                                <Button
-                                  variant="trust"
-                                  size="sm"
-                                  onClick={() => handleApproveDeal(deal.id)}
-                                  title="Approve deal"
-                                >
-                                  <CheckCircle className="h-4 w-4 mr-1" />
-                                  Approve
-                                </Button>
-                              </>
-                            ) : (
-                              <>
-                                {deal.status === "approved" && (
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => toggleDealStatus(deal.id)}
-                                    title={deal.isActive ? "Deactivate deal" : "Activate deal"}
-                                  >
-                                    {deal.isActive ? 
-                                      <ToggleRight className="h-4 w-4 text-green-600" /> : 
-                                      <ToggleLeft className="h-4 w-4 text-slate-600" />
-                                    }
-                                  </Button>
-                                )}
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => navigate(`/startup/${deal.id}`)}
-                                  title="View deal"
-                                >
-                                  <Search className="h-4 w-4" />
-                                </Button>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => setEditDealId(deal.id)}
-                                  title="Edit deal"
-                                >
-                                  <PencilLine className="h-4 w-4" />
-                                </Button>
-                              </>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <DealTable 
+                deals={filteredDeals}
+                handleApproveDeal={handleApproveDeal}
+                handleRejectDeal={handleRejectDeal}
+                toggleDealStatus={toggleDealStatus}
+                setEditDealId={setEditDealId}
+              />
             )}
           </TabsContent>
         </Tabs>

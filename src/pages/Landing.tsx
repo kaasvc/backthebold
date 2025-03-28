@@ -338,7 +338,7 @@ const Landing = () => {
         </div>
         
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">This Week's Top Fundraisers</h2>
+          <h2 className="text-2xl font-bold">This Week's Top Deals</h2>
           <div className="text-sm text-muted-foreground">
             {filteredDeals.length} {filteredDeals.length === 1 ? 'deal' : 'deals'} live
           </div>

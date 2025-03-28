@@ -5,31 +5,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { MessageCircle, Users, Info, Flame, TrendingUp } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, InfoTooltip } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Deal } from "@/types/auth";
 
 export interface Founder {
   id: string;
   name: string;
   avatar?: string;
-}
-
-export interface Deal {
-  id: string;
-  number: number;
-  companyName: string;
-  description: string;
-  founders: {
-    id: string;
-    name: string;
-    avatar: string;
-  }[];
-  categories: string[];
-  stage: string;
-  backers: number;
-  comments: number;
-  logo: string;
-  valuation?: number;
-  investmentType?: "Direct Equity" | "Convertible Loan Agreement" | "SAFE";
 }
 
 interface DealCardProps {
@@ -133,7 +115,7 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className, isHot = false }) =
               
               <div className="flex items-center justify-between mt-2">
                 <div className="flex -space-x-2 mr-4">
-                  {deal.founders.map((founder) => (
+                  {deal.founders && Array.isArray(deal.founders) && deal.founders.map((founder) => (
                     <Avatar key={founder.id} className="border-2 border-background w-6 h-6">
                       {founder.avatar ? (
                         <AvatarImage src={founder.avatar} alt={founder.name} />

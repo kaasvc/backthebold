@@ -1,11 +1,12 @@
 
-import { Deal } from "@/components/DealCard";
+import { Deal } from "@/types/auth";
 
 export const mockDeals: Deal[] = [
   {
     id: "deal-1",
     number: 1,
     companyName: "PropRai",
+    shortDescription: "AI-powered property management platform",
     description: "AI-powered property management and rental platform",
     founders: [
       { id: "founder1", name: "Alex Johnson", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces" }
@@ -16,12 +17,22 @@ export const mockDeals: Deal[] = [
     comments: 23,
     logo: "/placeholder.svg",
     valuation: 4500000,
-    investmentType: "SAFE"
+    investmentType: "SAFE",
+    minInvestment: 1000,
+    noteDiscount: 20,
+    industry: ["PropTech", "AI"],
+    raised: 97500,
+    target: 150000,
+    isActive: true,
+    createdAt: new Date(2023, 11, 15).toISOString(),
+    status: "approved",
+    successHighlight: "Already serving 50+ property owners with 200+ properties"
   },
   {
     id: "deal-2",
     number: 2,
     companyName: "MediSync",
+    shortDescription: "Healthcare data synchronization",
     description: "Healthcare data synchronization platform",
     founders: [
       { id: "founder2", name: "Emma Chen", avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&h=150&fit=crop&crop=faces" },
@@ -33,12 +44,22 @@ export const mockDeals: Deal[] = [
     comments: 15,
     logo: "/placeholder.svg",
     valuation: 3000000,
-    investmentType: "SAFE"
+    investmentType: "SAFE",
+    minInvestment: 2000,
+    noteDiscount: 15,
+    industry: ["HealthTech", "AI"],
+    raised: 60000,
+    target: 150000,
+    isActive: true,
+    createdAt: new Date(2024, 0, 20).toISOString(),
+    status: "approved",
+    successHighlight: "Pilot program with 3 major hospitals showing 40% improvement in data accuracy"
   },
   {
     id: "deal-3",
     number: 3,
     companyName: "GreenLogistics",
+    shortDescription: "Sustainable supply chain optimization",
     description: "Sustainable supply chain optimization platform",
     founders: [
       { id: "founder4", name: "Sarah Williams", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=faces" }
@@ -49,12 +70,22 @@ export const mockDeals: Deal[] = [
     comments: 31,
     logo: "/placeholder.svg",
     valuation: 8500000,
-    investmentType: "Direct Equity"
+    investmentType: "Direct Equity",
+    minInvestment: 5000,
+    noteDiscount: 0,
+    industry: ["Logistics", "Sustainability"],
+    raised: 45000,
+    target: 150000,
+    isActive: true,
+    createdAt: new Date(2023, 9, 5).toISOString(),
+    status: "approved",
+    successHighlight: "Reduced carbon emissions by 30% for 12 enterprise clients"
   },
   {
     id: "deal-4",
     number: 4,
     companyName: "FinTrack",
+    shortDescription: "Personal finance for millennials",
     description: "Personal finance management for millennials",
     founders: [
       { id: "founder5", name: "Michael Chen", avatar: "https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=150&h=150&fit=crop&crop=faces" },
@@ -66,12 +97,22 @@ export const mockDeals: Deal[] = [
     comments: 19,
     logo: "/placeholder.svg",
     valuation: 1500000,
-    investmentType: "SAFE"
+    investmentType: "SAFE",
+    minInvestment: 500,
+    noteDiscount: 25,
+    industry: ["Finance", "Consumer Tech"],
+    raised: 75000,
+    target: 150000,
+    isActive: true,
+    createdAt: new Date(2024, 1, 10).toISOString(),
+    status: "approved",
+    successHighlight: "10,000 active users with average savings of €2,000 per user"
   },
   {
     id: "deal-5",
     number: 5,
     companyName: "EduMetrics",
+    shortDescription: "Learning analytics for higher education",
     description: "Learning analytics for higher education",
     founders: [
       { id: "founder7", name: "Robert Smith", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=faces" }
@@ -82,6 +123,15 @@ export const mockDeals: Deal[] = [
     comments: 12,
     logo: "/placeholder.svg",
     valuation: 5000000,
-    investmentType: "Convertible Loan Agreement"
+    investmentType: "Convertible Loan Agreement",
+    minInvestment: 1500,
+    noteDiscount: 20,
+    industry: ["EdTech", "Analytics"],
+    raised: 22500,
+    target: 150000,
+    isActive: true,
+    createdAt: new Date(2023, 8, 25).toISOString(),
+    status: "approved",
+    successHighlight: "Partnered with 5 universities, improving student retention by 25%"
   }
 ];

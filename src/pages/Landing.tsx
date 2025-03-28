@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import DealCard from "@/components/DealCard";
-import { mockDeals } from "@/data/mockDeals";
+import { useAuth } from "@/contexts/AuthContext";
 import { Badge } from "@/components/ui/badge";
 import { 
   Select, 
@@ -28,6 +28,7 @@ import { ChevronDown, ChevronUp, Filter, User, Mail, Plus } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const Landing = () => {
+  const { deals } = useAuth();
   const [activeFilters, setActiveFilters] = useState<{
     countries: string[];
     categories: string[];
@@ -42,9 +43,9 @@ const Landing = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const isMobile = useIsMobile();
   
-  const allCategories = [...new Set(mockDeals.flatMap(deal => deal.categories))].sort();
+  const allCategories = [...new Set(deals.flatMap(deal => deal.categories || []))].sort();
   const allCountries = ["United States", "Canada", "United Kingdom", "Germany", "France", "Singapore"];
-  const allStages = ["Pre-seed", "Seed", "Series A", "Series B", "Growth", "Angel"];
+  const allStages = [...new Set(deals.map(deal => deal.stage))].filter(Boolean).sort();
   
   const hasActiveFilters = () => {
     return activeFilters.countries.length > 0 || 
@@ -78,10 +79,14 @@ const Landing = () => {
     });
   };
   
-  const filteredDeals = mockDeals
+  const filteredDeals = deals
     .filter(deal => {
+      if (!deal.isActive) {
+        return false;
+      }
+      
       if (activeFilters.categories.length > 0 && 
-          !deal.categories.some(cat => activeFilters.categories.includes(cat))) {
+          !deal.categories?.some(cat => activeFilters.categories.includes(cat))) {
         return false;
       }
       
@@ -102,11 +107,11 @@ const Landing = () => {
     .sort((a, b) => {
       switch (sortOption) {
         case "popularity":
-          return b.backers - a.backers;
+          return (b.backers || 0) - (a.backers || 0);
         case "newest":
-          return b.number - a.number;
+          return (b.number || 0) - (a.number || 0);
         case "comments":
-          return b.comments - a.comments;
+          return (b.comments || 0) - (a.comments || 0);
         case "lowestValuation":
           const aVal = a.valuation ?? Infinity;
           const bVal = b.valuation ?? Infinity;

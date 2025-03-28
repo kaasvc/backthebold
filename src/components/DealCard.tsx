@@ -6,13 +6,7 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { MessageCircle, Users, Info, Flame, TrendingUp } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Deal } from "@/types/auth";
-
-export interface Founder {
-  id: string;
-  name: string;
-  avatar?: string;
-}
+import { Deal, Founder } from "@/types/auth";
 
 interface DealCardProps {
   deal: Deal;

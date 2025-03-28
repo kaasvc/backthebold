@@ -9,6 +9,12 @@ export interface User {
   companyName?: string;
 }
 
+export interface Founder {
+  id: string;
+  name: string;
+  avatar?: string;
+}
+
 export interface Application {
   id: string;
   userId: string;
@@ -40,4 +46,5 @@ export interface Deal {
   valuation: number;
   number: number;
   successHighlight: string;
+  founders?: Founder[]; // Added founders property
 }

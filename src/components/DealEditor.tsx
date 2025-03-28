@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -33,7 +32,7 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
     isActive: true,
     stage: "Seed",
     categories: [],
-    investmentType: "SAFE",
+    investmentType: "Convertible Loan Agreement",
     backers: 0,
     comments: 0,
     valuation: 0,
@@ -61,7 +60,7 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
           isActive: deal.isActive,
           stage: deal.stage || "Seed",
           categories: deal.categories || [],
-          investmentType: deal.investmentType || "SAFE",
+          investmentType: deal.investmentType || "Convertible Loan Agreement",
           backers: deal.backers || 0,
           comments: deal.comments || 0,
           valuation: deal.valuation || 0,
@@ -71,7 +70,6 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
         setSuccessHighlight(deal.successHighlight || "");
       }
     } else {
-      // Reset form for create mode
       setFormData({
         companyName: "",
         logo: "/placeholder.svg",
@@ -85,7 +83,7 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
         isActive: true,
         stage: "Seed",
         categories: [],
-        investmentType: "SAFE",
+        investmentType: "Convertible Loan Agreement",
         backers: 0,
         comments: 0,
         valuation: 0,
@@ -155,7 +153,6 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
   };
 
   const handleSubmit = async () => {
-    // Basic validation
     if (!formData.companyName || !formData.shortDescription) {
       toast.error("Please fill out all required fields");
       return;
@@ -164,20 +161,17 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
     setLoading(true);
 
     try {
-      // Add success highlight to form data before saving
       const fullFormData = {
         ...formData,
         successHighlight: successHighlight
       };
       
       if (isCreate) {
-        // Create new deal
         const newDealId = await createDeal(fullFormData as Omit<Deal, "id" | "createdAt">);
         if (newDealId) {
           onClose();
         }
       } else if (dealId) {
-        // Update existing deal
         const success = await updateDeal(dealId, fullFormData);
         if (success) {
           onClose();
@@ -191,10 +185,8 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
     }
   };
 
-  // Investment types available for selection
-  const investmentTypes = ["Direct Equity", "Convertible Loan Agreement", "SAFE"];
+  const investmentTypes = ["Direct Equity", "Convertible Loan Agreement"];
   
-  // Stages available for selection
   const stages = ["Pre-seed", "Seed", "Series A", "Series B", "Growth", "Angel"];
 
   return (
@@ -295,7 +287,7 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
             <div className="grid gap-2">
               <Label htmlFor="investmentType">Investment Type *</Label>
               <Select 
-                value={formData.investmentType || "SAFE"} 
+                value={formData.investmentType || "Convertible Loan Agreement"} 
                 onValueChange={(value) => handleSelectChange("investmentType", value)}
               >
                 <SelectTrigger>

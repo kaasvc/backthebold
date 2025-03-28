@@ -63,10 +63,8 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className, isHot = false }) =
                         <TooltipContent>
                           {deal.investmentType === "Direct Equity" ? (
                             "Direct purchase of company shares at the stated valuation"
-                          ) : deal.investmentType === "Convertible Loan Agreement" ? (
-                            "Loan that converts to equity at a future funding round, typically with a discount"
                           ) : (
-                            "Simple Agreement for Future Equity - investment converts to equity in a future funding round"
+                            "Loan that converts to equity at a future funding round, typically with a discount"
                           )}
                         </TooltipContent>
                       </Tooltip>
@@ -76,20 +74,7 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className, isHot = false }) =
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center">
-                    <div className="border border-border rounded-md px-2 py-1 flex items-center justify-center">
-                      <Users className="h-3 w-3 mr-1 text-gray-500" />
-                      <span className="text-xs font-medium">{deal.backers}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center">
-                    <div className="border border-border rounded-md px-2 py-1 flex items-center justify-center">
-                      <MessageCircle className="h-3 w-3 mr-1 text-gray-500" />
-                      <span className="text-xs font-medium">{deal.comments}</span>
-                    </div>
-                  </div>
-
+                  {/* Hot deal indicator - Now placed first */}
                   {isHot && (
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -104,6 +89,20 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className, isHot = false }) =
                       </TooltipContent>
                     </Tooltip>
                   )}
+                  
+                  <div className="flex items-center">
+                    <div className="border border-border rounded-md px-2 py-1 flex items-center justify-center">
+                      <Users className="h-3 w-3 mr-1 text-gray-500" />
+                      <span className="text-xs font-medium">{deal.backers}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <div className="border border-border rounded-md px-2 py-1 flex items-center justify-center">
+                      <MessageCircle className="h-3 w-3 mr-1 text-gray-500" />
+                      <span className="text-xs font-medium">{deal.comments}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               

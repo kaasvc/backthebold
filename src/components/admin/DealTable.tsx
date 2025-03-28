@@ -18,9 +18,9 @@ import {
 
 interface DealTableProps {
   deals: Deal[];
-  handleApproveDeal: (dealId: string) => Promise<void>;
-  handleRejectDeal: (dealId: string) => Promise<void>;
-  toggleDealStatus: (dealId: string) => Promise<void>;
+  handleApproveDeal: (dealId: string) => Promise<boolean>;
+  handleRejectDeal: (dealId: string) => Promise<boolean>;
+  toggleDealStatus: (dealId: string) => Promise<boolean>;
   setEditDealId: (id: string | null) => void;
 }
 

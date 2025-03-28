@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
-import { LogOut, Clock, CheckCircle, XCircle, AlertCircle, Search, Building, Plus, Filter, ExternalLink } from "lucide-react";
+import { LogOut, Clock, CheckCircle, XCircle, AlertCircle, Search, Building, Plus, Filter } from "lucide-react";
 import DealEditor from "@/components/DealEditor";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import DealTable from "@/components/admin/DealTable";
@@ -102,7 +102,6 @@ const AdminDashboard: React.FC = () => {
   };
 
   const pendingDealsCount = deals.filter(deal => deal.status === "pending").length;
-  const activeDealCount = deals.filter(deal => deal.isActive && deal.status === "approved").length;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -119,10 +118,6 @@ const AdminDashboard: React.FC = () => {
           </Link>
           
           <div className="flex items-center space-x-4">
-            <Link to="/landing" className="text-sm flex items-center gap-1 hover:text-primary">
-              <ExternalLink className="h-4 w-4" />
-              View Live Site
-            </Link>
             <span className="text-sm font-medium">{user.name}</span>
             <Button variant="ghost" size="sm" onClick={() => logout()}>
               <LogOut className="h-4 w-4 mr-2" />
@@ -138,26 +133,6 @@ const AdminDashboard: React.FC = () => {
           <p className="text-muted-foreground">
             Manage applications and deals.
           </p>
-        </div>
-
-        <div className="flex flex-wrap gap-4 mb-8">
-          <Card className="p-4 flex-1 min-w-[200px]">
-            <h3 className="text-lg font-medium mb-1">Pending Deals</h3>
-            <p className="text-3xl font-bold">{pendingDealsCount}</p>
-            <p className="text-sm text-muted-foreground">Awaiting review</p>
-          </Card>
-          
-          <Card className="p-4 flex-1 min-w-[200px]">
-            <h3 className="text-lg font-medium mb-1">Active Deals</h3>
-            <p className="text-3xl font-bold">{activeDealCount}</p>
-            <p className="text-sm text-muted-foreground">Live on platform</p>
-          </Card>
-          
-          <Card className="p-4 flex-1 min-w-[200px]">
-            <h3 className="text-lg font-medium mb-1">Applications</h3>
-            <p className="text-3xl font-bold">{applications.length}</p>
-            <p className="text-sm text-muted-foreground">Total submissions</p>
-          </Card>
         </div>
 
         {pendingDealsCount > 0 && (

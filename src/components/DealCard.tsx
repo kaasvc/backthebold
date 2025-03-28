@@ -1,12 +1,11 @@
 
 import React from "react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { MessageSquare, ChevronRight, Users, Flame } from "lucide-react";
-import SuccessHighlight from "./SuccessHighlight";
-import { Deal as DealType } from "@/contexts/AuthContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { MessageCircle, Users, Info, Flame, TrendingUp } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, InfoTooltip } from "@/components/ui/tooltip";
 
 export interface Founder {
   id: string;
@@ -14,139 +13,155 @@ export interface Founder {
   avatar?: string;
 }
 
-export interface Deal extends DealType {
-  founders?: Founder[];
+export interface Deal {
+  id: string;
+  number: number;
+  companyName: string;
+  description: string;
+  founders: {
+    id: string;
+    name: string;
+    avatar: string;
+  }[];
+  categories: string[];
+  stage: string;
+  backers: number;
+  comments: number;
+  logo: string;
+  valuation?: number;
+  investmentType?: "Direct Equity" | "Convertible Loan Agreement" | "SAFE";
 }
 
 interface DealCardProps {
   deal: Deal;
+  className?: string;
   isHot?: boolean;
 }
 
-const DealCard: React.FC<DealCardProps> = ({ deal, isHot = false }) => {
-  const formattedRaised = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(deal.raised || 0);
-  
-  const formattedTarget = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(deal.target || 0);
-  
-  const raisedPercentage = deal.target ? Math.min(100, Math.round((deal.raised / deal.target) * 100)) : 0;
+const DealCard: React.FC<DealCardProps> = ({ deal, className, isHot = false }) => {
+  // Limit categories to max 2 for display (plus stage as the last tag)
+  const displayCategories = deal.categories.slice(0, 2);
   
   return (
-    <Card className="overflow-hidden">
-      <div className="flex flex-col md:flex-row">
-        <div className="p-6 flex-1">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center">
-              <div className="h-12 w-12 relative mr-4">
-                <img
-                  src={deal.logo || "/placeholder.svg"}
-                  alt={`${deal.companyName} logo`}
-                  className="h-full w-full object-contain rounded-md"
-                />
+    <TooltipProvider>
+      <Link to={`/startup/${deal.id}`}>
+        <Card className={cn(
+          "p-4 hover:shadow-md transition-all duration-200 relative group", 
+          className
+        )}>
+          <div className="absolute inset-0 bg-kaas-pink opacity-0 group-hover:opacity-5 rounded-lg transition-opacity duration-200"></div>
+          <div className="flex items-start gap-4 relative z-10">
+            <div className="flex-shrink-0">
+              <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
+                {deal.logo ? (
+                  <img 
+                    src={deal.logo} 
+                    alt={`${deal.companyName} logo`} 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      // Fallback to first letter if image fails to load
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.parentElement!.innerHTML = deal.companyName.charAt(0);
+                    }}
+                  />
+                ) : (
+                  <span className="font-bold text-foreground">{deal.companyName.charAt(0)}</span>
+                )}
               </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-bold">{deal.companyName}</h3>
+            </div>
+            
+            <div className="flex-grow">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-bold text-base flex items-center">
+                    <span className="text-muted-foreground mr-2">{deal.number}.</span>
+                    {deal.companyName}
+                    {deal.investmentType && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="ml-2 text-xs px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded-sm inline-flex items-center">
+                            <Info className="h-3 w-3 mr-1" />
+                            {deal.investmentType}
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          {deal.investmentType === "Direct Equity" ? (
+                            "Direct purchase of company shares at the stated valuation"
+                          ) : deal.investmentType === "Convertible Loan Agreement" ? (
+                            "Loan that converts to equity at a future funding round, typically with a discount"
+                          ) : (
+                            "Simple Agreement for Future Equity - investment converts to equity in a future funding round"
+                          )}
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-2 line-clamp-1">{deal.description}</p>
+                </div>
+                
+                <div className="flex items-center space-x-3">
+                  <div className="flex items-center">
+                    <div className="border border-border rounded-md px-2 py-1 flex items-center justify-center">
+                      <Users className="h-3 w-3 mr-1 text-gray-500" />
+                      <span className="text-xs font-medium">{deal.backers}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center">
+                    <div className="border border-border rounded-md px-2 py-1 flex items-center justify-center">
+                      <MessageCircle className="h-3 w-3 mr-1 text-gray-500" />
+                      <span className="text-xs font-medium">{deal.comments}</span>
+                    </div>
+                  </div>
+
                   {isHot && (
-                    <Badge variant="destructive" className="text-xs font-medium px-1 py-0 flex items-center gap-1">
-                      <Flame className="h-3 w-3" />
-                      Hot
-                    </Badge>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex items-center">
+                          <div className="border border-orange-200 bg-orange-50 rounded-md px-2 py-1 flex items-center justify-center">
+                            <Flame className="h-3 w-3 text-orange-500" />
+                          </div>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p className="text-xs">Hot Deal</p>
+                      </TooltipContent>
+                    </Tooltip>
                   )}
                 </div>
-                <div className="text-sm text-muted-foreground">{deal.shortDescription}</div>
-              </div>
-            </div>
-            
-            <div className="hidden md:flex items-center gap-4">
-              <div className="flex items-center text-sm text-muted-foreground">
-                <MessageSquare className="h-3.5 w-3.5 mr-1" />
-                {deal.comments || 0}
               </div>
               
-              <div className="flex items-center text-sm text-muted-foreground">
-                <Users className="h-3.5 w-3.5 mr-1" />
-                {deal.backers || 0}
+              <div className="flex items-center justify-between mt-2">
+                <div className="flex -space-x-2 mr-4">
+                  {deal.founders.map((founder) => (
+                    <Avatar key={founder.id} className="border-2 border-background w-6 h-6">
+                      {founder.avatar ? (
+                        <AvatarImage src={founder.avatar} alt={founder.name} />
+                      ) : (
+                        <AvatarFallback>
+                          {founder.name.charAt(0)}
+                        </AvatarFallback>
+                      )}
+                    </Avatar>
+                  ))}
+                </div>
+                
+                <div className="flex items-center text-xs text-muted-foreground gap-1 flex-grow">
+                  {displayCategories.map((category, index) => (
+                    <React.Fragment key={category}>
+                      {index > 0 && <span className="mx-1 text-muted-foreground">•</span>}
+                      <span>{category}</span>
+                    </React.Fragment>
+                  ))}
+                  <span className="mx-1 text-muted-foreground">•</span>
+                  <span>{deal.stage}</span>
+                </div>
               </div>
             </div>
           </div>
-          
-          {deal.successHighlight && (
-            <div className="mt-4">
-              <SuccessHighlight>{deal.successHighlight}</SuccessHighlight>
-            </div>
-          )}
-
-          <div className="mt-4 mb-2 flex flex-wrap gap-1.5">
-            {deal.stage && (
-              <Badge variant="outline" className="font-normal">
-                {deal.stage}
-              </Badge>
-            )}
-            
-            {deal.categories && deal.categories.map(category => (
-              <Badge key={category} variant="outline" className="font-normal">
-                {category}
-              </Badge>
-            ))}
-          </div>
-          
-          <div className="mt-6">
-            <div className="flex justify-between text-sm mb-1">
-              <span>Raised: {formattedRaised}</span>
-              <span>{raisedPercentage}%</span>
-            </div>
-            
-            <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-blue-500 rounded-full"
-                style={{ width: `${raisedPercentage}%` }}
-              />
-            </div>
-            
-            <div className="mt-1 text-sm text-muted-foreground">
-              Target: {formattedTarget}
-            </div>
-          </div>
-        </div>
-        
-        <div className="md:w-48 bg-gray-50 p-6 flex flex-col justify-between border-t md:border-t-0 md:border-l">
-          <div>
-            <p className="text-sm font-medium mb-1">Minimum Investment</p>
-            <p className="text-xl font-bold">
-              {new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "EUR",
-                maximumFractionDigits: 0,
-              }).format(deal.minInvestment || 500)}
-            </p>
-            
-            <div className="mt-4">
-              <p className="text-sm font-medium mb-1">Type</p>
-              <p className="text-sm">{deal.investmentType || "SAFE"}</p>
-            </div>
-            
-            <div className="mt-4">
-              <p className="text-sm font-medium mb-1">Discount</p>
-              <p className="text-sm">{deal.noteDiscount || 0}%</p>
-            </div>
-          </div>
-          
-          <Link to={`/startup/${deal.id}`} className="mt-6">
-            <Button className="w-full justify-between">
-              View Deal <ChevronRight className="h-4 w-4 ml-2" />
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </Card>
+        </Card>
+      </Link>
+    </TooltipProvider>
   );
 };
 

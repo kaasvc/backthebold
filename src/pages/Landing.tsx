@@ -43,11 +43,14 @@ const Landing = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const isMobile = useIsMobile();
   
-  const firstDeal = mockDeals[0];
+  // Filter active deals from mockDeals
+  const activeDeals = mockDeals.filter(deal => deal.isActive);
+  const firstDeal = activeDeals.length > 0 ? activeDeals[0] : null;
   
+  // Extract unique categories, stages from all deals
   const allCategories = [...new Set(mockDeals.flatMap(deal => deal.categories))].sort();
-  const allCountries = ["United States", "Canada", "United Kingdom", "Germany", "France", "Singapore"];
-  const allStages = ["Pre-seed", "Seed", "Series A", "Series B", "Growth", "Angel"];
+  const allCountries = ["United States", "Canada", "United Kingdom", "Germany", "France", "Portugal", "Singapore"];
+  const allStages = [...new Set(mockDeals.map(deal => deal.stage))].sort();
   
   const hasActiveFilters = () => {
     return activeFilters.countries.length > 0 || 
@@ -82,12 +85,14 @@ const Landing = () => {
   };
   
   const shouldShowDeal = !hasActiveFilters() || (
-    (!activeFilters.categories.length || 
-      firstDeal.categories.some(cat => activeFilters.categories.includes(cat))) &&
-    (!activeFilters.countries.length || 
-      activeFilters.countries.includes("United States")) &&
-    (!activeFilters.stages.length || 
-      activeFilters.stages.includes(firstDeal.stage))
+    firstDeal && (
+      (!activeFilters.categories.length || 
+        firstDeal.categories.some(cat => activeFilters.categories.includes(cat))) &&
+      (!activeFilters.countries.length || 
+        activeFilters.countries.includes("Portugal")) &&
+      (!activeFilters.stages.length || 
+        activeFilters.stages.includes(firstDeal.stage))
+    )
   );
   
   return (
@@ -314,11 +319,11 @@ const Landing = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">This Week's Top Deals</h2>
           <div className="text-sm text-muted-foreground">
-            {shouldShowDeal ? 1 : 0} {shouldShowDeal ? 'deal' : 'deals'} live
+            {activeDeals.length > 0 && shouldShowDeal ? activeDeals.length : 0} {activeDeals.length === 1 ? 'deal' : 'deals'} live
           </div>
         </div>
         
-        {shouldShowDeal ? (
+        {firstDeal && shouldShowDeal ? (
           <div className="space-y-4 mb-10">
             <Link to={`/startup/${firstDeal.id}`}>
               <DealCard 

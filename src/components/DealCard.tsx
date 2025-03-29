@@ -3,7 +3,7 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { MessageCircle, Users, Info, Flame, TrendingUp } from "lucide-react";
+import { MessageCircle, Users, Info, Flame } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Deal, Founder } from "@/types/auth";
 import { Link } from "react-router-dom";
@@ -15,8 +15,8 @@ interface DealCardProps {
 }
 
 const DealCard: React.FC<DealCardProps> = ({ deal, className, isHot = false }) => {
-  // Limit categories to max 2 for display (plus stage as the last tag)
-  const displayCategories = deal.categories.slice(0, 2);
+  // Limit categories to max 3 for display (plus stage as the last tag)
+  const displayCategories = deal.categories.slice(0, 3);
   
   return (
     <TooltipProvider>

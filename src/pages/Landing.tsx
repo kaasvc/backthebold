@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -319,11 +320,13 @@ const Landing = () => {
         
         {shouldShowDeal ? (
           <div className="space-y-4 mb-10">
-            <DealCard 
-              key={firstDeal.id} 
-              deal={firstDeal} 
-              isHot={true}
-            />
+            <Link to={`/startup/${firstDeal.id}`}>
+              <DealCard 
+                key={firstDeal.id} 
+                deal={firstDeal} 
+                isHot={true}
+              />
+            </Link>
             
             <div className="bg-gray-50 rounded-lg border border-gray-100 p-6 my-8">
               <div className="flex flex-col md:flex-row items-center justify-between gap-4">

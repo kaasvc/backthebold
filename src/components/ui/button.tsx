@@ -25,7 +25,7 @@ const buttonVariants = cva(
         founder: "bg-gradient-to-r from-kaas-pink to-purple-600 text-white hover:from-kaas-darkpink hover:to-purple-700",
         trust: "bg-green-600 text-white hover:bg-green-700 focus:bg-green-700",
         trusted: "bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700",
-        subscribe: "bg-purple-600 text-white hover:bg-purple-700 focus:bg-purple-700 rounded-full",
+        subscribe: "bg-white text-purple-600 hover:bg-gray-50 focus:bg-gray-50 rounded-full border border-purple-300",
       },
       size: {
         default: "h-10 px-4 py-2",

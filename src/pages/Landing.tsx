@@ -42,6 +42,8 @@ const Landing = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const isMobile = useIsMobile();
   
+  const firstDeal = mockDeals[0];
+  
   const allCategories = [...new Set(mockDeals.flatMap(deal => deal.categories))].sort();
   const allCountries = ["United States", "Canada", "United Kingdom", "Germany", "France", "Singapore"];
   const allStages = ["Pre-seed", "Seed", "Series A", "Series B", "Growth", "Angel"];
@@ -78,43 +80,14 @@ const Landing = () => {
     });
   };
   
-  const filteredDeals = mockDeals
-    .filter(deal => {
-      if (activeFilters.categories.length > 0 && 
-          !deal.categories.some(cat => activeFilters.categories.includes(cat))) {
-        return false;
-      }
-      
-      if (activeFilters.countries.length > 0) {
-        const selectedCountry = activeFilters.countries[0];
-        if (selectedCountry && selectedCountry !== "United States") {
-          return false;
-        }
-      }
-      
-      if (activeFilters.stages.length > 0 && 
-          !activeFilters.stages.includes(deal.stage)) {
-        return false;
-      }
-      
-      return true;
-    })
-    .sort((a, b) => {
-      switch (sortOption) {
-        case "popularity":
-          return b.backers - a.backers;
-        case "newest":
-          return b.number - a.number;
-        case "comments":
-          return b.comments - a.comments;
-        case "lowestValuation":
-          const aVal = a.valuation ?? Infinity;
-          const bVal = b.valuation ?? Infinity;
-          return aVal - bVal;
-        default:
-          return 0;
-      }
-    });
+  const shouldShowDeal = !hasActiveFilters() || (
+    (!activeFilters.categories.length || 
+      firstDeal.categories.some(cat => activeFilters.categories.includes(cat))) &&
+    (!activeFilters.countries.length || 
+      activeFilters.countries.includes("United States")) &&
+    (!activeFilters.stages.length || 
+      activeFilters.stages.includes(firstDeal.stage))
+  );
   
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -340,21 +313,18 @@ const Landing = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">This Week's Top Deals</h2>
           <div className="text-sm text-muted-foreground">
-            {filteredDeals.length} {filteredDeals.length === 1 ? 'deal' : 'deals'} live
+            {shouldShowDeal ? 1 : 0} {shouldShowDeal ? 'deal' : 'deals'} live
           </div>
         </div>
         
-        {filteredDeals.length > 0 ? (
+        {shouldShowDeal ? (
           <div className="space-y-4 mb-10">
-            {filteredDeals.slice(0, 5).map((deal, index) => (
-              <DealCard 
-                key={deal.id} 
-                deal={deal} 
-                isHot={sortOption === "popularity" && index === 0}
-              />
-            ))}
+            <DealCard 
+              key={firstDeal.id} 
+              deal={firstDeal} 
+              isHot={true}
+            />
             
-            {/* Promotional Bar */}
             <div className="bg-gray-50 rounded-lg border border-gray-100 p-6 my-8">
               <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
@@ -367,14 +337,6 @@ const Landing = () => {
                 </Button>
               </div>
             </div>
-            
-            {filteredDeals.slice(5).map((deal, index) => (
-              <DealCard 
-                key={deal.id} 
-                deal={deal} 
-                isHot={false}
-              />
-            ))}
           </div>
         ) : (
           <div className="text-center py-10 border border-dashed rounded-lg">

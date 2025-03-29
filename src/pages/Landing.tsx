@@ -97,16 +97,6 @@ const Landing = () => {
       <header className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center">
           <div className="mr-4 flex items-center space-x-2">
-            <div className={cn("flex items-center", isMobile && "hidden")}>
-              <div className="flex items-center">
-                <span className="text-xs text-muted-foreground mr-1.5">powered by</span>
-                <img 
-                  src="/lovable-uploads/3aae86c2-a61b-44da-99fd-3071f77961e3.png" 
-                  alt="Kaas logo" 
-                  className="h-8 object-contain" 
-                />
-              </div>
-            </div>
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-4">

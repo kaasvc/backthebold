@@ -1,3 +1,4 @@
+
 import { Deal, User } from "../types/auth";
 import { mockDeals } from "../data/mockDeals";
 import { toast } from "sonner";

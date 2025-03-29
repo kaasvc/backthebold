@@ -1,10 +1,9 @@
-
 import { Deal, User } from "../types/auth";
-import { MOCK_DEALS } from "../data/mockAuthData";
+import { mockDeals } from "../data/mockDeals";
 import { toast } from "sonner";
 
 export const getDealById = (dealId: string): Deal | undefined => {
-  return MOCK_DEALS.find(deal => deal.id === dealId);
+  return mockDeals.find(deal => deal.id === dealId);
 };
 
 export const updateDealData = async (
@@ -20,18 +19,18 @@ export const updateDealData = async (
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    const dealIndex = MOCK_DEALS.findIndex(deal => deal.id === dealId);
+    const dealIndex = mockDeals.findIndex(deal => deal.id === dealId);
     if (dealIndex === -1) {
       toast.error("Deal not found");
       return false;
     }
     
-    if (currentUser.role === "founder" && MOCK_DEALS[dealIndex].founderUserId !== currentUser.id) {
+    if (currentUser.role === "founder" && mockDeals[dealIndex].founderUserId !== currentUser.id) {
       toast.error("You can only update your own deals");
       return false;
     }
     
-    MOCK_DEALS[dealIndex] = { ...MOCK_DEALS[dealIndex], ...dealData };
+    mockDeals[dealIndex] = { ...mockDeals[dealIndex], ...dealData };
     
     return true;
   } catch (error) {
@@ -64,7 +63,7 @@ export const createNewDeal = async (
       isActive: currentUser.role === "admin" ? (dealData.isActive ?? true) : false,
     };
     
-    MOCK_DEALS.push(newDeal);
+    mockDeals.push(newDeal);
     
     return newDeal.id;
   } catch (error) {
@@ -83,13 +82,13 @@ export const toggleDealActiveStatus = async (dealId: string, currentUser: User |
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    const dealIndex = MOCK_DEALS.findIndex(deal => deal.id === dealId);
+    const dealIndex = mockDeals.findIndex(deal => deal.id === dealId);
     if (dealIndex === -1) {
       toast.error("Deal not found");
       return false;
     }
     
-    MOCK_DEALS[dealIndex].isActive = !MOCK_DEALS[dealIndex].isActive;
+    mockDeals[dealIndex].isActive = !mockDeals[dealIndex].isActive;
     
     return true;
   } catch (error) {
@@ -108,25 +107,25 @@ export const submitDealToReview = async (dealId: string, currentUser: User | nul
   try {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    const dealIndex = MOCK_DEALS.findIndex(deal => deal.id === dealId);
+    const dealIndex = mockDeals.findIndex(deal => deal.id === dealId);
     if (dealIndex === -1) {
       toast.error("Deal not found");
       return false;
     }
     
-    if (MOCK_DEALS[dealIndex].founderUserId !== currentUser.id) {
+    if (mockDeals[dealIndex].founderUserId !== currentUser.id) {
       toast.error("You can only submit your own deals for review");
       return false;
     }
     
-    if (MOCK_DEALS[dealIndex].status !== "draft") {
-      toast.error(`Deal is already in ${MOCK_DEALS[dealIndex].status} status`);
+    if (mockDeals[dealIndex].status !== "draft") {
+      toast.error(`Deal is already in ${mockDeals[dealIndex].status} status`);
       return false;
     }
     
-    MOCK_DEALS[dealIndex].status = "pending";
+    mockDeals[dealIndex].status = "pending";
     
-    console.log("Sending email to admin@kaas.vc about new deal submission:", MOCK_DEALS[dealIndex]);
+    console.log("Sending email to admin@kaas.vc about new deal submission:", mockDeals[dealIndex]);
     
     return true;
   } catch (error) {
@@ -137,5 +136,5 @@ export const submitDealToReview = async (dealId: string, currentUser: User | nul
 };
 
 export const getFounderDealsData = (userId: string): Deal[] => {
-  return MOCK_DEALS.filter(deal => deal.founderUserId === userId);
+  return mockDeals.filter(deal => deal.founderUserId === userId);
 };

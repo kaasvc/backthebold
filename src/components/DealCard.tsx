@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { MessageCircle, Users, Info, Flame, TrendingUp } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Deal, Founder } from "@/types/auth";
+import { Link } from "react-router-dom";
 
 interface DealCardProps {
   deal: Deal;
@@ -55,7 +56,7 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className, isHot = false }) =
                       <TooltipTrigger asChild>
                         <div className="ml-2 text-xs px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded-sm inline-flex items-center">
                           <Info className="h-3 w-3 mr-1" />
-                          {deal.investmentType}
+                          {deal.investmentType === "Direct Equity" ? "Equity" : "CLA"}
                         </div>
                       </TooltipTrigger>
                       <TooltipContent>

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -43,11 +42,9 @@ const Landing = () => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const isMobile = useIsMobile();
   
-  // Filter active deals from mockDeals
   const activeDeals = mockDeals.filter(deal => deal.isActive);
   const firstDeal = activeDeals.length > 0 ? activeDeals[0] : null;
   
-  // Extract unique categories, stages from all deals
   const allCategories = [...new Set(mockDeals.flatMap(deal => deal.categories))].sort();
   const allCountries = ["United States", "Canada", "United Kingdom", "Germany", "France", "Portugal", "Singapore"];
   const allStages = [...new Set(mockDeals.map(deal => deal.stage))].sort();
@@ -113,7 +110,11 @@ const Landing = () => {
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-4">
-              <Button variant="outline" size="sm" className="flex items-center gap-1.5">
+              <Button 
+                variant="subscribe" 
+                size="sm" 
+                className="flex items-center gap-1.5"
+              >
                 <Mail className="h-4 w-4" />
                 Subscribe
               </Button>
@@ -339,7 +340,10 @@ const Landing = () => {
                   <Bell className="h-5 w-5 text-kaas-pink" />
                   <h3 className="text-lg font-medium">Know When New Deals Drop &gt; Join Our Newsletter</h3>
                 </div>
-                <Button variant="kaas" className="whitespace-nowrap">
+                <Button 
+                  variant="subscribe"
+                  className="whitespace-nowrap"
+                >
                   <Mail className="h-4 w-4 mr-2" />
                   Subscribe
                 </Button>

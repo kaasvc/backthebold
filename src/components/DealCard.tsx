@@ -3,10 +3,11 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { MessageCircle, Users, Info, Flame } from "lucide-react";
+import { MessageCircle, Users, Info, Flame, ExternalLink } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Deal, Founder } from "@/types/auth";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button"; 
 
 interface DealCardProps {
   deal: Deal;
@@ -70,6 +71,19 @@ const DealCard: React.FC<DealCardProps> = ({ deal, className, isHot = false }) =
                   )}
                 </h3>
                 <p className="text-sm text-muted-foreground mb-2 line-clamp-1">{deal.description}</p>
+                
+                {/* Add "See Live Deal" button for approved deals */}
+                {deal.status === "approved" && (
+                  <a 
+                    href={`/startup/${deal.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer" 
+                    className="inline-flex items-center text-xs text-green-600 hover:text-green-700 transition-colors mb-2"
+                  >
+                    <span>See Live Deal</span>
+                    <ExternalLink className="h-3 w-3 ml-1" />
+                  </a>
+                )}
               </div>
               
               <div className="flex items-center space-x-3">

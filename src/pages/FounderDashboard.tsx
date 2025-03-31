@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { 
   AlertCircle, CheckCircle, XCircle, LogOut, 
-  PencilLine, PlusCircle, Send, Clock
+  PencilLine, PlusCircle, Send, Clock, ExternalLink
 } from "lucide-react";
 import { 
   Dialog, DialogContent, DialogHeader, 
@@ -39,7 +38,6 @@ const FounderDashboard: React.FC = () => {
   
   useEffect(() => {
     if (user && user.role === "founder") {
-      // Get all deals for this founder
       setDeals(getFounderDeals());
     }
   }, [user, getFounderDeals]);
@@ -86,14 +84,12 @@ const FounderDashboard: React.FC = () => {
   const handleCloseDealEditor = () => {
     setEditDealId(null);
     setShowCreateDealDialog(false);
-    // Refresh deals after closing the editor
     setDeals(getFounderDeals());
   };
 
   const handleSubmitForReview = async (dealId: string) => {
     const success = await submitDealForReview(dealId);
     if (success) {
-      // Refresh deals
       setDeals(getFounderDeals());
     }
   };
@@ -241,9 +237,17 @@ const FounderDashboard: React.FC = () => {
                       )}
                       
                       {deal.status === "approved" && (
-                        <div className="text-xs text-green-600 flex items-center">
-                          <CheckCircle className="h-3 w-3 mr-1" />
-                          Live on KaasX
+                        <div className="flex items-center gap-2">
+                          <a 
+                            href={`/startup/${deal.id}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-xs text-green-600 flex items-center hover:text-green-700 transition-colors"
+                          >
+                            <CheckCircle className="h-3 w-3 mr-1" />
+                            See Live Deal
+                            <ExternalLink className="h-3 w-3 ml-1" />
+                          </a>
                         </div>
                       )}
                       

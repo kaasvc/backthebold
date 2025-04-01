@@ -808,6 +808,41 @@ const Deals = () => {
                     )}
                   >
                     <CardContent className="p-0 flex flex-col h-full">
+                      <CardSection className="px-4 pt-4">
+                        <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center">
+                              <CircleDollarSign className="h-4 w-4 text-kaas-pink mr-1.5" />
+                              <span className="text-sm font-medium">Funding Status</span>
+                            </div>
+                            <span className="text-xs font-medium bg-kaas-pink/10 text-kaas-pink px-2 py-0.5 rounded-full">
+                              Raising {deal.stage}
+                            </span>
+                          </div>
+                          
+                          <div className="flex items-center justify-between text-xs mb-1.5">
+                            <span className="font-medium">
+                              Funding to date: {calculateFundingToDate(150, deal.progress)}
+                            </span>
+                            <span className="font-medium">
+                              {deal.progress}% complete
+                            </span>
+                          </div>
+                          
+                          <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden mb-1">
+                            <div 
+                              className="h-full bg-kaas-pink rounded-full" 
+                              style={{ width: `${deal.progress}%` }}
+                            ></div>
+                          </div>
+                          
+                          <div className="flex items-center justify-between text-xs text-slate-500">
+                            <span>€0</span>
+                            <span>€150K</span>
+                          </div>
+                        </div>
+                      </CardSection>
+                      
                       <CardSection className="p-4" title="The Team" icon={<Users className="h-3.5 w-3.5 text-kaas-pink" />}>
                         <div className="grid gap-2.5">
                           {deal.founders.slice(0, 3).map((founder, idx) => (
@@ -892,41 +927,6 @@ const Deals = () => {
                             ))}
                           </div>
                         )}
-                      </CardSection>
-                      
-                      <CardSection className="px-4">
-                        <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                          <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center">
-                              <CircleDollarSign className="h-4 w-4 text-kaas-pink mr-1.5" />
-                              <span className="text-sm font-medium">Funding Status</span>
-                            </div>
-                            <span className="text-xs font-medium bg-kaas-pink/10 text-kaas-pink px-2 py-0.5 rounded-full">
-                              Raising {deal.stage}
-                            </span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between text-xs mb-1.5">
-                            <span className="font-medium">
-                              Funding to date: {calculateFundingToDate(150, deal.progress)}
-                            </span>
-                            <span className="font-medium">
-                              {deal.progress}% complete
-                            </span>
-                          </div>
-                          
-                          <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden mb-1">
-                            <div 
-                              className="h-full bg-kaas-pink rounded-full" 
-                              style={{ width: `${deal.progress}%` }}
-                            ></div>
-                          </div>
-                          
-                          <div className="flex items-center justify-between text-xs text-slate-500">
-                            <span>€0</span>
-                            <span>€150K</span>
-                          </div>
-                        </div>
                       </CardSection>
                       
                       <div className="mt-auto p-4 pt-0 flex flex-col">

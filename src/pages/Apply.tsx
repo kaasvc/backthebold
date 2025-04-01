@@ -7,15 +7,17 @@ import { useAuth } from "@/contexts/AuthContext";
 import ContinuousFormSection from "@/components/ContinuousFormSection";
 import FounderSection from "@/components/FounderSection";
 import { formSections, validateAllSections, submitForm } from "@/utils/formUtils";
+import { toast } from "sonner";
 
 const Apply = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [formData, setFormData] = useState<Record<string, string>>({
-    founders: JSON.stringify([{ name: "", email: "", linkedin: "" }])
+    founders: JSON.stringify([{ name: "", email: "", linkedin: "", bio: "", title: "", skills: "" }])
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentSection, setCurrentSection] = useState(0);
 
   const handleChange = (id: string, value: string) => {
     setFormData(prev => ({ ...prev, [id]: value }));
@@ -64,6 +66,7 @@ const Apply = () => {
         errorElement.focus();
       }
       
+      toast.error("Please fix the errors in the form");
       return;
     }
     
@@ -83,6 +86,7 @@ const Apply = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("Error submitting application");
     } finally {
       setIsSubmitting(false);
     }
@@ -97,6 +101,9 @@ const Apply = () => {
         <p className="text-muted-foreground mb-6">
           Join thousands of founders who have successfully raised funding through our platform. Our application process is designed to understand your business and help us determine how we can best support your growth.
         </p>
+        <div className="text-sm text-kaas-darkpink font-medium">
+          <p>💡 <strong>Pro tip:</strong> Add your company URL and LinkedIn profiles to auto-fill information and save time!</p>
+        </div>
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-12">

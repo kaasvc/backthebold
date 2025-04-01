@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import SignupForm from "@/components/SignupForm";
 import ContinuousFormSection from "@/components/ContinuousFormSection";
 import FounderSection from "@/components/FounderSection";
 import { formSections, validateAllSections, submitForm } from "@/utils/formUtils";
@@ -12,7 +11,6 @@ import { formSections, validateAllSections, submitForm } from "@/utils/formUtils
 const Apply = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [showSignup, setShowSignup] = useState(false);
   const [formData, setFormData] = useState<Record<string, string>>({
     founders: JSON.stringify([{ name: "", email: "", linkedin: "" }])
   });
@@ -72,9 +70,16 @@ const Apply = () => {
     setIsSubmitting(true);
     
     try {
-      const success = await submitForm(formData);
-      if (success) {
-        navigate("/founder");
+      if (user) {
+        // If user is logged in, submit directly
+        const success = await submitForm(formData);
+        if (success) {
+          navigate("/founder");
+        }
+      } else {
+        // If not logged in, store application data and redirect to register
+        sessionStorage.setItem("pendingApplication", JSON.stringify(formData));
+        navigate("/register");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -83,50 +88,14 @@ const Apply = () => {
     }
   };
 
-  if (!user && !showSignup) {
-    return (
-      <div className="container max-w-5xl mx-auto py-12 px-4">
-        <h1 className="text-3xl font-bold mb-8 text-gray-800">Start Your Raise</h1>
-        
-        <div className="bg-gradient-to-br from-white to-kaas-pink/10 rounded-lg p-6 mb-8 border border-kaas-pink/20 shadow-sm">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">Begin Your Funding Journey</h2>
-          <p className="text-muted-foreground mb-6">
-            Join thousands of founders who have successfully raised funding through our platform. Our application process is designed to understand your business and help us determine how we can best support your growth.
-          </p>
-          
-          <Button 
-            onClick={() => setShowSignup(true)} 
-            variant="kaas" 
-            className="w-full md:w-auto shadow-md hover:shadow-lg transition-all"
-          >
-            Create an Account to Apply
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  if (showSignup) {
-    return (
-      <div className="container max-w-5xl mx-auto py-12 px-4">
-        <h1 className="text-3xl font-bold mb-8 text-gray-800">Create Your Account</h1>
-        <SignupForm 
-          onComplete={() => navigate("/apply")} 
-          onCancel={() => setShowSignup(false)} 
-        />
-      </div>
-    );
-  }
-
   return (
     <div className="container max-w-5xl mx-auto py-12 px-4">
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Start Your Raise</h1>
       
-      <div className="bg-gradient-to-br from-white to-kaas-pink/10 p-6 rounded-lg mb-8 border border-kaas-pink/20 shadow-sm">
-        <p className="text-muted-foreground">
-          Please complete all sections of the application below. You can save your progress at any time and return later to finish.
-          Fields marked with an asterisk (<span className="text-kaas-pink">*</span>) are required.
+      <div className="bg-gradient-to-br from-white to-kaas-pink/10 rounded-lg p-6 mb-8 border border-kaas-pink/20 shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">Begin Your Funding Journey</h2>
+        <p className="text-muted-foreground mb-6">
+          Join thousands of founders who have successfully raised funding through our platform. Our application process is designed to understand your business and help us determine how we can best support your growth.
         </p>
       </div>
       
@@ -157,7 +126,8 @@ const Apply = () => {
               className="w-full md:w-auto shadow-md hover:shadow-lg transition-all"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting Application..." : "Submit Application"}
+              {isSubmitting ? "Submitting Application..." : user ? "Submit Application" : "Continue to Create Account"}
+              {!isSubmitting && <ArrowRight className="ml-2 h-4 w-4" />}
             </Button>
           </div>
         </div>

@@ -929,24 +929,27 @@ const Deals = () => {
                         </div>
                       </CardSection>
                       
-                      <div className="mt-auto p-4 pt-0 flex items-center justify-between gap-2">
-                        <Button 
-                          variant="outline" 
-                          size="sm" 
-                          className="w-full"
-                          onClick={() => handleViewDetails(deal.name)}
-                        >
-                          View Details
-                        </Button>
-                        
-                        <Button 
-                          variant="kaas" 
-                          size="sm" 
-                          className="w-full"
-                          onClick={() => handleCommit(deal.name)}
-                        >
-                          Back Now
-                        </Button>
+                      <div className="mt-auto p-4 pt-0 flex flex-col">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="w-full"
+                            onClick={() => handleViewDetails(deal.name)}
+                          >
+                            View Details
+                          </Button>
+                          
+                          <Button 
+                            variant="kaas" 
+                            size="sm" 
+                            className="w-full"
+                            onClick={() => handleCommit(deal.name)}
+                          >
+                            Back Now
+                          </Button>
+                        </div>
+                        <p className="text-xs text-muted-foreground text-center mt-1">Commitments are non-binding, soft reservations</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -989,6 +992,7 @@ const Deals = () => {
               />
             </div>
           </div>
+          <p className="text-xs text-muted-foreground text-center mt-1 mb-4">Commitments are non-binding, soft reservations</p>
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>

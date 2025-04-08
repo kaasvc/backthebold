@@ -3,12 +3,12 @@ import React, { useEffect } from "react";
 import FormInput from "./FormInput";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { FormSection as FormSectionType, validateSection } from "@/utils/formUtils";
+import { validateSection } from "@/utils/formUtils";
 import { cn } from "@/lib/utils";
-import { FormSection } from "@/types/form";
+import type { FormSection as FormSectionType } from "@/types/form";
 
 interface FormSectionProps {
-  section: FormSection;
+  section: FormSectionType;
   formData: Record<string, string>;
   onChange: (id: string, value: string) => void;
   onNext: () => void;

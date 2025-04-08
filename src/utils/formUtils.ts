@@ -187,11 +187,15 @@ export const validateAllSections = (formData: Record<string, string>): Record<st
   return allErrors;
 };
 
-// Update the existing submitForm function to work with Supabase
 export const submitForm = async (formData: Record<string, string>): Promise<boolean> => {
-  // Simulate API call to submit the form
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  // Return success (in a real implementation, this would check the API response)
-  return true;
+  try {
+    // Attempt to save to Supabase (this will be handled in the Apply component directly)
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Return success (in a real implementation, this would check the API response)
+    return true;
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    return false;
+  }
 };

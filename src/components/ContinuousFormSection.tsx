@@ -1,14 +1,14 @@
 
 import React, { useState } from "react";
 import FormInput from "./FormInput";
-import { FormSection as FormSectionType } from "@/utils/formUtils";
+import { FormSection } from "@/types/form";
 import SuccessHighlight from "./SuccessHighlight";
 import { Button } from "@/components/ui/button";
 import { Loader2, Globe, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
 interface ContinuousFormSectionProps {
-  section: FormSectionType;
+  section: FormSection;
   formData: Record<string, string>;
   onChange: (id: string, value: string) => void;
   errors: Record<string, string>;

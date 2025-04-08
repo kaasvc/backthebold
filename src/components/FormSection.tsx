@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { FormSection as FormSectionType, validateSection } from "@/utils/formUtils";
 import { cn } from "@/lib/utils";
+import { FormSection } from "@/types/form";
 
 interface FormSectionProps {
-  section: FormSectionType;
+  section: FormSection;
   formData: Record<string, string>;
   onChange: (id: string, value: string) => void;
   onNext: () => void;

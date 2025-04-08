@@ -1,6 +1,6 @@
 
 import React from "react";
-import { FormSection } from "@/utils/formUtils";
+import { FormSection } from "@/types/form";
 import { cn } from "@/lib/utils";
 
 interface FormProgressProps {

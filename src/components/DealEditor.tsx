@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { X } from "lucide-react";
 import SuccessHighlight from "./SuccessHighlight";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
 
 interface DealEditorProps {
   dealId: string | null;
@@ -19,7 +19,7 @@ interface DealEditorProps {
 }
 
 const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCreate = false }) => {
-  const { getDeal, updateDeal, createDeal } = useAuth();
+  const { getDeal, updateDeal, createDeal, user } = useAuth();
   const [formData, setFormData] = useState<Partial<Deal>>({
     companyName: "",
     logo: "/placeholder.svg",

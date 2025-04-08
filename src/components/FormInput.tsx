@@ -1,10 +1,11 @@
+
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, useFormField } from "@/components/ui/form";
+import { FormItem, FormLabel, FormDescription, FormMessage } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 
 interface FormInputProps {
@@ -14,7 +15,7 @@ interface FormInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
-  helperText?: React.ReactNode; // Changed from string to ReactNode
+  helperText?: React.ReactNode; // Accept ReactNode for helperText
   error?: string;
   required?: boolean;
   options?: string[];
@@ -32,8 +33,6 @@ const FormInput: React.FC<FormInputProps> = ({
   required,
   options,
 }) => {
-  const formField = useFormField();
-
   const renderInput = () => {
     switch (type) {
       case "textarea":
@@ -52,12 +51,10 @@ const FormInput: React.FC<FormInputProps> = ({
           <RadioGroup onValueChange={onChange} defaultValue={value}>
             <div className="flex items-center space-x-2">
               {options?.map((option) => (
-                <FormItem key={option} className="space-y-0">
-                  <FormControl>
-                    <RadioGroupItem value={option} id={`${id}-${option}`} />
-                  </FormControl>
-                  <FormLabel htmlFor={`${id}-${option}`}>{option}</FormLabel>
-                </FormItem>
+                <div key={option} className="flex items-center space-x-2">
+                  <RadioGroupItem value={option} id={`${id}-${option}`} />
+                  <Label htmlFor={`${id}-${option}`}>{option}</Label>
+                </div>
               ))}
             </div>
           </RadioGroup>
@@ -94,19 +91,14 @@ const FormInput: React.FC<FormInputProps> = ({
   };
 
   return (
-    <FormField
-      control={{}}
-      name={id}
-    >
+    <div className="space-y-2">
       <FormItem>
-        <FormLabel>{label}</FormLabel>
-        <FormControl>
-          {renderInput()}
-        </FormControl>
+        <FormLabel htmlFor={id}>{label}{required && <span className="text-destructive ml-1">*</span>}</FormLabel>
+        {renderInput()}
         {helperText && <FormDescription>{helperText}</FormDescription>}
         {error && <FormMessage>{error}</FormMessage>}
       </FormItem>
-    </FormField>
+    </div>
   );
 };
 

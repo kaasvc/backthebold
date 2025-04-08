@@ -8,6 +8,7 @@ import ContinuousFormSection from "@/components/ContinuousFormSection";
 import FounderSection from "@/components/FounderSection";
 import { formSections, validateAllSections, submitForm } from "@/utils/formUtils";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const Apply = () => {
   const navigate = useNavigate();
@@ -50,6 +51,63 @@ const Apply = () => {
     });
   };
 
+  const saveToSupabase = async (formData: Record<string, string>) => {
+    try {
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+      
+      // First, insert the application
+      const { data: applicationData, error: applicationError } = await supabase
+        .from('applications')
+        .insert({
+          user_id: user.id,
+          company_name: formData.companyName || 'Untitled Company',
+          company_url: formData.companyUrl || null,
+          short_description: formData.shortDescription || null,
+          tagline: formData.tagline || null,
+          category: formData.category || null,
+          stage: formData.stage || null,
+          funding_amount: formData.fundingAmount ? parseFloat(formData.fundingAmount) : null,
+          funding_target: formData.fundingTarget ? parseFloat(formData.fundingTarget) : null
+        })
+        .select('id')
+        .single();
+      
+      if (applicationError) {
+        throw applicationError;
+      }
+      
+      // Then insert founders
+      const founders = JSON.parse(formData.founders || '[]');
+      
+      if (founders.length > 0 && applicationData) {
+        const foundersToInsert = founders.map((founder: any) => ({
+          application_id: applicationData.id,
+          name: founder.name || '',
+          email: founder.email || '',
+          linkedin: founder.linkedin || null,
+          bio: founder.bio || null,
+          title: founder.title || null,
+          skills: founder.skills || null
+        }));
+        
+        const { error: foundersError } = await supabase
+          .from('founders')
+          .insert(foundersToInsert);
+          
+        if (foundersError) {
+          console.error("Error inserting founders:", foundersError);
+        }
+      }
+      
+      return true;
+    } catch (error) {
+      console.error("Error saving to Supabase:", error);
+      return false;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -74,14 +132,24 @@ const Apply = () => {
     
     try {
       if (user) {
-        // If user is logged in, submit directly
+        // If user is logged in, save to Supabase and submit
+        const supabaseSaveSuccess = await saveToSupabase(formData);
+        
+        if (!supabaseSaveSuccess) {
+          toast.error("Failed to save application data");
+          setIsSubmitting(false);
+          return;
+        }
+        
         const success = await submitForm(formData);
         if (success) {
+          toast.success("Application submitted successfully!");
           navigate("/founder");
         }
       } else {
         // If not logged in, store application data and redirect to register
         sessionStorage.setItem("pendingApplication", JSON.stringify(formData));
+        toast.info("Please create an account to submit your application");
         navigate("/register");
       }
     } catch (error) {

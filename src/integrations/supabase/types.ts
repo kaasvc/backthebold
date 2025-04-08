@@ -9,7 +9,206 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      applications: {
+        Row: {
+          category: string | null
+          company_name: string
+          company_url: string | null
+          created_at: string | null
+          funding_amount: number | null
+          funding_target: number | null
+          id: string
+          short_description: string | null
+          stage: string | null
+          status: string | null
+          tagline: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          category?: string | null
+          company_name: string
+          company_url?: string | null
+          created_at?: string | null
+          funding_amount?: number | null
+          funding_target?: number | null
+          id?: string
+          short_description?: string | null
+          stage?: string | null
+          status?: string | null
+          tagline?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          category?: string | null
+          company_name?: string
+          company_url?: string | null
+          created_at?: string | null
+          funding_amount?: number | null
+          funding_target?: number | null
+          id?: string
+          short_description?: string | null
+          stage?: string | null
+          status?: string | null
+          tagline?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      deals: {
+        Row: {
+          backers: number | null
+          categories: string[] | null
+          comments: number | null
+          company_name: string
+          created_at: string | null
+          description: string | null
+          id: string
+          industry: string[] | null
+          investment_type: string | null
+          is_active: boolean | null
+          logo: string | null
+          min_investment: number
+          note_discount: number
+          number: number | null
+          raised: number
+          short_description: string
+          stage: string | null
+          success_highlight: string | null
+          target: number
+          updated_at: string | null
+          user_id: string | null
+          valuation: number | null
+        }
+        Insert: {
+          backers?: number | null
+          categories?: string[] | null
+          comments?: number | null
+          company_name: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          industry?: string[] | null
+          investment_type?: string | null
+          is_active?: boolean | null
+          logo?: string | null
+          min_investment?: number
+          note_discount?: number
+          number?: number | null
+          raised?: number
+          short_description: string
+          stage?: string | null
+          success_highlight?: string | null
+          target?: number
+          updated_at?: string | null
+          user_id?: string | null
+          valuation?: number | null
+        }
+        Update: {
+          backers?: number | null
+          categories?: string[] | null
+          comments?: number | null
+          company_name?: string
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          industry?: string[] | null
+          investment_type?: string | null
+          is_active?: boolean | null
+          logo?: string | null
+          min_investment?: number
+          note_discount?: number
+          number?: number | null
+          raised?: number
+          short_description?: string
+          stage?: string | null
+          success_highlight?: string | null
+          target?: number
+          updated_at?: string | null
+          user_id?: string | null
+          valuation?: number | null
+        }
+        Relationships: []
+      }
+      founders: {
+        Row: {
+          application_id: string | null
+          bio: string | null
+          created_at: string | null
+          email: string
+          id: string
+          linkedin: string | null
+          name: string
+          skills: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          application_id?: string | null
+          bio?: string | null
+          created_at?: string | null
+          email: string
+          id?: string
+          linkedin?: string | null
+          name: string
+          skills?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          application_id?: string | null
+          bio?: string | null
+          created_at?: string | null
+          email?: string
+          id?: string
+          linkedin?: string | null
+          name?: string
+          skills?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "founders_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          company_name: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          name: string | null
+          role: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          company_name?: string | null
+          created_at?: string | null
+          email?: string | null
+          id: string
+          name?: string | null
+          role?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          company_name?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          name?: string | null
+          role?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

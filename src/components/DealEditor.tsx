@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { X } from "lucide-react";
 import SuccessHighlight from "./SuccessHighlight";
+import { supabase } from "@/lib/supabase";
 
 interface DealEditorProps {
   dealId: string | null;
@@ -167,19 +168,79 @@ const DealEditor: React.FC<DealEditorProps> = ({ dealId, isOpen, onClose, isCrea
       };
       
       if (isCreate) {
-        const newDealId = await createDeal(fullFormData as Omit<Deal, "id" | "createdAt">);
-        if (newDealId) {
+        const { data, error } = await supabase
+          .from('deals')
+          .insert({
+            company_name: fullFormData.companyName,
+            logo: fullFormData.logo,
+            short_description: fullFormData.shortDescription,
+            description: fullFormData.description || '',
+            min_investment: fullFormData.minInvestment || 500,
+            note_discount: fullFormData.noteDiscount || 30,
+            industry: fullFormData.industry || [],
+            raised: fullFormData.raised || 0,
+            target: fullFormData.target || 0,
+            is_active: fullFormData.isActive,
+            stage: fullFormData.stage || 'Seed',
+            categories: fullFormData.categories || [],
+            investment_type: fullFormData.investmentType || 'Convertible Loan Agreement',
+            backers: fullFormData.backers || 0,
+            comments: fullFormData.comments || 0,
+            valuation: fullFormData.valuation || 0,
+            number: fullFormData.number || 0,
+            success_highlight: fullFormData.successHighlight || '',
+            user_id: user?.id
+          })
+          .select('id')
+          .single();
+
+        if (error) {
+          throw error;
+        }
+        
+        if (data) {
+          toast.success("Deal created successfully!");
+          const newDealId = data.id;
           onClose();
+          return newDealId;
         }
       } else if (dealId) {
-        const success = await updateDeal(dealId, fullFormData);
-        if (success) {
-          onClose();
+        const { error } = await supabase
+          .from('deals')
+          .update({
+            company_name: fullFormData.companyName,
+            logo: fullFormData.logo,
+            short_description: fullFormData.shortDescription,
+            description: fullFormData.description || '',
+            min_investment: fullFormData.minInvestment || 500,
+            note_discount: fullFormData.noteDiscount || 30,
+            industry: fullFormData.industry || [],
+            raised: fullFormData.raised || 0,
+            target: fullFormData.target || 0,
+            is_active: fullFormData.isActive,
+            stage: fullFormData.stage || 'Seed',
+            categories: fullFormData.categories || [],
+            investment_type: fullFormData.investmentType || 'Convertible Loan Agreement',
+            backers: fullFormData.backers || 0,
+            comments: fullFormData.comments || 0,
+            valuation: fullFormData.valuation || 0,
+            number: fullFormData.number || 0,
+            success_highlight: fullFormData.successHighlight || ''
+          })
+          .eq('id', dealId);
+
+        if (error) {
+          throw error;
         }
+        
+        toast.success("Deal updated successfully!");
+        onClose();
+        return true;
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error saving deal:", error);
-      toast.error("Failed to save deal");
+      toast.error(error.message || "Failed to save deal");
+      return null;
     } finally {
       setLoading(false);
     }
